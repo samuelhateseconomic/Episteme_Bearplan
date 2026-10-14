@@ -38,7 +38,7 @@ Pass: reproducible startup, durable task identity, duplicate-instance handling a
 
 Evidence: startup transcript with secrets omitted, schema/migration version, saved record, and a short sleep/wake observation. Repeat on the Mac; the development environment cannot certify Mac power-event behavior.
 
-### M1 — Weekly planner
+### M1 — Weekly planner ✅
 
 Review: projects, parent/subtasks, completion semantics, date assignment versus deadlines, previous-week snapshots and movement of unfinished work.
 

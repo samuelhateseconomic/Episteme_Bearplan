@@ -1,0 +1,24 @@
+[project]
+name = "bearplans"
+version = "0.1.0"
+description = "Local laptop planner with task-linked countdowns."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "httpx2>=2.13",
+    "playwright>=1.45",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+markers = [
+    "e2e: real-browser journey; needs a built frontend and an installed Chrome or Edge",
+]

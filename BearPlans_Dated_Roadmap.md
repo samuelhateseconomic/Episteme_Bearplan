@@ -1,6 +1,7 @@
 # BearPlans — One-Day Feature Roadmap
 
-Revised October 13, 2026. Start: October 14, 2026. Dates use America/Los_Angeles. Status: planned, not implemented or tested.
+Revised October 13, 2026. Start: October 14, 2026. 
+Dates use America/Los_Angeles. Status: planned, not implemented or tested.
 
 ## 1. Revised delivery approach
 
