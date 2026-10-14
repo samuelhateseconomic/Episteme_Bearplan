@@ -18,5 +18,6 @@ instance.json
 
 # Local evidence and editor files
 .evidence/
+sleep-probe-*.jsonl
 .DS_Store
 .vscode/
