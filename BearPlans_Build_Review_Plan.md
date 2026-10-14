@@ -38,7 +38,12 @@ Pass: reproducible startup, durable task identity, duplicate-instance handling a
 
 Evidence: startup transcript with secrets omitted, schema/migration version, saved record, and a short sleep/wake observation. Repeat on the Mac; the development environment cannot certify Mac power-event behavior.
 
-### M1 — Weekly planner ✅
+### M1 — Weekly planner (gate pending)
+
+The daily roadmap splits this gate across Oct 15 projects/tasks, Oct 16 weekly
+planning, and Oct 17 history. Passing the projects/tasks implementation alone does
+not certify the complete planner gate. Current build evidence is in
+[the M1 takeover review](docs/reviews/2026-10-13-m1-takeover.md).
 
 Review: projects, parent/subtasks, completion semantics, date assignment versus deadlines, previous-week snapshots and movement of unfinished work.
 

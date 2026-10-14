@@ -4,9 +4,9 @@ Personal, local-only Mac laptop planner: weekly planning, task-linked countdowns
 
 ## Current milestone
 
-**M0 / Oct 14 — Local foundation.** Done in code: React+TS interface, FastAPI service, SQLite migration 0001, shared `create_task`/`list_tasks`, task entry + saved list, data outside the repo, `python3 launch.py`.
-Still open for the M0 gate: Mac sleep/wake experiment and a run on the actual Mac (needs hardware; see `docs/reviews/2026-10-14-local-foundation.md`).
-Next: Oct 15 Projects and tasks (M1) — only after M0 passes.
+**M0 / Oct 14 — Local foundation: passed** on the target Mac, including the sleep/wake experiment (`docs/reviews/2026-10-14-local-foundation.md`).
+**M1 / Oct 15 — Projects and tasks: implementation review Pass on 2026-10-13.** Schema version 2. Projects (create, rename), task/subtask editing, notes/deadline/estimate, derived completion, leaf-only totals and confirmed subtask removal. Current evidence and separate gate decisions: `docs/reviews/2026-10-13-m1-takeover.md`. Claude's earlier draft review is historical, not current proof.
+**Milestone review: pending operator demonstration; no advancement.** The broader weekly-planner gate also includes the Oct 16/17 builds, which remain unimplemented. Stop at this build.
 
 ## Rules
 
@@ -16,6 +16,11 @@ Next: Oct 15 Projects and tasks (M1) — only after M0 passes.
 - User data lives outside the source tree (`backend/platform/paths.py`). Never commit databases, tokens or personal data. Test against temp dirs/copies, never the real data folder.
 - Store instants in UTC ISO-8601 with `Z`. Validate input in the domain layer; return `{"error": {"code", "message", ...}}`.
 - Keep local request protection: loopback Host check and same-origin check on mutations (`backend/app.py`). No CORS.
+- A subtask is a task with a `parent_id`, not a separate record. Nesting is one level: a subtask cannot have subtasks, which is what makes a parent cycle impossible.
+- **Completion:** a task with no subtasks is complete when marked complete. A task with subtasks has no completion of its own — it is complete exactly when every subtask is, and its completion time is when the last one was completed. Both direct completion and reopening of containers are rejected without changing children. Adding an unfinished child makes a parent incomplete. Repeated leaf completion/reopen requests are no-ops.
+- Count only leaf work items in completion totals. Additional parent work must be an explicit subtask. Removing the last child leaves the parent incomplete with explicit completion control; never restore stale completion. Only subtask removal is supported in M1, with UI confirmation. General deletion and re-parenting remain deferred.
+- Finishing a timer never automatically completes a task. No timer exists in this build.
+- Deadlines are date-only (`YYYY-MM-DD`) and never move with a timezone. Instants stay UTC with `Z`; write them at microsecond precision so stored timestamps stay comparable.
 - Proposed product defaults (coin rate, prices, streak threshold) are configurable, not confirmed requirements. Changing a rule means updating its acceptance scenario, not the expected result.
 - Scope: one feature per day at its smallest passing version. New ideas go to a later list. A failed required check stays a failure; never mark work done to keep the calendar.
 

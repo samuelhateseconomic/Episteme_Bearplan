@@ -51,18 +51,20 @@ def http_json(method: str, url: str, body: dict | None = None) -> tuple[int, obj
 class Service:
     """A real `python -m backend` process, as launch.py starts it."""
 
-    def __init__(self, data_dir: Path, port: int) -> None:
+    def __init__(self, data_dir: Path, port: int, *, via_launcher: bool = False) -> None:
         self.data_dir = data_dir
         self.port = port
         self.url = f"http://127.0.0.1:{port}"
         self.process: subprocess.Popen[str] | None = None
         self.output = ""
+        self.via_launcher = via_launcher
 
     def start(self) -> Service:
         env = {**os.environ, "BEARPLANS_DATA_DIR": str(self.data_dir), "PYTHONUNBUFFERED": "1"}
         flags = subprocess.CREATE_NEW_PROCESS_GROUP if sys.platform == "win32" else 0
+        entry = [str(ROOT / "launch.py")] if self.via_launcher else ["-m", "backend"]
         self.process = subprocess.Popen(
-            [sys.executable, "-m", "backend", "--no-browser", "--port", str(self.port)],
+            [sys.executable, *entry, "--no-browser", "--port", str(self.port)],
             cwd=ROOT,
             env=env,
             stdout=subprocess.PIPE,

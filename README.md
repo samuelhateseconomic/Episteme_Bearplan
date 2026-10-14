@@ -1,7 +1,20 @@
 # BearPlans
 
 A personal, local-only laptop planner. Your data stays on your computer.
-Current state: **M0 foundation** — enter tasks and see the saved list; tasks persist across restarts.
+Current state: **M1 projects and tasks implemented and checked on macOS**. Create and
+rename projects; create and edit tasks and subtasks with notes, date-only deadlines,
+estimated minutes and completion. The operator demonstration is still pending.
+See [the current review](docs/reviews/2026-10-13-m1-takeover.md).
+
+A task without subtasks has an explicit completion checkbox. With subtasks, its
+completion comes from its children; finish every child to complete the parent.
+Reopening a child or adding unfinished work reopens the parent. Progress totals
+count leaf work items once, excluding containers. Put additional parent work in an
+explicit subtask. Subtask removal is available through Edit and requires confirmation;
+removing the last child leaves an incomplete task with an enabled checkbox.
+General task/project deletion and re-parenting are deferred. Weekly planning,
+timers, rewards, AI and integrations are later builds. Finishing a future timer
+must never automatically complete its task.
 
 ## Requirements
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sqlite3
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -13,8 +14,8 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 
 from backend import __version__
 from backend.domain.errors import InvalidInput
-from backend.routes import tasks
-from backend.storage.db import Database
+from backend.routes import projects, tasks
+from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
 SAFE_METHODS = frozenset({"GET", "HEAD", "OPTIONS"})
@@ -76,6 +77,18 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
     app.state.db = db
     app.add_middleware(LocalOnlyMiddleware)
 
+    @app.exception_handler(sqlite3.Error)
+    @app.exception_handler(StorageError)
+    async def storage_error(_: Request, exc: Exception) -> JSONResponse:
+        return JSONResponse(
+            {"error": {
+                "code": "storage_unavailable",
+                "message": "BearPlans could not access its saved data. Check disk space and "
+                "folder permissions, close other database tools, then try again.",
+            }},
+            status_code=503,
+        )
+
     @app.exception_handler(InvalidInput)
     async def invalid_input(_: Request, exc: InvalidInput) -> JSONResponse:
         return JSONResponse(
@@ -90,6 +103,9 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
         error = {"code": "invalid_input", "message": "The request was not in the expected format."}
         if location:
             error["field"] = ".".join(location)
+            field = location[-1].replace("_", " ").capitalize()
+            message = first.get("msg", "Check this value.")
+            error["message"] = f"{field}: {message}"
         return JSONResponse({"error": error}, status_code=422)
 
     @app.exception_handler(StarletteHTTPException)
@@ -101,6 +117,7 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
             headers=exc.headers,
         )
 
+    app.include_router(projects.router)
     app.include_router(tasks.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
