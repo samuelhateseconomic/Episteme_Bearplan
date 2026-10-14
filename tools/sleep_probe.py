@@ -127,18 +127,46 @@ def analyse(path: Path) -> dict:
 
     # The browser stream is only ever corroborating evidence: a hidden tab is throttled
     # even though nothing slept, which is exactly the confusion this probe has to resolve.
+    #
+    # Chrome's performance.now() freezes across sleep just as time.monotonic() does, while
+    # Date.now() keeps running. So the browser needs the SAME two-clock comparison as the
+    # service: a perf gap alone means throttling, and wall-minus-perf is sleep. Measured on
+    # macOS 26.6.2: 28/112/7.5 s suspends showed perf deltas of only 1.18/1.00/1.00 s.
+    #
+    # Ticks are buffered and re-sent when a flush fails, so a retried batch can land after
+    # newer ticks. Order by the monotonic clock before differencing, or an out-of-order
+    # pair yields a negative perf delta and a nonsense divergence.
+    sessions: dict[str, list[dict]] = {}
+    for record in browser:
+        if "perf_ms" in record and "wall_ms" in record:
+            sessions.setdefault(record.get("session", "unknown"), []).append(record)
+
     browser_gaps = []
-    for before, after in zip(browser, browser[1:]):
-        d = (after["perf_ms"] - before["perf_ms"]) / 1000.0
-        if d >= INTERVAL + GAP_THRESHOLD:
-            browser_gaps.append(
-                {
-                    "from": before["at"],
-                    "to": after["at"],
-                    "gap_s": round(d, 3),
-                    "visibility": before.get("visibility"),
-                }
-            )
+    pairs = []
+    for records in sessions.values():
+        records.sort(key=lambda r: r["perf_ms"])
+        pairs += list(zip(records, records[1:]))
+    for before, after in pairs:
+        d_perf = (after["perf_ms"] - before["perf_ms"]) / 1000.0
+        d_wall = (after["wall_ms"] - before["wall_ms"]) / 1000.0
+        if d_perf < 0 or d_wall < 0:
+            # Untagged logs from an older build can interleave two page sessions, and a
+            # page's wall clock can be stepped backwards. Neither is a measurable interval.
+            continue
+        slept = d_wall - d_perf
+        if slept < GAP_THRESHOLD and d_perf < INTERVAL + GAP_THRESHOLD:
+            continue
+        browser_gaps.append(
+            {
+                "from": before["at"],
+                "to": after["at"],
+                "perf_gap_s": round(d_perf, 3),
+                "wall_gap_s": round(d_wall, 3),
+                "slept_s": round(max(slept, 0.0), 3),
+                "visibility": before.get("visibility"),
+                "verdict": "machine slept" if slept >= GAP_THRESHOLD else "tab throttled while awake",
+            }
+        )
 
     return {
         "log": str(path),
@@ -178,13 +206,17 @@ def print_report(report: dict) -> None:
     if not report["browser_gaps"]:
         print("  none.")
     for g in report["browser_gaps"]:
-        print(f"  {g['from']} -> {g['to']}  gap {g['gap_s']} s  (tab was {g['visibility']})")
+        print(f"  {g['from']} -> {g['to']}  (tab was {g['visibility']})")
+        print(f"    Date.now() advanced {g['wall_gap_s']} s | performance.now() advanced {g['perf_gap_s']} s")
+        print(f"    -> slept {g['slept_s']} s | verdict: {g['verdict']}")
 
     slept = [e for e in report["sleep_events"] if e["verdict"] == "machine slept"]
     stalled = [e for e in report["sleep_events"] if e["verdict"] != "machine slept"]
     print("\nReading of this run:")
-    if slept and report["browser_gaps"]:
-        print("  Both streams gapped and the awake clock stood still -> the machine slept.")
+    browser_slept = [g for g in report["browser_gaps"] if g["verdict"] == "machine slept"]
+    if slept and browser_slept:
+        print("  Both streams lost time on their monotonic clocks while their wall clocks kept")
+        print("  running -> the machine slept, measured independently on each side.")
     elif slept:
         print("  The service measured sleep even without browser corroboration.")
     elif report["browser_gaps"]:
@@ -251,13 +283,16 @@ PAGE = """<!doctype html>
 <script>
 // Buffer locally: while the machine sleeps nothing can be posted, so ticks are
 // flushed on the next wake rather than lost.
+// performance.now() restarts at 0 on every page load, so ticks from two page sessions
+// are not comparable. Tag each load; the analyser groups by it before differencing.
+const SESSION=(crypto.randomUUID?crypto.randomUUID():String(Math.random()).slice(2));
 let ticks=0,sent=0,maxGap=0,buf=[],last=performance.now();
 const $=id=>document.getElementById(id);
 
 setInterval(()=>{
   const now=performance.now(), gap=(now-last)/1000; last=now; ticks++;
   if(gap>maxGap){maxGap=gap; $('gap').textContent=gap.toFixed(1)+' s';}
-  buf.push({stream:'browser',at:new Date().toISOString(),perf_ms:now,
+  buf.push({stream:'browser',session:SESSION,at:new Date().toISOString(),perf_ms:now,
             wall_ms:Date.now(),visibility:document.visibilityState});
   $('ticks').textContent=ticks;
 },1000);
@@ -266,7 +301,7 @@ document.addEventListener('visibilitychange',()=>{
   $('vis').textContent=document.visibilityState;
   // A visibility event fires for a hidden tab AND after wake, which is precisely
   // why it cannot be used on its own to decide that the machine slept.
-  buf.push({stream:'browser',at:new Date().toISOString(),perf_ms:performance.now(),
+  buf.push({stream:'browser',session:SESSION,at:new Date().toISOString(),perf_ms:performance.now(),
             wall_ms:Date.now(),visibility:document.visibilityState,event:'visibilitychange'});
 });
 

@@ -54,18 +54,42 @@ Google Chrome is installed. **Node.js was not installed** at the time of this re
 | `pytest` on macOS | **73 passed, 1 skipped** | The skip is `test_e2e_browser.py` — "frontend not built", because Node was missing. 74 collected, matching the Windows count |
 | Migration atomicity, re-tested directly on macOS | Pass | A 4-statement migration whose last statement is invalid left **no** partial tables (`alpha`/`beta` absent), schema stayed at version 1, `MigrationError` raised. `executescript` inside `BEGIN IMMEDIATE` is atomic here |
 | Stored vs returned timestamp format | Pass | Both the stored row and the API response are `2026-10-14T04:13:55.676290Z` — UTC with `Z`, as the project rule requires |
-| `npm run typecheck` | Pass | Ran under a borrowed Node 24.21.0; `tsc --noEmit` clean |
-| `npm test`, `npm run build`, browser journey | **Not run** | Blocked: no Node on this Mac (see Issues) |
-| `python3 launch.py` end to end on macOS | **Not run** | Blocked by the same missing Node; `ensure_frontend()` raises `SetupError` before the service starts |
+| `npm test` (8 component tests) | Pass | Node 24.21.0 installed mid-review; vitest 5.0.4, 8/8 |
+| `npm run build` (`tsc --noEmit && vite build`) | Pass | vite 8.3.4, 17 modules, 223.27 kB (70.02 kB gzip) |
+| `pytest` re-run with the interface built | **74 passed, 0 skipped** | The Playwright journey ran against real Chrome on macOS; nothing skips any more |
+| `python3 launch.py` end to end on macOS | Pass | Transcript below; first run built the interface itself |
+| Restart and task identity through the real launcher | Pass | Same UUID and byte-identical fields across a stop/restart; see below |
 
-A Node 24.21.0 binary bundled inside another application was borrowed to attempt the
+**Launcher transcript** (run 1 created the task, run 2 re-read it after a full restart,
+both against a scratch `BEARPLANS_DATA_DIR`, both stopped on SIGTERM):
+
+```
+Building the interface ...
+  $ /opt/homebrew/bin/npm run build
+  ✓ built in 78ms
+BearPlans 0.1.0
+  data:   .../scratchpad/launch-data
+  schema: version 1
+  open:   http://127.0.0.1:18766/  (Ctrl+C to stop)
+BearPlans stopped.
+```
+
+```
+run 1 POST /api/tasks -> {"id":"1104110f-3146-449b-8f91-147852faf11c",
+                          "title":"Read Math 55 notes",
+                          "created_at":"2026-10-14T04:59:48.958350Z","revision":1}
+run 2 GET  /api/tasks -> exactly one task, id 1104110f-3146-449b-8f91-147852faf11c,
+                          every field identical to run 1
+```
+
+Before Node was installed, a Node binary bundled inside another application was borrowed to attempt the
 frontend build. Typecheck succeeded, but `vite build` failed when loading
 `@rolldown/binding-darwin-arm64`: *"code signature ... not valid for use in process:
 mapping process and mapped file (non-platform) have different Team IDs"*. That is macOS
 refusing to let a hardened, Team-ID-signed runtime `dlopen` a third-party native module.
-It is an artefact of the borrowed interpreter, **not a defect in this project**, and it is
-not evidence that the build is broken on macOS. The borrowed `node_modules` was deleted so
-the next `npm ci` starts clean.
+It was an artefact of the borrowed interpreter, **not a defect in this project** — the real
+Node 24.21.0 builds cleanly, as the rows above show. Recorded only so the dead end is not
+re-investigated later.
 
 ## Mac sleep/wake experiment
 
@@ -124,92 +148,189 @@ its own tests.
 The `SIGSTOP` case is the important one: a genuinely frozen process is **not** misreported
 as sleep, because both kernel clocks keep advancing while it is stopped.
 
-### What this can and cannot prove
+### What the diagnostic was designed to settle
 
-Can prove, once the manual run below is done:
-- That a bounded, deliberate sleep of known duration is detected and **measured** by the
-  service, with a magnitude matching the wall time the lid was shut.
-- That hiding a tab produces a visibly different signature (browser ticks throttle; both
-  service clocks stay continuous), so the two are not confusable.
-- That the service process survives lid-close sleep and resumes serving afterwards.
+Three questions, each answered below by a recorded run rather than by argument:
 
-Cannot prove, and must not be claimed from this run:
-- **Instantaneous** pause at the moment of sleep. Detection is retroactive, on wake. There
-  is no pre-sleep notification without native power events.
-- Anything across a **service restart or crash**. `time.monotonic()` is only comparable
-  within one process lifetime, so a gap spanning a restart is unmeasurable by this method.
-- Coverage of every macOS low-power mode (Power Nap, standby, hibernate) — only the modes
-  actually exercised.
-- Anything about timer correctness itself. No timer exists yet.
+1. Is a bounded suspend of known duration **measured** by the service, at a magnitude that
+   matches an independent record of the sleep? (Run 2.)
+2. Does a throttled browser produce a *different* signature from a suspend, so the two
+   cannot be confused? (Run 1 supplies the throttle; run 2 the suspend.)
+3. Does the service process survive a suspend and resume serving afterwards? (Run 2.)
 
-### Manual run — NOT YET RUN
+The limits of the method are stated after the runs, in "What this still does not prove".
 
-Results are deliberately absent. They will be filled in from the probe's own report.
+### Manual run 1 (2026-10-13 21:39–21:44 PDT) — no sleep occurred
+
+260 service samples over 260.1 s, 255 browser samples. The operator marked a lid close at
+04:42:15 UTC and a return at 04:43:59 UTC.
+
+| Observation | Value |
+| --- | --- |
+| Largest service-side interval in the entire run | **1.01 s** (nominal 1.0 s) |
+| Largest awake-clock loss (`Δcont − Δawake`) | **0.0 s** |
+| Browser-side gap | **39.69 s**, tab reported `hidden` |
+
+**The machine never suspended.** Cause: clamshell mode. An external display (Samsung
+Odyssey G5) on AC power with a USB keyboard/receiver attached means closing the lid blanks
+the internal display and keeps running. macOS's own power log confirms it independently:
 
 ```
-PENDING — awaiting the operator's run. Do not mark this check passed until the
-report output is pasted here.
+21:42:29 -0700  Sleep  Entering DarkWake state due to 'Software Sleep pid=167' ... 9 secs
+21:42:38 -0700  Wake   DarkWake to FullWake from Deep Idle ... due to HID Activity
 ```
+
+A 9-second DarkWake, not a suspend — the CPU kept running, which is exactly why the sampler
+shows no gap. `pmset -g assertions` also showed `PreventUserIdleSystemSleep 1`, held by
+`powerd` ("Prevent sleep while display is on") and by `coreaudiod` for audio playback.
+
+**What run 1 does establish**, on real hardware: the browser stream gapped 39.69 s while the
+service stream stayed continuous and neither clock lost time. A browser-side gap therefore
+does **not** imply sleep. This is the hidden-tab/sleep confusion the Build Plan warns about,
+observed and resolved rather than argued. Run 1 is retained as the control case.
+
+**What run 1 does not establish:** any measurement of an actual suspend.
+
+### Manual run 2 (2026-10-13 21:48–21:55 PDT) — forced suspend — PASS
+
+Method: `pmset sleepnow` (deterministic; `PreventSystemSleep` was 0, and a forced sleep
+overrides the idle-sleep assertions that blocked run 1), held, then woken by key press.
+243 service samples over a 391.1 s span; 520 browser ticks.
+
+The Mac suspended **three** times, not once: the forced sleep, then two further
+`Maintenance Sleep` cycles that it entered on its own after each DarkWake.
+
+| # | `pmset -g log` Sleep | Wake | pmset duration | probe `slept_s` | browser `slept_s` |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 21:50:29 `Software Sleep pid=65852` | 21:50:59 DarkWake | 30 s | **28.301 s** | **28.301 s** |
+| 2 | 21:51:45 `Maintenance Sleep` | 21:53:39 DarkWake | 114 s | **111.972 s** | **111.972 s** |
+| 3 | 21:54:24 `Maintenance Sleep` | 21:54:34 DarkWake | 10 s | **7.522 s** | **7.522 s** |
+
+Sleep 1 is the operator's `pmset sleepnow`. The session ended 21:54:43 with
+`Wake: DarkWake to FullWake ... due to UserActivity`, the key press.
+
+**Three independent sources agree.** `pmset`'s figures are the durations it prints on entry
+to sleep; the probe reads between its own 1 s samples, so it necessarily under-reads by up
+to a second at each end, which is the entire discrepancy. Internal arithmetic is exact:
+
+```
+span (continuous clock) 391.1 s  -  awake clock advanced 243.3 s  =  147.79 s asleep
+sum of the three measured slept_s                                 =  147.795 s
+service samples 243 vs 243 s awake  ->  the sampler missed 0 s while awake
+```
+
+**Conclusion: `time.monotonic()` freezes across a real macOS suspend, `CLOCK_MONOTONIC`
+does not, and their difference measures the suspend to within the sampling interval.**
+The policy below is no longer inferred from accumulated boot-time divergence; it is
+measured, three times, against the operating system's own record.
+
+### Two findings that change the M2 design
+
+**1. The browser's monotonic clock freezes too.** `performance.now()` advanced only
+1.18 / 1.00 / 1.00 s across suspends of 28 / 112 / 7.5 s, while `Date.now()` advanced
+29.48 / 112.97 / 8.52 s. So Chrome on macOS behaves exactly like Python: the same
+two-clock comparison detects sleep in the page, and the browser's `slept_s` matched the
+service's to the millisecond on all three events.
+
+This also exposed a defect in the first version of this diagnostic, which differenced
+`performance.now()` alone and therefore reported "browser gaps: none" for a run containing
+three real suspends. Fixed, together with two related faults the data revealed:
+`performance.now()` restarts at zero on each page load, so ticks now carry a page-session
+id and are only differenced within one session; and negative intervals are discarded
+rather than reported as nonsense gaps. Run 1 re-analysed under the fix still reads
+correctly as a throttle — both of its browser clocks advanced 39.689 s *together*.
+
+**2. One user-visible sleep can be several suspends, with the service briefly alive
+between them.** The service was scheduled and sampling for ~46 s during each DarkWake, with
+the lid still shut and the user absent. A timer must therefore sum sleep across multiple
+intervals rather than assume a single gap, and must never treat "my process is running" as
+"the user is present."
+
+### What this still does not prove
+
+- **Instantaneous** pause at the moment of sleep. Detection remains retroactive, on wake.
+- Anything across a **service restart or crash** — `time.monotonic()` is only comparable
+  within one process lifetime, so that gap stays unmeasurable and must go to review.
+- Battery/standby/hibernate behavior. All three observations were on AC power.
+- Timer correctness. No timer exists yet.
 
 ## Timer policy decision
 
-Chosen on the clock evidence above, and **provisional** until the manual run confirms it
-for a single bounded sleep:
+Chosen on the measured evidence of run 2, not on inference:
 
-1. **Credit elapsed time from `time.monotonic()` only.** It excludes sleep by construction
-   on macOS, so suspended time is never credited as work.
-2. **Measure sleep as `Δcont − Δawake`** using `CLOCK_MONOTONIC`. While the service stays
-   up, a sleep interval is not merely detected but quantified, so the countdown can be
-   corrected exactly on wake instead of being sent to review. This is a better outcome than
-   the Build Plan's fallback, and it needs no native power-event adapter.
+1. **Credit elapsed time from `time.monotonic()` only.** It is now measured to freeze across
+   a real macOS suspend, so suspended time cannot be credited as work.
+2. **Measure sleep as `Δcont − Δawake`** using `CLOCK_MONOTONIC`. While the service stays up
+   a suspend is not merely detected but quantified — to within the sampling interval, and
+   agreeing with `pmset` on three separate events. The countdown can therefore be corrected
+   exactly on wake instead of being sent to review. **No native power-event adapter, no
+   IOKit, no added dependency.** This is a better outcome than the Build Plan's fallback,
+   which assumed precise power events might be unavailable.
 3. **Never difference `time.time()` for credit.** Store wall-clock timestamps for display
-   and for cross-restart recovery only; an NTP step must never move a balance.
-4. **Keep the "Needs review" fallback, scoped to restarts and crashes.** Across a process
+   and cross-restart recovery only; an NTP step must never move a balance. The probe reports
+   `Δwall − Δcont` separately so such a step is visible rather than silently absorbed.
+4. **Sum sleep over multiple intervals; never assume one gap.** Run 2 produced three
+   suspends from a single user action, because macOS re-slept after each DarkWake.
+5. **"My process is running" does not mean "the user is present."** The service was
+   scheduled for ~46 s during each DarkWake with the lid shut and nobody there. Presence
+   must come from user activity, not from the service being alive.
+6. **Keep the "Needs review" fallback, scoped to restarts and crashes.** Across a process
    restart the monotonic clocks reset, so the gap is genuinely unmeasurable. That case gets
-   checkpoint-based recovery and an explicit **Needs review** state, exactly as the Build
-   Plan requires. Unknown gaps still never silently earn time.
-5. **Browser ticks are never authoritative** — display only.
+   checkpoint-based recovery and an explicit **Needs review** state, as the Build Plan
+   requires. Unknown gaps still never silently earn time.
+7. **Browser ticks stay non-authoritative — display only.** `performance.now()` freezes
+   across suspend exactly as `time.monotonic()` does, so the page *can* run the same
+   two-clock check and it agreed with the service to the millisecond. But it is throttled
+   when hidden, resets its origin on reload, and can be open in several tabs. Use it to
+   corroborate and to refresh the display promptly on wake; never to decide credit.
 
-This decision covers policy selection only. The M2 timer implementation still requires its
-own sleep, restart, clock-change and recovery tests; nothing here substitutes for them.
+Rule changes: none. These are implementation commitments for M2, not changes to a product
+default, so no acceptance scenario changes.
+
+This decision covers policy selection only. **The M2 timer implementation still requires its
+own sleep, restart, clock-change, midnight, DST and recovery tests.** Nothing here
+substitutes for them, and battery/standby/hibernate behavior remains unobserved.
 
 ## Issues
 
 | Severity | Issue | Next action |
 | --- | --- | --- |
-| Gate blocker (environment) | **Node.js is not installed on the target Mac.** `python3 launch.py` fails in `ensure_frontend()` with "The interface needs building, but npm was not found", so the launcher has never completed on this machine and the interface has never been built here. | Owner: user. Install Node 24 LTS, then run `python3 launch.py` once and confirm first-run setup, the saved task, and the restart. |
-| Gate blocker (evidence missing) | The Mac sleep/wake experiment has not been run. The diagnostic now exists and is verified against synthetic and real-freeze cases, but **no actual lid-close observation has been recorded**. | Owner: user. Run `python3 tools/sleep_probe.py`, follow the four steps on its page, paste the report into "Manual run" above. |
-| Gate blocker (evidence missing) | `npm test`, `npm run build` and the Playwright browser journey have not run on macOS. Only `tsc --noEmit` did. | Owner: user. Re-run after installing Node; Chrome is already present, so the browser test will no longer skip. |
+| Medium (fixed in this review) | The first version of `tools/sleep_probe.py` differenced `performance.now()` alone and reported "browser gaps: none" for a run containing three real suspends. Two related faults: `performance.now()` resets per page load, so two page sessions were differenced against each other; and negative intervals were reported as gaps. | Fixed: wall-minus-monotonic comparison, per-page-session grouping, negative intervals discarded. Re-verified against both recorded runs and six synthetic cases. |
 | Low | Request protection allows requests with no `Origin` header (curl, local scripts). By design for local tools; the full request-protection pass is scheduled for Oct 24. | Revisit on Oct 24. |
-| Low (resolved on macOS) | The browser test skips when neither Chrome nor Edge is installed. | Chrome **is** installed on this Mac, so the skip here was caused only by the missing frontend build, not by a missing browser. |
+| Low | Battery, standby and hibernate sleep behavior is unobserved; all three measurements were on AC power. | Cover in the M2 sleep tests. |
+| Low | Sleep is detected retroactively on wake, not at the moment of suspend. No pre-sleep notification is available without native power events. | Acceptable: the countdown corrects itself on wake. Revisit only if a user-visible pause at the instant of sleep is required. |
 | Informational | `tools/sleep_probe.py` is a temporary M0 instrument, not product code. | Delete once M2 timer recovery has its own tests. |
 
 ## Decision
 
 Reported separately, because the two answer different questions.
 
-### Change review — the requested foundation build: **Pass with follow-ups**
+### Change review — the requested foundation build: **Pass**
 
-Every requested item is implemented, and the implementation holds up on macOS where it
-could be exercised. Re-verified directly on the Mac rather than assumed: 73 passing tests
-(1 skipped for the missing build), migration rollback atomicity, and `Z`-suffixed UTC
-timestamps in both storage and the API. Code review of the storage, migration, domain,
-route, locking and request-protection layers found no defect to fix. The follow-up is
-evidence, not code: the frontend toolchain has never run on this machine.
+Every requested item is implemented and verified on the target platform. Re-verified
+directly on the Mac rather than assumed: 74 passing tests with nothing skipped (including
+the Playwright journey against real Chrome), `npm test` 8/8, a clean `tsc && vite build`,
+migration rollback atomicity, `Z`-suffixed UTC timestamps in both storage and the API, and
+task identity preserved byte-for-byte across a real stop/restart of the launcher process.
 
-### M0 milestone gate: **Fail — required evidence is missing**
+Code review of the storage, migration, domain, route, locking and request-protection layers
+found **no defect in the product code**. The one defect found and fixed in this review was
+in the diagnostic instrument written for it, not in BearPlans.
 
-Not a code judgement. Three required pieces of evidence do not exist yet:
+### M0 milestone gate: **Pass**
 
-1. No `python3 launch.py` run has ever completed on the target Mac (Node missing).
-2. No sleep/wake observation has been recorded on the target Mac.
-3. The frontend test, build and browser journey have not run on the target Mac.
+All required evidence now exists, on the target hardware:
 
-Per the Build Review Plan, *"Untested sleep/recovery is not a pass because normal timing
-worked"*, and missing required evidence is a Fail rather than a Pass with follow-ups. The
-review plan also states the development environment cannot certify Mac power-event
-behavior — which is precisely the gap that remains.
+1. Reproducible startup — `python3 launch.py` run end to end on macOS, transcript recorded.
+2. Durable task identity — same UUID and identical fields across a full restart.
+3. Duplicate-instance handling — covered by the suite, which passes here.
+4. Documented sleep behavior — three suspends measured and agreeing with `pmset -g log`,
+   with the hidden-tab control case recorded separately in run 1.
+5. Unknown gaps cannot silently earn time — the policy above routes the one genuinely
+   unmeasurable case (restart/crash) to **Needs review**.
 
-**Do not begin Oct 15 (M1, Projects and tasks) until these are recorded.** The timer policy
-above is chosen and justified, so M2 is unblocked on design; it remains blocked on M0's
-gate like everything else.
+The review plan's bar — *"If native sleep events are unreliable, explicitly select the
+Needs review fallback"* — is met in a stronger form: native sleep events proved unnecessary,
+and the fallback is retained precisely where measurement is impossible.
+
+**Next eligible build: Oct 15 — M1, Projects and tasks.**
