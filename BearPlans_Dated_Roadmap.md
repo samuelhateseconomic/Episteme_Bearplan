@@ -4,7 +4,7 @@ Revised October 13, 2026. Start: October 14, 2026.
 Dates use America/Los_Angeles. Dates below are targets, not proof of completion.
 
 Current status (2026-10-13): M0 has a recorded target-Mac pass. The Oct 15 projects/tasks
-build has a passing implementation review; the operator demonstration remains pending.
+build has passing implementation and operator reviews; all six hands-on checks passed.
 See [the M1 takeover review](docs/reviews/2026-10-13-m1-takeover.md) for verified evidence.
 Oct 16 onward remains planned. No next build was started.
 

@@ -1,9 +1,9 @@
 # BearPlans
 
 A personal, local-only laptop planner. Your data stays on your computer.
-Current state: **M1 projects and tasks implemented and checked on macOS**. Create and
+Current state: **M1 projects and tasks passed automated and operator review on macOS**. Create and
 rename projects; create and edit tasks and subtasks with notes, date-only deadlines,
-estimated minutes and completion. The operator demonstration is still pending.
+estimated minutes and completion. All six operator checks passed.
 See [the current review](docs/reviews/2026-10-13-m1-takeover.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its

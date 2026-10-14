@@ -6,7 +6,7 @@ Personal, local-only Mac laptop planner: weekly planning, task-linked countdowns
 
 **M0 / Oct 14 — Local foundation: passed** on the target Mac, including the sleep/wake experiment (`docs/reviews/2026-10-14-local-foundation.md`).
 **M1 / Oct 15 — Projects and tasks: implementation review Pass on 2026-10-13.** Schema version 2. Projects (create, rename), task/subtask editing, notes/deadline/estimate, derived completion, leaf-only totals and confirmed subtask removal. Current evidence and separate gate decisions: `docs/reviews/2026-10-13-m1-takeover.md`. Claude's earlier draft review is historical, not current proof.
-**Milestone review: pending operator demonstration; no advancement.** The broader weekly-planner gate also includes the Oct 16/17 builds, which remain unimplemented. Stop at this build.
+**Projects/tasks build review: Pass.** The operator confirmed all six hands-on checks passed on 2026-10-13. The broader weekly-planner gate still requires the Oct 16/17 builds, which remain unimplemented. Weekly planning is the next eligible build; do not start it without a new instruction.
 
 ## Rules
 

@@ -42,7 +42,8 @@ Evidence: startup transcript with secrets omitted, schema/migration version, sav
 
 The daily roadmap splits this gate across Oct 15 projects/tasks, Oct 16 weekly
 planning, and Oct 17 history. Passing the projects/tasks implementation alone does
-not certify the complete planner gate. Current build evidence is in
+not certify the complete planner gate. The Oct 15 projects/tasks build has passed
+implementation and operator review; Oct 16/17 remain pending. Current build evidence is in
 [the M1 takeover review](docs/reviews/2026-10-13-m1-takeover.md).
 
 Review: projects, parent/subtasks, completion semantics, date assignment versus deadlines, previous-week snapshots and movement of unfinished work.
