@@ -59,6 +59,7 @@ Google Chrome is installed. **Node.js was not installed** at the time of this re
 | `pytest` re-run with the interface built | **74 passed, 0 skipped** | The Playwright journey ran against real Chrome on macOS; nothing skips any more |
 | `python3 launch.py` end to end on macOS | Pass | Transcript below; first run built the interface itself |
 | Restart and task identity through the real launcher | Pass | Same UUID and byte-identical fields across a stop/restart; see below |
+| Same check through the interface, confirmed by the operator | Pass | App launched on the default port against the real data folder; operator confirmed the task and its id were still listed after a stop and relaunch |
 
 **Launcher transcript** (run 1 created the task, run 2 re-read it after a full restart,
 both against a scratch `BEARPLANS_DATA_DIR`, both stopped on SIGTERM):
