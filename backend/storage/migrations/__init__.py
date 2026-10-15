@@ -91,6 +91,14 @@ def migrate(db: Database, migrations: list[Migration] | None = None) -> int:
             except sqlite3.Error as exc:
                 if conn.in_transaction:
                     conn.execute("ROLLBACK")
+                if migration.name == "single_planned_day" and isinstance(exc, sqlite3.IntegrityError):
+                    raise MigrationError(
+                        "The one-planned-day upgrade could not be applied because some tasks have "
+                        "multiple planned dates. No plans or tasks were removed; the upgrade was "
+                        "rolled back. Open the previous BearPlans build, remove extra planned dates "
+                        "so each task has only one, then retry this update. Split multi-day work "
+                        "into subtasks."
+                    ) from exc
                 raise MigrationError(
                     f"Migration {migration.version:04d}_{migration.name} failed and was rolled back: {exc}"
                 ) from exc

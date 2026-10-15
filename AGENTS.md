@@ -58,12 +58,17 @@ dates; use their contents and commit history to determine which evidence is curr
 ## Weekly planning rules
 
 - A placement references one existing leaf task on a date; never clone tasks or
-  copy completion into placements. Multiple planned days are allowed, with a unique
-  task/day pair. Parent tasks appear as context, not scheduled work.
-- Move only the selected placement, preserving its identity. A destination that
-  already contains that task is a conflict: leave all records unchanged and explain
-  it. Removing a placement keeps the task and its other placements. Scheduling must
-  preserve task identity, project, notes, deadline, completion and history.
+  copy completion into placements. Each leaf task or subtask has at most **one
+  planned date across all weeks**, including completed work. Split multi-day work
+  into explicit subtasks, each with its own date. Parents appear as context and
+  complete only when all their children complete. This supersedes the original
+  multi-day placement decision (user refinement, 2026-10-15).
+- Reject a second assignment with the existing date and guidance to Move or split
+  work into subtasks; leave records unchanged. Move the existing placement to change
+  its day/week, preserving its identity. Different tasks may share a date. Removing
+  a placement keeps its task. Scheduling preserves task identity, project, notes,
+  deadline, completion and history. Never silently discard legacy multi-day plans
+  during migration; fail safely with recovery instructions if they exist.
 - Unscheduled tasks remain accessible. Display planned dates separately from
   deadlines. Monday–Sunday weeks use calendar dates, not elapsed-hour arithmetic.
   Today is determined by the service using `BEARPLANS_TIMEZONE` (an installed IANA

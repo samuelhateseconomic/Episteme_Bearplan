@@ -27,7 +27,6 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
             "title": "Draft proof", "parent_id": parent["id"], "deadline": "2026-11-20", "notes": "Keep proof notes", "estimate_minutes": 45,
         })
         _, other = http_json("POST", service.url + "/api/tasks", {"title": "Review proof", "parent_id": parent["id"]})
-        http_json("PUT", service.url + f"/api/tasks/{other['id']}/completion", {"complete": True})
         _, backlog = http_json("POST", service.url + "/api/tasks", {"title": "Unscheduled reading"})
         _, initial = http_json("GET", service.url + "/api/planning")
         monday = date.fromisoformat(initial["week_start"])
@@ -46,10 +45,17 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         child_row = page.locator(".subtasks > .task").filter(has=page.get_by_label("Draft proof", exact=True))
         child_row.get_by_text("Plan task", exact=True).click()
         assign = child_row.locator(".planning-form").first
-        for day in (monday, tuesday):
-            assign.get_by_label('Planned date for “Draft proof”').fill(day.isoformat())
-            assign.get_by_role("button", name="Add to day", exact=True).click()
-            expect(page.locator(".week-board .planned-card")).to_have_count(1 if day == monday else 2)
+        assign.get_by_label('Planned date for “Draft proof”').fill(monday.isoformat())
+        assign.get_by_role("button", name="Add to day", exact=True).click()
+        expect(page.locator(".week-board .planned-card")).to_have_count(1)
+        expect(child_row.get_by_text("Move or remove plan", exact=True)).to_be_visible()
+        expect(child_row.get_by_role("button", name="Add to day", exact=True)).to_have_count(0)
+        other_row = page.locator(".subtasks > .task").filter(has=page.get_by_label("Review proof", exact=True))
+        other_row.get_by_text("Plan task", exact=True).click()
+        other_assign = other_row.locator(".planning-form").first
+        other_assign.get_by_label('Planned date for “Review proof”').fill(tuesday.isoformat())
+        other_assign.get_by_role("button", name="Add to day", exact=True).click()
+        expect(page.locator(".week-board .planned-card")).to_have_count(2)
         # The referenced task is not copied; deadline and planned dates are distinct.
         _, state = http_json("GET", service.url + "/api/planning")
         assert len(state["tasks"]) == len(initial["tasks"]) == 4
@@ -57,17 +63,38 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         expect(page.get_by_text("Due Nov 20, 2026").first).to_be_visible()
         expect(page.locator(".week-board").get_by_text("Inbox / Homework")).to_have_count(2)
         assert no_horizontal_overflow(page)
-        page.screenshot(path=evidence / "weekly-01-wide.png", full_page=True)
+        page.screenshot(path=evidence / "single-day-01-wide.png", full_page=True)
 
-        # Completion is task-owned, reflected by both cards and the derived parent.
+        # A stale second tab cannot assign a second day, including in another week.
+        backlog_row = page.locator(".tasks > .task").filter(has=page.get_by_label("Unscheduled reading", exact=True))
+        backlog_row.get_by_text("Plan task", exact=True).click()
+        backlog_assign = backlog_row.locator(".planning-form").first
+        backlog_assign.get_by_label('Planned date for “Unscheduled reading”').fill(next_monday.isoformat())
+        _, existing = http_json("POST", service.url + "/api/placements", {"task_id": backlog["id"], "planned_date": friday.isoformat()})
+        _, before_conflict = http_json("GET", service.url + "/api/planning")
+        backlog_assign.get_by_role("button", name="Add to day", exact=True).click()
+        expect(backlog_assign.get_by_role("alert")).to_contain_text(f"already planned for {friday.isoformat()}")
+        expect(backlog_assign.get_by_role("alert")).to_contain_text("Use Move placement")
+        expect(backlog_assign.get_by_label('Planned date for “Unscheduled reading”')).to_have_value(next_monday.isoformat())
+        _, after_conflict = http_json("GET", service.url + "/api/planning")
+        assert after_conflict == before_conflict
+        page.screenshot(path=evidence / "single-day-02-conflict.png", full_page=True)
+        http_json("DELETE", service.url + f"/api/placements/{existing['id']}")
+        page.reload()
+
+        # Each day is separate child work; the parent waits for both children.
         boxes = page.locator(".week-board").get_by_role("checkbox")
         boxes.first.click()
         expect(boxes.first).to_be_checked()
-        expect(boxes.last).to_be_checked()
-        expect(page.get_by_label("Homework", exact=True)).to_be_checked()
+        expect(boxes.last).not_to_be_checked()
+        expect(page.get_by_label("Homework", exact=True)).not_to_be_checked()
         expect(page.get_by_label("Draft proof", exact=True)).to_be_checked()
+        expect(page.get_by_text("1 of 2 subtasks done", exact=True)).to_be_visible()
+        boxes.last.click()
+        expect(page.get_by_label("Homework", exact=True)).to_be_checked()
+        expect(page.get_by_text("2 of 2 subtasks done", exact=True)).to_be_visible()
 
-        # Move only Monday's placement into next week; Tuesday remains untouched.
+        # Move only one child's placement across weeks; the other stays unchanged.
         monday_card = page.locator(".week-board .planned-card").filter(has=page.get_by_role("checkbox", name=f"Draft proof, planned {display(monday)}", exact=True))
         monday_card.get_by_text("Move or remove", exact=True).click()
         monday_card.get_by_label(f'Move “Draft proof” from {display(monday)} to').fill(next_monday.isoformat())
@@ -80,15 +107,19 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         moved_card.get_by_text("Move or remove", exact=True).click()
         move_input = moved_card.get_by_label(f'Move “Draft proof” from {display(next_monday)} to')
         move_input.fill(tuesday.isoformat())
-        _, before_conflict = http_json("GET", service.url + "/api/planning")
         moved_card.get_by_role("button", name="Move placement", exact=True).click()
-        expect(moved_card.get_by_role("alert")).to_contain_text("already planned")
-        expect(move_input).to_have_value(tuesday.isoformat())
-        _, after_conflict = http_json("GET", service.url + "/api/planning")
-        assert after_conflict == before_conflict
-        page.screenshot(path=evidence / "weekly-02-conflict.png", full_page=True)
-        moved_card.get_by_role("button", name="Remove from plan", exact=True).click()
         expect(page.locator(".week-board .planned-card")).to_have_count(0)
+        # Different tasks may share a date; moving never clones or completes work.
+        _, after_move = http_json("GET", service.url + "/api/planning")
+        assert len(after_move["placements"]) == 2
+        assert all(p["planned_date"] == tuesday.isoformat() for p in after_move["placements"])
+        assert len({p["task_id"] for p in after_move["placements"]}) == 2
+        page.get_by_role("button", name="Previous week", exact=True).click()
+        moved_card = page.locator(".week-board .planned-card").filter(has=page.get_by_role("checkbox", name=f"Draft proof, planned {display(tuesday)}", exact=True))
+        expect(moved_card.get_by_role("checkbox")).to_be_checked()
+        moved_card.get_by_text("Move or remove", exact=True).click()
+        moved_card.get_by_role("button", name="Remove from plan", exact=True).click()
+        expect(page.locator(".week-board .planned-card")).to_have_count(1)
         _, after_remove = http_json("GET", service.url + "/api/planning")
         assert len(after_remove["placements"]) == 1
         assert after_remove["placements"][0]["planned_date"] == tuesday.isoformat()
@@ -106,7 +137,7 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         expect(page.locator(".week-board .planned-card:visible")).to_have_count(1)
         expect(page.locator(".week-board .day-column:visible")).to_have_count(1)
         assert no_horizontal_overflow(page)
-        page.screenshot(path=evidence / "weekly-03-laptop.png", full_page=True)
+        page.screenshot(path=evidence / "single-day-03-laptop.png", full_page=True)
         page.get_by_role("button", name="Previous week", exact=True).click()
         page.get_by_role("button", name="Today", exact=True).click()
         expect(page.locator(".planner-heading")).to_contain_text(display(monday))
@@ -121,10 +152,11 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         assign.get_by_role("button", name="Add to day", exact=True).click()
         expect(assign.get_by_role("alert")).to_contain_text("Cannot reach the BearPlans service")
         expect(assign.get_by_label('Planned date for “Draft proof”')).to_have_value(friday.isoformat())
-        page.screenshot(path=evidence / "weekly-04-save-error.png", full_page=True)
+        page.screenshot(path=evidence / "single-day-04-save-error.png", full_page=True)
         service = Service(data_dir, port).start()
         assign.get_by_role("button", name="Add to day", exact=True).click()
-        expect(child_row.locator(".placement-list > li")).to_have_count(2)
+        expect(child_row.locator(".placement-list > li")).to_have_count(1)
+        expect(child_row.get_by_role("button", name="Add to day", exact=True)).to_have_count(0)
         _, result = http_json("GET", service.url + "/api/planning")
         assert len(result["placements"]) == 2
         assert len(result["tasks"]) == 4
@@ -139,13 +171,13 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         page.get_by_role("group", name="Selected day").get_by_role("button", name=re.compile("Tue")).click()
         assert no_horizontal_overflow(page)
         expect(page.locator(".week-board .planned-card:visible")).to_have_count(1)
-        page.screenshot(path=evidence / "weekly-05-narrow.png", full_page=True)
+        page.screenshot(path=evidence / "single-day-05-narrow.png", full_page=True)
         page.set_viewport_size({"width": 1600, "height": 1000})
         page.emulate_media(color_scheme="dark")
         page.reload()
         expect(page.locator(".week-board .planned-card:visible")).to_have_count(2)
         assert no_horizontal_overflow(page)
-        page.screenshot(path=evidence / "weekly-06-dark-wide.png", full_page=True)
+        page.screenshot(path=evidence / "single-day-06-dark-wide.png", full_page=True)
         assert errors == []
     finally:
         service.kill()

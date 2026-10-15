@@ -131,7 +131,7 @@ export interface Planning {
   week_start: string;
   week_end: string;
   tasks: Task[];
-  /** Every placement, including dates outside the displayed week. */
+  /** Every placement, including dates outside the displayed week; at most one per task. */
   placements: Placement[];
 }
 

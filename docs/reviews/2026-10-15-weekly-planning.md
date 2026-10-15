@@ -1,5 +1,10 @@
 # Weekly planning — daily build review
 
+**Historical review:** the original multi-day rule below was superseded by the
+user's one-planned-day decision on 2026-10-15. Current behavior, evidence and operator
+checklist are in the [single-day refinement review](2026-10-15-single-planned-day.md).
+The original results below remain historical evidence for commit `801cbc3`.
+
 Date: 2026-10-15 (America/Los_Angeles), pulled forward from the Oct 16 roadmap row.
 Baseline: `d2174a6`; prior application implementation `a9ba50b`.
 Status: **implementation review Pass; operator demonstration pending**. The local

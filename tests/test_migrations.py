@@ -262,7 +262,11 @@ def test_planning_schema_enforces_foreign_keys_uniqueness_and_non_cascading_remo
 
     task = create_task(db, "Keep this task")
     placement = create_placement(db, task.id, "2026-10-15")
-    for task_id, day in ((task.id, "2026-10-15"), ("00000000-0000-4000-8000-000000000099", "2026-10-16")):
+    for task_id, day in (
+        (task.id, "2026-10-15"),
+        (task.id, "2026-10-22"),
+        ("00000000-0000-4000-8000-000000000099", "2026-10-16"),
+    ):
         with pytest.raises(sqlite3.IntegrityError):
             with db.write() as conn:
                 conn.execute(
@@ -275,3 +279,74 @@ def test_planning_schema_enforces_foreign_keys_uniqueness_and_non_cascading_remo
             conn.execute("DELETE FROM tasks WHERE id = ?", (task.id,))
     assert list_tasks(db) == [task]
     assert list_placements(db) == [placement]
+
+
+def _schema_three_with_placements(path: Path, *, multiple_dates: bool = False) -> Database:
+    db = _schema_two_with_rich_tasks(path)
+    migrate(db, load_migrations()[:3])
+    with db.write() as conn:
+        conn.execute(
+            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
+            ("00000000-0000-4000-8000-000000000011", "00000000-0000-4000-8000-000000000002", "2026-10-15",
+             "2026-10-14T11:00:00.000000Z", "2026-10-14T13:00:00.000000Z", 4),
+        )
+        conn.execute(
+            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision)"
+            " VALUES (?, ?, ?, ?, ?, ?)",
+            ("00000000-0000-4000-8000-000000000012",
+             "00000000-0000-4000-8000-000000000002" if multiple_dates else "00000000-0000-4000-8000-000000000003",
+             "2026-10-22", "2026-10-14T14:00:00.000000Z", "2026-10-14T14:00:00.000000Z", 1),
+        )
+    return db
+
+
+def _placement_rows(db: Database) -> list[tuple]:
+    with db.read() as conn:
+        return [tuple(row) for row in conn.execute("SELECT * FROM planned_items ORDER BY id")]
+
+
+def test_single_day_upgrade_preserves_existing_placements_tasks_and_projects(tmp_path: Path) -> None:
+    db = _schema_three_with_placements(tmp_path / "single-day-compatible.sqlite3")
+    content_before, plans_before = _stored_content(db), _placement_rows(db)
+    migrate(db)
+    assert current_version(db) == len(load_migrations())
+    assert _stored_content(db) == content_before
+    assert _placement_rows(db) == plans_before
+    reopened = open_database(db.path)
+    assert _stored_content(reopened) == content_before
+    assert _placement_rows(reopened) == plans_before
+    with reopened.read() as conn:
+        assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+
+
+def test_legacy_multiple_dates_abort_upgrade_without_data_loss_and_can_retry(tmp_path: Path) -> None:
+    db = _schema_three_with_placements(tmp_path / "legacy-multiple-days.sqlite3", multiple_dates=True)
+    content_before, plans_before = _stored_content(db), _placement_rows(db)
+    with db.read() as conn:
+        schema_before = [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
+        structure_before = [tuple(row) for row in conn.execute("SELECT name, sql FROM sqlite_master ORDER BY name")]
+
+    for upgrade in (lambda: migrate(db), lambda: open_database(db.path)):
+        with pytest.raises(MigrationError) as excinfo:
+            upgrade()
+        message = str(excinfo.value).lower()
+        assert "multiple planned dates" in message and "rolled back" in message
+        assert "previous" in message and "remove extra" in message and "retry" in message
+        assert current_version(db) == 3
+        assert _stored_content(db) == content_before
+        assert _placement_rows(db) == plans_before
+        with db.read() as conn:
+            assert [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")] == schema_before
+            assert [tuple(row) for row in conn.execute("SELECT name, sql FROM sqlite_master ORDER BY name")] == structure_before
+            assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+            assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+
+    # Simulate the user's explicit choice in the previous build, on disposable data.
+    with db.write() as conn:
+        conn.execute("DELETE FROM planned_items WHERE id = ?", (plans_before[1][0],))
+    migrate(db)
+    assert current_version(db) == len(load_migrations())
+    assert _stored_content(db) == content_before
+    assert _placement_rows(open_database(db.path)) == plans_before[:1]

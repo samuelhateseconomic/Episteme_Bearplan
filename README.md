@@ -6,7 +6,7 @@ tasks and subtasks retain their previously passed behavior. A Monday–Sunday bo
 now supports date assignment, individual placement moves and unscheduling. The
 weekly-planning operator demonstration remains pending. See
 [shared progress](docs/PROGRESS.md) and the
-[current review](docs/reviews/2026-10-15-weekly-planning.md).
+[current review](docs/reviews/2026-10-15-single-planned-day.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -25,21 +25,29 @@ choose a day using the Monday–Sunday buttons; on very narrow windows the board
 above the task list. Previous, Next and Today navigate weeks without moving work.
 
 Open **Plan task** on a leaf task or subtask, choose a **Planned date**, and use
-**Add to day**. One task may have several planned days. Parents remain context for
-their scheduled children; unscheduled work stays in the project list. **Planned**
-dates and **Due** deadlines are displayed separately.
+**Add to day**. Each leaf task or subtask has **one planned day maximum**, across
+all weeks. Break work requiring several days into smaller subtasks and plan each
+one separately. Complete every child to complete its parent. Parents remain context
+for their scheduled children; unscheduled work stays in the project list.
+**Planned** dates and **Due** deadlines are displayed separately.
 
 On a board card, open **Move or remove**. **Move placement** changes only that
-placement, including to another week; if the task is already on the destination
-date, the service explains the conflict and leaves both placements untouched.
-**Remove from plan** keeps the task and its other dates. The task list's planning
-controls also show dates outside the displayed week. Completion is shared by every
-placement because they all reference the same task.
+placement, including to another week. Already scheduled tasks show **Move or remove
+plan** in the task list, with no second assignment form. A second assignment from a
+stale tab is rejected with the existing date and guidance to Move or split the work.
+Different tasks may share a date. **Remove from plan** keeps the task, its fields and
+completion. The task list also shows its planned date outside the displayed week.
+Completion agrees between the task list and its board card.
 
-Before adding subtasks to a scheduled standalone task, remove its placements and
+Before adding subtasks to a scheduled standalone task, remove its placement and
 then schedule the children. Before deleting a scheduled subtask, unschedule it.
 Neither operation silently removes planned dates. Previous-week views are live
 plans; closed-week snapshots and historical reports are not implemented.
+
+The one-day upgrade preserves existing records. If an older database has several
+dates for one task, startup stops safely without deleting plans. Open the previous
+build, remove the extra planned dates so each task has only one, and retry the
+update. Split multi-day work into subtasks after unscheduling its standalone parent.
 
 Today comes from the service's application timezone. With no timezone setting yet,
 the default is the computer's local timezone, including its DST rules. Optionally

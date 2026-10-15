@@ -23,7 +23,6 @@ def assign(client: TestClient, task_id: str, day: str) -> dict:
 def test_assign_move_unschedule_keeps_one_task_and_separate_deadline(client: TestClient, db: Database) -> None:
     task = make_task(client)
     first = assign(client, task["id"], "2026-10-15")
-    second = assign(client, task["id"], "2026-10-16")
     moved = client.patch(f"/api/placements/{first['id']}", json={"planned_date": "2026-10-22"})
     assert moved.status_code == 200
     assert moved.json()["id"] == first["id"]
@@ -34,43 +33,57 @@ def test_assign_move_unschedule_keeps_one_task_and_separate_deadline(client: Tes
     assert (body["week_start"], body["week_end"]) == ("2026-10-19", "2026-10-25")
     assert body["today"] and body["timezone"]
     assert body["tasks"] == [task]
-    assert {p["id"]: p for p in body["placements"]} == {first["id"]: moved.json(), second["id"]: second}
+    assert body["placements"] == [moved.json()]
     removed = client.delete(f"/api/placements/{first['id']}")
     assert removed.status_code == 200 and removed.json() == {"removed": first["id"]}
     assert client.get("/api/tasks").json()["tasks"] == [task]
-    assert [p.model_dump(mode="json") for p in list_placements(db)] == [second]
+    assert list_placements(db) == []
     assert len(list_tasks(db)) == 1
+    reassigned = assign(client, task["id"], "2026-10-23")
+    assert reassigned["id"] != first["id"]
+    assert client.get("/api/tasks").json()["tasks"] == [task]
 
 
-def test_duplicate_assignment_and_move_return_clear_conflicts_without_mutation(client: TestClient) -> None:
+@pytest.mark.parametrize("second_date", ["2026-10-15", "2026-10-16", "2026-10-22"])
+@pytest.mark.parametrize("complete", [False, True])
+def test_second_assignment_returns_clear_conflict_without_mutation(
+    client: TestClient, second_date: str, complete: bool,
+) -> None:
     task = make_task(client)
-    first = assign(client, task["id"], "2026-10-15")
-    assign(client, task["id"], "2026-10-22")
+    if complete:
+        assert client.put(f"/api/tasks/{task['id']}/completion", json={"complete": True}).status_code == 200
+    assign(client, task["id"], "2026-10-15")
     before = client.get("/api/planning").json()
-    for method, path, payload in (
-        ("POST", "/api/placements", {"task_id": task["id"], "planned_date": "2026-10-15"}),
-        ("PATCH", f"/api/placements/{first['id']}", {"planned_date": "2026-10-22"}),
-    ):
-        response = client.request(method, path, json=payload)
-        assert response.status_code == 409
-        error = response.json()["error"]
-        assert error["code"] == "placement_conflict"
-        assert "already" in error["message"].lower()
-        assert client.get("/api/planning").json() == before
+    response = client.post("/api/placements", json={"task_id": task["id"], "planned_date": second_date})
+    assert response.status_code == 409
+    error = response.json()["error"]
+    assert error["code"] == "placement_conflict"
+    assert "2026-10-15" in error["message"]
+    assert "move" in error["message"].lower() and "subtasks" in error["message"].lower()
+    assert client.get("/api/planning").json() == before
 
 
-def test_completed_state_comes_from_shared_task_in_all_weeks(client: TestClient) -> None:
+def test_subtasks_on_separate_days_complete_independently_and_derive_parent(client: TestClient) -> None:
     parent = make_task(client, "Assignment")
     child = client.post("/api/tasks", json={"title": "Proof", "parent_id": parent["id"]}).json()
+    other_child = client.post("/api/tasks", json={"title": "Review proof", "parent_id": parent["id"]}).json()
     first = assign(client, child["id"], "2026-10-15")
-    second = assign(client, child["id"], "2026-10-22")
-    for complete in (True, False):
-        assert client.put(f"/api/tasks/{child['id']}/completion", json={"complete": complete}).status_code == 200
+    second = assign(client, other_child["id"], "2026-10-22")
+    for task_id, complete, completed_total in (
+        (child["id"], True, 1), (other_child["id"], True, 2), (child["id"], False, 1),
+    ):
+        assert client.put(f"/api/tasks/{task_id}/completion", json={"complete": complete}).status_code == 200
         for week in ("2026-10-12", "2026-10-19"):
             snapshot = client.get("/api/planning", params={"week": week}).json()
-            assert all(task["completed"] is complete for task in snapshot["tasks"])
+            by_id = {task["id"]: task for task in snapshot["tasks"]}
+            assert by_id[parent["id"]]["completed"] is (completed_total == 2)
+            assert by_id[parent["id"]]["completed_subtask_count"] == completed_total
+            assert by_id[parent["id"]]["subtask_count"] == 2
+            assert by_id[task_id]["completed"] is complete
+            if task_id == child["id"] and complete:
+                assert by_id[other_child["id"]]["completed"] is False
             assert {p["id"]: p for p in snapshot["placements"]} == {first["id"]: first, second["id"]: second}
-        assert client.get("/api/tasks").json()["progress"] == {"completed": int(complete), "total": 1}
+        assert client.get("/api/tasks").json()["progress"] == {"completed": completed_total, "total": 2}
 
 
 @pytest.mark.parametrize("payload", [
@@ -146,9 +159,10 @@ def test_failed_planning_saves_are_actionable_atomic_and_retryable(client: TestC
 
     task = make_task(client)
     placement = assign(client, task["id"], "2026-10-15")
+    new_task = make_task(client, "Unplanned work") if method == "POST" else None
     before = client.get("/api/planning").json()
     path = "/api/placements" if method == "POST" else f"/api/placements/{placement['id']}"
-    payload = {"task_id": task["id"], "planned_date": "2026-10-22"} if method == "POST" else (
+    payload = {"task_id": new_task["id"], "planned_date": "2026-10-22"} if new_task else (
         {"planned_date": "2026-10-22"} if method == "PATCH" else None
     )
     monkeypatch.setattr(storage, "BUSY_TIMEOUT_MS", 10)
@@ -162,7 +176,7 @@ def test_failed_planning_saves_are_actionable_atomic_and_retryable(client: TestC
         blocker.execute("ROLLBACK")
     retried = client.request(method, path, json=payload)
     assert retried.status_code == (201 if method == "POST" else 200)
-    assert client.get("/api/tasks").json()["tasks"] == [task]
+    assert client.get("/api/tasks").json()["tasks"] == ([task, new_task] if new_task else [task])
 
 
 @pytest.mark.parametrize("method", ["POST", "PATCH", "DELETE"])

@@ -77,9 +77,9 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
         {placements.length ? `Planned: ${placements.map((placement) => showDate(placement.planned_date)).join(" · ")}` : "Unscheduled"}
       </p>
       <details>
-        <summary>Plan task</summary>
-        <p className="planning-hint muted">Add another day, or change one placement. Deadlines stay unchanged.</p>
-        <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} />
+        <summary>{placements.length ? "Move or remove plan" : "Plan task"}</summary>
+        <p className="planning-hint muted">One planned day per task or subtask. Split multi-day work into subtasks. Deadlines stay unchanged.</p>
+        {!placements.length ? <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /> : null}
         {placements.length ? (
           <ul className="placement-list">
             {placements.map((placement) => (
@@ -165,7 +165,7 @@ function PlannedCard({ task, placement, context, onRun, locked }: { task: Task; 
           const complete = event.target.checked;
           setBusy(true);
           setError(null);
-          try { await onRun(() => setTaskCompletion(task.id, complete), complete ? "Marked complete everywhere." : "Reopened everywhere."); }
+          try { await onRun(() => setTaskCompletion(task.id, complete), complete ? "Task marked complete." : "Task reopened."); }
           catch (caught) { setError(message(caught)); }
           finally { setBusy(false); }
         }} />
@@ -202,7 +202,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked }: { state: Retur
         </nav>
       </div>
       {plan ? <p className="timezone-note muted">Today is {showDate(plan.today)} · {plan.timezone}</p> : null}
-      <p className="planning-hint muted">Plan a task from the project list. A task can appear on several days; completion is shared.</p>
+      <p className="planning-hint muted">Plan a task from the project list. One planned day per task or subtask. Split multi-day work into subtasks.</p>
       {error ? <p role="alert" className="error">{error} <button type="button" className="link" onClick={() => void refresh()}>Retry weekly plan</button></p> : null}
       {plan ? (
         <>

@@ -145,6 +145,41 @@ def test_corrupt_database_gives_clear_message_and_is_left_untouched(tmp_path: Pa
     assert db_file.read_bytes() == b"not a database" * 200
 
 
+def test_legacy_multiday_plans_give_actionable_startup_error_without_removal(tmp_path: Path) -> None:
+    from backend.domain.tasks import create_task
+    from backend.storage.db import Database
+    from backend.storage.migrations import current_version, migrate
+
+    data_dir = tmp_path / "LegacyPlans"
+    data_dir.mkdir()
+    db = Database(data_dir / DATABASE_FILENAME)
+    migrate(db, load_migrations()[:3])
+    task = create_task(db, "Keep both saved dates")
+    with db.write() as conn:
+        conn.executemany(
+            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision)"
+            " VALUES (?, ?, ?, '2026-10-14T12:00:00.000000Z', '2026-10-14T12:00:00.000000Z', 1)",
+            [
+                ("00000000-0000-4000-8000-000000000001", task.id, "2026-10-15"),
+                ("00000000-0000-4000-8000-000000000002", task.id, "2026-10-22"),
+            ],
+        )
+    with db.read() as conn:
+        before = [tuple(row) for row in conn.execute("SELECT * FROM planned_items ORDER BY id")]
+        task_before = tuple(conn.execute("SELECT * FROM tasks WHERE id = ?", (task.id,)).fetchone())
+    result = _run_service(data_dir, free_port())
+    assert result.returncode == 1
+    assert "cannot start" in result.stderr
+    assert "multiple planned dates" in result.stderr
+    assert "previous BearPlans build" in result.stderr and "retry" in result.stderr
+    assert "Traceback" not in result.stderr
+    assert not (data_dir / INSTANCE_FILENAME).exists()
+    assert current_version(db) == 3
+    with db.read() as conn:
+        assert [tuple(row) for row in conn.execute("SELECT * FROM planned_items ORDER BY id")] == before
+        assert tuple(conn.execute("SELECT * FROM tasks WHERE id = ?", (task.id,)).fetchone()) == task_before
+
+
 def test_refuses_data_dir_inside_repository() -> None:
     result = subprocess.run(
         [sys.executable, "-m", "backend", "--no-browser", "--port", str(free_port())],
@@ -208,7 +243,9 @@ def test_planning_changes_and_shared_completion_survive_service_restart(tmp_path
         assert status == 201
         status, moved = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-15"})
         assert status == 201
-        status, removed = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-16"})
+        status, conflict = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-16"})
+        assert status == 409 and conflict["error"]["code"] == "placement_conflict"
+        status, removed = http_json("POST", f"{first.url}/api/placements", {"task_id": unscheduled["id"], "planned_date": "2026-10-16"})
         assert status == 201
         status, moved = http_json("PATCH", f"{first.url}/api/placements/{moved['id']}", {"planned_date": "2026-10-22"})
         assert status == 200
