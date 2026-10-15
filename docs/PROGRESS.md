@@ -5,22 +5,22 @@ This is the single mutable work/handoff record. Detailed reviews retain the evid
 
 ## Current state
 
-**Weekly planning, including one-day refinement: implementation review Pass;
-operator demonstration pending.** Implemented 2026-10-15, pulled forward from the
-Oct 16 daily roadmap row. Schema **4**. Original weekly build: `801cbc3`; latest
-refinement is the local commit containing this record. Previous projects/tasks:
-`a9ba50b`, operator acceptance `d2174a6`. Local relevant commits are authorized;
-no push.
+**Weeks, closed history and reviewed carryover: implementation review Pass;
+operator/M1 milestone demonstration pending.** Implemented 2026-10-15, pulled forward
+from the Oct 17 roadmap row. Schema **5**. Baseline `a21cb49` (one-day refinement),
+original weekly build `801cbc3`; current build is the local commit containing this
+record. Previous projects/tasks: `a9ba50b`, operator acceptance `d2174a6`.
+Relevant local commit authorized; no push.
 
 Current implementation work is complete. The next action is the five-minute
-operator checklist in the [current review](reviews/2026-10-15-single-planned-day.md).
-**Weeks/history is the next daily build, not started and not authorized by this
-request.** The broader M1 planner milestone is not certified by this daily build.
-Closed-week snapshots/reports/bulk carryover, timers, rewards, AI and integrations
-remain deferred.
+operator checklist in the [current review](reviews/2026-10-15-weeks-history.md).
+**Countdown is the next roadmap build, not started and not authorized by this
+request.** Broader M1 operator acceptance is not certified by automated checks alone.
+Reopening, recurring tasks, automatic bulk carryover, advanced reports, timers,
+rewards, AI and integrations remain deferred.
 
 Pre-existing staged user edits to `BearPlans_Build_Review_Plan.md` and
-`BearPlans_Dated_Roadmap.md` are unchanged and remain staged outside the refinement
+`BearPlans_Dated_Roadmap.md` are unchanged and remain staged outside the build
 commit. `CLAUDE.md` remains substantive and available, referencing shared guidance
 and this handoff record.
 
@@ -30,14 +30,16 @@ and this handoff record.
 | --- | --- | --- |
 | M0 / foundation | Implementation and Mac/operator gate passed | [M0 review](reviews/2026-10-14-local-foundation.md); `36f6e48`, `f4c59dd` |
 | Projects/tasks/subtasks | Implementation and all six operator checks passed | [M1 takeover review](reviews/2026-10-13-m1-takeover.md); `a9ba50b`, `d2174a6` |
-| Weekly planning + one-day refinement | Implementation Pass; operator check pending | [Current review](reviews/2026-10-15-single-planned-day.md); [original weekly evidence](reviews/2026-10-15-weekly-planning.md), `801cbc3` |
-| Weeks/history and later builds | **Not started** | [Daily roadmap](../BearPlans_Dated_Roadmap.md) and [review gates](../BearPlans_Build_Review_Plan.md) |
+| Weekly planning + one-day refinement | Implementation Pass; previous operator checklist remains pending | [Prior review](reviews/2026-10-15-single-planned-day.md), `a21cb49`; [original weekly evidence](reviews/2026-10-15-weekly-planning.md), `801cbc3` |
+| Weeks/history/carryover | Implementation Pass; operator/M1 milestone check pending | [Current review](reviews/2026-10-15-weeks-history.md) |
+| Countdown and later builds | **Not started** | [Daily roadmap](../BearPlans_Dated_Roadmap.md) and [review gates](../BearPlans_Build_Review_Plan.md) |
 
 Weekly planning retains the project/task editor beside a Monday–Sunday board,
 Previous/Next/Today, selected-day laptop layout, existing-leaf assignment,
 individual placement moves across weeks, and unscheduling without deleting tasks.
-**Latest user decision:** each leaf task or subtask has at most one planned date,
-across all weeks, including completed work. Split multi-day work into smaller
+**Latest user decisions:** each leaf task or subtask has at most one active planned
+date across open weeks, including completed work. Closed history does not consume
+that allowance. Split multi-day work into smaller
 subtasks, schedule them separately, and finish every child to complete the parent.
 A second assignment is an atomic conflict with the existing date and guidance to
 Move or split work. Scheduled leaves show Move/remove controls without an Add form.
@@ -56,6 +58,24 @@ and writes use `Database.write()`. A scheduled standalone task must be unschedul
 before gaining children; a scheduled subtask must be unscheduled before deletion.
 No silent removal or transfer of placements.
 
+End Week previews complete displayed task/parent/project fields, placements and
+unique-leaf totals before confirmation. Closure atomically stores a versioned frozen
+JSON snapshot and archives original placement IDs/fields in `closed_placements`;
+tasks remain unchanged. SQLite triggers protect history from update/deletion.
+Closed cards have no mutation controls and separate At closure from Current task
+status. Backend rejects closed-date scheduling and archived-ID moves/removal.
+Empty weeks show 0/0 (0%). Closure can be past/current/future; reopening is deferred.
+
+Carryover selects only unfinished-at-closure work still existing as incomplete
+leaves. Choose dates in the immediately following Monday–Sunday week, Review, then
+Apply. Completed/deleted/new-parent/already-planned tasks and closed destinations
+are explained and rejected. Revalidate preview hashes inside `Database.write()`;
+conflicts/failures are atomic. Persistent operation receipts return the original
+result on retries and reject reused IDs with different source/work/dates. The same
+task IDs, fields, completion and future session references remain; source history
+is untouched. A current subtask may still be removed once its active plan is removed,
+without erasing its historical details.
+
 Today is server-authoritative. `BEARPLANS_TIMEZONE` optionally names an installed
 IANA timezone; otherwise the OS local timezone at the current instant is the
 application default. The interface displays it. No timezone settings UI exists.
@@ -67,23 +87,35 @@ date, rather than relying on the browser timezone or a cached date.
 
 Detected **macOS 26.6.2 (25G83)**, Python **3.13.15**, Node **24.21.0**, installed Chrome.
 
-- Current full suite: **242 passed, zero failed/skipped**, 21.19 s. Includes
+- Verified baseline: **242 Python/browser tests**, 20.43 s; **32 frontend tests**,
+  2.71 s; TypeScript passed before this build.
+- Current full suite: **326 passed, zero failed/skipped**, 27.71 s. Includes
   migration v1/v2/v3 preservation, legacy duplicate rollback/retry, concurrency and
   global duplicate prevention, cross-week movement, unscheduling/reassignment,
   independent child completion/derived parent progress, invalid input, leaf guards,
   timezone/week boundaries, real-service/launcher restart and foundation regressions.
-- Frontend: **32 tests passed**; typecheck and production build passed. Cases cover
+- New history domain/API/migration/restart cases: **83 passed**, 3.53 s, including
+  exact frozen/archive preservation, distinct-leaf counts, empty closure, stale
+  previews, closed-date guards, following-week boundaries, concurrent/retried close
+  and carryover, receipt replay, current-state eligibility, injected partial-write
+  rollback and genuine v4→v5 migration rollback/retry.
+- Frontend: **40 tests passed**, 2.84 s; typecheck and production build passed. Cases cover
   one-date controls and stale-tab conflicts, plus
   saved-but-refresh-failed messaging, retrying the requested week/Today, and stale
   responses during concurrent navigation/mutation.
-- Inspected synthetic Chrome evidence at **1600**, **1024**, **375** px and dark mode.
+- Inspected current synthetic Chrome history evidence at **1600**, **1024**, **375** px.
+  Earlier weekly dark-mode evidence remains linked in the prior review.
   Weekly browser journey covers separately scheduled children, parent 1/2 to 2/2,
   rejected second date, cross-week movement, unscheduling, restart, selected-day
   navigation, service-down failed save with retained date, and successful retry.
-- Separate read-only source review: **Pass**, no blocking defect. Reviewer
-  independently ran **103 domain/API/migration tests**, all passed.
-- Initial service-test attempts in the sandbox failed on loopback permissions;
-  permitted rerun passed all **12 service tests**, then the full suite passed.
+- Real Chrome history journey passed (3.28 s): preview/cancel/close, frozen history
+  after later edits/restart, current completion exclusion, reviewed carryover and
+  lost-response retry with identical operation ID and exactly one destination plan.
+  Strengthened keyboard activation of End Week/Cancel/Close also passed (3.26 s).
+- Separate read-only backend/frontend/test source review: **Pass**, no blocking defect.
+- Initial new browser helper raced refreshed choices; waiting for enabled controls
+  fixed test synchronization. Targeted and full journeys pass. Initial frontend
+  test typing issue was corrected before the final passing checks.
 - Scoped diff/whitespace, local document links and preservation of the two existing
   planning-file edits are checked before committing. A global whitespace warning
   in the user-edited review-plan heading is pre-existing and is retained.
@@ -99,31 +131,31 @@ evidence, not a timer implementation pass.
 
 ## Normal running instance and data preservation
 
-The identified schema-3 launcher/service at `http://127.0.0.1:8765/` was stopped
-gracefully after confirming no legacy duplicate plans. A SQLite backup was created
-in the normal data folder: `bearplans-pre-single-day-20261015T153552Z.sqlite3`.
-A disposable copy upgraded to schema 4 with every stored task/project/placement
-field unchanged and clean integrity/FK checks. The current launcher then upgraded
-the normal database: **five saved tasks and two placements** retained, all original
-fields matching exactly. No test plans or task changes were added to personal data.
-Read-only Chrome checks confirmed both saved scheduled leaves have Move/remove
-controls with no second assignment form.
-The running normal instance now serves the one-day rule with system-local timezone
-(PDT); refresh the browser to load the new interface. Earlier schema-2 to schema-3
-upgrade/backup evidence remains in the original weekly review.
+The identified schema-4 launcher/service at `http://127.0.0.1:8765/` was stopped
+gracefully. SQLite backup: `bearplans-pre-weeks-20261015T155840Z.sqlite3` in the normal
+data folder, outside Git. Rehearsed schema 5 on a disposable copy with every original
+task/project/placement SQL field unchanged and clean integrity/FK checks. The current
+launcher then upgraded the normal database: **six saved tasks and three active
+placements** retained, all original fields matching exactly. No real weeks were
+closed, no personal carryover applied, and all history/receipt tables remain empty.
+Chrome preview/Cancel checks on the updated normal app left its complete planning
+response unchanged; no personal screenshot was taken.
+The running app serves schema 5 with system-local timezone (PDT); refresh the
+browser. Previous upgrade/backup evidence remains in the prior reviews.
 
 No database, personal content or personal screenshot belongs in Git. Screenshot
 artifacts included in the review are synthetic browser-test data only.
 
 ## Pending evidence and next steps
 
-- **Operator:** complete the five-minute one-day weekly-planning checklist in the
-  current review. In particular, plan two separate children for different dates and
-  confirm the parent waits for both.
+- **Operator/M1 milestone:** complete the five-minute weeks/history/carryover
+  checklist in the current review using a sample or real-course week. Prior weekly
+  operator evidence was not supplied; do not silently mark it passed. Verify one
+  active date per leaf and derived parent progress alongside the new closed view.
   The prior projects/tasks checklist remains passed; do not reopen it without a
   regression. No known blocking implementation defect remains in the current build.
 - After this daily build is accepted and the user authorizes another build, plan
-  Weeks/history with its own acceptance scenario. Do not implement it now.
+  Countdown with its own acceptance scenario. Do not implement it now.
 - Future timer gates still require their own sleep/restart/clock-change/midnight/DST
   checks and battery/standby/hibernate evidence. Unknown gaps must not earn work time.
 
@@ -131,7 +163,8 @@ artifacts included in the review are synthetic browser-test data only.
 
 - Original weekly guidance/review allowed several dates for one task. The user's
   2026-10-15 refinement supersedes that rule: one planned day per leaf task/subtask.
-  The historical weekly review is marked superseded; current rules are in AGENTS.
+  With closed history, that means one **active** date across open weeks; historical
+  placements are preserved independently. Current rules are in AGENTS.
 - The user-edited roadmap says "planned, not implemented or tested" but marks its
   first two rows complete, with checkmarks outside the declared table columns.
   The user-edited review plan removes the broader-M1 status explanation. Preserve

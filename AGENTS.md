@@ -59,7 +59,9 @@ dates; use their contents and commit history to determine which evidence is curr
 
 - A placement references one existing leaf task on a date; never clone tasks or
   copy completion into placements. Each leaf task or subtask has at most **one
-  planned date across all weeks**, including completed work. Split multi-day work
+  active planned date across open weeks**, including completed work. Closed-week
+  placements are historical records and do not consume that active allowance.
+  Split multi-day work
   into explicit subtasks, each with its own date. Parents appear as context and
   complete only when all their children complete. This supersedes the original
   multi-day placement decision (user refinement, 2026-10-15).
@@ -77,7 +79,28 @@ dates; use their contents and commit history to determine which evidence is curr
 - A scheduled standalone task must be unscheduled before gaining children; a
   scheduled subtask must be unscheduled before deletion. Reject those changes with
   a useful message instead of silently removing placements or scheduling containers.
-- Week closure, snapshots, historical reports and bulk carryover are later work.
+- End Week requires a preview. In one transaction, freeze the displayed task,
+  parent/project details, original placements and completion, then archive those
+  placements with their original IDs/fields. Closing never modifies task records.
+  Stored snapshots and historical placements are immutable; later edits, completion
+  or permitted subtask removal cannot change the closed view. Show historical
+  completion separately from current status. Count unique scheduled leaves once,
+  excluding parent containers; empty weeks show 0/0 and 0%, never an undefined value.
+- Reject all scheduling into closed weeks, and any move/removal of archived IDs,
+  in shared domain functions as well as the interface. Repeated closure returns
+  the original snapshot. Reopening is deferred; closure may be past, current or
+  future because no date restriction was requested.
+- Carryover requires a closed source, explicit selection and preview of destination
+  dates in the immediately following Monday–Sunday week. Include only work that
+  was unfinished at closure and still exists as an incomplete leaf. Explain current
+  completion, removed tasks, new containers, closed destinations and existing active
+  placements. Preserve task identity/fields/history and the closed source; create
+  new destination placements, never new tasks or changes to historical rows.
+- Revalidate previews inside serialized write transactions. Stale review, conflicts
+  or failed writes leave no partial closure/carryover. Persist carryover operation
+  IDs and results atomically; retries of the same normalized source/selections
+  return the original result, while key reuse with different work/dates conflicts.
+  Recurring work, advanced reports and bulk automatic carryover remain deferred.
 
 ## Architecture and data safety
 

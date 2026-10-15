@@ -1,12 +1,12 @@
 # BearPlans
 
 A personal, local-only laptop planner. Your data stays on your computer.
-Current state: **weekly planning implemented and verified on macOS**. Projects,
-tasks and subtasks retain their previously passed behavior. A Monday–Sunday board
-now supports date assignment, individual placement moves and unscheduling. The
-weekly-planning operator demonstration remains pending. See
+Current state: **weekly planning, closed-week history and reviewed carryover
+implemented**. Projects, tasks and subtasks retain their previously passed behavior.
+A Monday–Sunday board supports date assignment, moves, unscheduling, End Week and
+immutable history. The real-course operator demonstration remains pending. See
 [shared progress](docs/PROGRESS.md) and the
-[current review](docs/reviews/2026-10-15-single-planned-day.md).
+[current review](docs/reviews/2026-10-15-weeks-history.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -14,8 +14,9 @@ Reopening a child or adding unfinished work reopens the parent. Progress totals
 count leaf work items once, excluding containers. Put additional parent work in an
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
-General task/project deletion and re-parenting are deferred. Week snapshots/history,
-bulk carryover, timers, rewards, AI and integrations are later builds. Finishing a future timer
+General task/project deletion and re-parenting are deferred. Reopening closed weeks,
+recurring tasks, automatic bulk carryover, advanced reports, timers, rewards, AI and
+integrations are later work. Finishing a future timer
 must never automatically complete its task.
 
 ## Plan your week
@@ -25,8 +26,9 @@ choose a day using the Monday–Sunday buttons; on very narrow windows the board
 above the task list. Previous, Next and Today navigate weeks without moving work.
 
 Open **Plan task** on a leaf task or subtask, choose a **Planned date**, and use
-**Add to day**. Each leaf task or subtask has **one planned day maximum**, across
-all weeks. Break work requiring several days into smaller subtasks and plan each
+**Add to day**. Each leaf task or subtask has **one active planned day maximum**,
+across all open weeks. Closed-week history does not consume this allowance.
+Break work requiring several days into smaller subtasks and plan each
 one separately. Complete every child to complete its parent. Parents remain context
 for their scheduled children; unscheduled work stays in the project list.
 **Planned** dates and **Due** deadlines are displayed separately.
@@ -41,8 +43,37 @@ Completion agrees between the task list and its board card.
 
 Before adding subtasks to a scheduled standalone task, remove its placement and
 then schedule the children. Before deleting a scheduled subtask, unschedule it.
-Neither operation silently removes planned dates. Previous-week views are live
-plans; closed-week snapshots and historical reports are not implemented.
+Neither operation silently removes active planned dates. Previous-week views remain
+live until you explicitly close that week.
+
+## End a week and carry unfinished work forward
+
+In an open week, choose **End Week**, review its displayed task details, dates and
+completion totals, then **Close week**. Cancel leaves everything unchanged. Closure
+does not complete or delete tasks. It freezes a snapshot and archives that week's
+placements with their original IDs. The build cannot reopen closed weeks, and
+closing is allowed for past, current or future weeks.
+
+The board changes to **Closed week · read-only history**. Use **Closed-week history**
+or Previous/Next to revisit it. Titles, project/parent context, notes, deadlines,
+estimates and **At closure** completion stay frozen after later edits or restarts.
+**Current task** status is separate; the project list always edits current tasks.
+Historical cards have no completion or scheduling controls. Empty weeks show
+0 of 0 complete (0%); every unique scheduled leaf counts once, excluding parents.
+
+From a closed week, choose **Carry unfinished work**. Select work and destination
+dates in the immediately following Monday–Sunday week. **Review carryover** shows
+the current task details and destination dates; **Apply carryover** creates plans
+for the same task IDs while leaving the closed source unchanged. Work must have
+been unfinished at closure and still be an incomplete leaf. Completed, removed,
+new-parent and already-planned tasks are explained and excluded. A closed
+destination week cannot receive work. Existing active plans must be moved or
+removed explicitly before carrying that task over.
+
+Changes since preview require another review. Failed saves retain your choices;
+retry the same Apply action after a connection failure. Persistent operation IDs
+prevent repeated requests from creating duplicate plans. No automatic bulk
+carryover, recurring work, reopening or advanced reports are included.
 
 The one-day upgrade preserves existing records. If an older database has several
 dates for one task, startup stops safely without deleting plans. Open the previous

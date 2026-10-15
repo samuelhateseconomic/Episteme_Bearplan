@@ -14,8 +14,8 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 
 from backend import __version__
 from backend.domain.errors import InvalidInput
-from backend.domain.planning import PlacementConflict
-from backend.routes import planning, projects, tasks
+from backend.domain.planning import PlacementConflict, WeekConflict
+from backend.routes import planning, projects, tasks, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -78,6 +78,13 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
     app.state.db = db
     app.add_middleware(LocalOnlyMiddleware)
 
+    @app.exception_handler(WeekConflict)
+    async def week_conflict(_: Request, exc: WeekConflict) -> JSONResponse:
+        return JSONResponse(
+            {"error": {"code": "week_conflict", "field": exc.field, "message": exc.message}},
+            status_code=409,
+        )
+
     @app.exception_handler(PlacementConflict)
     async def placement_conflict(_: Request, exc: PlacementConflict) -> JSONResponse:
         return JSONResponse(
@@ -127,6 +134,7 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
 
     app.include_router(projects.router)
     app.include_router(planning.router)
+    app.include_router(weeks.router)
     app.include_router(tasks.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():

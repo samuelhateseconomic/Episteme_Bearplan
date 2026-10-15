@@ -1,5 +1,10 @@
 # Weekly planning refinement — one planned day
 
+**Historical review for `a21cb49`:** with the later
+[closed-week build](2026-10-15-weeks-history.md), the one-day limit applies to active
+plans across open weeks. Archived historical placements are retained independently.
+The checks below remain evidence for the earlier refinement.
+
 Date: 2026-10-15 (America/Los_Angeles). Baseline: `801cbc3`.
 Latest explicit user decision supersedes the original weekly build's multi-day rule.
 

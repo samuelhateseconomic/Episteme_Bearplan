@@ -131,8 +131,76 @@ export interface Planning {
   week_start: string;
   week_end: string;
   tasks: Task[];
-  /** Every placement, including dates outside the displayed week; at most one per task. */
+  /** Current open-week placements, including dates outside the displayed week. */
   placements: Placement[];
+  closed_week?: ClosedWeek | null;
+  closed_weeks?: ClosedWeekSummary[];
+}
+
+export interface HistoricalTask extends Task {
+  project_name: string;
+  parent_title: string | null;
+}
+
+export interface ClosedWeek {
+  snapshot_version: 1;
+  week_start: string;
+  week_end: string;
+  closed_at: string | null;
+  timezone: string;
+  tasks: HistoricalTask[];
+  placements: Placement[];
+  completed: number;
+  total: number;
+}
+
+export interface ClosedWeekSummary {
+  week_start: string;
+  week_end: string;
+  closed_at: string;
+  completed: number;
+  total: number;
+}
+
+export interface ClosePreview { preview_token: string; snapshot: ClosedWeek }
+export interface CarryoverCandidate {
+  task_id: string;
+  snapshot_task: HistoricalTask;
+  task: Task | null;
+  eligible: boolean;
+  reason: string | null;
+  existing_planned_date: string | null;
+}
+export interface CarryoverOptions {
+  week_start: string;
+  destination_start: string;
+  destination_end: string;
+  candidates: CarryoverCandidate[];
+}
+export interface CarryoverSelection { task_id: string; planned_date: string }
+export interface CarryoverPreview {
+  preview_token: string;
+  week_start: string;
+  destination_start: string;
+  destination_end: string;
+  items: (CarryoverSelection & { task: Task; project_name: string; parent_title: string | null })[];
+}
+
+const weekPath = (week: string) => `/api/weeks/${encodeURIComponent(week)}`;
+export function previewCloseWeek(week: string): Promise<ClosePreview> {
+  return request<ClosePreview>(`${weekPath(week)}/close-preview`);
+}
+export function closeWeek(week: string, previewToken: string): Promise<ClosedWeek> {
+  return request<ClosedWeek>(`${weekPath(week)}/close`, json("POST", { preview_token: previewToken }));
+}
+export function getCarryover(week: string): Promise<CarryoverOptions> {
+  return request<CarryoverOptions>(`${weekPath(week)}/carryover`);
+}
+export function previewCarryover(week: string, selections: CarryoverSelection[]): Promise<CarryoverPreview> {
+  return request<CarryoverPreview>(`${weekPath(week)}/carryover-preview`, json("POST", { selections }));
+}
+export function applyCarryover(week: string, operationId: string, previewToken: string, selections: CarryoverSelection[]): Promise<{ operation_id: string; week_start: string; placements: Placement[] }> {
+  return request(`${weekPath(week)}/carryover`, json("POST", { operation_id: operationId, preview_token: previewToken, selections }));
 }
 
 export function getPlanning(week?: string, signal?: AbortSignal): Promise<Planning> {

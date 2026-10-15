@@ -145,7 +145,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
   font: inherit;
   width: 100%;
   min-width: 0;
@@ -194,6 +195,7 @@ button:disabled {
 
 input:focus-visible,
 textarea:focus-visible,
+select:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
@@ -568,6 +570,105 @@ details > summary:focus-visible {
 
 .day-selector {
   display: none;
+}
+
+/* Week closure and reviewed carryover ------------------------------------ */
+.week-state {
+  margin-top: 0.75rem;
+}
+
+.week-state > p {
+  margin: 0.4rem 0;
+  font-size: 0.9rem;
+}
+
+.week-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.week-badge-closed {
+  border-style: dashed;
+  color: var(--text);
+  border-color: var(--muted);
+  background: var(--bg);
+}
+
+.weekly-planner-closed {
+  border-color: var(--muted);
+}
+
+.week-actions {
+  margin: 0.75rem 0;
+}
+
+.week-review {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.85rem;
+  margin-top: 0.75rem;
+  background: var(--bg);
+  overflow-wrap: anywhere;
+}
+
+.week-review h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.week-review p {
+  margin: 0.35rem 0;
+  font-size: 0.85rem;
+}
+
+.week-review-items {
+  padding: 0;
+  margin: 0.75rem 0;
+  list-style: none;
+}
+
+.week-review-items > li {
+  border-top: 1px solid var(--border);
+  padding: 0.7rem 0;
+}
+
+.week-review .field {
+  max-width: 24rem;
+  margin-top: 0.5rem;
+}
+
+.carryover-choice {
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.carryover-choice span,
+.week-task-title {
+  overflow-wrap: anywhere;
+}
+
+.closed-history {
+  max-width: 30rem;
+  margin-top: 0.75rem;
+}
+
+.week-task-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.historical-status {
+  margin: 0.6rem 0 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 @media (max-width: 81.25rem) {

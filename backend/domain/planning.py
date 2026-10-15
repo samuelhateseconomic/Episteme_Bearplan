@@ -1,8 +1,8 @@
 """Weekly planning application functions shared by the UI and future adapters.
 
-A leaf task has at most one placement, on one date. Tasks, their completion, and their deadlines
-are never cloned or changed by scheduling. All task/placement reads in a planning
-snapshot share a SQLite read transaction.
+A leaf task has at most one active placement. Closed-week placements are archived
+separately. Tasks, completion and deadlines are never cloned by scheduling. All
+task/placement/history reads in a planning view share a SQLite read transaction.
 """
 
 from __future__ import annotations
@@ -34,6 +34,33 @@ class Placement(BaseModel):
     revision: int
 
 
+class HistoricalTask(Task):
+    project_name: str
+    parent_title: str | None
+
+
+class ClosedWeek(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    snapshot_version: int = 1
+    week_start: date
+    week_end: date
+    closed_at: datetime | None = None
+    timezone: str
+    tasks: list[HistoricalTask]
+    placements: list[Placement]
+    completed: int
+    total: int
+
+
+class ClosedWeekSummary(BaseModel):
+    week_start: date
+    week_end: date
+    closed_at: datetime
+    completed: int
+    total: int
+
+
 class PlanningSnapshot(BaseModel):
     today: date
     timezone: str
@@ -41,6 +68,12 @@ class PlanningSnapshot(BaseModel):
     week_end: date
     tasks: list[Task]
     placements: list[Placement]
+    closed_week: ClosedWeek | None = None
+    closed_weeks: list[ClosedWeekSummary] = []
+
+
+class WeekConflict(InvalidInput):
+    """A closed week or a changed reviewed state prevents this operation."""
 
 
 class PlacementConflict(InvalidInput):
@@ -107,6 +140,12 @@ def _require_placement(conn: sqlite3.Connection, placement_id: object) -> sqlite
         raise InvalidInput("placement_id", "Placement id must be text.")
     row = conn.execute("SELECT * FROM planned_items WHERE id = ?", (placement_id,)).fetchone()
     if row is None:
+        archived = conn.execute("SELECT week_start FROM closed_placements WHERE id = ?", (placement_id,)).fetchone()
+        if archived:
+            raise WeekConflict(
+                "placement_id", f"This placement belongs to the closed week starting {archived['week_start']}. "
+                "Historical placements are read-only. Plan the current task in an open week instead.",
+            )
         raise InvalidInput("placement_id", "This planned placement no longer exists. Refresh the plan.")
     return row
 
@@ -123,6 +162,8 @@ def list_placements(db: Database) -> list[Placement]:
 
 
 def get_planning(db: Database, week: str | date | None = None, *, now: datetime | None = None) -> PlanningSnapshot:
+    from backend.domain.weeks import _closed_week, _closed_week_summaries
+
     today, timezone = application_today(now)
     monday, sunday = week_bounds(today if week is None else week)
     with db.read() as conn:
@@ -130,6 +171,8 @@ def get_planning(db: Database, week: str | date | None = None, *, now: datetime 
         return PlanningSnapshot(
             today=today, timezone=timezone, week_start=monday, week_end=sunday,
             tasks=_list_tasks(conn), placements=_list_placements(conn),
+            closed_week=_closed_week(conn, monday.isoformat()),
+            closed_weeks=_closed_week_summaries(conn),
         )
 
 
@@ -143,6 +186,15 @@ def _require_leaf(conn: sqlite3.Connection, task_id: object) -> None:
     _require_task(conn, task_id)
     if _children_of(conn, task_id):
         raise InvalidInput("task_id", "Plan this task's subtasks instead. Parent tasks are shown as context.")
+
+
+def _require_open_week(conn: sqlite3.Connection, day: str) -> None:
+    monday, _ = week_bounds(day)
+    if conn.execute("SELECT 1 FROM closed_weeks WHERE week_start = ?", (monday.isoformat(),)).fetchone():
+        raise WeekConflict(
+            "planned_date", f"The week starting {monday.isoformat()} is closed. "
+            "Historical placements are read-only. Choose an open week; reopening is not available.",
+        )
 
 
 def _check_already_planned(conn: sqlite3.Connection, task_id: str, *, except_id: str = "") -> None:
@@ -159,6 +211,7 @@ def create_placement(db: Database, task_id: str, planned_date: str | date) -> Pl
     now = utc_now()
     placement_id = str(uuid4())
     with db.write() as conn:
+        _require_open_week(conn, day)
         _require_leaf(conn, task_id)
         _check_already_planned(conn, task_id)
         conn.execute(
@@ -173,6 +226,8 @@ def move_placement(db: Database, placement_id: str, planned_date: str | date) ->
     day = _planned_date(planned_date)
     with db.write() as conn:
         row = _require_placement(conn, placement_id)
+        _require_open_week(conn, row["planned_date"])
+        _require_open_week(conn, day)
         _require_leaf(conn, row["task_id"])
         _check_already_planned(conn, row["task_id"], except_id=placement_id)
         if row["planned_date"] != day:
@@ -185,6 +240,7 @@ def move_placement(db: Database, placement_id: str, planned_date: str | date) ->
 
 def remove_placement(db: Database, placement_id: str) -> str:
     with db.write() as conn:
-        _require_placement(conn, placement_id)
+        row = _require_placement(conn, placement_id)
+        _require_open_week(conn, row["planned_date"])
         conn.execute("DELETE FROM planned_items WHERE id = ?", (placement_id,))
     return placement_id

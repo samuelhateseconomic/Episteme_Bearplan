@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
+import { WeekActions, WeekTaskDetails, historicalContext } from "./WeekActions";
 
 const fullDate = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 const dayName = new Intl.DateTimeFormat(undefined, { weekday: "long", timeZone: "UTC" });
@@ -78,8 +79,9 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
       </p>
       <details>
         <summary>{placements.length ? "Move or remove plan" : "Plan task"}</summary>
-        <p className="planning-hint muted">One planned day per task or subtask. Split multi-day work into subtasks. Deadlines stay unchanged.</p>
-        {!placements.length ? <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /> : null}
+        <p className="planning-hint muted">One active planned day per task or subtask. Split multi-day work into subtasks. Deadlines stay unchanged.</p>
+        {!placements.length && !plan.closed_week ? <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /> : null}
+        {!placements.length && plan.closed_week ? <p className="planning-hint muted">Viewing a closed week. Choose an open week to plan this task.</p> : null}
         {placements.length ? (
           <ul className="placement-list">
             {placements.map((placement) => (
@@ -188,8 +190,15 @@ export function WeeklyPlanner({ state, projects, onRun, locked }: { state: Retur
   const days = plan ? Array.from({ length: 7 }, (_, index) => addDays(plan.week_start, index)) : [];
   const tasksById = new Map(plan?.tasks.map((task) => [task.id, task]) ?? []);
   const projectById = new Map(projects.map((project) => [project.id, project.name]));
+  const closed = plan?.closed_week;
+  const historicalTasks = new Map(closed?.tasks.map((task) => [task.id, task]) ?? []);
+  const visiblePlacements = closed?.placements ?? plan?.placements ?? [];
+  const uniqueTasks = new Set(visiblePlacements.filter((placement) => plan && placement.planned_date >= plan.week_start && placement.planned_date <= plan.week_end).map((placement) => placement.task_id));
+  const leafTasks = [...uniqueTasks].map((id) => tasksById.get(id)).filter((task): task is Task => !!task && !task.subtask_count);
+  const completed = closed?.completed ?? leafTasks.filter((task) => task.completed).length;
+  const total = closed?.total ?? leafTasks.length;
   return (
-    <section className="weekly-planner" aria-labelledby="planning-heading" aria-busy={loading}>
+    <section className={`weekly-planner${closed ? " weekly-planner-closed" : ""}`} aria-labelledby="planning-heading" aria-busy={loading}>
       <div className="planner-heading">
         <div>
           <h2 id="planning-heading">Weekly plan</h2>
@@ -202,7 +211,18 @@ export function WeeklyPlanner({ state, projects, onRun, locked }: { state: Retur
         </nav>
       </div>
       {plan ? <p className="timezone-note muted">Today is {showDate(plan.today)} · {plan.timezone}</p> : null}
-      <p className="planning-hint muted">Plan a task from the project list. One planned day per task or subtask. Split multi-day work into subtasks.</p>
+      {plan ? <>
+        <div className="week-state">
+          <strong className={`week-badge${closed ? " week-badge-closed" : ""}`}>{closed ? "Closed week · read-only history" : "Open week"}</strong>
+          <p>{closed ? "At closure: " : "Weekly completion: "}{completed} of {total} work items complete ({total ? Math.round(completed / total * 100) : 0}%).</p>
+        </div>
+        {closed ? <p className="planning-hint muted">Saved {closed.closed_at ? new Date(closed.closed_at).toLocaleString() : "at closure"} · {closed.timezone}. Historical details and completion stay fixed. Current task status is shown separately. The project list edits current tasks.</p> : <p className="planning-hint muted">Plan a task from the project list. One active planned day per task or subtask. Split multi-day work into subtasks.</p>}
+        {plan.closed_weeks?.length ? <div className="closed-history field"><label htmlFor="closed-week-history">Closed-week history</label><select id="closed-week-history" value={closed ? plan.week_start : ""} disabled={loading || locked} onChange={(event) => { if (event.target.value) void navigate(event.target.value); }}>
+          <option value="">Choose a closed week</option>
+          {plan.closed_weeks.map((week) => <option key={week.week_start} value={week.week_start}>{showDate(week.week_start)} – {showDate(week.week_end)} · {week.completed}/{week.total} complete</option>)}
+        </select></div> : null}
+        <WeekActions key={`${plan.week_start}-${closed ? "closed" : "open"}`} plan={plan} onRun={onRun} locked={locked || loading} />
+      </> : null}
       {error ? <p role="alert" className="error">{error} <button type="button" className="link" onClick={() => void refresh()}>Retry weekly plan</button></p> : null}
       {plan ? (
         <>
@@ -215,13 +235,24 @@ export function WeeklyPlanner({ state, projects, onRun, locked }: { state: Retur
           </div>
           <div className="week-board">
             {days.map((date) => {
-              const placements = plan.placements.filter((placement) => placement.planned_date === date);
+              const placements = visiblePlacements.filter((placement) => placement.planned_date === date);
               return (
                 <section key={date} className={`day-column${selectedDay === date ? " day-selected" : ""}${date === plan.today ? " day-today" : ""}`} aria-label={`${dayName.format(plainDate(date))}, ${showDate(date)}`}>
                   <h3>{dayName.format(plainDate(date))}<span>{shortDate.format(plainDate(date))}{date === plan.today ? " · Today" : ""}</span></h3>
                   {placements.length ? (
                     <ul className="day-placements">
                       {placements.map((placement) => {
+                        if (closed) {
+                          const historical = historicalTasks.get(placement.task_id);
+                          const current = tasksById.get(placement.task_id);
+                          if (!historical) return null;
+                          return <li key={placement.id} className={`planned-card historical-card${historical.completed ? " planned-card-done" : ""}`}>
+                            <WeekTaskDetails task={historical} context={historicalContext(historical)} />
+                            <p className="planned-meta">Planned {showDate(placement.planned_date)}</p>
+                            <p className="historical-status">At closure: {historical.completed ? "Complete" : "Unfinished"}</p>
+                            <p className="planned-meta muted">Current task: {current ? current.completed ? "Complete" : "Unfinished" : "No longer available"}</p>
+                          </li>;
+                        }
                         const task = tasksById.get(placement.task_id);
                         if (!task) return null;
                         const parent = task.parent_id ? tasksById.get(task.parent_id) : null;
