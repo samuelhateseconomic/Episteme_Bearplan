@@ -1,9 +1,9 @@
 # Weeks, closed history and reviewed carryover — daily build review
 
 Date: 2026-10-15 (America/Los_Angeles); pulled forward from the Oct 17 roadmap row.
-Baseline: `a21cb49`. Implementation review: **Pass**. Operator/M1 milestone
-demonstration: **pending**. The local commit containing this record is the reviewed
-build; no push and no next feature.
+Baseline: `a21cb49`. Reviewed application build: `7155bc2`.
+Implementation review: **Pass**. Overall operator acceptance: **Pass** (2026-10-15).
+Broader M1 milestone review remains separate and pending. No push and no next feature.
 
 ## Acceptance scenario and design
 
@@ -122,10 +122,16 @@ Relevant local commit authorized, no push. Pre-existing staged edits to the road
 and review-plan files are preserved outside this commit. Shared guidance and progress
 are updated; CLAUDE.md remains intact and points to them.
 
-**Operator/M1 milestone review: pending.** Automated evidence supports this daily
-build; a real-course workflow still needs the operator checklist below. Previous
-projects/tasks operator acceptance remains passed. Do not describe full M1 as
-operator-certified until the real week is demonstrated. Reopening, recurring work,
+**Operator acceptance: Pass.** After receiving the implementation report and
+demonstration checklist for `7155bc2`, the user said “Looks good to me” on 2026-10-15.
+This records overall feature acceptance; it does not attest that each manual step
+was individually performed. No application tests were rerun for this documentation
+update; content, links and scoped diff were checked instead.
+
+**Broader M1 milestone review: pending.** The daily build's acceptance does not
+individually certify every broader milestone scenario. Previous projects/tasks
+operator acceptance remains passed; retain the checklist below as evidence guidance.
+Reopening, recurring work,
 advanced reports, timers, rewards, AI and integrations remain deferred. Countdown is
 the next roadmap build, **not started and not authorized by this request**.
 

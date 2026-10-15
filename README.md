@@ -4,7 +4,8 @@ A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history and reviewed carryover
 implemented**. Projects, tasks and subtasks retain their previously passed behavior.
 A Monday–Sunday board supports date assignment, moves, unscheduling, End Week and
-immutable history. The real-course operator demonstration remains pending. See
+immutable history. The user accepted this build on 2026-10-15; broader M1 milestone
+review remains separate. See
 [shared progress](docs/PROGRESS.md) and the
 [current review](docs/reviews/2026-10-15-weeks-history.md).
 

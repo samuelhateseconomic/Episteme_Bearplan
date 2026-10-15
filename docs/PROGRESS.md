@@ -6,14 +6,18 @@ This is the single mutable work/handoff record. Detailed reviews retain the evid
 ## Current state
 
 **Weeks, closed history and reviewed carryover: implementation review Pass;
-operator/M1 milestone demonstration pending.** Implemented 2026-10-15, pulled forward
+operator acceptance Pass.** User accepted build `7155bc2` on 2026-10-15:
+“Looks good to me.” This records overall feature acceptance, not itemized confirmation
+of every demonstration step. Broader M1 milestone review remains separately pending.
+Implemented 2026-10-15, pulled forward
 from the Oct 17 roadmap row. Schema **5**. Baseline `a21cb49` (one-day refinement),
-original weekly build `801cbc3`; current build is the local commit containing this
-record. Previous projects/tasks: `a9ba50b`, operator acceptance `d2174a6`.
+original weekly build `801cbc3`; reviewed application build `7155bc2`.
+Previous projects/tasks: `a9ba50b`, operator acceptance `d2174a6`.
 Relevant local commit authorized; no push.
 
-Current implementation work is complete. The next action is the five-minute
-operator checklist in the [current review](reviews/2026-10-15-weeks-history.md).
+Current implementation work and overall operator acceptance are complete. The
+[current review](reviews/2026-10-15-weeks-history.md) preserves the demonstration
+checklist and exact evidence; individual manual steps were not reported separately.
 **Countdown is the next roadmap build, not started and not authorized by this
 request.** Broader M1 operator acceptance is not certified by automated checks alone.
 Reopening, recurring tasks, automatic bulk carryover, advanced reports, timers,
@@ -31,7 +35,7 @@ and this handoff record.
 | M0 / foundation | Implementation and Mac/operator gate passed | [M0 review](reviews/2026-10-14-local-foundation.md); `36f6e48`, `f4c59dd` |
 | Projects/tasks/subtasks | Implementation and all six operator checks passed | [M1 takeover review](reviews/2026-10-13-m1-takeover.md); `a9ba50b`, `d2174a6` |
 | Weekly planning + one-day refinement | Implementation Pass; previous operator checklist remains pending | [Prior review](reviews/2026-10-15-single-planned-day.md), `a21cb49`; [original weekly evidence](reviews/2026-10-15-weekly-planning.md), `801cbc3` |
-| Weeks/history/carryover | Implementation Pass; operator/M1 milestone check pending | [Current review](reviews/2026-10-15-weeks-history.md) |
+| Weeks/history/carryover | Implementation Pass; overall operator acceptance Pass; broader M1 review separate | [Current review](reviews/2026-10-15-weeks-history.md), `7155bc2` |
 | Countdown and later builds | **Not started** | [Daily roadmap](../BearPlans_Dated_Roadmap.md) and [review gates](../BearPlans_Build_Review_Plan.md) |
 
 Weekly planning retains the project/task editor beside a Monday–Sunday board,
@@ -148,13 +152,13 @@ artifacts included in the review are synthetic browser-test data only.
 
 ## Pending evidence and next steps
 
-- **Operator/M1 milestone:** complete the five-minute weeks/history/carryover
-  checklist in the current review using a sample or real-course week. Prior weekly
-  operator evidence was not supplied; do not silently mark it passed. Verify one
-  active date per leaf and derived parent progress alongside the new closed view.
+- **Operator acceptance:** user approved build `7155bc2` with “Looks good to me.”
+  No new runtime checks were performed to record this approval. Specific weekly/
+  history demonstration steps were not individually confirmed; the broader M1
+  milestone gate remains separately pending. Retain the checklist for that review.
   The prior projects/tasks checklist remains passed; do not reopen it without a
   regression. No known blocking implementation defect remains in the current build.
-- After this daily build is accepted and the user authorizes another build, plan
+- When the user authorizes another build, plan
   Countdown with its own acceptance scenario. Do not implement it now.
 - Future timer gates still require their own sleep/restart/clock-change/midnight/DST
   checks and battery/standby/hibernate evidence. Unknown gaps must not earn work time.
