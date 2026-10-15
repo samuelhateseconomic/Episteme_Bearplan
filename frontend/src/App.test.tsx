@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import App from "./App";
-import type { Project, Task } from "./api";
+import type { Placement, Project, Task } from "./api";
+import { addDays } from "./WeeklyPlanner";
 
 const MATH = "00000000-0000-4000-8000-00000000aaaa";
 const CS = "00000000-0000-4000-8000-00000000bbbb";
@@ -38,6 +39,18 @@ function taskList(tasks: Task[]) {
   return { tasks, progress: { completed: leaves.filter((t) => t.completed).length, total: leaves.length } };
 }
 
+function planningSnapshot(tasks: Task[], placements: Placement[] = [], query = "") {
+  const requested = new URL(query || "/api/planning", "http://x").searchParams.get("week") || "2026-10-15";
+  const date = new Date(`${requested}T00:00:00Z`);
+  const weekStart = addDays(requested, -((date.getUTCDay() + 6) % 7));
+  return { today: "2026-10-15", timezone: "America/Los_Angeles", week_start: weekStart, week_end: addDays(weekStart, 6), tasks, placements };
+}
+
+function placement(id: string, taskId: string, date: string): Placement {
+  const at = "2026-10-15T16:00:00.000000Z";
+  return { id, task_id: taskId, planned_date: date, created_at: at, updated_at: at, revision: 1 };
+}
+
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 }
@@ -52,7 +65,7 @@ interface Call {
  * A fake service routed by URL. Every mutation in the app triggers a refresh, so a
  * fixed response sequence would desynchronise as soon as the component changes.
  */
-function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; status: number; error: unknown }) {
+function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; status: number; error: unknown }, placements: Placement[] = []) {
   const calls: Call[] = [];
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
     const url = String(input);
@@ -61,6 +74,27 @@ function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; s
     calls.push({ url, method, body });
 
     if (fail && url.startsWith(fail.url) && method !== "GET") return json({ error: fail.error }, fail.status);
+    if (url.startsWith("/api/planning") && method === "GET") return json(planningSnapshot(tasks, placements, url));
+    if (url === "/api/placements" && method === "POST") {
+      if (placements.some((p) => p.task_id === body!.task_id && p.planned_date === body!.planned_date)) {
+        return json({ error: { code: "placement_conflict", message: "This task is already planned for that day. Choose another day." } }, 409);
+      }
+      const created = placement(`placement-${placements.length + 1}`, String(body!.task_id), String(body!.planned_date));
+      placements.push(created);
+      return json(created, 201);
+    }
+    if (url.startsWith("/api/placements/") && method === "PATCH") {
+      const existing = placements.find((p) => p.id === url.split("/")[3])!;
+      if (placements.some((p) => p.id !== existing.id && p.task_id === existing.task_id && p.planned_date === body!.planned_date)) {
+        return json({ error: { code: "placement_conflict", message: "This task is already planned for that day. No placements were changed." } }, 409);
+      }
+      existing.planned_date = String(body!.planned_date);
+      return json(existing);
+    }
+    if (url.startsWith("/api/placements/") && method === "DELETE") {
+      const index = placements.findIndex((p) => p.id === url.split("/")[3]);
+      return json({ removed: placements.splice(index, 1)[0].id });
+    }
     if (url === "/api/projects" && method === "GET") return json({ projects });
     if (url === "/api/projects" && method === "POST") {
       const created = project(CS, String(body!.name));
@@ -264,6 +298,7 @@ test("a failed projects load reports the problem and can be retried", async () =
   let attempt = 0;
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects") {
       attempt += 1;
       if (attempt === 1) throw new TypeError("Failed to fetch");
@@ -312,6 +347,7 @@ test("a mutation resolving after a project switch does not show the old project'
 
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects")
       return json({ projects: [project(MATH, "Math 55", true), project(CS, "CS 61A")] });
     if (url.includes("/completion")) {
@@ -342,6 +378,7 @@ test("Try again refetches the tasks, not only the projects", async () => {
   let taskAttempt = 0;
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects") return json({ projects: [project(MATH, "Math 55", true)] });
     taskAttempt += 1;
     if (taskAttempt === 1) throw new TypeError("Failed to fetch");
@@ -407,4 +444,263 @@ test("a storage save error keeps the edit available for correction or retry", as
   expect(await screen.findByRole("alert")).toHaveTextContent("Check disk space");
   expect(field).toHaveValue("Changed");
   expect(screen.getByLabelText("Keep")).toBeInTheDocument();
+});
+
+function taskPlanner(title: string) {
+  return within(screen.getByRole("checkbox", { name: title }).closest(".task-row")!.querySelector(".task-main") as HTMLElement);
+}
+
+function board() {
+  return within(screen.getByRole("region", { name: "Weekly plan" }));
+}
+
+test("the server defines Today and the board spans Monday through Sunday across year boundaries", async () => {
+  const calls = fakeService([project(MATH, "Math 55", true)], []);
+  const user = userEvent.setup();
+  render(<App />);
+  expect(await screen.findByText("Today is Oct 15, 2026 · America/Los_Angeles")).toBeInTheDocument();
+  expect(board().getByRole("region", { name: "Monday, Oct 12, 2026" })).toBeInTheDocument();
+  expect(board().getByRole("region", { name: "Sunday, Oct 18, 2026" })).toBeInTheDocument();
+  await user.click(board().getByRole("button", { name: "Next week" }));
+  expect(await screen.findByRole("region", { name: "Monday, Oct 19, 2026" })).toBeInTheDocument();
+  await user.click(board().getByRole("button", { name: "Previous week" }));
+  await screen.findByRole("region", { name: "Monday, Oct 12, 2026" });
+  await user.click(board().getByRole("button", { name: "Today" }));
+  expect(calls.filter((call) => call.url === "/api/planning")).toHaveLength(2);
+  expect(addDays("2026-12-28", 6)).toBe("2027-01-03");
+  expect(addDays("2027-01-04", -7)).toBe("2026-12-28");
+  expect(addDays("2026-03-08", 1)).toBe("2026-03-09");
+});
+
+test("assigning existing leaf work preserves its fields and duplicate assignment keeps the date and explains the conflict", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Problem set", { deadline: "2026-10-20", notes: "Keep my notes", estimate_minutes: 60 });
+  const placements: Placement[] = [];
+  const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByLabelText("Problem set");
+  await user.click(taskPlanner("Problem set").getByText("Plan task"));
+  const date = taskPlanner("Problem set").getByLabelText("Planned date for “Problem set”");
+  fireEvent.change(date, { target: { value: "2026-10-16" } });
+  await user.click(taskPlanner("Problem set").getByRole("button", { name: "Add to day" }));
+  expect(await board().findByLabelText("Problem set, planned Oct 16, 2026")).toBeInTheDocument();
+  expect(board().getByText("Planned Oct 16, 2026")).toBeInTheDocument();
+  expect(board().getByText("Due Oct 20, 2026")).toBeInTheDocument();
+  expect(placements).toHaveLength(1);
+  expect(placements[0].task_id).toBe(existing.id);
+  expect(existing).toMatchObject({ notes: "Keep my notes", deadline: "2026-10-20", estimate_minutes: 60, revision: 1 });
+  expect(calls.some((call) => call.url.startsWith("/api/tasks") && call.method !== "GET")).toBe(false);
+  await user.click(taskPlanner("Problem set").getByRole("button", { name: "Add to day" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("already planned for that day");
+  expect(date).toHaveValue("2026-10-16");
+  expect(placements).toHaveLength(1);
+});
+
+test("parents are context; only leaves get assignment controls", async () => {
+  const parent = task("00000000-0000-4000-8000-000000000001", "Homework", { subtask_count: 1 });
+  const child = task("00000000-0000-4000-8000-000000000002", "Problem 1", { parent_id: parent.id });
+  fakeService([project(MATH, "Math 55", true)], [parent, child], undefined, [placement("p1", child.id, "2026-10-15")]);
+  render(<App />);
+  await screen.findByLabelText("Homework");
+  expect(taskPlanner("Homework").queryByText("Plan task")).not.toBeInTheDocument();
+  expect(taskPlanner("Homework").getByText("Plan the subtasks below.")).toBeInTheDocument();
+  expect(taskPlanner("Problem 1").getByText("Plan task")).toBeInTheDocument();
+  expect(await board().findByText("Math 55 / Homework")).toBeInTheDocument();
+});
+
+test("moving across weeks changes only the selected placement and leaves other planned days accessible", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  const placements = [placement("p1", existing.id, "2026-10-15"), placement("p2", existing.id, "2026-10-16")];
+  const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
+  const user = userEvent.setup();
+  render(<App />);
+  await board().findByLabelText("Read, planned Oct 15, 2026");
+  const thursday = within(board().getByRole("region", { name: "Thursday, Oct 15, 2026" }));
+  await user.click(thursday.getByText("Move or remove"));
+  fireEvent.change(thursday.getByLabelText("Move “Read” from Oct 15, 2026 to"), { target: { value: "2026-10-23" } });
+  await user.click(thursday.getByRole("button", { name: "Move placement" }));
+  await waitFor(() => expect(placements[0].planned_date).toBe("2026-10-23"));
+  expect(placements[1].planned_date).toBe("2026-10-16");
+  expect(calls.find((call) => call.method === "PATCH")?.url).toBe("/api/placements/p1");
+  expect(await taskPlanner("Read").findByText("Planned: Oct 16, 2026 · Oct 23, 2026")).toBeInTheDocument();
+  await user.click(board().getByRole("button", { name: "Next week" }));
+  expect(await board().findByLabelText("Read, planned Oct 23, 2026")).toBeInTheDocument();
+  expect(board().queryByLabelText("Read, planned Oct 16, 2026")).not.toBeInTheDocument();
+  await user.click(board().getByRole("button", { name: "Previous week" }));
+  expect(await board().findByLabelText("Read, planned Oct 16, 2026")).toBeInTheDocument();
+});
+
+test("a conflicting move preserves both records and the attempted destination for correction", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  const placements = [placement("p1", existing.id, "2026-10-15"), placement("p2", existing.id, "2026-10-16")];
+  fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
+  const user = userEvent.setup();
+  render(<App />);
+  await board().findByLabelText("Read, planned Oct 15, 2026");
+  const thursday = within(board().getByRole("region", { name: "Thursday, Oct 15, 2026" }));
+  await user.click(thursday.getByText("Move or remove"));
+  const date = thursday.getByLabelText("Move “Read” from Oct 15, 2026 to");
+  fireEvent.change(date, { target: { value: "2026-10-16" } });
+  await user.click(thursday.getByRole("button", { name: "Move placement" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("No placements were changed");
+  expect(date).toHaveValue("2026-10-16");
+  expect(placements.map((p) => p.planned_date)).toEqual(["2026-10-15", "2026-10-16"]);
+});
+
+test("removing a placement keeps its task accessible and never calls task deletion", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Keep this task");
+  const placements = [placement("p1", existing.id, "2026-10-15")];
+  const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
+  const user = userEvent.setup();
+  render(<App />);
+  await board().findByLabelText("Keep this task, planned Oct 15, 2026");
+  const thursday = within(board().getByRole("region", { name: "Thursday, Oct 15, 2026" }));
+  await user.click(thursday.getByText("Move or remove"));
+  await user.click(thursday.getByRole("button", { name: "Remove from plan" }));
+  expect(await taskPlanner("Keep this task").findByText("Unscheduled")).toBeInTheDocument();
+  expect(screen.getByLabelText("Keep this task")).toBeInTheDocument();
+  expect(placements).toHaveLength(0);
+  expect(calls.filter((call) => call.method === "DELETE").map((call) => call.url)).toEqual(["/api/placements/p1"]);
+});
+
+test("task completion is reflected in its project list and every placement", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  fakeService([project(MATH, "Math 55", true)], [existing], undefined, [placement("p1", existing.id, "2026-10-15"), placement("p2", existing.id, "2026-10-16")]);
+  const user = userEvent.setup();
+  render(<App />);
+  await user.click(await board().findByLabelText("Read, planned Oct 15, 2026"));
+  await waitFor(() => expect(screen.getByRole("checkbox", { name: "Read" })).toBeChecked());
+  expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeChecked();
+  expect(board().getByLabelText("Read, planned Oct 16, 2026")).toBeChecked();
+  await user.click(screen.getByRole("checkbox", { name: "Read" }));
+  await waitFor(() => expect(board().getByLabelText("Read, planned Oct 16, 2026")).not.toBeChecked());
+});
+
+test("failed placement saves retain the selected date and explain how to retry", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  fakeService([project(MATH, "Math 55", true)], [existing], { url: "/api/placements", status: 503, error: { code: "storage_unavailable", message: "Check disk space, then try again." } });
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByLabelText("Read");
+  await user.click(taskPlanner("Read").getByText("Plan task"));
+  const date = taskPlanner("Read").getByLabelText("Planned date for “Read”");
+  fireEvent.change(date, { target: { value: "2026-11-20" } });
+  await user.click(taskPlanner("Read").getByRole("button", { name: "Add to day" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Check disk space");
+  expect(date).toHaveValue("2026-11-20");
+  expect(taskPlanner("Read").getByRole("button", { name: "Add to day" })).toBeEnabled();
+});
+
+test("selected-day controls change the day rendered in the narrow-window layout", async () => {
+  fakeService([project(MATH, "Math 55", true)], []);
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByText("Today is Oct 15, 2026 · America/Los_Angeles");
+  const selector = within(board().getByRole("group", { name: "Selected day" }));
+  await user.click(selector.getByRole("button", { name: /FriOct 16/ }));
+  expect(selector.getByRole("button", { name: /FriOct 16/ })).toHaveAttribute("aria-pressed", "true");
+  expect(board().getByRole("region", { name: "Friday, Oct 16, 2026" })).toHaveClass("day-selected");
+  expect(board().getByRole("region", { name: "Thursday, Oct 15, 2026" })).not.toHaveClass("day-selected");
+});
+
+test("a successful save with a failed readback is reported as saved and refresh can be retried without a second write", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, [placement("p1", existing.id, "2026-10-15")]);
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let failReadback = false;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    const url = String(input);
+    if (url.startsWith("/api/planning") && failReadback) {
+      failReadback = false;
+      throw new TypeError("network interrupted after save");
+    }
+    const response = await original(input, init);
+    if (url.endsWith("/completion")) failReadback = true;
+    return response;
+  });
+  const user = userEvent.setup();
+  render(<App />);
+  await user.click(await board().findByLabelText("Read, planned Oct 15, 2026"));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Cannot reach");
+  expect(screen.getByRole("status")).toHaveTextContent("Saved. Some views could not refresh.");
+  expect(screen.getByRole("checkbox", { name: "Read" })).toBeDisabled();
+  await user.click(board().getByRole("button", { name: "Retry weekly plan" }));
+  await waitFor(() => expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeChecked());
+  expect(screen.getByRole("checkbox", { name: "Read" })).toBeEnabled();
+  expect(calls.filter((call) => call.url.endsWith("/completion"))).toHaveLength(1);
+});
+
+test("retrying a failed Next navigation keeps its requested week instead of silently reloading the old week", async () => {
+  fakeService([project(MATH, "Math 55", true)], []);
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let nextAttempts = 0;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/planning?week=2026-10-19") {
+      nextAttempts += 1;
+      if (nextAttempts === 1) throw new TypeError("offline");
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByRole("region", { name: "Monday, Oct 12, 2026" });
+  await user.click(board().getByRole("button", { name: "Next week" }));
+  await screen.findByRole("alert");
+  expect(board().getByRole("region", { name: "Monday, Oct 12, 2026" })).toBeInTheDocument();
+  await user.click(board().getByRole("button", { name: "Retry weekly plan" }));
+  expect(await board().findByRole("region", { name: "Monday, Oct 19, 2026" })).toBeInTheDocument();
+  expect(nextAttempts).toBe(2);
+});
+
+test("retrying a failed Today navigation asks the service for current Today again", async () => {
+  fakeService([project(MATH, "Math 55", true)], []);
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let todayRequests = 0;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/planning") {
+      todayRequests += 1;
+      if (todayRequests === 2) throw new TypeError("offline");
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByRole("region", { name: "Monday, Oct 12, 2026" });
+  await user.click(board().getByRole("button", { name: "Next week" }));
+  await screen.findByRole("region", { name: "Monday, Oct 19, 2026" });
+  await user.click(board().getByRole("button", { name: "Today" }));
+  await screen.findByRole("alert");
+  await user.click(board().getByRole("button", { name: "Retry weekly plan" }));
+  expect(await board().findByRole("region", { name: "Monday, Oct 12, 2026" })).toBeInTheDocument();
+  expect(todayRequests).toBe(3);
+});
+
+test("a mutation during slow week navigation refreshes the requested week and ignores the stale response", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read");
+  fakeService([project(MATH, "Math 55", true)], [existing]);
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let nextRequests = 0;
+  let release: () => void = () => {};
+  const hold = new Promise<void>((resolve) => { release = resolve; });
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/planning?week=2026-10-19") {
+      nextRequests += 1;
+      if (nextRequests === 1) {
+        await hold;
+        // Simulate an out-of-order service response even if fetch ignores abort.
+        return json(planningSnapshot([], [], "/api/planning?week=2026-10-12"));
+      }
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<App />);
+  await screen.findByRole("region", { name: "Monday, Oct 12, 2026" });
+  await user.click(board().getByRole("button", { name: "Next week" }));
+  await user.click(screen.getByRole("checkbox", { name: "Read" }));
+  expect(await board().findByRole("region", { name: "Monday, Oct 19, 2026" })).toBeInTheDocument();
+  expect(nextRequests).toBe(2);
+  release();
+  await waitFor(() => expect(screen.getByRole("checkbox", { name: "Read" })).toBeChecked());
+  expect(board().getByRole("region", { name: "Monday, Oct 19, 2026" })).toBeInTheDocument();
 });

@@ -1,33 +1,40 @@
-# BearPlans — working rules
+# BearPlans — Claude entrypoint
 
-Personal, local-only Mac laptop planner: weekly planning, task-linked countdowns, forest/coins/streaks, stats; local AI and connections later. Planning docs (repo root): `BearPlans_Dated_Roadmap.md` is the **current schedule**; `BearPlans_Build_Plan.md` (architecture, product rules) and `BearPlans_Build_Review_Plan.md` (acceptance gates, severities) define the requirements. The roadmap overrides their timing only, never their safety, persistence, recovery or acceptance rules.
+This file remains available for Claude to resume BearPlans. Shared product rules,
+architecture, commands, data safety and verification requirements now live in
+[AGENTS.md](AGENTS.md). Read that file as part of these instructions; do not maintain
+a second copy of its shared rules here.
 
-## Current milestone
+The single current-work and handoff record is [docs/PROGRESS.md](docs/PROGRESS.md).
+Use it to find completed work, active work, recorded checks, pending manual gates,
+known guidance discrepancies and the next build. Historical reviews are linked
+there; do not pick the newest-looking filename and assume its claims are current.
 
-**M0 / Oct 14 — Local foundation: passed** on the target Mac, including the sleep/wake experiment (`docs/reviews/2026-10-14-local-foundation.md`).
-**M1 / Oct 15 — Projects and tasks: implementation review Pass on 2026-10-13.** Schema version 2. Projects (create, rename), task/subtask editing, notes/deadline/estimate, derived completion, leaf-only totals and confirmed subtask removal. Current evidence and separate gate decisions: `docs/reviews/2026-10-13-m1-takeover.md`. Claude's earlier draft review is historical, not current proof.
-**Projects/tasks build review: Pass.** The operator confirmed all six hands-on checks passed on 2026-10-13. The broader weekly-planner gate still requires the Oct 16/17 builds, which remain unimplemented. Weekly planning is the next eligible build; do not start it without a new instruction.
+## Resuming after Codex or a usage limit
 
-## Rules
+1. Read `AGENTS.md`, `docs/PROGRESS.md`, the relevant planning sections and linked
+   review evidence before changing files. Shared guidance applies equally when
+   Claude resumes code originally written or reviewed by Codex.
+2. Inspect Git status, recent commits, the full working diff and relevant untracked
+   files. Treat another agent's uncommitted work as unfinished work to understand
+   and preserve. Do not restart the project or replace it from an old summary.
+3. Compare the tree and test evidence with the current acceptance scenario. State
+   what is implemented, incomplete or uncertain; verify previous completion claims
+   with appropriate checks rather than treating the summary as proof.
+4. Give a brief progress update and immediate next steps, then continue authorized
+   work without routine confirmation. The next-build entry is a plan, not a request
+   to start application implementation.
 
-- One FastAPI service, one SQLite database, bound to 127.0.0.1. No hosting, accounts, cloud models, sync or mobile.
-- All mutations go through application functions in `backend/domain/` using `Database.write()` (serialized, short transactions). Routes, future AI tools and sync adapters never write SQL directly. Never hold a write transaction while waiting on a model or provider.
-- Schema changes add a new `backend/storage/migrations/NNNN_name.sql`; never edit an applied migration. No BEGIN/COMMIT inside migration files.
-- User data lives outside the source tree (`backend/platform/paths.py`). Never commit databases, tokens or personal data. Test against temp dirs/copies, never the real data folder.
-- Store instants in UTC ISO-8601 with `Z`. Validate input in the domain layer; return `{"error": {"code", "message", ...}}`.
-- Keep local request protection: loopback Host check and same-origin check on mutations (`backend/app.py`). No CORS.
-- A subtask is a task with a `parent_id`, not a separate record. Nesting is one level: a subtask cannot have subtasks, which is what makes a parent cycle impossible.
-- **Completion:** a task with no subtasks is complete when marked complete. A task with subtasks has no completion of its own — it is complete exactly when every subtask is, and its completion time is when the last one was completed. Both direct completion and reopening of containers are rejected without changing children. Adding an unfinished child makes a parent incomplete. Repeated leaf completion/reopen requests are no-ops.
-- Count only leaf work items in completion totals. Additional parent work must be an explicit subtask. Removing the last child leaves the parent incomplete with explicit completion control; never restore stale completion. Only subtask removal is supported in M1, with UI confirmation. General deletion and re-parenting remain deferred.
-- Finishing a timer never automatically completes a task. No timer exists in this build.
-- Deadlines are date-only (`YYYY-MM-DD`) and never move with a timezone. Instants stay UTC with `Z`; write them at microsecond precision so stored timestamps stay comparable.
-- Proposed product defaults (coin rate, prices, streak threshold) are configurable, not confirmed requirements. Changing a rule means updating its acceptance scenario, not the expected result.
-- Scope: one feature per day at its smallest passing version. New ideas go to a later list. A failed required check stays a failure; never mark work done to keep the calendar.
+## Leaving a useful handoff
 
-## Workflow
+Before pausing, reaching a usage limit or transferring work back to Codex, update
+`docs/PROGRESS.md` with the exact work state, changed files, commit references,
+commands/results, failures/skips, pending manual checks and next concrete action.
+Keep incomplete work clearly marked; do not claim completion because usage ran out.
+Link the detailed review record and separate implementation and milestone decisions.
+Do not rely on Claude's chat/session memory as the only record of a product decision.
 
-- Run: `python3 launch.py` (Windows: `py launch.py`; `--no-browser`, `--port N`). Needs Python 3.12+ and Node 24 LTS. Dev deps: `.venv` python `-m pip install -r requirements-dev.lock`.
-- Tests: `.venv` python `-m pytest` (includes real service restart and an installed-Chrome/Edge browser journey); `cd frontend && npm test && npm run typecheck`.
-- Dependencies: edit `pyproject.toml`, then `uv pip compile pyproject.toml --universal --python-version 3.12 -o requirements.lock` (add `--extra dev -o requirements-dev.lock` for dev). Frontend uses `package-lock.json` (`npm ci`).
-- Each build: state the acceptance scenario first; implement; run relevant checks (timer/reward/storage/AI changes need behavioral + retry tests; visual changes need a visual check at wide and narrow widths); write a short record in `docs/reviews/YYYY-MM-DD-<feature>.md` with commit, checks, evidence, issues and **Pass / Pass with follow-ups / Fail**.
-- Commit only when asked.
+Commit only when asked or otherwise explicitly authorized in the current task;
+preserve unrelated uncommitted changes. Keep this file substantive and available
+for Claude's return. Add future Claude-specific tool/workflow instructions here,
+while shared rules and mutable progress remain in their respective documents.

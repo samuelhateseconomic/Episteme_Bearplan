@@ -16,7 +16,7 @@ def tables(db: Database) -> set[str]:
 def test_fresh_database_reaches_latest_version(tmp_path: Path) -> None:
     db = open_database(tmp_path / "fresh.sqlite3")
     assert current_version(db) == len(load_migrations())
-    assert {"tasks", "projects", "schema_migrations"} <= tables(db)
+    assert {"tasks", "projects", "planned_items", "schema_migrations"} <= tables(db)
     with db.read() as conn:
         assert conn.execute("PRAGMA journal_mode").fetchone()[0] == "wal"
         assert conn.execute("PRAGMA foreign_keys").fetchone()[0] == 1
@@ -179,9 +179,99 @@ def test_failed_v1_table_rebuild_preserves_original_and_can_retry(tmp_path: Path
         assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
     assert "projects" not in tables(db) and "tasks_new" not in tables(db)
     migrate(db)
-    # Reopening a schema-2 database is also safe: nothing is rebuilt again.
+    # Reopening at the latest schema is also safe: nothing is rebuilt again.
     after = list_tasks(db)
     assert list_tasks(open_database(db.path)) == after
     with db.read() as conn:
         assert tuple(conn.execute("SELECT id, title, created_at, updated_at, revision FROM tasks").fetchone()) == original
         assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+
+
+def _schema_two_with_rich_tasks(path: Path) -> Database:
+    """A genuine pre-planning schema, populated without calling newer domain code."""
+    db = Database(path)
+    migrate(db, load_migrations()[:2])
+    with db.write() as conn:
+        project_id = conn.execute("SELECT id FROM projects WHERE is_default = 1").fetchone()[0]
+        conn.executemany(
+            "INSERT INTO tasks (id, project_id, parent_id, title, notes, deadline, estimate_minutes,"
+            " completed_at, created_at, updated_at, revision) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+                ("00000000-0000-4000-8000-000000000001", project_id, None, "Assignment", "Parent notes", "2026-10-30", 90,
+                 None, "2026-10-13T10:00:00.000000Z", "2026-10-14T12:00:00.000000Z", 5),
+                ("00000000-0000-4000-8000-000000000002", project_id, "00000000-0000-4000-8000-000000000001", "Proof", "Child notes", "2026-10-29", 30,
+                 "2026-10-14T12:00:00.000000Z", "2026-10-13T11:00:00.000000Z", "2026-10-14T12:00:00.000000Z", 3),
+                ("00000000-0000-4000-8000-000000000003", project_id, None, "Unscheduled", "Keep this", None, None,
+                 None, "2026-10-13T12:00:00.000000Z", "2026-10-13T12:00:00.000000Z", 1),
+            ],
+        )
+    return db
+
+
+def _stored_content(db: Database) -> tuple[list[tuple], list[tuple]]:
+    with db.read() as conn:
+        return (
+            [tuple(row) for row in conn.execute("SELECT * FROM tasks ORDER BY id")],
+            [tuple(row) for row in conn.execute("SELECT * FROM projects ORDER BY id")],
+        )
+
+
+def test_planning_upgrade_preserves_schema_two_tasks_projects_and_completion(tmp_path: Path) -> None:
+    from backend.domain.planning import create_placement, list_placements
+    from backend.domain.tasks import get_task
+
+    db = _schema_two_with_rich_tasks(tmp_path / "schema-two.sqlite3")
+    before = _stored_content(db)
+    migrate(db)
+    assert current_version(db) == len(load_migrations())
+    assert _stored_content(db) == before
+    assert list_placements(db) == []
+    parent = get_task(db, "00000000-0000-4000-8000-000000000001")
+    assert parent.completed is True and parent.completed_subtask_count == parent.subtask_count == 1
+    placement = create_placement(db, "00000000-0000-4000-8000-000000000002", "2026-10-15")
+    assert _stored_content(db) == before
+    reopened = open_database(db.path)
+    assert _stored_content(reopened) == before and list_placements(reopened) == [placement]
+    with reopened.read() as conn:
+        assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+
+
+def test_failed_planning_upgrade_is_atomic_and_can_retry(tmp_path: Path) -> None:
+    from backend.domain.planning import create_placement, list_placements
+
+    db = _schema_two_with_rich_tasks(tmp_path / "retry-planning.sqlite3")
+    before = _stored_content(db)
+    migrations = load_migrations()
+    planning = migrations[2]
+    broken = Migration(planning.version, planning.name, planning.sql + "\nINSERT INTO nonexistent VALUES (1);")
+    with pytest.raises(MigrationError, match="rolled back"):
+        migrate(db, [*migrations[:2], broken])
+    assert current_version(db) == 2
+    assert "planned_items" not in tables(db)
+    assert _stored_content(db) == before
+    migrate(db)
+    assert _stored_content(db) == before
+    placement = create_placement(db, "00000000-0000-4000-8000-000000000002", "2026-10-15")
+    assert list_placements(open_database(db.path)) == [placement]
+
+
+def test_planning_schema_enforces_foreign_keys_uniqueness_and_non_cascading_removal(db: Database) -> None:
+    from backend.domain.planning import create_placement, list_placements
+    from backend.domain.tasks import list_tasks
+
+    task = create_task(db, "Keep this task")
+    placement = create_placement(db, task.id, "2026-10-15")
+    for task_id, day in ((task.id, "2026-10-15"), ("00000000-0000-4000-8000-000000000099", "2026-10-16")):
+        with pytest.raises(sqlite3.IntegrityError):
+            with db.write() as conn:
+                conn.execute(
+                    "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision)"
+                    " VALUES ('00000000-0000-4000-8000-000000000098', ?, ?, 'x', 'x', 1)",
+                    (task_id, day),
+                )
+    with pytest.raises(sqlite3.IntegrityError):
+        with db.write() as conn:
+            conn.execute("DELETE FROM tasks WHERE id = ?", (task.id,))
+    assert list_tasks(db) == [task]
+    assert list_placements(db) == [placement]

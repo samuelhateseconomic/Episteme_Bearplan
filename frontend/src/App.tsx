@@ -17,6 +17,7 @@ import {
   type Task,
   type TaskEdit,
 } from "./api";
+import { TaskPlanning, WeeklyPlanner, usePlanning } from "./WeeklyPlanner";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -37,6 +38,7 @@ function formatEstimate(minutes: number): string {
 }
 
 export default function App() {
+  const planning = usePlanning();
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[] | null>(null);
@@ -46,6 +48,7 @@ export default function App() {
   const [editing, setEditing] = useState<string | null>(null);
   const [addingSubtaskTo, setAddingSubtaskTo] = useState<string | null>(null);
   const [renaming, setRenaming] = useState(false);
+  const [mutations, setMutations] = useState(0);
   const taskRequest = useRef<AbortController | null>(null);
   // Handlers capture the project that was selected when they were created. A mutation
   // can resolve after the user has moved on, so the refresh needs the current project,
@@ -80,13 +83,15 @@ export default function App() {
       .then((loaded) => {
         // Drop a late response for a project the user has already left, or its tasks
         // would appear under another project's heading.
-        if (controller.signal.aborted || selectedIdRef.current !== projectId) return;
+        if (controller.signal.aborted || selectedIdRef.current !== projectId) return true;
         setTasks(loaded.tasks);
         setProgress(loaded.progress);
         setLoadError(null);
+        return true;
       })
       .catch((error: unknown) => {
         if (!controller.signal.aborted) setLoadError(errorMessage(error));
+        return controller.signal.aborted;
       });
   }, []);
 
@@ -112,10 +117,15 @@ export default function App() {
   }, [selectedId, refreshTasks]);
 
   async function run(work: () => Promise<unknown>, done: string) {
-    await work();
-    const current = selectedIdRef.current;
-    if (current) await refreshTasks(current);
-    setStatus(done);
+    setMutations((count) => count + 1);
+    try {
+      await work();
+      const current = selectedIdRef.current;
+      const refreshed = await Promise.all([current ? refreshTasks(current) : Promise.resolve(true), planning.refresh()]);
+      setStatus(refreshed.every(Boolean) ? done : "Saved. Some views could not refresh. Use the retry controls to see the saved changes.");
+    } finally {
+      setMutations((count) => count - 1);
+    }
   }
 
   const parents = tasks?.filter((task) => task.parent_id === null) ?? [];
@@ -125,7 +135,7 @@ export default function App() {
     <main className="page">
       <header className="page-head">
         <h1>BearPlans</h1>
-        <p className="muted">Projects, tasks and subtasks</p>
+        <p className="muted">Make room for your week.</p>
       </header>
 
       {loadError ? (
@@ -137,160 +147,169 @@ export default function App() {
         </p>
       ) : null}
 
-      <section className="projects" aria-labelledby="projects-heading">
-        <h2 id="projects-heading">Projects</h2>
-        {projects === null && !loadError ? <p className="muted">Loading…</p> : null}
-        {projects !== null ? (
-          <>
-            <ul className="project-list">
-              {projects.map((project) => (
-                <li key={project.id}>
-                  <button
-                    type="button"
-                    className={project.id === selectedId ? "chip chip-on" : "chip"}
-                    aria-current={project.id === selectedId ? "true" : undefined}
-                    onClick={() => setSelectedId(project.id)}
-                  >
-                    {project.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+      <div className="workspace">
+        <div className="work-list">
+          <section className="projects" aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects</h2>
+            {projects === null && !loadError ? <p className="muted">Loading…</p> : null}
+            {projects !== null ? (
+              <>
+                <ul className="project-list">
+                  {projects.map((project) => (
+                    <li key={project.id}>
+                      <button
+                        type="button"
+                        className={project.id === selectedId ? "chip chip-on" : "chip"}
+                        aria-current={project.id === selectedId ? "true" : undefined}
+                        onClick={() => setSelectedId(project.id)}
+                      >
+                        {project.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
 
-            <div className="project-actions">
-              <TextForm
-                label="New project"
-                placeholder="Add a project"
-                submitLabel="Add project"
-                maxLength={NAME_MAX_LENGTH}
-                onSubmit={async (name) => {
-                  const project = await createProject(name);
-                  setProjects((current) => [...(current ?? []), project]);
-                  setSelectedId(project.id);
-                  setStatus(`Added project “${project.name}”.`);
-                }}
-              />
-              {selected ? (
-                renaming ? (
+                <div className="project-actions">
                   <TextForm
-                    key={`rename-${selected.id}-${selected.revision}`}
-                    label={`Rename “${selected.name}”`}
-                    placeholder="New name"
-                    submitLabel="Save name"
-                    initial={selected.name}
+                    label="New project"
+                    placeholder="Add a project"
+                    submitLabel="Add project"
                     maxLength={NAME_MAX_LENGTH}
-                    onCancel={() => setRenaming(false)}
                     onSubmit={async (name) => {
-                      const updated = await renameProject(selected.id, name);
-                      setProjects((current) => (current ?? []).map((p) => (p.id === updated.id ? updated : p)));
-                      setRenaming(false);
-                      setStatus(`Renamed to “${updated.name}”.`);
+                      const project = await createProject(name);
+                      setProjects((current) => [...(current ?? []), project]);
+                      setSelectedId(project.id);
+                      setStatus(`Added project “${project.name}”.`);
                     }}
                   />
-                ) : (
-                  <button type="button" className="link" onClick={() => setRenaming(true)}>
-                    Rename “{selected.name}”
-                  </button>
-                )
-              ) : null}
-            </div>
-          </>
-        ) : null}
-      </section>
-
-      {selected ? (
-        <section className="tasks-section" aria-labelledby="tasks-heading">
-          <h2 id="tasks-heading">{selected.name}</h2>
-          {progress ? <p className="muted">{progress.completed} of {progress.total} work items complete</p> : null}
-
-          <TaskForm
-            key={`new-task-${selected.id}`}
-            submitLabel="Add task"
-            onSubmit={(edit) => run(() => createTask({ ...edit, title: edit.title ?? "", project_id: selected.id }), "Task added.")}
-          />
-
-          {tasks === null && !loadError ? <p className="muted">Loading…</p> : null}
-          {tasks !== null && parents.length === 0 ? <p className="muted">No tasks in this project yet.</p> : null}
-
-          <ul className="tasks">
-            {parents.map((task) => {
-              const children = subtasksOf(task.id);
-              return (
-                <li key={task.id} className="task">
-                  <TaskRow
-                    task={task}
-                    onToggle={(complete) =>
-                      run(() => setTaskCompletion(task.id, complete), complete ? "Marked complete." : "Reopened.")
-                    }
-                    onEdit={() => setEditing(editing === task.id ? null : task.id)}
-                    editing={editing === task.id}
-                    extra={
-                      <button type="button" className="link" onClick={() => setAddingSubtaskTo(addingSubtaskTo === task.id ? null : task.id)}>
-                        {addingSubtaskTo === task.id ? "Cancel subtask" : "Add subtask"}
+                  {selected ? (
+                    renaming ? (
+                      <TextForm
+                        key={`rename-${selected.id}-${selected.revision}`}
+                        label={`Rename “${selected.name}”`}
+                        placeholder="New name"
+                        submitLabel="Save name"
+                        initial={selected.name}
+                        maxLength={NAME_MAX_LENGTH}
+                        onCancel={() => setRenaming(false)}
+                        onSubmit={async (name) => {
+                          const updated = await renameProject(selected.id, name);
+                          setProjects((current) => (current ?? []).map((p) => (p.id === updated.id ? updated : p)));
+                          setRenaming(false);
+                          setStatus(`Renamed to “${updated.name}”.`);
+                        }}
+                      />
+                    ) : (
+                      <button type="button" className="link" onClick={() => setRenaming(true)}>
+                        Rename “{selected.name}”
                       </button>
-                    }
-                  />
-
-                  {editing === task.id ? (
-                    <TaskForm
-                      task={task}
-                      submitLabel="Save changes"
-                      onCancel={() => setEditing(null)}
-                      onSubmit={async (edit) => {
-                        await run(() => updateTask(task.id, edit), "Changes saved.");
-                        setEditing(null);
-                      }}
-                    />
+                    )
                   ) : null}
+                </div>
+              </>
+            ) : null}
+          </section>
 
-                  {addingSubtaskTo === task.id ? (
-                    <TaskForm
-                      submitLabel="Add subtask"
-                      onCancel={() => setAddingSubtaskTo(null)}
-                      onSubmit={async (edit) => {
-                        await run(() => createTask({ ...edit, title: edit.title ?? "", parent_id: task.id }), "Subtask added.");
-                        setAddingSubtaskTo(null);
-                      }}
-                    />
-                  ) : null}
+          {selected ? (
+            <section className="tasks-section" aria-labelledby="tasks-heading">
+              <h2 id="tasks-heading">{selected.name}</h2>
+              {progress ? <p className="muted">{progress.completed} of {progress.total} work items complete</p> : null}
 
-                  {children.length ? (
-                    <ul className="subtasks">
-                      {children.map((child) => (
-                        <li key={child.id} className="task">
-                          <TaskRow
-                            task={child}
-                            onToggle={(complete) =>
-                              run(() => setTaskCompletion(child.id, complete), complete ? "Marked complete." : "Reopened.")
-                            }
-                            onEdit={() => setEditing(editing === child.id ? null : child.id)}
-                            editing={editing === child.id}
-                          />
-                          {editing === child.id ? (
-                            <TaskForm
-                              task={child}
-                              submitLabel="Save changes"
-                              onRemove={async () => {
-                                await run(() => removeSubtask(child.id), "Subtask removed.");
-                                setEditing(null);
-                              }}
-                              onCancel={() => setEditing(null)}
-                              onSubmit={async (edit) => {
-                                await run(() => updateTask(child.id, edit), "Changes saved.");
-                                setEditing(null);
-                              }}
-                            />
-                          ) : null}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      ) : null}
+              <TaskForm
+                key={`new-task-${selected.id}`}
+                submitLabel="Add task"
+                onSubmit={(edit) => run(() => createTask({ ...edit, title: edit.title ?? "", project_id: selected.id }), "Task added.")}
+              />
+
+              {tasks === null && !loadError ? <p className="muted">Loading…</p> : null}
+              {tasks !== null && parents.length === 0 ? <p className="muted">No tasks in this project yet.</p> : null}
+
+              <ul className="tasks">
+                {parents.map((task) => {
+                  const children = subtasksOf(task.id);
+                  return (
+                    <li key={task.id} className="task">
+                      <TaskRow
+                        task={task}
+                        onToggle={(complete) =>
+                          run(() => setTaskCompletion(task.id, complete), complete ? "Marked complete." : "Reopened.")
+                        }
+                        onEdit={() => setEditing(editing === task.id ? null : task.id)}
+                        editing={editing === task.id}
+                        locked={mutations > 0 || Boolean(loadError) || Boolean(planning.error)}
+                        planning={<TaskPlanning task={task} plan={planning.plan} selectedDay={planning.selectedDay} onRun={run} />}
+                        extra={
+                          <button type="button" className="link" onClick={() => setAddingSubtaskTo(addingSubtaskTo === task.id ? null : task.id)}>
+                            {addingSubtaskTo === task.id ? "Cancel subtask" : "Add subtask"}
+                          </button>
+                        }
+                      />
+
+                      {editing === task.id ? (
+                        <TaskForm
+                          task={task}
+                          submitLabel="Save changes"
+                          onCancel={() => setEditing(null)}
+                          onSubmit={async (edit) => {
+                            await run(() => updateTask(task.id, edit), "Changes saved.");
+                            setEditing(null);
+                          }}
+                        />
+                      ) : null}
+
+                      {addingSubtaskTo === task.id ? (
+                        <TaskForm
+                          submitLabel="Add subtask"
+                          onCancel={() => setAddingSubtaskTo(null)}
+                          onSubmit={async (edit) => {
+                            await run(() => createTask({ ...edit, title: edit.title ?? "", parent_id: task.id }), "Subtask added.");
+                            setAddingSubtaskTo(null);
+                          }}
+                        />
+                      ) : null}
+
+                      {children.length ? (
+                        <ul className="subtasks">
+                          {children.map((child) => (
+                            <li key={child.id} className="task">
+                              <TaskRow
+                                task={child}
+                                onToggle={(complete) =>
+                                  run(() => setTaskCompletion(child.id, complete), complete ? "Marked complete." : "Reopened.")
+                                }
+                                onEdit={() => setEditing(editing === child.id ? null : child.id)}
+                                editing={editing === child.id}
+                                locked={mutations > 0 || Boolean(loadError) || Boolean(planning.error)}
+                                planning={<TaskPlanning task={child} plan={planning.plan} selectedDay={planning.selectedDay} onRun={run} />}
+                              />
+                              {editing === child.id ? (
+                                <TaskForm
+                                  task={child}
+                                  submitLabel="Save changes"
+                                  onRemove={async () => {
+                                    await run(() => removeSubtask(child.id), "Subtask removed.");
+                                    setEditing(null);
+                                  }}
+                                  onCancel={() => setEditing(null)}
+                                  onSubmit={async (edit) => {
+                                    await run(() => updateTask(child.id, edit), "Changes saved.");
+                                    setEditing(null);
+                                  }}
+                                />
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : null}
+        </div>
+      <WeeklyPlanner state={planning} projects={projects ?? []} onRun={run} locked={mutations > 0 || planning.loading || Boolean(loadError) || Boolean(planning.error)} />
+      </div>
 
       <p className="status" role="status" aria-live="polite">{status}</p>
     </main>
@@ -303,12 +322,16 @@ function TaskRow({
   onEdit,
   editing,
   extra,
+  planning,
+  locked,
 }: {
   task: Task;
   onToggle: (complete: boolean) => Promise<void>;
   onEdit: () => void;
   editing: boolean;
   extra?: ReactNode;
+  planning?: ReactNode;
+  locked: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -323,7 +346,7 @@ function TaskRow({
         type="checkbox"
         id={`done-${task.id}`}
         checked={task.completed}
-        disabled={derived || busy}
+        disabled={derived || busy || locked}
         title={hint}
         aria-describedby={derived ? `derived-${task.id}` : undefined}
         onChange={async (event) => {
@@ -348,6 +371,7 @@ function TaskRow({
           {task.estimate_minutes ? <span>{formatEstimate(task.estimate_minutes)}</span> : null}
         </p>
         {task.notes ? <p className="task-notes">{task.notes}</p> : null}
+        {planning}
         {error ? <p className="error" role="alert">{error}</p> : null}
       </div>
       <div className="task-actions">

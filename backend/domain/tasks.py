@@ -219,13 +219,18 @@ def get_task(db: Database, task_id: str) -> Task:
 def list_tasks(db: Database, project_id: str | None = None) -> list[Task]:
     """Tasks oldest first, each parent immediately followed by its own subtasks."""
     with db.read() as conn:
-        if project_id is None:
-            rows = conn.execute("SELECT * FROM tasks ORDER BY created_at, rowid").fetchall()
-        else:
-            require_project(conn, project_id)
-            rows = conn.execute(
-                "SELECT * FROM tasks WHERE project_id = ? ORDER BY created_at, rowid", (project_id,)
-            ).fetchall()
+        return _list_tasks(conn, project_id)
+
+
+def _list_tasks(conn: sqlite3.Connection, project_id: str | None = None) -> list[Task]:
+    """Read tasks using an existing transaction, including planning snapshots."""
+    if project_id is None:
+        rows = conn.execute("SELECT * FROM tasks ORDER BY created_at, rowid").fetchall()
+    else:
+        require_project(conn, project_id)
+        rows = conn.execute(
+            "SELECT * FROM tasks WHERE project_id = ? ORDER BY created_at, rowid", (project_id,)
+        ).fetchall()
 
     children: dict[str, list[sqlite3.Row]] = {}
     for row in rows:
@@ -270,6 +275,12 @@ def create_task(
     with db.write() as conn:
         if parent_id is not None:
             parent = _resolve_parent(conn, parent_id, task_id=None)
+            if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (parent_id,)).fetchone():
+                raise InvalidInput(
+                    "parent_id",
+                    "This task has planned dates. Remove its placements before adding subtasks, "
+                    "then plan its subtasks instead.",
+                )
             if project_id is not None and project_id != parent["project_id"]:
                 raise InvalidInput("project_id", "A subtask belongs to the same project as its parent.")
             resolved_project = parent["project_id"]
@@ -384,6 +395,8 @@ def remove_subtask(db: Database, task_id: str) -> Task:
         parent_id = child["parent_id"]
         if parent_id is None:
             raise InvalidInput("task_id", "Only subtasks can be removed in this build.")
+        if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (task_id,)).fetchone():
+            raise InvalidInput("task_id", "Remove this subtask's planned placements before deleting it.")
         conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
         conn.execute(
             "UPDATE tasks SET completed_at = NULL, updated_at = ?, revision = revision + 1 WHERE id = ?",

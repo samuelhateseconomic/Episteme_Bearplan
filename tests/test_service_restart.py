@@ -182,7 +182,59 @@ def test_real_launcher_preserves_m1_records_across_restart(tmp_path: Path) -> No
             else:
                 assert listed == before
             assert service.stop() == 0
-            assert "schema: version 2" in service.output
+            assert f"schema: version {len(load_migrations())}" in service.output
             assert "BearPlans stopped." in service.output
         finally:
             service.kill()
+
+
+def test_planning_changes_and_shared_completion_survive_service_restart(tmp_path: Path) -> None:
+    """Persist cross-week moves and removals without copying or mutating tasks."""
+    data_dir = tmp_path / "PlanningData"
+    port = free_port()
+    first = Service(data_dir, port).start()
+    try:
+        status, project = http_json("POST", f"{first.url}/api/projects", {"name": "Planning check"})
+        assert status == 201
+        status, parent = http_json("POST", f"{first.url}/api/tasks", {
+            "title": "Assignment", "project_id": project["id"], "deadline": "2026-10-30", "notes": "Parent context",
+        })
+        assert status == 201
+        status, child = http_json("POST", f"{first.url}/api/tasks", {
+            "title": "Proof", "parent_id": parent["id"], "deadline": "2026-10-29", "notes": "Keep proof", "estimate_minutes": 25,
+        })
+        assert status == 201
+        status, unscheduled = http_json("POST", f"{first.url}/api/tasks", {"title": "Backlog"})
+        assert status == 201
+        status, moved = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-15"})
+        assert status == 201
+        status, removed = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-16"})
+        assert status == 201
+        status, moved = http_json("PATCH", f"{first.url}/api/placements/{moved['id']}", {"planned_date": "2026-10-22"})
+        assert status == 200
+        assert http_json("DELETE", f"{first.url}/api/placements/{removed['id']}")[0] == 200
+        assert http_json("PUT", f"{first.url}/api/tasks/{child['id']}/completion", {"complete": True})[0] == 200
+        status, before = http_json("GET", f"{first.url}/api/planning?week=2026-10-19")
+        assert status == 200
+        assert first.stop() == 0
+    finally:
+        first.kill()
+
+    with running_service(data_dir, port) as second:
+        status, after = http_json("GET", f"{second.url}/api/planning?week=2026-10-19")
+        assert status == 200 and after == before
+        _, projects = http_json("GET", f"{second.url}/api/projects")
+        assert project in projects["projects"]
+        assert after["placements"] == [moved]
+        tasks = {task["id"]: task for task in after["tasks"]}
+        assert set(tasks) == {parent["id"], child["id"], unscheduled["id"]}
+        assert tasks[unscheduled["id"]] == unscheduled
+        assert tasks[parent["id"]]["completed"] is tasks[child["id"]]["completed"] is True
+        assert tasks[child["id"]]["deadline"] == "2026-10-29"
+        assert tasks[child["id"]]["notes"] == "Keep proof"
+        assert tasks[child["id"]]["estimate_minutes"] == 25
+        # The placement is still linked to the same child after reopening and completion changes.
+        assert http_json("PUT", f"{second.url}/api/tasks/{child['id']}/completion", {"complete": False})[0] == 200
+        _, reopened = http_json("GET", f"{second.url}/api/planning?week=2026-10-12")
+        assert reopened["placements"] == [moved]
+        assert all(not task["completed"] for task in reopened["tasks"])

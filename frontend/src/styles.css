@@ -38,9 +38,9 @@ body {
 }
 
 .page {
-  max-width: 48rem;
+  max-width: 112rem;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 1.75rem 1.5rem 3rem;
 }
 
 .page-head h1 {
@@ -327,5 +327,321 @@ button:focus-visible {
 
   .subtasks {
     margin-left: 0.75rem;
+  }
+}
+
+/* Weekly planning -------------------------------------------------------- */
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(19rem, 23rem) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.work-list,
+.weekly-planner,
+.day-column {
+  min-width: 0;
+}
+
+.work-list .projects,
+.work-list .tasks-section {
+  padding: 1rem;
+}
+
+.work-list .task-row {
+  flex-wrap: wrap;
+}
+
+.work-list .task-actions {
+  width: 100%;
+  padding-left: 1.75rem;
+}
+
+.work-list .text-form {
+  min-width: 0;
+  width: 100%;
+}
+
+.work-list .project-actions {
+  align-items: stretch;
+}
+
+.weekly-planner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.planner-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.planner-heading h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.planner-heading p {
+  margin: 0.25rem 0 0;
+}
+
+.week-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+button.secondary {
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.timezone-note,
+.planning-hint,
+.planning-summary {
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.timezone-note {
+  margin: 0.5rem 0;
+}
+
+.planning-hint {
+  margin: 0.4rem 0 0.6rem;
+}
+
+.planning-summary {
+  margin: 0.25rem 0;
+}
+
+details > summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+details > summary:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.planning-form {
+  margin: 0.65rem 0;
+}
+
+.planning-form .field-row {
+  align-items: end;
+  gap: 0.4rem;
+}
+
+.planning-form .field {
+  min-width: min(10rem, 100%);
+  margin: 0;
+}
+
+.planning-form button {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.5rem;
+  white-space: normal;
+}
+
+.planning-form .form-actions {
+  margin-top: 0.4rem;
+}
+
+.placement-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.placement-list li {
+  border-top: 1px solid var(--border);
+}
+
+.placement-list li > p {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}
+
+.week-board {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.day-column {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  min-height: 20rem;
+  padding: 0.45rem;
+}
+
+.day-today {
+  border-color: var(--accent);
+}
+
+.day-column h3 {
+  margin: 0.2rem 0 0.65rem;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.day-column h3 span {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.day-placements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.planned-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.planned-context,
+.planned-meta {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.planned-title {
+  display: flex;
+  align-items: start;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.planned-title label {
+  font-size: 0.9rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.planned-card-done .planned-title label {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.planned-card .planning-form .field {
+  min-width: 0;
+}
+
+.planned-card .planning-form input {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.2rem;
+}
+
+.planned-card .form-actions {
+  gap: 0.25rem;
+}
+
+.empty-day {
+  font-size: 0.8rem;
+}
+
+.day-selector {
+  display: none;
+}
+
+@media (max-width: 81.25rem) {
+  .workspace {
+    grid-template-columns: minmax(19rem, 22rem) minmax(0, 1fr);
+  }
+
+  .day-selector {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+
+  .day-choice {
+    padding: 0.4rem 0.15rem;
+    font-size: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+    white-space: normal;
+  }
+
+  .day-choice span {
+    display: block;
+  }
+
+  .day-choice-on {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+
+  .today-mark {
+    font-size: 0.65rem;
+  }
+
+  .week-board {
+    display: block;
+    margin-top: 0.75rem;
+  }
+
+  .day-column {
+    display: none;
+    padding: 0.75rem;
+  }
+
+  .day-column.day-selected {
+    display: block;
+  }
+
+  .day-column h3 {
+    font-size: 1rem;
+  }
+
+  .planned-card {
+    padding: 0.75rem;
+  }
+
+  .planned-card .planning-form {
+    max-width: 23rem;
+  }
+}
+
+@media (max-width: 47.5rem) {
+  .page {
+    padding: 1.25rem 0.75rem 2rem;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weekly-planner {
+    order: -1;
   }
 }

@@ -115,3 +115,38 @@ export function setTaskCompletion(id: string, complete: boolean): Promise<Task> 
 export function removeSubtask(id: string): Promise<Task> {
   return request<Task>(`/api/tasks/${encodeURIComponent(id)}`, { method: "DELETE" });
 }
+
+export interface Placement {
+  id: string;
+  task_id: string;
+  planned_date: string;
+  created_at: string;
+  updated_at: string;
+  revision: number;
+}
+
+export interface Planning {
+  today: string;
+  timezone: string;
+  week_start: string;
+  week_end: string;
+  tasks: Task[];
+  /** Every placement, including dates outside the displayed week. */
+  placements: Placement[];
+}
+
+export function getPlanning(week?: string, signal?: AbortSignal): Promise<Planning> {
+  return request<Planning>(`/api/planning${week ? `?week=${encodeURIComponent(week)}` : ""}`, { signal });
+}
+
+export function assignTask(taskId: string, plannedDate: string): Promise<Placement> {
+  return request<Placement>("/api/placements", json("POST", { task_id: taskId, planned_date: plannedDate }));
+}
+
+export function movePlacement(id: string, plannedDate: string): Promise<Placement> {
+  return request<Placement>(`/api/placements/${encodeURIComponent(id)}`, json("PATCH", { planned_date: plannedDate }));
+}
+
+export function removePlacement(id: string): Promise<{ removed: string }> {
+  return request<{ removed: string }>(`/api/placements/${encodeURIComponent(id)}`, { method: "DELETE" });
+}

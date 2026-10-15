@@ -84,7 +84,7 @@ def test_project_task_subtask_journey_survives_restart(browser, evidence: Path, 
         page.get_by_label("Estimate (minutes)").first.fill("90")
         page.get_by_label("Notes").first.fill("Ch.4 and Ch.5 exercises.")
         page.get_by_role("button", name="Add task").click()
-        expect(page.get_by_text("Write PS7")).to_be_visible()
+        expect(page.get_by_text("Write PS7", exact=True)).to_be_visible()
         expect(page.get_by_text("Due Oct 20, 2026")).to_be_visible()
         expect(page.get_by_text("1 h 30 min")).to_be_visible()
 
@@ -92,19 +92,19 @@ def test_project_task_subtask_journey_survives_restart(browser, evidence: Path, 
             page.get_by_role("button", name="Add subtask").first.click()
             page.get_by_label("Title").last.fill(subtask)
             page.get_by_role("button", name="Add subtask").last.click()
-            expect(page.get_by_text(subtask)).to_be_visible()
+            expect(page.get_by_text(subtask, exact=True)).to_be_visible()
 
-        parent_box = page.get_by_label("Write PS7")
+        parent_box = page.get_by_label("Write PS7", exact=True)
         # The parent's completion is derived, so it offers no control of its own.
         expect(parent_box).to_be_disabled()
         expect(page.get_by_text("0 of 2 subtasks done")).to_be_visible()
 
         # The checkbox reflects what the service stored, so it flips after the round
         # trip rather than on the click; the expectations below retry until it does.
-        page.get_by_label("read ch.4").click()
+        page.get_by_label("read ch.4", exact=True).click()
         expect(page.get_by_text("1 of 2 subtasks done")).to_be_visible()
         expect(parent_box).not_to_be_checked()
-        page.get_by_label("draft the proof").click()
+        page.get_by_label("draft the proof", exact=True).click()
         expect(page.get_by_text("2 of 2 subtasks done")).to_be_visible()
         expect(parent_box).to_be_checked()
         expect(page.get_by_text("2 of 2 work items complete")).to_be_visible()
@@ -129,15 +129,15 @@ def test_project_task_subtask_journey_survives_restart(browser, evidence: Path, 
         page.reload()
         page.get_by_role("button", name="Math 55 — Honors", exact=True).click()
 
-        expect(page.get_by_text("Write PS7")).to_be_visible()
+        expect(page.get_by_text("Write PS7", exact=True)).to_be_visible()
         expect(page.get_by_text("Due Oct 20, 2026")).to_be_visible()
         expect(page.get_by_text("Ch.4 and Ch.5 exercises, final pass.")).to_be_visible()
         expect(page.get_by_text("Check definitions.")).to_be_visible()
         expect(page.get_by_text("Due Oct 19, 2026")).to_be_visible()
         expect(page.get_by_text("25 min")).to_be_visible()
         expect(page.get_by_text("2 of 2 subtasks done")).to_be_visible()
-        expect(page.get_by_label("Write PS7")).to_be_checked()
-        expect(page.get_by_label("read ch.4 carefully")).to_be_checked()
+        expect(page.get_by_label("Write PS7", exact=True)).to_be_checked()
+        expect(page.get_by_label("read ch.4 carefully", exact=True)).to_be_checked()
         page.screenshot(path=evidence / "03-after-restart-wide.png", full_page=True)
         assert console_errors == []
 
@@ -159,32 +159,32 @@ def test_project_task_subtask_journey_survives_restart(browser, evidence: Path, 
         page.get_by_role("button", name="Math 55 — Honors", exact=True).click()
 
         # Reopening and adding work must both make a completed container incomplete.
-        page.get_by_label("draft the proof").click()
-        expect(page.get_by_label("Write PS7")).not_to_be_checked()
+        page.get_by_label("draft the proof", exact=True).click()
+        expect(page.get_by_label("Write PS7", exact=True)).not_to_be_checked()
         expect(page.get_by_text("1 of 2 work items complete")).to_be_visible()
-        page.get_by_label("draft the proof").click()
+        page.get_by_label("draft the proof", exact=True).click()
         page.get_by_role("button", name="Add subtask", exact=True).click()
         page.get_by_label("Title").last.fill("Additional parent work")
         page.get_by_role("button", name="Add subtask", exact=True).last.click()
         expect(page.get_by_text("2 of 3 subtasks done")).to_be_visible()
-        expect(page.get_by_label("Write PS7")).not_to_be_checked()
+        expect(page.get_by_label("Write PS7", exact=True)).not_to_be_checked()
         for title in ("Additional parent work", "draft the proof", "read ch.4 carefully"):
             row = page.locator(".subtasks > .task").filter(has_text=title)
             row.get_by_role("button", name="Edit", exact=True).click()
             row.get_by_role("button", name="Remove subtask", exact=True).click()
             row.get_by_role("button", name="Confirm removal", exact=True).click()
             expect(page.get_by_label(title, exact=True)).to_have_count(0)
-        expect(page.get_by_label("Write PS7")).to_be_enabled()
-        expect(page.get_by_label("Write PS7")).not_to_be_checked()
+        expect(page.get_by_label("Write PS7", exact=True)).to_be_enabled()
+        expect(page.get_by_label("Write PS7", exact=True)).not_to_be_checked()
         expect(page.get_by_text("0 of 1 work items complete")).to_be_visible()
-        page.get_by_label("Write PS7").click()
+        page.get_by_label("Write PS7", exact=True).click()
         expect(page.get_by_text("1 of 1 work items complete")).to_be_visible()
         assert service.stop() == 0
         service = Service(data_dir, port).start()
         page.reload()
         page.get_by_role("button", name="Math 55 — Honors", exact=True).click()
-        expect(page.get_by_label("Write PS7")).to_be_checked()
-        expect(page.get_by_label("Write PS7")).to_be_enabled()
+        expect(page.get_by_label("Write PS7", exact=True)).to_be_checked()
+        expect(page.get_by_label("Write PS7", exact=True)).to_be_enabled()
         page.screenshot(path=evidence / "07-after-last-child-removal.png")
 
         service.kill()

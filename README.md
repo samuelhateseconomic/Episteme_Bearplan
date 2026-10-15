@@ -1,10 +1,12 @@
 # BearPlans
 
 A personal, local-only laptop planner. Your data stays on your computer.
-Current state: **M1 projects and tasks passed automated and operator review on macOS**. Create and
-rename projects; create and edit tasks and subtasks with notes, date-only deadlines,
-estimated minutes and completion. All six operator checks passed.
-See [the current review](docs/reviews/2026-10-13-m1-takeover.md).
+Current state: **weekly planning implemented and verified on macOS**. Projects,
+tasks and subtasks retain their previously passed behavior. A Monday–Sunday board
+now supports date assignment, individual placement moves and unscheduling. The
+weekly-planning operator demonstration remains pending. See
+[shared progress](docs/PROGRESS.md) and the
+[current review](docs/reviews/2026-10-15-weekly-planning.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -12,9 +14,39 @@ Reopening a child or adding unfinished work reopens the parent. Progress totals
 count leaf work items once, excluding containers. Put additional parent work in an
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
-General task/project deletion and re-parenting are deferred. Weekly planning,
-timers, rewards, AI and integrations are later builds. Finishing a future timer
+General task/project deletion and re-parenting are deferred. Week snapshots/history,
+bulk carryover, timers, rewards, AI and integrations are later builds. Finishing a future timer
 must never automatically complete its task.
+
+## Plan your week
+
+The project/task list sits beside the weekly board. On narrower laptop windows,
+choose a day using the Monday–Sunday buttons; on very narrow windows the board sits
+above the task list. Previous, Next and Today navigate weeks without moving work.
+
+Open **Plan task** on a leaf task or subtask, choose a **Planned date**, and use
+**Add to day**. One task may have several planned days. Parents remain context for
+their scheduled children; unscheduled work stays in the project list. **Planned**
+dates and **Due** deadlines are displayed separately.
+
+On a board card, open **Move or remove**. **Move placement** changes only that
+placement, including to another week; if the task is already on the destination
+date, the service explains the conflict and leaves both placements untouched.
+**Remove from plan** keeps the task and its other dates. The task list's planning
+controls also show dates outside the displayed week. Completion is shared by every
+placement because they all reference the same task.
+
+Before adding subtasks to a scheduled standalone task, remove its placements and
+then schedule the children. Before deleting a scheduled subtask, unschedule it.
+Neither operation silently removes planned dates. Previous-week views are live
+plans; closed-week snapshots and historical reports are not implemented.
+
+Today comes from the service's application timezone. With no timezone setting yet,
+the default is the computer's local timezone, including its DST rules. Optionally
+set `BEARPLANS_TIMEZONE` to an installed IANA name such as `America/Los_Angeles`
+before starting the service. The interface displays the active timezone. Dates
+remain date-only across browser timezones. Today metadata refreshes on navigation,
+saves or page reload; the Today button asks the service for the current date again.
 
 ## Requirements
 
