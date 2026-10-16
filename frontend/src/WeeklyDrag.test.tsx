@@ -16,7 +16,7 @@ function setup(placements = [source], overrides: Partial<Planning> = {}) {
   return { ...rendered, state, run, onTrack };
 }
 function transfer() { return { setData: vi.fn(), effectAllowed: "none", dropEffect: "none" }; }
-const handle = () => screen.getByRole("img", { name: "Drag “Read chapter” from Oct 15, 2026" });
+const handle = () => screen.getByRole("img", { name: "Move “Read chapter” from Oct 15, 2026" });
 const friday = () => screen.getByRole("region", { name: "Friday, Oct 16, 2026" });
 const thursday = () => screen.getByRole("region", { name: "Thursday, Oct 15, 2026" });
 function drag(element: Element, type: string, dataTransfer: ReturnType<typeof transfer>, add = false) {
@@ -36,7 +36,15 @@ test("a handle moves the existing placement, highlights valid days and leaves so
   let finish!: (response: Response) => void;
   const fetch = vi.spyOn(globalThis, "fetch").mockImplementation(() => new Promise((resolve) => { finish = resolve; }));
   setup();
-  expect(screen.getByText(/Option \(Mac\) \/ Alt \(Windows\)/)).toBeInTheDocument();
+  expect(screen.queryByText(/Option \(Mac\) \/ Alt \(Windows\)/)).not.toBeInTheDocument();
+  expect(screen.queryByText("Add another planned day")).not.toBeInTheDocument();
+  expect(handle().textContent?.trim()).toBe("");
+  expect(handle().parentElement).toHaveClass("planned-card-heading");
+  expect(handle().parentElement?.firstElementChild).toBe(handle());
+  expect(handle().nextElementSibling).toHaveClass("planned-context");
+  expect(thursday().querySelector(".planned-title .placement-drag-handle")).toBeNull();
+  expect(within(thursday()).queryByText("Planned Oct 15, 2026")).not.toBeInTheDocument();
+  expect(within(thursday()).getByText("Due Oct 25, 2026")).toBeInTheDocument();
   const dataTransfer = start();
   expect(screen.getByRole("status")).toHaveTextContent("Move");
   expect(friday()).toHaveClass("drop-valid");
@@ -51,21 +59,20 @@ test("a handle moves the existing placement, highlights valid days and leaves so
   await waitFor(() => expect(screen.queryByText("Saving planned date…")).not.toBeInTheDocument());
 });
 
-test("Option/Alt at drop adds a destination with source identity and keeps the source placement", async () => {
-  const fetch = vi.spyOn(globalThis, "fetch").mockResolvedValue(json({ ...source, id: "p2", planned_date: "2026-10-16" }));
+test("Option/Alt dragging still moves the existing placement and never adds one", async () => {
+  const fetch = vi.spyOn(globalThis, "fetch").mockResolvedValue(json({ ...source, planned_date: "2026-10-16" }));
   setup();
-  const dataTransfer = start();
+  const dataTransfer = start(true);
+  expect(dataTransfer.effectAllowed).toBe("move");
   fireEvent.keyDown(window, { key: "Alt" });
-  expect(screen.getByRole("status")).toHaveTextContent("Add");
-  fireEvent.keyUp(window, { key: "Alt" });
   expect(screen.getByRole("status")).toHaveTextContent("Move");
+  fireEvent.keyUp(window, { key: "Alt" });
   drag(friday(), "dragover", dataTransfer, true);
-  expect(dataTransfer.dropEffect).toBe("copy");
-  expect(screen.getByRole("status")).toHaveTextContent("Add");
+  expect(dataTransfer.dropEffect).toBe("move");
+  expect(screen.getByRole("status")).toHaveTextContent("Move");
   drag(friday(), "drop", dataTransfer, true);
   await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
-  expect(fetch).toHaveBeenCalledWith("/api/placements", expect.objectContaining({ method: "POST", body: JSON.stringify({ task_id: task.id, planned_date: "2026-10-16", source_placement_id: source.id }) }));
-  expect(within(thursday()).getByLabelText("Read chapter, planned Oct 15, 2026")).toBeInTheDocument();
+  expect(fetch).toHaveBeenCalledWith("/api/placements/p1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ planned_date: "2026-10-16" }) }));
 });
 
 test("narrow-layout day buttons accept drops without changing selected day or week", async () => {
@@ -81,7 +88,7 @@ test("narrow-layout day buttons accept drops without changing selected day or we
   expect(state.navigate).not.toHaveBeenCalled();
 });
 
-test.each([false, true])("duplicate destination rejects %s add mode and keeps both placements", async (add) => {
+test.each([false, true])("duplicate destination rejects with Alt held %s and keeps both placements", async (add) => {
   const fetch = vi.spyOn(globalThis, "fetch");
   setup([source, { ...source, id: "p2", planned_date: "2026-10-16" }]);
   const dataTransfer = start(add);
@@ -130,7 +137,7 @@ test("failed saves retain displayed placements and offer refresh for stale state
 test("closed history has no drag handles or scheduling forms and ignores drops", () => {
   const fetch = vi.spyOn(globalThis, "fetch");
   setup([], { closed_week: { snapshot_version: 1, week_start: "2026-10-12", week_end: "2026-10-18", closed_at: at, timezone: "America/Los_Angeles", tasks: [{ ...task, project_name: "Project", parent_title: null }], placements: [source], completed: 0, total: 1 } });
-  expect(screen.queryByRole("img", { name: /Drag/ })).not.toBeInTheDocument();
+  expect(screen.queryByRole("img", { name: /Move/ })).not.toBeInTheDocument();
   expect(screen.queryByText("Add another planned day")).not.toBeInTheDocument();
   fireEvent.drop(friday(), { dataTransfer: transfer() });
   expect(fetch).not.toHaveBeenCalled();
@@ -152,17 +159,19 @@ test("card controls cannot initiate drag and still work independently", async ()
   await waitFor(() => expect(globalThis.fetch).toHaveBeenCalledWith("/api/tasks/leaf/completion", expect.objectContaining({ method: "PUT" })));
 });
 
-test("keyboard date form adds another day from a card with source validation", async () => {
+test("keyboard date form moves a card without dragging or adding another date", async () => {
   const fetch = vi.spyOn(globalThis, "fetch").mockResolvedValue(json(source));
   setup();
   const user = userEvent.setup();
-  await user.click(screen.getByText("Add another planned day"));
-  const date = screen.getByLabelText("Planned date for “Read chapter”");
-  expect(date).toHaveValue("2026-10-16");
+  expect(screen.queryByText("Add another planned day")).not.toBeInTheDocument();
+  await user.click(screen.getByText("Move or remove"));
+  const date = screen.getByLabelText("Move “Read chapter” from Oct 15, 2026 to");
+  expect(date).toHaveValue("2026-10-15");
+  fireEvent.change(date, { target: { value: "2026-10-16" } });
   date.focus();
   expect(date).toHaveFocus();
   await user.tab();
-  expect(screen.getByRole("button", { name: "Add to day" })).toHaveFocus();
+  expect(screen.getByRole("button", { name: "Move placement" })).toHaveFocus();
   await user.keyboard("{Enter}");
-  await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/placements", expect.objectContaining({ method: "POST", body: JSON.stringify({ task_id: task.id, planned_date: "2026-10-16", source_placement_id: source.id }) })));
+  await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/placements/p1", expect.objectContaining({ method: "PATCH", body: JSON.stringify({ planned_date: "2026-10-16" }) })));
 });

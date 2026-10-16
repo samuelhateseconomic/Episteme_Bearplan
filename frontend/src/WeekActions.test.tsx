@@ -83,6 +83,7 @@ test("the closed board uses frozen details with separate current status and no s
   expect(screen.getByText("Original project / Original parent")).toBeInTheDocument();
   expect(screen.getByText("Due Oct 25, 2026")).toBeInTheDocument();
   expect(screen.getByText("At closure: Unfinished")).toBeInTheDocument();
+  expect(screen.queryByText("Planned Oct 15, 2026")).not.toBeInTheDocument();
   expect(screen.getByText("Current task: Complete")).toBeInTheDocument();
   expect(screen.queryByText("Changed later")).not.toBeInTheDocument();
   expect(screen.queryByText("New notes")).not.toBeInTheDocument();

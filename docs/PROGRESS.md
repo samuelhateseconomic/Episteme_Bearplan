@@ -5,21 +5,42 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
-**Weekly drag Move / Option–Alt Add: implementation review Pass.** Verified baseline
-`bbe6059` (countdown ancestor `c4b7dd3`). The local commit containing this record
-includes the reviewed build and preserved disabled-button copy follow-up.
-Dedicated handles, visible Move/Add feedback, valid/conflict destinations,
-cancel/same-day no-ops, saved-state errors, closed read-only history and keyboard
-Move/Add date controls are implemented. Schema **7** permits multiple active dates
-for the same leaf, unique per task/date. This explicit October 16 Add request
-supersedes October 15's one-active-date refinement. No task cloning or automatic
-week/day switching. See the [drag review](reviews/2026-10-16-drag-scheduling.md).
+**Card context/due-date follow-up: implementation review Pass.** The
+grip is now to the left of the project/parent-task line, above the leaf/subtask
+title. Redundant Planned-date metadata is removed from open and historical weekly
+cards; due dates remain, and planned dates stay in task planning, Move controls,
+accessibility labels and saved records. Frontend **74 passed**, 3.33 s; typecheck
+and production build passed (86 ms). Native wide/narrow **2 passed**, 7.68 s;
+affected planner/history/tracking Chrome regressions **7 passed**, 23.14 s. Actual
+parent/subtask context, icon alignment, due-only open/closed cards, unchanged saved
+dates, drag/retry/keyboard and restart/history/session behavior pass. Seven synthetic
+images inspected at 1600/375 px. The running service serves the new interface on
+refresh, with no restart or personal-data operation. See the
+[review follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up).
+The user subsequently requested the local commit; this follow-up and the preceding
+move-only refinement are included in the commit containing this record. No push.
+
+**Move-only drag interface refinement: implementation review Pass against `a7de8bf`.**
+Removes Option/Alt Add, all Add-another-day controls, the open-board dragging paragraph
+and the visible Drag label. The earlier grip placement by the leaf title is
+superseded by the follow-up above. Initial scheduling, keyboard Move/remove, native Move feedback,
+cancel/conflict/error handling and existing placements remain. Schema stays **7**;
+no new one-active-date constraint or data migration. See the
+[current review](reviews/2026-10-16-drag-simplification.md). Included in the local
+commit containing this record at the user's request. No recovery work or push. The normal service
+serves the rebuilt interface on refresh; no service restart or user-data writes.
+
+**Preceding drag Move / Option–Alt Add build: implementation review Pass**, commit
+`a7de8bf` against `bbe6059` (countdown ancestor `c4b7dd3`). Its Add interface is
+superseded by this follow-up; saved multi-date records remain supported and intact.
+The [original drag review](reviews/2026-10-16-drag-scheduling.md) retains its actual
+400-test full-core evidence rather than claiming that result for this follow-up.
 
 The preceding tracking interface and cosmetic follow-up were reverified **Pass**
 before drag edits: frontend **63 passed**, typecheck passed, Chrome **1 passed**,
 1440/375 px inspected. The already-present removal of explanation beneath disabled
 Start tracking controls is preserved, with its tests/review/evidence included in
-this local build commit. See the
+`a7de8bf`. See the
 [cosmetic follow-up](reviews/2026-10-16-countdown-eligibility.md#cosmetic-follow-up--remove-disabled-button-explanation).
 No timer eligibility or session behavior changed in this drag build.
 
@@ -51,8 +72,8 @@ valid; the latter was “Looks good to me,” not an itemized checklist report.
 
 Pre-existing staged user edits to `BearPlans_Build_Review_Plan.md` and
 `BearPlans_Dated_Roadmap.md`, plus the unstaged roadmap checkmarks, are preserved
-outside this build commit. Their staged/unstaged diff hashes are checked before
-commit. `CLAUDE.md` remains substantive and points here.
+outside application changes. Their staged/unstaged diff hashes remain unchanged.
+`CLAUDE.md` remains substantive and points here.
 
 ## Completed builds
 
@@ -64,8 +85,10 @@ commit. `CLAUDE.md` remains substantive and points here.
 | Weeks/history/carryover | Implementation Pass; overall user acceptance Pass | [History review](reviews/2026-10-15-weeks-history.md), `7155bc2`; acceptance `69c6630` |
 | Joined M1 technical review | Pass; broader operator gate not newly certified | [October 16 review](reviews/2026-10-16-m1-review.md) |
 | M2 normal countdown | Implementation Pass; overall M2 gate not passed | [Countdown review](reviews/2026-10-16-countdown.md), `c4b7dd3` |
-| Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Eligibility review](reviews/2026-10-16-countdown-eligibility.md), `bbe6059`; cosmetic follow-up retained in current local commit |
-| Weekly drag Move / Option–Alt Add | Implementation Pass; operator demo not newly certified | [Drag review](reviews/2026-10-16-drag-scheduling.md), local commit containing this record |
+| Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Eligibility review](reviews/2026-10-16-countdown-eligibility.md), `bbe6059`; cosmetic follow-up in `a7de8bf` |
+| Weekly drag Move / Option–Alt Add | Implementation Pass; Add interface superseded by later follow-up | [Drag review](reviews/2026-10-16-drag-scheduling.md), `a7de8bf` |
+| Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
+| Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
 | Recovery and later builds | **Not started** | Future work requires its own authorized scope and acceptance evidence |
 
 ## Implemented countdown behavior
@@ -100,9 +123,10 @@ commit. `CLAUDE.md` remains substantive and points here.
   explicit Save confirmed time and finish excludes the uncertain gap. Full recovery,
   automatic sleep reconciliation and time correction are unavailable.
 
-Core planning rules remain in AGENTS: several active dates per leaf, unique per
-task/date; Move preserves placement identity and other placements, Add retains its
-source and references the same task. Closed snapshots/archive rows are immutable.
+Core planning rules remain in AGENTS: stored dates are unique per task/date; existing
+multiple placements for a leaf stay intact. The latest interface only schedules
+unscheduled tasks or moves/removes saved placements; Option/Alt is no longer an Add
+gesture. Move preserves placement identity and other placements. Closed snapshots/archive rows are immutable.
 Reviewed carryover creates a new placement for the same current incomplete leaf,
 and still excludes leaves with any active placement. Parent completion derives
 from children, and totals count leaves once. Today is
@@ -119,7 +143,31 @@ Relevant tests: `tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
 `tests/test_timer_eligibility_browser.py`, `frontend/src/Countdown.test.tsx` and
 updated App mocks. Shared guidance/README carry the refined eligibility rule.
 
-## Drag scheduling checks actually performed
+## Move-only refinement checks actually performed
+
+Same **macOS 26.6.2 (25G83), Darwin arm64** host. Backend, schema, timer arithmetic
+and recovery code unchanged. All mutation/browser fixtures use disposable data.
+
+- Frontend **74 passed**, **3.31 s**; typecheck and production build passed (82 ms).
+  Initial scheduling remains, extra-date forms disappear, and existing multiple
+  placements stay editable with shared completion and unique-leaf totals.
+- Native Chrome **2 passed**, **7.24 s**: ordinary/Option Move use the same placement
+  ID and PATCH only, no new-placement requests. Conflicts, same-day/Escape/outside,
+  failed Move/retry, stale/closed sources, existing other dates, timer history and
+  exact rows after restart pass. Keyboard Move and normal card controls work.
+- Existing affected planner/M1/history/tracking/project-task Chrome regressions:
+  **7 passed**, **23.04 s**, zero failed/skipped. No full-core/timer-domain repeat
+  for this UI-only refinement; earlier 400-test evidence remains historical below.
+- Inspected seven new synthetic wide/narrow screenshots at **1600/375 px**. Grip
+  icon precedes the title on the same line with no Drag word; no open-board help
+  paragraph or extra-date controls, no page errors or overflow. Native geometry
+  confirms alignment. See [evidence/commands](reviews/2026-10-16-drag-simplification.md).
+- Normal service's read-only HTML response matches the rebuilt interface. Initial
+  sandbox socket denial was rerun with permission. No restart or normal database
+  operation was needed. Scoped whitespace/doc links and original user-file diff
+  hashes pass. No unresolved implementation issue found.
+
+## Drag scheduling checks (historical, a7de8bf)
 
 Actual environment: **macOS 26.6.2 (25G83), Darwin arm64**, Python **3.13.15**,
 Node **24.21.0**, Chrome **155.0.8059.82**. All mutation/failure/restart fixtures
@@ -247,15 +295,16 @@ backup evidence remains in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
-- Drag implementation/review is complete and passes, with the authorized relevant
-  local commit containing this record. Unrelated staged/unstaged user planning
-  changes remain preserved outside it. No push or subsequent build.
-- Hands-on drag demonstration: Move a card; Option/Alt-add another date; try an
-  occupied date, same-day, Escape and outside drop; use keyboard Move/Add date
-  controls; inspect narrow day-button targets and existing closed history. See the
-  [short checklist](reviews/2026-10-16-drag-scheduling.md#remaining-checks-and-demonstration).
-  Physical Windows Alt-drag and new operator acceptance remain unperformed. No
-  confirmed drag blocker remains after the native layout fix.
+- Context-row grip and due-only weekly-card refinement/review are complete, **Pass**.
+  Changes are included in the user-requested local commit containing this record
+  against `a7de8bf`, with unrelated staged/unstaged user planning changes intact
+  outside that commit. No push or subsequent build.
+- Hands-on drag demonstration: move using the grip icon before the project/parent line;
+  Option/Alt still moves, and no Add-another-day option or instructional paragraph
+  appears. Try same-day, Escape/outside and an existing duplicate destination; use
+  keyboard Move/remove. Inspect narrow day-button targets and existing closed history.
+  Weekly cards show Due without a redundant Planned-date line; task-list dates stay.
+  New operator/Windows hardware acceptance is not claimed.
 - Hands-on refinement: select an incomplete weekly card, start/pause, complete its
   task in Plan, then return to the same timer and finish. Verify completed work is
   excluded from new choices and empty guidance appears when no eligible work remains.
@@ -278,7 +327,9 @@ backup evidence remains in the countdown/eligibility reviews.
 - The explicit October 16 Option/Alt Add request supersedes October 15's one-active
   date refinement. Multiple dates now reference the same leaf, unique per task/date,
   with shared completion, unique-leaf totals and immutable historical placements.
-  The October 15 review retains historical evidence and links to the new decision.
+  The later October 16 simplification removes modifier Add and Add-another-day UI,
+  without reinstating a storage constraint or deleting existing dates. Earlier
+  reviews retain historical evidence and link to the new decision.
 - User-edited roadmap says planned/not tested while checkmark rows say otherwise;
   its unstaged checkmarks now include weeks/history and countdown. The review-plan
   edit removes an older M1 status paragraph. Preserve these edits;

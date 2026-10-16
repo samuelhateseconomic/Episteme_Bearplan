@@ -64,7 +64,8 @@ def test_m1_create_plan_move_close_revisit_and_carry_same_work(browser, evidence
         draft_card.get_by_text("Move or remove", exact=True).click()
         draft_card.locator(".planning-form").filter(has=page.get_by_role("button", name="Move placement", exact=True)).locator('input[type="date"]').fill(friday.isoformat())
         draft_card.get_by_role("button", name="Move placement", exact=True).click()
-        expect(draft_card.get_by_text(f"Planned {friday:%b} {friday.day}, {friday.year}", exact=True)).to_be_visible()
+        expect(draft_card.get_by_role("checkbox", name=f"Draft the argument, planned {friday:%b} {friday.day}, {friday.year}", exact=True)).to_be_visible()
+        expect(draft_card.get_by_text(f"Planned {friday:%b} {friday.day}, {friday.year}", exact=True)).to_have_count(0)
         _, moved = http_json("GET", service.url + "/api/planning")
         moved_placement = next(item for item in moved["placements"] if item["task_id"] == draft["id"])
         assert moved_placement["id"] == original_placement["id"]

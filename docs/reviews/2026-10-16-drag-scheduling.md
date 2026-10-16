@@ -1,5 +1,10 @@
 # Weekly board — drag Move and Option/Alt Add
 
+Later October 16 interface follow-up: modifier Add, Add-another-day forms, the board
+instructions and visible Drag label are superseded by the
+[move-only refinement](2026-10-16-drag-simplification.md). This record retains the
+original build's evidence. Existing saved placements and schema 7 remain intact.
+
 October 16, 2026, America/Los_Angeles. Baseline **`bbe6059`**, with the existing
 reviewed disabled-tracking-button copy follow-up preserved. Countdown baseline
 **`c4b7dd3`** is an ancestor. The local commit containing this record identifies

@@ -207,8 +207,8 @@ export function getPlanning(week?: string, signal?: AbortSignal): Promise<Planni
   return request<Planning>(`/api/planning${week ? `?week=${encodeURIComponent(week)}` : ""}`, { signal });
 }
 
-export function assignTask(taskId: string, plannedDate: string, sourcePlacementId?: string): Promise<Placement> {
-  return request<Placement>("/api/placements", json("POST", { task_id: taskId, planned_date: plannedDate, ...(sourcePlacementId ? { source_placement_id: sourcePlacementId } : {}) }));
+export function assignTask(taskId: string, plannedDate: string): Promise<Placement> {
+  return request<Placement>("/api/placements", json("POST", { task_id: taskId, planned_date: plannedDate }));
 }
 
 export function movePlacement(id: string, plannedDate: string): Promise<Placement> {

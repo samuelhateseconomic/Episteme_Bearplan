@@ -548,6 +548,18 @@ details > summary:focus-visible {
   margin-bottom: 0.4rem;
 }
 
+.planned-card-heading {
+  display: flex;
+  align-items: start;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.planned-card-heading .planned-context {
+  margin: 0;
+  min-width: 0;
+}
+
 .planned-title label {
   font-size: 0.9rem;
   color: var(--text);
@@ -906,13 +918,13 @@ details > summary:focus-visible {
 
 /* Explicit drag handles keep card controls and text selection independent. */
 .placement-drag-handle {
-  display: inline-block;
-  margin: -0.1rem 0 0.45rem;
-  padding: 0.2rem 0.25rem;
-  border: 1px solid var(--border);
-  border-radius: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 1.1rem;
+  width: 1.1rem;
+  height: 1.125rem;
   color: var(--muted);
-  font-size: 0.75rem;
   cursor: grab;
   user-select: none;
 }
@@ -943,8 +955,6 @@ details > summary:focus-visible {
   overflow-wrap: anywhere;
 }
 
-.drag-indicator-add { border-style: dashed; }
-
 .day-column.drop-valid,
 .day-choice.drop-valid {
   outline: 2px dashed var(--accent);
@@ -965,5 +975,3 @@ details > summary:focus-visible {
 
 .day-column.drop-over.drop-conflict,
 .day-choice.drop-over.drop-conflict { outline-style: solid; }
-
-.add-planned-day { margin-top: 0.5rem; }

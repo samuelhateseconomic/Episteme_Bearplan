@@ -478,7 +478,7 @@ test("the server defines Today and the board spans Monday through Sunday across 
   expect(addDays("2026-03-08", 1)).toBe("2026-03-09");
 });
 
-test("assigning existing leaf work preserves its fields and keeps keyboard move and add controls", async () => {
+test("assigning existing leaf work preserves its fields and replaces assignment with keyboard move controls", async () => {
   const existing = task("00000000-0000-4000-8000-000000000001", "Problem set", { deadline: "2026-10-20", notes: "Keep my notes", estimate_minutes: 60 });
   const placements: Placement[] = [];
   const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
@@ -490,7 +490,7 @@ test("assigning existing leaf work preserves its fields and keeps keyboard move 
   fireEvent.change(date, { target: { value: "2026-10-16" } });
   await user.click(taskPlanner("Problem set").getByRole("button", { name: "Add to day" }));
   expect(await board().findByLabelText("Problem set, planned Oct 16, 2026")).toBeInTheDocument();
-  expect(board().getByText("Planned Oct 16, 2026")).toBeInTheDocument();
+  expect(board().queryByText("Planned Oct 16, 2026")).not.toBeInTheDocument();
   expect(board().getByText("Due Oct 20, 2026")).toBeInTheDocument();
   expect(placements).toHaveLength(1);
   expect(placements[0].task_id).toBe(existing.id);
@@ -498,8 +498,8 @@ test("assigning existing leaf work preserves its fields and keeps keyboard move 
   expect(calls.some((call) => call.url.startsWith("/api/tasks") && call.method !== "GET")).toBe(false);
   expect(taskPlanner("Problem set").getByText("Planned: Oct 16, 2026")).toBeInTheDocument();
   expect(taskPlanner("Problem set").getByText("Move or remove plan")).toBeInTheDocument();
-  expect(taskPlanner("Problem set").getByText("Add another planned day")).toBeInTheDocument();
-  expect(taskPlanner("Problem set").getByLabelText("Planned date for “Problem set”")).toBeInTheDocument();
+  expect(taskPlanner("Problem set").queryByText("Add another planned day")).not.toBeInTheDocument();
+  expect(taskPlanner("Problem set").queryByLabelText("Planned date for “Problem set”")).not.toBeInTheDocument();
   expect(taskPlanner("Problem set").getByRole("button", { name: "Move placement" })).toBeDisabled();
   expect(calls.filter((call) => call.url === "/api/placements" && call.method === "POST")).toHaveLength(1);
   expect(placements).toHaveLength(1);
@@ -534,7 +534,7 @@ test("parents are context; only leaves get assignment controls", async () => {
   expect(taskPlanner("Homework").queryByText("Plan task")).not.toBeInTheDocument();
   expect(taskPlanner("Homework").getByText("Plan the subtasks below.")).toBeInTheDocument();
   expect(taskPlanner("Problem 1").getByText("Move or remove plan")).toBeInTheDocument();
-  expect(taskPlanner("Problem 1").getByText("Add another planned day")).toBeInTheDocument();
+  expect(taskPlanner("Problem 1").queryByText("Add another planned day")).not.toBeInTheDocument();
   expect(await board().findByText("Math 55 / Homework")).toBeInTheDocument();
 });
 
@@ -559,7 +559,7 @@ test("moving across weeks keeps one planned day, preserves the task and leaves o
   expect(calls.find((call) => call.method === "PATCH")?.url).toBe("/api/placements/p1");
   expect(await taskPlanner("Read").findByText("Planned: Oct 23, 2026")).toBeInTheDocument();
   await user.click(taskPlanner("Read").getByText("Move or remove plan"));
-  expect(taskPlanner("Read").getByText("Add another planned day")).toBeInTheDocument();
+  expect(taskPlanner("Read").queryByText("Add another planned day")).not.toBeInTheDocument();
   expect(taskPlanner("Read").getByLabelText("Move “Read” from Oct 23, 2026 to")).toHaveValue("2026-10-23");
   await user.click(board().getByRole("button", { name: "Next week" }));
   expect(await board().findByLabelText("Read, planned Oct 23, 2026")).toBeInTheDocument();
@@ -745,29 +745,31 @@ test("a mutation during slow week navigation refreshes the requested week and ig
 });
 
 
-test("keyboard scheduling adds another planned day while preserving identity and synchronizing completion", async () => {
+test("existing multiple dates remain editable without Add controls and synchronize completion", async () => {
   const existing = task("00000000-0000-4000-8000-000000000001", "Read", { deadline: "2026-10-20", notes: "Keep notes" });
   const original = { ...existing };
-  const placements = [placement("p1", existing.id, "2026-10-15")];
+  const placements = [placement("p1", existing.id, "2026-10-15"), placement("p2", existing.id, "2026-10-16")];
   const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
   const user = userEvent.setup();
   render(<App />);
   await board().findByLabelText("Read, planned Oct 15, 2026");
   await screen.findByRole("checkbox", { name: "Read" });
   await user.click(taskPlanner("Read").getByText("Move or remove plan"));
-  await user.click(taskPlanner("Read").getByText("Add another planned day"));
-  fireEvent.change(taskPlanner("Read").getByLabelText("Planned date for “Read”"), { target: { value: "2026-10-16" } });
-  await user.click(taskPlanner("Read").getByRole("button", { name: "Add to day" }));
-  expect(await board().findByLabelText("Read, planned Oct 16, 2026")).toBeInTheDocument();
-  expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeInTheDocument();
+  expect(screen.queryByText("Add another planned day")).not.toBeInTheDocument();
+  expect(taskPlanner("Read").queryByRole("button", { name: "Add to day" })).not.toBeInTheDocument();
+  const sourceActions = within(taskPlanner("Read").getByLabelText("Move “Read” from Oct 15, 2026 to").closest("form")!);
+  fireEvent.change(sourceActions.getByLabelText("Move “Read” from Oct 15, 2026 to"), { target: { value: "2026-10-17" } });
+  await user.click(sourceActions.getByRole("button", { name: "Move placement" }));
+  expect(await board().findByLabelText("Read, planned Oct 17, 2026")).toBeInTheDocument();
+  expect(board().getByLabelText("Read, planned Oct 16, 2026")).toBeInTheDocument();
   expect(placements).toHaveLength(2);
-  expect(placements[0]).toEqual(placement("p1", existing.id, "2026-10-15"));
-  expect(placements[1].task_id).toBe(existing.id);
+  expect(placements[0]).toEqual(placement("p1", existing.id, "2026-10-17"));
+  expect(placements[1]).toEqual(placement("p2", existing.id, "2026-10-16"));
   expect(existing).toEqual(original);
   expect(board().getByText("Weekly completion: 0 of 1 work items complete (0%).")).toBeInTheDocument();
-  expect(calls.filter((call) => call.method !== "GET").map((call) => call.url)).toEqual(["/api/placements"]);
+  expect(calls.filter((call) => call.method !== "GET").map((call) => call.url)).toEqual(["/api/placements/p1"]);
   await user.click(board().getByLabelText("Read, planned Oct 16, 2026"));
-  await waitFor(() => expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeChecked());
+  await waitFor(() => expect(board().getByLabelText("Read, planned Oct 17, 2026")).toBeChecked());
   expect(board().getByLabelText("Read, planned Oct 16, 2026")).toBeChecked();
   expect(board().getByText("Weekly completion: 1 of 1 work items complete (100%).")).toBeInTheDocument();
 });

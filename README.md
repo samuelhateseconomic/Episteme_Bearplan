@@ -4,14 +4,14 @@ A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 normal countdown tracking implemented**. Projects, tasks and subtasks retain their
 previously passed behavior.
-A Monday–Sunday board supports date assignment, drag Move/Add, unscheduling, End Week and
+A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
 immutable history. The joined M1 technical review passed; no new itemized operator
 demonstration is claimed. See
 [shared progress](docs/PROGRESS.md),
 [M1 review](docs/reviews/2026-10-16-m1-review.md) and
 [countdown review](docs/reviews/2026-10-16-countdown.md). The current interface
 refinement is recorded in the [eligibility review](docs/reviews/2026-10-16-countdown-eligibility.md).
-Current scheduling behavior is recorded in the [drag scheduling review](docs/reviews/2026-10-16-drag-scheduling.md).
+Current scheduling behavior is recorded in the [move-only interface review](docs/reviews/2026-10-16-drag-simplification.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -59,18 +59,22 @@ choose a day using the Monday–Sunday buttons; on very narrow windows the board
 above the task list. Previous, Next and Today navigate weeks without moving work.
 
 Open **Plan task** on a leaf task or subtask, choose a **Planned date**, and use
-**Add to day**. Each leaf task or subtask may appear on **several planned dates**,
-with one placement per task/date. Those cards reference the same task and share
-completion; weekly totals count each scheduled leaf once. Parents remain context
+**Add to day**. Already scheduled work offers Move/remove controls. Existing saved
+dates stay intact, including several placements for the same task. Those cards
+reference the same task and share completion; weekly totals count each scheduled
+leaf once. Parents remain context
 for their scheduled children; unscheduled work stays in the project list.
 **Planned** dates and **Due** deadlines are displayed separately.
 
-Drag a card's **Drag** handle onto another day to **Move** that placement. Hold
-**Option on macOS / Alt on Windows** while dropping to **Add** a destination
-placement and keep the source. The visible Move/Add indicator and highlighted days
-show the operation and destinations. On narrow screens, drop onto one of the seven
-day buttons. Dragging does not switch weeks or select another day automatically.
+Drag the grip icon to the left of a card's project/parent-task line onto another day to **Move** that
+placement. Holding Option/Alt still moves it. The visible Move indicator and
+highlighted days show the operation and destinations. On narrow screens, drop onto
+one of the seven day buttons. Dragging does not switch weeks or select another day automatically.
 Checkboxes, tracking buttons and other card controls do not initiate dragging.
+
+Weekly cards show the task's due date; the day column identifies its planned day.
+The redundant Planned-date line is omitted on both open and historical cards.
+Planned dates remain in the task list and date controls.
 
 Cancel, drop outside a valid destination, or drop onto the source day to leave the
 plan unchanged. A destination already containing that task is a conflict; both
@@ -79,11 +83,9 @@ show an error and keep the saved board displayed; refresh the weekly plan to che
 its saved state after a lost response before retrying.
 
 Keyboard/date alternatives remain available: open **Move or remove** on a card to
-**Move placement** or **Remove from plan**. Open **Add another planned day** on a
-card or in the task's planning details and choose a date, then **Add to day**.
-Date controls can also move/add outside the displayed week. Moving changes only
-that placement and preserves its ID; adding creates a placement for the same task.
-Move back or remove an added placement to reverse a saved scheduling change.
+**Move placement** or **Remove from plan**. Date controls can move outside the
+displayed week. Moving changes only that placement and preserves its ID and any
+other saved placements for the task. Move back to reverse a saved move.
 Removal keeps the task and its completion. The task list shows all its active dates,
 including dates outside the displayed week. Completing/reopening any card updates
 the shared task and all its cards; finishing a timer still leaves completion alone.

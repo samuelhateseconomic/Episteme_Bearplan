@@ -64,12 +64,20 @@ dates; use their contents and commit history to determine which evidence is curr
   copy completion into placements. A leaf may have several active planned dates,
   with at most **one placement per task/date**. Completion is shared across its
   dates, and totals count each scheduled leaf once. Parents appear as context and
-  complete only when all their children complete. The explicit Option/Alt-add
-  request on 2026-10-16 supersedes the 2026-10-15 one-active-date refinement.
-- Drag a placement's handle to Move it, preserving its identity and other placements.
-  Option-drag on macOS / Alt-drag on Windows adds a destination placement for the
-  same task while retaining the source. Retain keyboard date controls for both
-  operations. Cancel, outside drops and same-day drops change nothing. Reject an
+  complete only when all their children complete. Preserve existing multi-date
+  records and schema-7 compatibility; the later interface simplification does not
+  restore a one-active-date constraint or remove saved dates.
+- Drag a placement's icon handle to Move it, preserving its identity and other
+  placements. Option/Alt does not change this operation. Initial scheduling is
+  available for unscheduled tasks; remove the Add-another-day interface and modifier
+  Add behavior (latest user refinement, 2026-10-16). Keep keyboard Move/remove date
+  controls. Show the icon to the left of the project/parent-task context line,
+  above the leaf/subtask title, with an accessible name and no visible Drag text;
+  omit the open-board dragging instructions. Weekly cards show the due date, while
+  their column identifies the planned day; omit redundant Planned-date metadata
+  on open and historical cards. Keep planned dates in task planning, date controls,
+  accessibility labels and saved records.
+  Cancel, outside drops and same-day drops change nothing. Reject an
   occupied task/date destination atomically, explain the conflict and preserve all
   existing placements. Different tasks may share a date. Removing a placement keeps
   its task. Scheduling preserves task identity, project, notes, deadline, completion,
