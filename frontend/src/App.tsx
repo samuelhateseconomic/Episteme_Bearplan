@@ -18,6 +18,7 @@ import {
   type TaskEdit,
 } from "./api";
 import { TaskPlanning, WeeklyPlanner, usePlanning } from "./WeeklyPlanner";
+import { CompactTimer, TrackScreen, useCountdown } from "./Countdown";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -39,6 +40,10 @@ function formatEstimate(minutes: number): string {
 
 export default function App() {
   const planning = usePlanning();
+  const timer = useCountdown();
+  const [screen, setScreen] = useState(() => window.location.hash === "#track" ? "track" : "plan");
+  const [trackingTaskId, setTrackingTaskId] = useState<string | null>(null);
+  const [trackingRequest, setTrackingRequest] = useState(0);
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[] | null>(null);
@@ -57,6 +62,22 @@ export default function App() {
   selectedIdRef.current = selectedId;
 
   const selected = projects?.find((p) => p.id === selectedId) ?? null;
+
+  useEffect(() => {
+    const navigate = () => setScreen(window.location.hash === "#track" ? "track" : "plan");
+    window.addEventListener("hashchange", navigate);
+    return () => window.removeEventListener("hashchange", navigate);
+  }, []);
+
+  function openTrack(taskId?: string) {
+    if (taskId) {
+      setTrackingTaskId(taskId);
+      setTrackingRequest((current) => current + 1);
+    }
+    setScreen("track");
+    window.location.hash = "track";
+    timer.refresh();
+  }
 
   const loadProjects = useCallback(() => {
     setLoadError(null);
@@ -136,7 +157,17 @@ export default function App() {
       <header className="page-head">
         <h1>BearPlans</h1>
         <p className="muted">Make room for your week.</p>
+        <nav className="main-navigation" aria-label="Main navigation">
+          <a href="#plan" aria-current={screen === "plan" ? "page" : undefined} onClick={() => setScreen("plan")}>Plan</a>
+          <a href="#track" aria-current={screen === "track" ? "page" : undefined} onClick={() => openTrack()}>Track</a>
+        </nav>
       </header>
+
+      {timer.error ? <p role="alert" className="error timer-error">{timer.error}{" "}<button type="button" className="link" onClick={timer.refresh}>Refresh timer</button></p> : null}
+      {screen !== "track" ? <CompactTimer timer={timer} onOpen={() => openTrack()} /> : null}
+      <TrackScreen timer={timer} plan={planning.plan} projects={projects ?? []} requestedTaskId={trackingTaskId} requestToken={trackingRequest} visible={screen === "track"} planError={planning.error} onRefreshTasks={() => void planning.refresh()} />
+
+      <div hidden={screen !== "plan"}>
 
       {loadError ? (
         <p className="error load-error" role="alert">
@@ -238,6 +269,7 @@ export default function App() {
                         editing={editing === task.id}
                         locked={mutations > 0 || Boolean(loadError) || Boolean(planning.error)}
                         planning={<TaskPlanning task={task} plan={planning.plan} selectedDay={planning.selectedDay} onRun={run} />}
+                        onTrack={() => openTrack(task.id)}
                         extra={
                           <button type="button" className="link" onClick={() => setAddingSubtaskTo(addingSubtaskTo === task.id ? null : task.id)}>
                             {addingSubtaskTo === task.id ? "Cancel subtask" : "Add subtask"}
@@ -281,6 +313,7 @@ export default function App() {
                                 editing={editing === child.id}
                                 locked={mutations > 0 || Boolean(loadError) || Boolean(planning.error)}
                                 planning={<TaskPlanning task={child} plan={planning.plan} selectedDay={planning.selectedDay} onRun={run} />}
+                                onTrack={() => openTrack(child.id)}
                               />
                               {editing === child.id ? (
                                 <TaskForm
@@ -311,6 +344,8 @@ export default function App() {
       <WeeklyPlanner state={planning} projects={projects ?? []} onRun={run} locked={mutations > 0 || planning.loading || Boolean(loadError) || Boolean(planning.error)} />
       </div>
 
+      </div>
+
       <p className="status" role="status" aria-live="polite">{status}</p>
     </main>
   );
@@ -324,6 +359,7 @@ function TaskRow({
   extra,
   planning,
   locked,
+  onTrack,
 }: {
   task: Task;
   onToggle: (complete: boolean) => Promise<void>;
@@ -332,6 +368,7 @@ function TaskRow({
   extra?: ReactNode;
   planning?: ReactNode;
   locked: boolean;
+  onTrack: () => void;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -375,6 +412,7 @@ function TaskRow({
         {error ? <p className="error" role="alert">{error}</p> : null}
       </div>
       <div className="task-actions">
+        {!derived ? <button type="button" className="link" onClick={onTrack}>Start tracking</button> : null}
         <button type="button" className="link" onClick={onEdit}>{editing ? "Cancel" : "Edit"}</button>
         {extra}
       </div>

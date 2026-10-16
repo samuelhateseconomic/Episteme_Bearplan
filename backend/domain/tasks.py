@@ -250,6 +250,16 @@ def _list_tasks(conn: sqlite3.Connection, project_id: str | None = None) -> list
 # --------------------------------------------------------------------------- writing
 
 
+def _reject_tracked_structure_change(conn: sqlite3.Connection, task_id: str, field: str) -> None:
+    # Upgrade tests also exercise genuine pre-timer schemas. Their tasks remain
+    # usable before migration 6; current services always have this table.
+    exists = conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'timer_sessions'").fetchone()
+    if exists and conn.execute(
+        "SELECT 1 FROM timer_sessions WHERE task_id = ? AND state <> 'finished'", (task_id,)
+    ).fetchone():
+        raise InvalidInput(field, "This task has an unfinished countdown. Finish it in Track before changing its subtasks or removing it.")
+
+
 def create_task(
     db: Database,
     title: str,
@@ -275,6 +285,7 @@ def create_task(
     with db.write() as conn:
         if parent_id is not None:
             parent = _resolve_parent(conn, parent_id, task_id=None)
+            _reject_tracked_structure_change(conn, parent_id, "parent_id")
             if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (parent_id,)).fetchone():
                 raise InvalidInput(
                     "parent_id",
@@ -395,6 +406,7 @@ def remove_subtask(db: Database, task_id: str) -> Task:
         parent_id = child["parent_id"]
         if parent_id is None:
             raise InvalidInput("task_id", "Only subtasks can be removed in this build.")
+        _reject_tracked_structure_change(conn, task_id, "task_id")
         if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (task_id,)).fetchone():
             raise InvalidInput("task_id", "Remove this subtask's planned placements before deleting it.")
         conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))

@@ -73,6 +73,8 @@ function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; s
     const body = init?.body ? (JSON.parse(init.body as string) as Record<string, unknown>) : undefined;
     calls.push({ url, method, body });
 
+    if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
+
     if (fail && url.startsWith(fail.url) && method !== "GET") return json({ error: fail.error }, fail.status);
     if (url.startsWith("/api/planning") && method === "GET") return json(planningSnapshot(tasks, placements, url));
     if (url === "/api/placements" && method === "POST") {
@@ -299,6 +301,7 @@ test("a failed projects load reports the problem and can be retried", async () =
   let attempt = 0;
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
     if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects") {
       attempt += 1;
@@ -348,6 +351,7 @@ test("a mutation resolving after a project switch does not show the old project'
 
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
     if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects")
       return json({ projects: [project(MATH, "Math 55", true), project(CS, "CS 61A")] });
@@ -379,6 +383,7 @@ test("Try again refetches the tasks, not only the projects", async () => {
   let taskAttempt = 0;
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input) => {
     const url = String(input);
+    if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
     if (url.startsWith("/api/planning")) return json(planningSnapshot([], [], url));
     if (url === "/api/projects") return json({ projects: [project(MATH, "Math 55", true)] });
     taskAttempt += 1;

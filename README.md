@@ -1,13 +1,15 @@
 # BearPlans
 
 A personal, local-only laptop planner. Your data stays on your computer.
-Current state: **weekly planning, closed-week history and reviewed carryover
-implemented**. Projects, tasks and subtasks retain their previously passed behavior.
+Current state: **weekly planning, closed-week history, reviewed carryover and
+normal countdown tracking implemented**. Projects, tasks and subtasks retain their
+previously passed behavior.
 A Monday–Sunday board supports date assignment, moves, unscheduling, End Week and
-immutable history. The user accepted this build on 2026-10-15; broader M1 milestone
-review remains separate. See
-[shared progress](docs/PROGRESS.md) and the
-[current review](docs/reviews/2026-10-15-weeks-history.md).
+immutable history. The joined M1 technical review passed; no new itemized operator
+demonstration is claimed. See
+[shared progress](docs/PROGRESS.md),
+[M1 review](docs/reviews/2026-10-16-m1-review.md) and
+[countdown review](docs/reviews/2026-10-16-countdown.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -16,9 +18,32 @@ count leaf work items once, excluding containers. Put additional parent work in 
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
 General task/project deletion and re-parenting are deferred. Reopening closed weeks,
-recurring tasks, automatic bulk carryover, advanced reports, timers, rewards, AI and
-integrations are later work. Finishing a future timer
-must never automatically complete its task.
+recurring tasks, automatic bulk carryover, advanced reports, rewards, AI and
+integrations are later work. Finishing a timer never automatically completes its task.
+
+## Track a countdown
+
+Open **Track** directly using the navigation or `/#track`, or choose **Start tracking**
+on a leaf task/subtask. Select existing work from any project, including unscheduled
+tasks, then choose a whole number of minutes from **1–180**. Start, Pause, Resume
+and Finish early control the same backend session across all tabs. Finish saves a
+session result; marking the task complete remains a separate task action.
+
+The compact timer stays visible while planning. Navigation, a hidden tab, refresh,
+and closing the browser leave the service tracking. Keep the local service running.
+Its monitor resolves expiry even with no browser open. The interface interpolates
+the backend's remaining time for display; browser ticks do not save or earn time.
+Saved UTC active intervals stay where the work occurred when the task is later moved
+or edited. Pause time is excluded, and active time cannot exceed the chosen duration.
+
+**Countdown recovery is provisional.** The service checkpoints about once a second.
+Restarted/interrupted sessions, unexplained service sampling gaps over five seconds,
+and clock inconsistencies become **Needs review** with only previously confirmed time.
+The timer slot remains occupied until you explicitly save confirmed time and finish,
+discarding the unverified gap. Automatic sleep/crash/clock-change reconciliation and
+time corrections are not in this build. Browser visibility is never treated as sleep.
+Actual Mac sleep/wake, battery/standby/hibernate, midnight/DST and longer-session
+acceptance remain gates for the recovery build and overall M2.
 
 ## Plan your week
 

@@ -218,3 +218,49 @@ export function movePlacement(id: string, plannedDate: string): Promise<Placemen
 export function removePlacement(id: string): Promise<{ removed: string }> {
   return request<{ removed: string }>(`/api/placements/${encodeURIComponent(id)}`, { method: "DELETE" });
 }
+
+export interface TimerSession {
+  id: string;
+  start_operation_id: string;
+  task_id: string;
+  task_title: string;
+  project_id: string;
+  project_name: string;
+  parent_title: string | null;
+  state: "running" | "paused" | "needs_review" | "finished";
+  duration_minutes: number;
+  requested_seconds: number;
+  active_seconds: number;
+  remaining_seconds: number;
+  started_at: string;
+  checkpoint_at: string;
+  deadline_at: string | null;
+  finished_at: string | null;
+  outcome: "completed" | "finished_early" | "interrupted" | null;
+  review_reason: string | null;
+  revision: number;
+}
+
+export interface TimerState {
+  server_now: string;
+  active_session: TimerSession | null;
+  last_session: TimerSession | null;
+}
+
+export interface TimerControl {
+  operation_id: string;
+  expected_revision: number;
+  discard_uncertain?: boolean;
+}
+
+export function getTimer(signal?: AbortSignal): Promise<TimerState> {
+  return request<TimerState>("/api/timer", { signal });
+}
+
+export function startTimer(operationId: string, taskId: string, durationMinutes: number): Promise<TimerState> {
+  return request<TimerState>("/api/timer/start", json("POST", { operation_id: operationId, task_id: taskId, duration_minutes: durationMinutes }));
+}
+
+export function controlTimer(id: string, action: "pause" | "resume" | "finish", control: TimerControl): Promise<TimerState> {
+  return request<TimerState>(`/api/timer/${encodeURIComponent(id)}/${action}`, json("POST", control));
+}

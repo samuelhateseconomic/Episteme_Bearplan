@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 from pathlib import Path
 import sqlite3
 
@@ -15,7 +16,8 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 from backend import __version__
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import PlacementConflict, WeekConflict
-from backend.routes import planning, projects, tasks, weeks
+from backend.domain.timer import Clock, TimerConflict, TimerService
+from backend.routes import planning, projects, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -67,16 +69,35 @@ async def _reject(scope: Scope, receive: Receive, send: Send, status: int, code:
     await response(scope, receive, send)
 
 
-def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
+def create_app(db: Database, static_dir: Path | None = None, *, timer_clock: Clock | None = None) -> FastAPI:
+    countdown = TimerService(db, timer_clock)
+
+    @asynccontextmanager
+    async def lifespan(_: FastAPI):
+        countdown.start_monitor()
+        try:
+            yield
+        finally:
+            countdown.stop_monitor()
+
     app = FastAPI(
         title="BearPlans",
         version=__version__,
         docs_url="/api/docs",
         redoc_url=None,
         openapi_url="/api/openapi.json",
+        lifespan=lifespan,
     )
     app.state.db = db
+    app.state.timer = countdown
     app.add_middleware(LocalOnlyMiddleware)
+
+    @app.exception_handler(TimerConflict)
+    async def timer_conflict(_: Request, exc: TimerConflict) -> JSONResponse:
+        return JSONResponse(
+            {"error": {"code": "timer_conflict", "field": exc.field, "message": exc.message}},
+            status_code=409,
+        )
 
     @app.exception_handler(WeekConflict)
     async def week_conflict(_: Request, exc: WeekConflict) -> JSONResponse:
@@ -136,6 +157,7 @@ def create_app(db: Database, static_dir: Path | None = None) -> FastAPI:
     app.include_router(planning.router)
     app.include_router(weeks.router)
     app.include_router(tasks.router)
+    app.include_router(timer.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")
