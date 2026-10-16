@@ -333,6 +333,7 @@ def test_moving_editing_and_removed_subtasks_cannot_move_history(timer, db: Data
     observed(service, clock, 2)
     saved = service.control(session.id, "finish").last_session
     before = stored(db)
+    added = create_placement(db, child.id, "2026-10-17", source_placement_id=placement.id)
     move_placement(db, placement.id, "2026-11-06")
     update_task(db, child.id, title="Edited leaf", deadline="2027-01-01")
     rename_project(db, child.project_id, "Edited project")
@@ -340,6 +341,7 @@ def test_moving_editing_and_removed_subtasks_cannot_move_history(timer, db: Data
     assert saved.task_id == child.id and saved.task_title == "Original leaf"
     from backend.domain.planning import remove_placement
     remove_placement(db, placement.id)
+    remove_placement(db, added.id)
     remove_subtask(db, child.id)
     assert stored(db) == before and service.get().last_session == saved
 
@@ -449,7 +451,7 @@ def test_v5_upgrade_preserves_all_existing_rows_and_failed_upgrade_retries(tmp_p
     with db.read() as conn:
         assert conn.execute("SELECT name FROM sqlite_master WHERE name = 'timer_sessions'").fetchone() is None
     migrate(db)
-    assert current_version(db) == 6 and legacy() == before
+    assert current_version(db) == len(load_migrations()) and legacy() == before
     reopened = open_database(db.path)
     assert list_tasks(reopened) == list_tasks(db)
     with reopened.read() as conn:

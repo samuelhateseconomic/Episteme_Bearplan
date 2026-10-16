@@ -1,5 +1,10 @@
 # Weekly planning refinement — one planned day
 
+**Superseded on 2026-10-16:** the explicit Option/Alt-add request restores multiple
+planned dates for one task, with task/date uniqueness. See the
+[drag scheduling review](2026-10-16-drag-scheduling.md). This file retains the
+historical one-day build's evidence.
+
 **Historical review for `a21cb49`:** with the later
 [closed-week build](2026-10-15-weeks-history.md), the one-day limit applies to active
 plans across open weeks. Archived historical placements are retained independently.

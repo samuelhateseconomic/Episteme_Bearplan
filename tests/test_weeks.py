@@ -132,25 +132,23 @@ def test_empty_week_closes_with_zero_total_and_retry_returns_identical_snapshot(
 
 
 def test_multiple_placements_count_each_leaf_once_and_exclude_parent_context(db: Database) -> None:
-    """Defensive historical count: repeated references never change the denominator."""
+    """Multiple planned dates never change the unique-leaf denominator."""
     parent = create_task(db, "Parent")
     child = create_task(db, "Completed child", parent_id=parent.id)
     unfinished = create_task(db, "Unfinished child", parent_id=parent.id)
     set_task_completion(db, child.id, True)
-    placement = create_placement(db, child.id, "2026-10-15")
+    create_placement(db, child.id, "2026-10-15")
     create_placement(db, unfinished.id, "2026-10-16")
-    # Exercise snapshot deduplication without weakening production's one-active-plan rule.
-    with db.write() as conn:
-        conn.execute("DROP INDEX planned_items_one_per_task")
-        conn.execute(
-            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision)"
-            " SELECT ?, task_id, '2026-10-17', created_at, updated_at, revision FROM planned_items WHERE id = ?",
-            (str(uuid4()), placement.id),
-        )
+    create_placement(db, child.id, "2026-10-17")
     history = dumped(closed(db))
     assert len(history["placements"]) == 3
     assert (history["completed"], history["total"]) == (1, 2)
     assert len({task["id"] for task in history["tasks"]}) == 3
+    assert list_placements(db) == []
+    create_placement(db, child.id, "2026-10-22")
+    set_task_completion(db, unfinished.id, True)
+    reopened = open_database(db.path)
+    assert dumped(get_planning(reopened, SOURCE).closed_week) == history
 
 
 @pytest.mark.parametrize("operation", ["assign", "move_into", "move_archived", "same_day_archived", "remove_archived"])

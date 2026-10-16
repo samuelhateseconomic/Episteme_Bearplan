@@ -1,6 +1,7 @@
 # Countdown refinement — incomplete leaves and weekly-card entry
 
 Date: October 16, 2026, America/Los_Angeles. Verified baseline **`c4b7dd3`**.
+The later cosmetic follow-up at the end records removal of disabled-button help text.
 Schema remains **6**; no migration, dependency, timer arithmetic or recovery change.
 The local commit containing this record identifies the reviewed refinement.
 
@@ -154,3 +155,37 @@ real Mac sleep/wake and DarkWake, crash/restart reconciliation, forward/backward
 clock changes, battery/standby/hibernate, midnight/DST and longer precision evidence.
 Current conservative Needs review behavior remains. No full recovery or next build
 was started; no drag-and-drop, untasked tracking or unrelated feature was added.
+
+
+## Cosmetic follow-up — remove disabled-button explanation
+
+October 16, 2026, baseline `bbe6059`; working-tree follow-up, no additional commit
+requested. **Change review: Pass.** The user's latest instruction supersedes the
+beneath-button explanation from the eligibility build. Completed leaf tasks still
+show disabled Start tracking in both the task list and open weekly board, with no
+extra paragraph or associated description. Removed unused hint CSS. Track empty
+states and backend rejection messages remain available. No record, schema, timer
+state, session behavior or eligibility rule changed; reversing this cosmetic edit
+only restores the paragraph.
+
+Actual checks on the same macOS/Darwin environment:
+
+- `npm --prefix frontend test`: **63 passed**, **3.18 s**; existing assertions updated,
+  no new test suite added.
+- `npm --prefix frontend run typecheck`: **Pass**.
+- `npm --prefix frontend run build`: **Pass**, Vite **83 ms**.
+- `BEARPLANS_EVIDENCE_DIR=/private/tmp/bearplans-tracking-copy-20261016 BEARPLANS_E2E_CHANNEL=chrome .venv/bin/python -m pytest -q tests/test_timer_eligibility_browser.py`
+  with Chrome/loopback permission: **1 passed**, **2.30 s**. Disabled entries,
+  keyboard weekly entry, completion during tracking, stale rejection and empty
+  states still pass.
+- Visually inspected synthetic **1440 px** and **375 px** views of both entry
+  points; no explanation below disabled controls and no horizontal overflow.
+  Evidence: [wide](evidence/tracking-button-copy/wide.png),
+  [narrow](evidence/tracking-button-copy/narrow.png).
+- Independent source review: **Pass**; disabled/leaf logic and all backend code
+  unchanged. No backend timer suite rerun for this presentation-only change.
+
+The normal service was left running; it serves the rebuilt interface on refresh.
+No normal database reads/writes, personal edits, personal screenshots or service
+restart were needed. Existing unrelated planning edits remain preserved. No new
+operator or overall M2 recovery acceptance is claimed; no recovery build started.

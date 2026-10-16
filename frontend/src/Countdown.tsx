@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { ApiError, controlTimer, getTimer, startTimer, type Planning, type Project, type Task, type TimerSession, type TimerState } from "./api";
 
 const message = (error: unknown) => error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
@@ -124,11 +124,9 @@ export type Countdown = ReturnType<typeof useCountdown>;
 
 /** Shared by current-task entry points; historical cards never offer this action. */
 export function StartTrackingButton({ task, onTrack, disabled = false }: { task: Task; onTrack: () => void; disabled?: boolean }) {
-  const hintId = useId();
   if (task.subtask_count > 0) return null;
   return <div className="tracking-entry">
-    <button type="button" className="link" disabled={disabled || task.completed} aria-describedby={task.completed ? hintId : undefined} onClick={onTrack}>Start tracking</button>
-    {task.completed ? <p id={hintId} className="tracking-hint muted">Reopen this task to start a new session. An existing session continues.</p> : null}
+    <button type="button" className="link" disabled={disabled || task.completed} onClick={onTrack}>Start tracking</button>
   </div>;
 }
 

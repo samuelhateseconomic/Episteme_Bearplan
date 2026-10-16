@@ -145,7 +145,7 @@ def test_corrupt_database_gives_clear_message_and_is_left_untouched(tmp_path: Pa
     assert db_file.read_bytes() == b"not a database" * 200
 
 
-def test_legacy_multiday_plans_give_actionable_startup_error_without_removal(tmp_path: Path) -> None:
+def test_legacy_multiday_plans_upgrade_and_survive_service_restart_without_removal(tmp_path: Path) -> None:
     from backend.domain.tasks import create_task
     from backend.storage.db import Database
     from backend.storage.migrations import current_version, migrate
@@ -167,17 +167,44 @@ def test_legacy_multiday_plans_give_actionable_startup_error_without_removal(tmp
     with db.read() as conn:
         before = [tuple(row) for row in conn.execute("SELECT * FROM planned_items ORDER BY id")]
         task_before = tuple(conn.execute("SELECT * FROM tasks WHERE id = ?", (task.id,)).fetchone())
-    result = _run_service(data_dir, free_port())
-    assert result.returncode == 1
-    assert "cannot start" in result.stderr
-    assert "multiple planned dates" in result.stderr
-    assert "previous BearPlans build" in result.stderr and "retry" in result.stderr
-    assert "Traceback" not in result.stderr
-    assert not (data_dir / INSTANCE_FILENAME).exists()
-    assert current_version(db) == 3
+    for _ in range(2):
+        service = Service(data_dir, free_port()).start()
+        status, plan = http_json("GET", f"{service.url}/api/planning?week=2026-10-12")
+        assert status == 200
+        assert {item["id"] for item in plan["placements"]} == {row[0] for row in before}
+        assert {item["task_id"] for item in plan["placements"]} == {task.id}
+        assert service.stop() == 0
+        assert not (data_dir / INSTANCE_FILENAME).exists()
+    assert current_version(db) == len(load_migrations())
     with db.read() as conn:
         assert [tuple(row) for row in conn.execute("SELECT * FROM planned_items ORDER BY id")] == before
         assert tuple(conn.execute("SELECT * FROM tasks WHERE id = ?", (task.id,)).fetchone()) == task_before
+
+
+def test_multiple_placements_and_move_persist_through_real_service_restart(tmp_path: Path) -> None:
+    data_dir = tmp_path / "DragPlans"
+    first = Service(data_dir, free_port()).start()
+    _, task = http_json("POST", f"{first.url}/api/tasks", {
+        "title": "Keep task fields", "deadline": "2026-10-30", "notes": "Original notes",
+    })
+    status, source = http_json("POST", f"{first.url}/api/placements", {
+        "task_id": task["id"], "planned_date": "2026-10-15",
+    })
+    assert status == 201
+    status, added = http_json("POST", f"{first.url}/api/placements", {
+        "task_id": task["id"], "planned_date": "2026-10-16", "source_placement_id": source["id"],
+    })
+    assert status == 201
+    status, moved = http_json("PATCH", f"{first.url}/api/placements/{source['id']}", {"planned_date": "2026-10-17"})
+    assert status == 200 and moved["id"] == source["id"]
+    _, before = http_json("GET", f"{first.url}/api/planning?week=2026-10-12")
+    assert first.stop() == 0
+    second = Service(data_dir, free_port()).start()
+    _, after = http_json("GET", f"{second.url}/api/planning?week=2026-10-12")
+    assert second.stop() == 0
+    assert after == before
+    assert {item["id"] for item in after["placements"]} == {source["id"], added["id"]}
+    assert after["tasks"] == [task]
 
 
 def test_refuses_data_dir_inside_repository() -> None:
@@ -243,7 +270,7 @@ def test_planning_changes_and_shared_completion_survive_service_restart(tmp_path
         assert status == 201
         status, moved = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-15"})
         assert status == 201
-        status, conflict = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-16"})
+        status, conflict = http_json("POST", f"{first.url}/api/placements", {"task_id": child["id"], "planned_date": "2026-10-15"})
         assert status == 409 and conflict["error"]["code"] == "placement_conflict"
         status, removed = http_json("POST", f"{first.url}/api/placements", {"task_id": unscheduled["id"], "planned_date": "2026-10-16"})
         assert status == 201

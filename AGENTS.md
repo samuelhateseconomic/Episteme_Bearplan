@@ -61,19 +61,19 @@ dates; use their contents and commit history to determine which evidence is curr
 ## Weekly planning rules
 
 - A placement references one existing leaf task on a date; never clone tasks or
-  copy completion into placements. Each leaf task or subtask has at most **one
-  active planned date across open weeks**, including completed work. Closed-week
-  placements are historical records and do not consume that active allowance.
-  Split multi-day work
-  into explicit subtasks, each with its own date. Parents appear as context and
-  complete only when all their children complete. This supersedes the original
-  multi-day placement decision (user refinement, 2026-10-15).
-- Reject a second assignment with the existing date and guidance to Move or split
-  work into subtasks; leave records unchanged. Move the existing placement to change
-  its day/week, preserving its identity. Different tasks may share a date. Removing
-  a placement keeps its task. Scheduling preserves task identity, project, notes,
-  deadline, completion and history. Never silently discard legacy multi-day plans
-  during migration; fail safely with recovery instructions if they exist.
+  copy completion into placements. A leaf may have several active planned dates,
+  with at most **one placement per task/date**. Completion is shared across its
+  dates, and totals count each scheduled leaf once. Parents appear as context and
+  complete only when all their children complete. The explicit Option/Alt-add
+  request on 2026-10-16 supersedes the 2026-10-15 one-active-date refinement.
+- Drag a placement's handle to Move it, preserving its identity and other placements.
+  Option-drag on macOS / Alt-drag on Windows adds a destination placement for the
+  same task while retaining the source. Retain keyboard date controls for both
+  operations. Cancel, outside drops and same-day drops change nothing. Reject an
+  occupied task/date destination atomically, explain the conflict and preserve all
+  existing placements. Different tasks may share a date. Removing a placement keeps
+  its task. Scheduling preserves task identity, project, notes, deadline, completion,
+  session history and closed snapshots. Never discard legacy plans during migration.
 - Unscheduled tasks remain accessible. Display planned dates separately from
   deadlines. Monday–Sunday weeks use calendar dates, not elapsed-hour arithmetic.
   Today is determined by the service using `BEARPLANS_TIMEZONE` (an installed IANA

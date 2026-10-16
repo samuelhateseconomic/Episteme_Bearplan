@@ -299,13 +299,6 @@ a:focus-visible {
   max-width: 100%;
 }
 
-.tracking-hint {
-  margin: 0.15rem 0.4rem 0.4rem;
-  max-width: 21rem;
-  font-size: 0.75rem;
-  overflow-wrap: anywhere;
-}
-
 .error {
   color: var(--error);
   margin: 0.5rem 0 0;
@@ -910,3 +903,67 @@ details > summary:focus-visible {
     white-space: normal;
   }
 }
+
+/* Explicit drag handles keep card controls and text selection independent. */
+.placement-drag-handle {
+  display: inline-block;
+  margin: -0.1rem 0 0.45rem;
+  padding: 0.2rem 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: grab;
+  user-select: none;
+}
+
+.placement-drag-handle[draggable="false"] {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.placement-drag-handle:active { cursor: grabbing; }
+
+.drag-indicator {
+  /* Native drag sources and destinations must not move when feedback appears. */
+  position: fixed;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 5;
+  width: max-content;
+  max-width: min(42rem, calc(100vw - 1.5rem));
+  margin: 0;
+  pointer-events: none;
+  box-shadow: 0 0.25rem 1rem #0003;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  overflow-wrap: anywhere;
+}
+
+.drag-indicator-add { border-style: dashed; }
+
+.day-column.drop-valid,
+.day-choice.drop-valid {
+  outline: 2px dashed var(--accent);
+  outline-offset: -3px;
+}
+
+.day-column.drop-over.drop-valid,
+.day-choice.drop-over.drop-valid {
+  outline-style: solid;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.day-column.drop-conflict,
+.day-choice.drop-conflict {
+  outline: 2px dashed var(--error);
+  outline-offset: -3px;
+}
+
+.day-column.drop-over.drop-conflict,
+.day-choice.drop-over.drop-conflict { outline-style: solid; }
+
+.add-planned-day { margin-top: 0.5rem; }

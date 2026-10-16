@@ -1,4 +1,5 @@
 import sqlite3
+from contextlib import contextmanager
 from pathlib import Path
 
 import pytest
@@ -264,7 +265,6 @@ def test_planning_schema_enforces_foreign_keys_uniqueness_and_non_cascading_remo
     placement = create_placement(db, task.id, "2026-10-15")
     for task_id, day in (
         (task.id, "2026-10-15"),
-        (task.id, "2026-10-22"),
         ("00000000-0000-4000-8000-000000000099", "2026-10-16"),
     ):
         with pytest.raises(sqlite3.IntegrityError):
@@ -321,16 +321,20 @@ def test_single_day_upgrade_preserves_existing_placements_tasks_and_projects(tmp
         assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
 
 
-def test_legacy_multiple_dates_abort_upgrade_without_data_loss_and_can_retry(tmp_path: Path) -> None:
+def test_old_one_day_upgrade_still_fails_safely_without_a_compatible_latest_target(tmp_path: Path) -> None:
     db = _schema_three_with_placements(tmp_path / "legacy-multiple-days.sqlite3", multiple_dates=True)
     content_before, plans_before = _stored_content(db), _placement_rows(db)
     with db.read() as conn:
         schema_before = [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
         structure_before = [tuple(row) for row in conn.execute("SELECT name, sql FROM sqlite_master ORDER BY name")]
 
-    for upgrade in (lambda: migrate(db), lambda: open_database(db.path)):
+    for target in (
+        load_migrations()[:4],
+        [*load_migrations()[:6], Migration(7, "multiple_planned_days", "SELECT 1;")],
+        [*load_migrations()[:4], Migration(5, "closed_weeks", "SELECT 1;"), *load_migrations()[5:]],
+    ):
         with pytest.raises(MigrationError) as excinfo:
-            upgrade()
+            migrate(db, target)
         message = str(excinfo.value).lower()
         assert "multiple planned dates" in message and "rolled back" in message
         assert "previous" in message and "remove extra" in message and "retry" in message
@@ -343,10 +347,100 @@ def test_legacy_multiple_dates_abort_upgrade_without_data_loss_and_can_retry(tmp
             assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
             assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
 
-    # Simulate the user's explicit choice in the previous build, on disposable data.
-    with db.write() as conn:
-        conn.execute("DELETE FROM planned_items WHERE id = ?", (plans_before[1][0],))
     migrate(db)
     assert current_version(db) == len(load_migrations())
     assert _stored_content(db) == content_before
-    assert _placement_rows(open_database(db.path)) == plans_before[:1]
+    assert _placement_rows(open_database(db.path)) == plans_before
+
+
+def test_legacy_multiple_dates_upgrade_preserves_every_row_without_intermediate_one_day_schema(tmp_path: Path) -> None:
+    db = _schema_three_with_placements(tmp_path / "legacy-multiple-dates.sqlite3", multiple_dates=True)
+    before = _stored_content(db), _placement_rows(db)
+    with db.read() as conn:
+        old_receipts = [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
+    reopened = open_database(db.path)
+    assert current_version(reopened) == len(load_migrations())
+    assert (_stored_content(reopened), _placement_rows(reopened)) == before
+    with reopened.read() as conn:
+        assert conn.execute("SELECT 1 FROM sqlite_master WHERE name = 'planned_items_one_per_task'").fetchone() is None
+        receipts = [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
+        assert receipts[:3] == old_receipts
+        assert [(row[0], row[1]) for row in receipts] == [(m.version, m.name) for m in load_migrations()]
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+        assert conn.execute("PRAGMA foreign_key_check").fetchall() == []
+
+
+def test_legacy_multiple_dates_chain_failure_rolls_back_all_versions_and_retries(tmp_path: Path, monkeypatch) -> None:
+    db = _schema_three_with_placements(tmp_path / "legacy-chain-retry.sqlite3", multiple_dates=True)
+    before = _stored_content(db), _placement_rows(db)
+    with db.read() as conn:
+        schema_before = [tuple(row) for row in conn.execute("SELECT name, sql FROM sqlite_master ORDER BY name")]
+        receipts_before = [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")]
+    original_exclusive = db.exclusive
+
+    @contextmanager
+    def denied_timer_creation():
+        with original_exclusive() as conn:
+            conn.set_authorizer(lambda operation, name, *_: (
+                sqlite3.SQLITE_DENY if operation == sqlite3.SQLITE_CREATE_TABLE and name == "timer_sessions" else sqlite3.SQLITE_OK
+            ))
+            yield conn
+
+    with monkeypatch.context() as patch:
+        patch.setattr(db, "exclusive", denied_timer_creation)
+        with pytest.raises(MigrationError, match="legacy multiple-planned-date upgrade failed and was rolled back"):
+            migrate(db)
+    assert current_version(db) == 3
+    assert (_stored_content(db), _placement_rows(db)) == before
+    with db.read() as conn:
+        assert [tuple(row) for row in conn.execute("SELECT name, sql FROM sqlite_master ORDER BY name")] == schema_before
+        assert [tuple(row) for row in conn.execute("SELECT * FROM schema_migrations ORDER BY version")] == receipts_before
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+    migrate(db)
+    assert current_version(db) == len(load_migrations())
+    assert (_stored_content(open_database(db.path)), _placement_rows(db)) == before
+
+
+def test_v6_multi_day_upgrade_preserves_tasks_history_timer_rows_and_retries_after_failure(tmp_path: Path) -> None:
+    from uuid import uuid4
+
+    from backend.domain.planning import create_placement, list_placements
+    from backend.domain.timer import TimerService
+    from backend.domain.weeks import close_week, preview_close
+
+    db = Database(tmp_path / "v6-upgrade.sqlite3")
+    migrations = load_migrations()
+    migrate(db, migrations[:6])
+    task = create_task(db, "Original leaf", deadline="2026-10-30", notes="Keep fields")
+    historical = create_placement(db, task.id, "2026-10-15")
+    close_week(db, "2026-10-12", preview_close(db, "2026-10-12").preview_token)
+    current = create_placement(db, task.id, "2026-10-22")
+    timer = TimerService(db)
+    session = timer.start(task.id, 1, str(uuid4())).active_session
+    timer.control(session.id, "finish")
+
+    def rows():
+        with db.read() as conn:
+            return {name: [tuple(row) for row in conn.execute(f"SELECT * FROM {name} ORDER BY rowid")]
+                    for name in sorted(tables(db))}
+
+    before = rows()
+    failed = Migration(7, migrations[6].name, migrations[6].sql + "\nINSERT INTO missing_table VALUES (1);")
+    with pytest.raises(MigrationError, match="rolled back"):
+        migrate(db, [*migrations[:6], failed])
+    assert current_version(db) == 6 and rows() == before
+    with db.read() as conn:
+        assert conn.execute("SELECT 1 FROM sqlite_master WHERE name = 'planned_items_one_per_task'").fetchone()
+    migrate(db)
+    after = rows()
+    assert {name: values for name, values in after.items() if name != "schema_migrations"} == {
+        name: values for name, values in before.items() if name != "schema_migrations"
+    }
+    assert after["schema_migrations"][:6] == before["schema_migrations"]
+    added = create_placement(db, task.id, "2026-10-23", source_placement_id=current.id)
+    reopened = open_database(db.path)
+    assert list_placements(reopened) == [current, added]
+    with reopened.read() as conn:
+        assert conn.execute("SELECT id FROM closed_placements").fetchone()[0] == historical.id
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+        assert conn.execute("PRAGMA foreign_key_check").fetchall() == []

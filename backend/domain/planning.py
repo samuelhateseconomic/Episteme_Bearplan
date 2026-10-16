@@ -1,8 +1,9 @@
 """Weekly planning application functions shared by the UI and future adapters.
 
-A leaf task has at most one active placement. Closed-week placements are archived
-separately. Tasks, completion and deadlines are never cloned by scheduling. All
-task/placement/history reads in a planning view share a SQLite read transaction.
+A leaf task may have distinct active planned dates, with at most one placement on
+each date. Closed-week placements are archived separately. Tasks, completion and
+deadlines are never cloned by scheduling. All task/placement/history reads in a
+planning view share a SQLite read transaction.
 """
 
 from __future__ import annotations
@@ -80,8 +81,8 @@ class PlacementConflict(InvalidInput):
     def __init__(self, planned_date: str) -> None:
         super().__init__(
             "planned_date",
-            f"This task is already planned for {planned_date}. Use Move placement to change "
-            "its day, or split multi-day work into subtasks. Nothing was changed.",
+            f"This task is already planned for {planned_date}. Choose another day. "
+            "All existing placements were kept; nothing was changed.",
         )
 
 
@@ -197,23 +198,30 @@ def _require_open_week(conn: sqlite3.Connection, day: str) -> None:
         )
 
 
-def _check_already_planned(conn: sqlite3.Connection, task_id: str, *, except_id: str = "") -> None:
+def _check_already_planned(conn: sqlite3.Connection, task_id: str, day: str, *, except_id: str = "") -> None:
     existing = conn.execute(
-        "SELECT planned_date FROM planned_items WHERE task_id = ? AND id <> ?",
-        (task_id, except_id),
+        "SELECT planned_date FROM planned_items WHERE task_id = ? AND planned_date = ? AND id <> ?",
+        (task_id, day, except_id),
     ).fetchone()
     if existing:
         raise PlacementConflict(existing["planned_date"])
 
 
-def create_placement(db: Database, task_id: str, planned_date: str | date) -> Placement:
+def create_placement(
+    db: Database, task_id: str, planned_date: str | date, *, source_placement_id: str | None = None,
+) -> Placement:
     day = _planned_date(planned_date)
     now = utc_now()
     placement_id = str(uuid4())
     with db.write() as conn:
+        if source_placement_id is not None:
+            source = _require_placement(conn, source_placement_id)
+            _require_open_week(conn, source["planned_date"])
+            if source["task_id"] != task_id:
+                raise InvalidInput("source_placement_id", "The source placement belongs to a different task. Refresh the plan; nothing was changed.")
         _require_open_week(conn, day)
         _require_leaf(conn, task_id)
-        _check_already_planned(conn, task_id)
+        _check_already_planned(conn, task_id, day)
         conn.execute(
             "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision) "
             "VALUES (?, ?, ?, ?, ?, 1)",
@@ -229,7 +237,7 @@ def move_placement(db: Database, placement_id: str, planned_date: str | date) ->
         _require_open_week(conn, row["planned_date"])
         _require_open_week(conn, day)
         _require_leaf(conn, row["task_id"])
-        _check_already_planned(conn, row["task_id"], except_id=placement_id)
+        _check_already_planned(conn, row["task_id"], day, except_id=placement_id)
         if row["planned_date"] != day:
             conn.execute(
                 "UPDATE planned_items SET planned_date = ?, updated_at = ?, revision = revision + 1 WHERE id = ?",

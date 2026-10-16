@@ -133,14 +133,13 @@ test("new-session choices include scheduled and unscheduled incomplete leaves ac
   expect(within(choices).queryByRole("option", { name: "Seminar / Container" })).not.toBeInTheDocument();
 });
 
-test("completed Plan leaves disable new-session entry and explain it visibly and accessibly", async () => {
+test("completed Plan leaves disable new-session entry without extra explanation", async () => {
   const { calls } = service(empty(), { ...plan, tasks: [{ ...task, completed: true }] });
   const user = userEvent.setup();
   render(<App />);
   const start = await screen.findByRole("button", { name: "Start tracking" });
   expect(start).toBeDisabled();
-  expect(start).toHaveAccessibleDescription("Reopen this task to start a new session. An existing session continues.");
-  expect(screen.getByText("Reopen this task to start a new session. An existing session continues.")).toBeVisible();
+  expect(screen.queryByText("Reopen this task to start a new session. An existing session continues.")).not.toBeInTheDocument();
   await user.click(start);
   expect(calls.some((call) => call.url === "/api/timer/start")).toBe(false);
 });

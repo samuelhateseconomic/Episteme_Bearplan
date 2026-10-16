@@ -5,11 +5,30 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
+**Weekly drag Move / Option–Alt Add: implementation review Pass.** Verified baseline
+`bbe6059` (countdown ancestor `c4b7dd3`). The local commit containing this record
+includes the reviewed build and preserved disabled-button copy follow-up.
+Dedicated handles, visible Move/Add feedback, valid/conflict destinations,
+cancel/same-day no-ops, saved-state errors, closed read-only history and keyboard
+Move/Add date controls are implemented. Schema **7** permits multiple active dates
+for the same leaf, unique per task/date. This explicit October 16 Add request
+supersedes October 15's one-active-date refinement. No task cloning or automatic
+week/day switching. See the [drag review](reviews/2026-10-16-drag-scheduling.md).
+
+The preceding tracking interface and cosmetic follow-up were reverified **Pass**
+before drag edits: frontend **63 passed**, typecheck passed, Chrome **1 passed**,
+1440/375 px inspected. The already-present removal of explanation beneath disabled
+Start tracking controls is preserved, with its tests/review/evidence included in
+this local build commit. See the
+[cosmetic follow-up](reviews/2026-10-16-countdown-eligibility.md#cosmetic-follow-up--remove-disabled-button-explanation).
+No timer eligibility or session behavior changed in this drag build.
+
 **Countdown eligibility and weekly-card entry refinement: implementation review Pass.**
-Reviewed October 16, 2026 against verified baseline **`c4b7dd3`**. Schema remains
-**6**; no migration. The local commit containing this record includes the
-[current refinement review](reviews/2026-10-16-countdown-eligibility.md).
-No push or next build. The original normal countdown build remains passed; its
+Committed build: `bbe6059`; its earlier explanation requirement is superseded by
+the cosmetic follow-up above. That refinement was reviewed October 16, 2026 against
+verified baseline **`c4b7dd3`**, then at schema **6** without migration. Its
+[review](reviews/2026-10-16-countdown-eligibility.md) retains the original evidence.
+The original normal countdown build remains passed; its
 [review](reviews/2026-10-16-countdown.md) and full-suite results are historical
 baseline evidence, not new checks for this refinement.
 
@@ -45,7 +64,8 @@ commit. `CLAUDE.md` remains substantive and points here.
 | Weeks/history/carryover | Implementation Pass; overall user acceptance Pass | [History review](reviews/2026-10-15-weeks-history.md), `7155bc2`; acceptance `69c6630` |
 | Joined M1 technical review | Pass; broader operator gate not newly certified | [October 16 review](reviews/2026-10-16-m1-review.md) |
 | M2 normal countdown | Implementation Pass; overall M2 gate not passed | [Countdown review](reviews/2026-10-16-countdown.md), `c4b7dd3` |
-| Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Current review](reviews/2026-10-16-countdown-eligibility.md), local commit containing this record |
+| Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Eligibility review](reviews/2026-10-16-countdown-eligibility.md), `bbe6059`; cosmetic follow-up retained in current local commit |
+| Weekly drag Move / Option–Alt Add | Implementation Pass; operator demo not newly certified | [Drag review](reviews/2026-10-16-drag-scheduling.md), local commit containing this record |
 | Recovery and later builds | **Not started** | Future work requires its own authorized scope and acceptance evidence |
 
 ## Implemented countdown behavior
@@ -55,8 +75,8 @@ commit. `CLAUDE.md` remains substantive and points here.
   The form suggests 25 minutes as a changeable UI convenience, not a newly confirmed
   product default. Only **incomplete leaves** are eligible, scheduled or unscheduled.
   Completed tasks and containers are excluded; the backend revalidates atomically.
-  Completed Plan entries explain reopening and disable new starts. Eligible open
-  weekly-board cards open Track with the same task and existing duration/start flow.
+  Completed Plan entries disable new starts without an explanation beneath them.
+  Eligible open weekly-board cards open Track with the same task and existing duration/start flow.
   Empty choices explain adding/reopening work; stale rejection refreshes choices
   and retains duration. Completing an actively tracked task leaves its same running,
   paused or Needs review session visible and controllable. Receipt replay remains safe
@@ -80,10 +100,12 @@ commit. `CLAUDE.md` remains substantive and points here.
   explicit Save confirmed time and finish excludes the uncertain gap. Full recovery,
   automatic sleep reconciliation and time correction are unavailable.
 
-Core planning rules remain in AGENTS: one active planned day per leaf across open
-weeks, move preserves placement identity, closed snapshots/archive rows are immutable,
-reviewed carryover creates a new placement for the same current incomplete leaf,
-parent completion derives from children, and totals count leaves once. Today is
+Core planning rules remain in AGENTS: several active dates per leaf, unique per
+task/date; Move preserves placement identity and other placements, Add retains its
+source and references the same task. Closed snapshots/archive rows are immutable.
+Reviewed carryover creates a new placement for the same current incomplete leaf,
+and still excludes leaves with any active placement. Parent completion derives
+from children, and totals count leaves once. Today is
 service-authoritative, using `BEARPLANS_TIMEZONE` or the OS local timezone. Reopening,
 recurring work, automatic bulk carryover, rewards, trees, coins, streaks, AI,
 integrations and advanced statistics are not in this build.
@@ -97,7 +119,40 @@ Relevant tests: `tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
 `tests/test_timer_eligibility_browser.py`, `frontend/src/Countdown.test.tsx` and
 updated App mocks. Shared guidance/README carry the refined eligibility rule.
 
-## Current refinement checks actually performed
+## Drag scheduling checks actually performed
+
+Actual environment: **macOS 26.6.2 (25G83), Darwin arm64**, Python **3.13.15**,
+Node **24.21.0**, Chrome **155.0.8059.82**. All mutation/failure/restart fixtures
+use disposable data. The [drag review](reviews/2026-10-16-drag-scheduling.md) records
+commands, failures, exact scope, screenshots and the demonstration checklist.
+
+- Planning/API/migration/weeks/timer targeted regressions: **227 passed**, 6.46 s;
+  independent reviewer also 227 passed, 6.33 s. Restart regressions: **13 passed**,
+  10.13 s. Multiple dates, duplicate/concurrent conflicts, stale/archived sources,
+  closed destinations, no-op identity, unique-leaf snapshots and upgrade rollback/
+  retry are covered. Legacy schema-3 multi-date rows survive an atomic exact-known
+  4–7 compatibility upgrade; applied SQL files were not changed.
+- Frontend **74 passed**, 3.33 s after the native correction; typecheck and production
+  build passed. Existing date controls remain; new keyboard Add and narrow day-button
+  targets are tested. No task cloning, dependency additions or timer logic changes.
+- Actual native Chrome mouse/Option journeys: **2 passed**, 7.76 s. Move/Add,
+  duplicates, same-day/Escape/outside, failed POST/PATCH plus retries, stale-tab
+  server conflict, closure during drag, card controls, keyboard, 375 px layout and
+  exact saved task/session/snapshot records after restart all pass. Seven synthetic
+  screenshots inspected at 1600/375 px; no page errors or horizontal overflow.
+- Native tests found a real layout defect: in-flow feedback moved the source at
+  drag start and stalled Chrome dragging. Fixed with a floating indicator and
+  retaining old error feedback until drop; repeated conflict/error drags now pass.
+- Initial full existing core: **397 passed, 1 helper failure**, 116.69 s. M1's date
+  locator matched both Move and Add inputs. Scoped it to Move; focused M1 rerun
+  **1 passed**, 3.55 s. Final full core including new native cases:
+  **400 passed**, **118.99 s**, zero failed/skipped. This includes the real-minute
+  countdown/expiry and relevant timer, completion, persistence and browser regressions.
+- Independent backend/UI review found no remaining blocker. Initial sandbox setup,
+  obsolete one-day test expectations and keyboard date-segment helper corrections
+  are disclosed in the review. No skipped/setup-failed attempt is counted as a pass.
+
+## Countdown eligibility checks (historical, bbe6059)
 
 Actual environment remains **macOS 26.6.2 (25G83), Darwin arm64**, Python
 **3.13.15**, Node **24.21.0**, installed Chrome **155.0.8059.82**. Disposable data
@@ -169,28 +224,38 @@ links and original planning-file diff preservation are checked before commit.
 
 ## Normal running app and preserved user data
 
-The user's saved data has grown since the countdown handoff. Before this refinement's
-refresh: **nine tasks, two projects, three active placements, two closed weeks, four
-archived placements, three finished sessions, four saved intervals and eight timer
-receipts**; carryover receipts empty. A live SQLite backup in a private temporary
-folder passed integrity/FK checks. No personal content was printed.
+Before drag upgrade: **nine tasks, two projects, three active placements, two closed
+weeks, four archived placements, three finished sessions, four saved intervals and
+eight timer receipts**; carryover receipts empty. A live WAL-safe SQLite backup and
+a disposable rehearsal of the schema-7 upgrade preserved every original field and
+migration row; integrity/FKs passed.
 
-Identified service **3284** and launcher **3261** on port 8765. Rechecked that no
-running, paused or Needs review session existed, then gracefully stopped the verified
-launcher and confirmed the port released. Durable SQLite backup in the normal data
-folder: `bearplans-pre-eligibility-20261016T161718Z.sqlite3`; it matched the live
-backup exactly. Restarted with `python3 launch.py --no-browser`. Schema remains **6**.
+Identified service **5897**, launcher **5874**, port 8765. Rechecked no running,
+paused or Needs review session, gracefully stopped that launcher and confirmed port
+release. Verified no saved rows had changed since rehearsal. Durable backup in the
+normal data folder: **`bearplans-pre-drag-20261016T164423Z.sqlite3`**, matching the
+baseline exactly. Restarted via `python3 launch.py --no-browser`; schema is now **7**.
 
-Read-only Chrome inspection checked exact incomplete-leaf choices, completed entry
-controls, Plan/Track and narrow layout. The entire planning response and **every SQL
-field/hash across all original tables**, including all saved sessions/intervals/
-receipts and closed snapshots, matched the pre-restart backup. Integrity/FKs pass.
-No personal timer was started or task/history changed; no personal screenshot taken.
-The normal app runs the refinement at `http://127.0.0.1:8765/`; refresh existing tabs.
-Earlier schema-6 migration/backup evidence remains in the original countdown review.
+Read-only Chrome inspected the already-closed current week, next open week's drag
+controls, exact incomplete-leaf Track choices and 1440/375 px layouts. No personal
+task, placement, completion, timer or history action and no personal screenshot.
+**Every original SQL field** (including closed snapshots, sessions, intervals and
+receipts), plus the original six migration rows, still equals the backup. Integrity/
+FKs pass. The planning response stayed identical through navigation. The normal app
+is running at `http://127.0.0.1:8765/`; refresh existing tabs. Earlier schema-6
+backup evidence remains in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
+- Drag implementation/review is complete and passes, with the authorized relevant
+  local commit containing this record. Unrelated staged/unstaged user planning
+  changes remain preserved outside it. No push or subsequent build.
+- Hands-on drag demonstration: Move a card; Option/Alt-add another date; try an
+  occupied date, same-day, Escape and outside drop; use keyboard Move/Add date
+  controls; inspect narrow day-button targets and existing closed history. See the
+  [short checklist](reviews/2026-10-16-drag-scheduling.md#remaining-checks-and-demonstration).
+  Physical Windows Alt-drag and new operator acceptance remain unperformed. No
+  confirmed drag blocker remains after the native layout fix.
 - Hands-on refinement: select an incomplete weekly card, start/pause, complete its
   task in Plan, then return to the same timer and finish. Verify completed work is
   excluded from new choices and empty guidance appears when no eligible work remains.
@@ -205,13 +270,15 @@ Earlier schema-6 migration/backup evidence remains in the original countdown rev
   battery/standby/hibernate and a longer independent timing reference. Unknown time
   must never silently earn credit; the current conservative fallback remains until
   that gate passes.
-- No known refinement or normal-countdown implementation blocker remains. No push and no recovery,
+- No known normal-countdown implementation blocker remains. No push, recovery,
   reward, AI or integration implementation is authorized by this handoff alone.
 
 ## Guidance discrepancies retained
 
-- User refinement on October 15 supersedes original multi-day planning: one active
-  planned day per leaf, with closed historical placements preserved independently.
+- The explicit October 16 Option/Alt Add request supersedes October 15's one-active
+  date refinement. Multiple dates now reference the same leaf, unique per task/date,
+  with shared completion, unique-leaf totals and immutable historical placements.
+  The October 15 review retains historical evidence and links to the new decision.
 - User-edited roadmap says planned/not tested while checkmark rows say otherwise;
   its unstaged checkmarks now include weeks/history and countdown. The review-plan
   edit removes an older M1 status paragraph. Preserve these edits;

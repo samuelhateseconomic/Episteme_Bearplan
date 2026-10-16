@@ -4,13 +4,14 @@ A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 normal countdown tracking implemented**. Projects, tasks and subtasks retain their
 previously passed behavior.
-A Monday–Sunday board supports date assignment, moves, unscheduling, End Week and
+A Monday–Sunday board supports date assignment, drag Move/Add, unscheduling, End Week and
 immutable history. The joined M1 technical review passed; no new itemized operator
 demonstration is claimed. See
 [shared progress](docs/PROGRESS.md),
 [M1 review](docs/reviews/2026-10-16-m1-review.md) and
 [countdown review](docs/reviews/2026-10-16-countdown.md). The current interface
 refinement is recorded in the [eligibility review](docs/reviews/2026-10-16-countdown-eligibility.md).
+Current scheduling behavior is recorded in the [drag scheduling review](docs/reviews/2026-10-16-drag-scheduling.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -27,8 +28,8 @@ integrations are later work. Finishing a timer never automatically completes its
 Open **Track** directly using the navigation or `/#track`, or choose **Start tracking**
 on an incomplete leaf task/subtask in the task list or an open weekly-board card.
 Select incomplete leaf work from any project, including scheduled and unscheduled
-tasks, then choose a whole number of minutes from **1–180**. Completed tasks explain
-that they must be reopened before a new session can start. If none are eligible,
+tasks, then choose a whole number of minutes from **1–180**. Completed tasks have
+Start tracking disabled without extra text beneath the control. If none are eligible,
 Track explains how to add or reopen work. Start, Pause, Resume
 and Finish early control the same backend session across all tabs. Finish saves a
 session result; marking the task complete remains a separate task action.
@@ -58,23 +59,38 @@ choose a day using the Monday–Sunday buttons; on very narrow windows the board
 above the task list. Previous, Next and Today navigate weeks without moving work.
 
 Open **Plan task** on a leaf task or subtask, choose a **Planned date**, and use
-**Add to day**. Each leaf task or subtask has **one active planned day maximum**,
-across all open weeks. Closed-week history does not consume this allowance.
-Break work requiring several days into smaller subtasks and plan each
-one separately. Complete every child to complete its parent. Parents remain context
+**Add to day**. Each leaf task or subtask may appear on **several planned dates**,
+with one placement per task/date. Those cards reference the same task and share
+completion; weekly totals count each scheduled leaf once. Parents remain context
 for their scheduled children; unscheduled work stays in the project list.
 **Planned** dates and **Due** deadlines are displayed separately.
 
-On a board card, open **Move or remove**. **Move placement** changes only that
-placement, including to another week. Already scheduled tasks show **Move or remove
-plan** in the task list, with no second assignment form. A second assignment from a
-stale tab is rejected with the existing date and guidance to Move or split the work.
-Different tasks may share a date. **Remove from plan** keeps the task, its fields and
-completion. The task list also shows its planned date outside the displayed week.
-Completion agrees between the task list and its board card.
+Drag a card's **Drag** handle onto another day to **Move** that placement. Hold
+**Option on macOS / Alt on Windows** while dropping to **Add** a destination
+placement and keep the source. The visible Move/Add indicator and highlighted days
+show the operation and destinations. On narrow screens, drop onto one of the seven
+day buttons. Dragging does not switch weeks or select another day automatically.
+Checkboxes, tracking buttons and other card controls do not initiate dragging.
 
-Before adding subtasks to a scheduled standalone task, remove its placement and
-then schedule the children. Before deleting a scheduled subtask, unschedule it.
+Cancel, drop outside a valid destination, or drop onto the source day to leave the
+plan unchanged. A destination already containing that task is a conflict; both
+existing placements stay in place. Different tasks may share a date. Failed saves
+show an error and keep the saved board displayed; refresh the weekly plan to check
+its saved state after a lost response before retrying.
+
+Keyboard/date alternatives remain available: open **Move or remove** on a card to
+**Move placement** or **Remove from plan**. Open **Add another planned day** on a
+card or in the task's planning details and choose a date, then **Add to day**.
+Date controls can also move/add outside the displayed week. Moving changes only
+that placement and preserves its ID; adding creates a placement for the same task.
+Move back or remove an added placement to reverse a saved scheduling change.
+Removal keeps the task and its completion. The task list shows all its active dates,
+including dates outside the displayed week. Completing/reopening any card updates
+the shared task and all its cards; finishing a timer still leaves completion alone.
+
+Before adding subtasks to a scheduled standalone task, remove all its placements
+and then schedule the children. Before deleting a scheduled subtask, unschedule it
+from every active date.
 Neither operation silently removes active planned dates. Previous-week views remain
 live until you explicitly close that week.
 
@@ -107,10 +123,11 @@ retry the same Apply action after a connection failure. Persistent operation IDs
 prevent repeated requests from creating duplicate plans. No automatic bulk
 carryover, recurring work, reopening or advanced reports are included.
 
-The one-day upgrade preserves existing records. If an older database has several
-dates for one task, startup stops safely without deleting plans. Open the previous
-build, remove the extra planned dates so each task has only one, and retry the
-update. Split multi-day work into subtasks after unscheduling its standalone parent.
+The multi-date upgrade preserves existing records. Schema 7 removes the former
+one-placement-per-task index while retaining task/date uniqueness. A schema-3
+database with several dates uses an atomic compatibility upgrade through the
+superseded one-day migration, preserving every date. Failed upgrades roll back and
+keep recoverable data; do not remove valid saved dates to satisfy the old rule.
 
 Today comes from the service's application timezone. With no timezone setting yet,
 the default is the computer's local timezone, including its DST rules. Optionally

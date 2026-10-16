@@ -14,6 +14,7 @@ class PlacementCreateRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     task_id: StrictStr
     planned_date: StrictStr
+    source_placement_id: StrictStr | None = None
 
 
 class PlacementMoveRequest(BaseModel):
@@ -28,7 +29,9 @@ def planning(request: Request, week: str | None = None) -> PlanningSnapshot:
 
 @router.post("/placements", status_code=201)
 def post_placement(body: PlacementCreateRequest, request: Request) -> Placement:
-    return create_placement(request.app.state.db, body.task_id, body.planned_date)
+    return create_placement(
+        request.app.state.db, body.task_id, body.planned_date, source_placement_id=body.source_placement_id,
+    )
 
 
 @router.patch("/placements/{placement_id}")

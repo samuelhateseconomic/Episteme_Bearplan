@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type DragEvent } from "react";
 import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
 import { WeekActions, WeekTaskDetails, historicalContext } from "./WeekActions";
 import { StartTrackingButton } from "./Countdown";
@@ -80,8 +80,8 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
       </p>
       <details>
         <summary>{placements.length ? "Move or remove plan" : "Plan task"}</summary>
-        <p className="planning-hint muted">One active planned day per task or subtask. Split multi-day work into subtasks. Deadlines stay unchanged.</p>
-        {!placements.length && !plan.closed_week ? <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /> : null}
+        <p className="planning-hint muted">Plan this task on one or more days. Deadlines stay unchanged.</p>
+        {!plan.closed_week ? placements.length ? <details className="add-planned-day"><summary>Add another planned day</summary><AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /></details> : <AssignForm key={selectedDay} task={task} initialDate={selectedDay || plan.today} onRun={onRun} /> : null}
         {!placements.length && plan.closed_week ? <p className="planning-hint muted">Viewing a closed week. Choose an open week to plan this task.</p> : null}
         {placements.length ? (
           <ul className="placement-list">
@@ -98,7 +98,7 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
   );
 }
 
-function AssignForm({ task, initialDate, onRun }: { task: Task; initialDate: string; onRun: Run }) {
+function AssignForm({ task, initialDate, onRun, sourcePlacementId }: { task: Task; initialDate: string; onRun: Run; sourcePlacementId?: string }) {
   const [date, setDate] = useState(initialDate);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -109,7 +109,7 @@ function AssignForm({ task, initialDate, onRun }: { task: Task; initialDate: str
       if (!date || busy) return;
       setBusy(true);
       setError(null);
-      try { await onRun(() => assignTask(task.id, date), `Planned “${task.title}” for ${showDate(date)}.`); }
+      try { await onRun(() => assignTask(task.id, date, sourcePlacementId), `Planned “${task.title}” for ${showDate(date)}.`); }
       catch (caught) { setError(message(caught)); }
       finally { setBusy(false); }
     }}>
@@ -156,12 +156,18 @@ function PlacementActions({ task, placement, onRun }: { task: Task; placement: P
   );
 }
 
-function PlannedCard({ task, placement, context, onRun, locked, onTrack }: { task: Task; placement: Placement; context: string; onRun: Run; locked: boolean; onTrack?: (taskId: string) => void }) {
+type DraggedPlacement = { placement: Placement; title: string; add: boolean };
+type DragControls = { start: (event: DragEvent<HTMLElement>, placement: Placement, task: Task) => void; end: () => void };
+
+function PlannedCard({ task, placement, context, onRun, locked, onTrack, drag }: { task: Task; placement: Placement; context: string; onRun: Run; locked: boolean; onTrack?: (taskId: string) => void; drag: DragControls }) {
   const id = useId();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   return (
-    <li className={`planned-card${task.completed ? " planned-card-done" : ""}`}>
+    <li className={`planned-card${task.completed ? " planned-card-done" : ""}`} onDragStart={(event) => {
+      if (!(event.target instanceof Element) || !event.target.closest(".placement-drag-handle")) event.preventDefault();
+    }}>
+      <span className="placement-drag-handle" draggable={!busy && !locked} role="img" aria-label={`Drag “${task.title}” from ${showDate(placement.planned_date)}`} title="Drag to move. Option/Alt-drag to add a day. Date controls are available below." onDragStart={(event) => drag.start(event, placement, task)} onDragEnd={drag.end}>⠿ Drag</span>
       <p className="planned-context muted">{context}</p>
       <div className="planned-title">
         <input id={id} type="checkbox" checked={task.completed} disabled={busy || locked} aria-label={`${task.title}, planned ${showDate(placement.planned_date)}`} onChange={async (event) => {
@@ -183,12 +189,45 @@ function PlannedCard({ task, placement, context, onRun, locked, onTrack }: { tas
         <summary>Move or remove</summary>
         <PlacementActions key={`${placement.id}-${placement.planned_date}`} task={task} placement={placement} onRun={onRun} />
       </details>
+      <details className="add-planned-day">
+        <summary>Add another planned day</summary>
+        <AssignForm task={task} initialDate={addDays(placement.planned_date, 1)} onRun={onRun} sourcePlacementId={placement.id} />
+      </details>
     </li>
   );
 }
 
 export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { state: ReturnType<typeof usePlanning>; projects: Project[]; onRun: Run; locked: boolean; onTrack?: (taskId: string) => void }) {
   const { plan, selectedDay, setSelectedDay, loading, error, navigate, refresh } = state;
+  const [dragged, setDragged] = useState<DraggedPlacement | null>(null);
+  const draggedRef = useRef<DraggedPlacement | null>(null);
+  const [overDay, setOverDay] = useState<string | null>(null);
+  const [dragBusy, setDragBusy] = useState(false);
+  const dragBusyRef = useRef(false);
+  const [dragError, setDragError] = useState<string | null>(null);
+  const endDrag = useCallback(() => {
+    draggedRef.current = null;
+    setDragged(null);
+    setOverDay(null);
+  }, []);
+  const updateModifier = useCallback((add: boolean) => {
+    const current = draggedRef.current;
+    if (current && current.add !== add) {
+      const next = { ...current, add };
+      draggedRef.current = next;
+      setDragged(next);
+    }
+  }, []);
+  useEffect(() => {
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") endDrag();
+      else if (event.key === "Alt") updateModifier(event.type === "keydown");
+    };
+    window.addEventListener("keydown", key);
+    window.addEventListener("keyup", key);
+    return () => { window.removeEventListener("keydown", key); window.removeEventListener("keyup", key); };
+  }, [endDrag, updateModifier]);
+  useEffect(endDrag, [plan?.week_start, Boolean(plan?.closed_week), endDrag]);
   const days = plan ? Array.from({ length: 7 }, (_, index) => addDays(plan.week_start, index)) : [];
   const tasksById = new Map(plan?.tasks.map((task) => [task.id, task]) ?? []);
   const projectById = new Map(projects.map((project) => [project.id, project.name]));
@@ -199,6 +238,57 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
   const leafTasks = [...uniqueTasks].map((id) => tasksById.get(id)).filter((task): task is Task => !!task && !task.subtask_count);
   const completed = closed?.completed ?? leafTasks.filter((task) => task.completed).length;
   const total = closed?.total ?? leafTasks.length;
+  const dragLocked = locked || loading || dragBusy || !!closed;
+  const duplicateDay = (date: string, item = draggedRef.current) => !!item && !!plan?.placements.some((placement) => placement.task_id === item.placement.task_id && placement.planned_date === date && placement.id !== item.placement.id);
+  const destinationClass = (date: string) => !dragged || dragLocked ? "" : date === dragged.placement.planned_date ? " drop-source" : duplicateDay(date) ? ` drop-conflict${overDay === date ? " drop-over" : ""}` : ` drop-valid${overDay === date ? " drop-over" : ""}`;
+  function dragOver(event: DragEvent<HTMLElement>, date: string) {
+    if (!draggedRef.current || dragLocked) return;
+    event.preventDefault();
+    updateModifier(event.altKey);
+    event.dataTransfer.dropEffect = event.altKey ? "copy" : "move";
+    setOverDay(date);
+  }
+  async function drop(event: DragEvent<HTMLElement>, date: string) {
+    const item = draggedRef.current;
+    if (!item) return;
+    event.preventDefault();
+    const add = event.altKey;
+    endDrag();
+    if (dragLocked || dragBusyRef.current || !plan || !days.includes(date) || date === item.placement.planned_date) return;
+    if (!plan.placements.some((placement) => placement.id === item.placement.id && placement.task_id === item.placement.task_id && placement.planned_date === item.placement.planned_date)) {
+      setDragError("The source placement changed. Refresh the weekly plan before trying again.");
+      return;
+    }
+    if (duplicateDay(date, item)) {
+      setDragError(`“${item.title}” is already planned for ${showDate(date)}. Both existing placements are kept. Choose another day.`);
+      return;
+    }
+    setDragError(null);
+    dragBusyRef.current = true;
+    setDragBusy(true);
+    try {
+      await onRun(() => add ? assignTask(item.placement.task_id, date, item.placement.id) : movePlacement(item.placement.id, date), `${add ? "Added" : "Moved"} “${item.title}” ${add ? "to another planned day, " : "to "}${showDate(date)}.`);
+    } catch (caught) {
+      setDragError(`${message(caught)} Refresh the weekly plan to check its saved state before retrying.`);
+    } finally {
+      dragBusyRef.current = false;
+      setDragBusy(false);
+    }
+  }
+  const dragControls: DragControls = {
+    start: (event, placement, task) => {
+      if (dragLocked || task.subtask_count > 0 || dragBusyRef.current) { event.preventDefault(); return; }
+      event.dataTransfer.effectAllowed = "copyMove";
+      // Keep the source identity in this board, never trust an external drag payload.
+      event.dataTransfer.setData("text/plain", task.title);
+      const next = { placement, title: task.title, add: event.altKey };
+      draggedRef.current = next;
+      setDragged(next);
+      // Keep in-flow feedback in place while the native gesture starts; removing
+      // it here would move the source card underneath the pointer.
+    },
+    end: endDrag,
+  };
   return (
     <section className={`weekly-planner${closed ? " weekly-planner-closed" : ""}`} aria-labelledby="planning-heading" aria-busy={loading}>
       <div className="planner-heading">
@@ -218,19 +308,22 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
           <strong className={`week-badge${closed ? " week-badge-closed" : ""}`}>{closed ? "Closed week · read-only history" : "Open week"}</strong>
           <p>{closed ? "At closure: " : "Weekly completion: "}{completed} of {total} work items complete ({total ? Math.round(completed / total * 100) : 0}%).</p>
         </div>
-        {closed ? <p className="planning-hint muted">Saved {closed.closed_at ? new Date(closed.closed_at).toLocaleString() : "at closure"} · {closed.timezone}. Historical details and completion stay fixed. Current task status is shown separately. The project list edits current tasks.</p> : <p className="planning-hint muted">Plan a task from the project list. One active planned day per task or subtask. Split multi-day work into subtasks.</p>}
+        {closed ? <p className="planning-hint muted">Saved {closed.closed_at ? new Date(closed.closed_at).toLocaleString() : "at closure"} · {closed.timezone}. Historical details and completion stay fixed. Current task status is shown separately. The project list edits current tasks.</p> : <p className="planning-hint muted">Plan a task from the project list. Drag a card’s handle to <strong>Move</strong>. Hold <strong>Option (Mac) / Alt (Windows)</strong> while dropping to <strong>Add</strong> another planned day and keep the source. Use the date controls to move or add without dragging. On narrow screens, drop onto a day button.</p>}
         {plan.closed_weeks?.length ? <div className="closed-history field"><label htmlFor="closed-week-history">Closed-week history</label><select id="closed-week-history" value={closed ? plan.week_start : ""} disabled={loading || locked} onChange={(event) => { if (event.target.value) void navigate(event.target.value); }}>
           <option value="">Choose a closed week</option>
           {plan.closed_weeks.map((week) => <option key={week.week_start} value={week.week_start}>{showDate(week.week_start)} – {showDate(week.week_end)} · {week.completed}/{week.total} complete</option>)}
         </select></div> : null}
         <WeekActions key={`${plan.week_start}-${closed ? "closed" : "open"}`} plan={plan} onRun={onRun} locked={locked || loading} />
       </> : null}
+      {dragged ? <p className={`drag-indicator${dragged.add ? " drag-indicator-add" : ""}`} role="status"><strong>{dragged.add ? "Add" : "Move"}</strong> “{dragged.title}”{overDay ? ` · ${showDate(overDay)}` : " · drop on a highlighted day"}{overDay === dragged.placement.planned_date ? " · same day: no change" : overDay && duplicateDay(overDay) ? " · already planned here; choose another day" : ""}</p> : null}
+      {dragBusy ? <p className="planning-hint muted" role="status">Saving planned date…</p> : null}
+      {dragError ? <p role="alert" className="error">{dragError} <button type="button" className="link" disabled={loading || dragBusy} onClick={() => void refresh()}>Refresh weekly plan</button></p> : null}
       {error ? <p role="alert" className="error">{error} <button type="button" className="link" onClick={() => void refresh()}>Retry weekly plan</button></p> : null}
       {plan ? (
         <>
           <div className="day-selector" role="group" aria-label="Selected day">
             {days.map((date) => (
-              <button key={date} type="button" className={selectedDay === date ? "day-choice day-choice-on" : "day-choice"} aria-pressed={selectedDay === date} onClick={() => setSelectedDay(date)}>
+              <button key={date} type="button" className={`${selectedDay === date ? "day-choice day-choice-on" : "day-choice"}${destinationClass(date)}`} onDragOver={(event) => dragOver(event, date)} onDrop={(event) => void drop(event, date)} aria-pressed={selectedDay === date} onClick={() => setSelectedDay(date)}>
                 <span>{dayName.format(plainDate(date)).slice(0, 3)}</span><span>{shortDate.format(plainDate(date))}</span>{date === plan.today ? <span className="today-mark">Today</span> : null}
               </button>
             ))}
@@ -239,7 +332,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
             {days.map((date) => {
               const placements = visiblePlacements.filter((placement) => placement.planned_date === date);
               return (
-                <section key={date} className={`day-column${selectedDay === date ? " day-selected" : ""}${date === plan.today ? " day-today" : ""}`} aria-label={`${dayName.format(plainDate(date))}, ${showDate(date)}`}>
+                <section key={date} className={`day-column${selectedDay === date ? " day-selected" : ""}${date === plan.today ? " day-today" : ""}${destinationClass(date)}`} onDragOver={(event) => dragOver(event, date)} onDrop={(event) => void drop(event, date)} aria-label={`${dayName.format(plainDate(date))}, ${showDate(date)}`}>
                   <h3>{dayName.format(plainDate(date))}<span>{shortDate.format(plainDate(date))}{date === plan.today ? " · Today" : ""}</span></h3>
                   {placements.length ? (
                     <ul className="day-placements">
@@ -259,7 +352,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
                         if (!task) return null;
                         const parent = task.parent_id ? tasksById.get(task.parent_id) : null;
                         const context = [projectById.get(task.project_id) ?? "Project", parent?.title].filter(Boolean).join(" / ");
-                        return <PlannedCard key={placement.id} task={task} placement={placement} context={context} onRun={onRun} locked={locked} onTrack={onTrack} />;
+                        return <PlannedCard key={placement.id} task={task} placement={placement} context={context} onRun={onRun} locked={locked || loading || dragBusy} onTrack={onTrack} drag={dragControls} />;
                       })}
                     </ul>
                   ) : <p className="empty-day muted">Nothing planned</p>}

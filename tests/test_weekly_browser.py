@@ -65,16 +65,15 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         assert no_horizontal_overflow(page)
         page.screenshot(path=evidence / "single-day-01-wide.png", full_page=True)
 
-        # A stale second tab cannot assign a second day, including in another week.
+        # A stale tab cannot add another placement for the same task/date.
         backlog_row = page.locator(".tasks > .task").filter(has=page.get_by_label("Unscheduled reading", exact=True))
         backlog_row.get_by_text("Plan task", exact=True).click()
         backlog_assign = backlog_row.locator(".planning-form").first
         backlog_assign.get_by_label('Planned date for “Unscheduled reading”').fill(next_monday.isoformat())
-        _, existing = http_json("POST", service.url + "/api/placements", {"task_id": backlog["id"], "planned_date": friday.isoformat()})
+        _, existing = http_json("POST", service.url + "/api/placements", {"task_id": backlog["id"], "planned_date": next_monday.isoformat()})
         _, before_conflict = http_json("GET", service.url + "/api/planning")
         backlog_assign.get_by_role("button", name="Add to day", exact=True).click()
-        expect(backlog_assign.get_by_role("alert")).to_contain_text(f"already planned for {friday.isoformat()}")
-        expect(backlog_assign.get_by_role("alert")).to_contain_text("Use Move placement")
+        expect(backlog_assign.get_by_role("alert")).to_contain_text(f"already planned for {next_monday.isoformat()}")
         expect(backlog_assign.get_by_label('Planned date for “Unscheduled reading”')).to_have_value(next_monday.isoformat())
         _, after_conflict = http_json("GET", service.url + "/api/planning")
         assert after_conflict == before_conflict

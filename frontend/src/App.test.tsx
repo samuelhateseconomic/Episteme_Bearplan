@@ -78,9 +78,9 @@ function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; s
     if (fail && url.startsWith(fail.url) && method !== "GET") return json({ error: fail.error }, fail.status);
     if (url.startsWith("/api/planning") && method === "GET") return json(planningSnapshot(tasks, placements, url));
     if (url === "/api/placements" && method === "POST") {
-      const existing = placements.find((p) => p.task_id === body!.task_id);
+      const existing = placements.find((p) => p.task_id === body!.task_id && p.planned_date === body!.planned_date);
       if (existing) {
-        return json({ error: { code: "placement_conflict", message: `This task is already planned for ${existing.planned_date}. Use Move placement to change its day, or split multi-day work into subtasks. No records were changed.` } }, 409);
+        return json({ error: { code: "placement_conflict", message: `This task is already planned for ${existing.planned_date}. Choose another day. No records were changed.` } }, 409);
       }
       const created = placement(`placement-${placements.length + 1}`, String(body!.task_id), String(body!.planned_date));
       placements.push(created);
@@ -478,7 +478,7 @@ test("the server defines Today and the board spans Monday through Sunday across 
   expect(addDays("2026-03-08", 1)).toBe("2026-03-09");
 });
 
-test("assigning existing leaf work preserves its fields and replaces assignment controls with move controls", async () => {
+test("assigning existing leaf work preserves its fields and keeps keyboard move and add controls", async () => {
   const existing = task("00000000-0000-4000-8000-000000000001", "Problem set", { deadline: "2026-10-20", notes: "Keep my notes", estimate_minutes: 60 });
   const placements: Placement[] = [];
   const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
@@ -498,14 +498,14 @@ test("assigning existing leaf work preserves its fields and replaces assignment 
   expect(calls.some((call) => call.url.startsWith("/api/tasks") && call.method !== "GET")).toBe(false);
   expect(taskPlanner("Problem set").getByText("Planned: Oct 16, 2026")).toBeInTheDocument();
   expect(taskPlanner("Problem set").getByText("Move or remove plan")).toBeInTheDocument();
-  expect(taskPlanner("Problem set").queryByRole("button", { name: "Add to day" })).not.toBeInTheDocument();
-  expect(taskPlanner("Problem set").queryByLabelText("Planned date for “Problem set”")).not.toBeInTheDocument();
+  expect(taskPlanner("Problem set").getByText("Add another planned day")).toBeInTheDocument();
+  expect(taskPlanner("Problem set").getByLabelText("Planned date for “Problem set”")).toBeInTheDocument();
   expect(taskPlanner("Problem set").getByRole("button", { name: "Move placement" })).toBeDisabled();
   expect(calls.filter((call) => call.url === "/api/placements" && call.method === "POST")).toHaveLength(1);
   expect(placements).toHaveLength(1);
 });
 
-test("a stale assignment form rejects a second day and explains how to move the existing plan", async () => {
+test("a stale assignment form rejects an already occupied date and keeps both records unchanged", async () => {
   const existing = task("00000000-0000-4000-8000-000000000001", "Read");
   const placements: Placement[] = [];
   fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
@@ -515,14 +515,13 @@ test("a stale assignment form rejects a second day and explains how to move the 
   await user.click(taskPlanner("Read").getByText("Plan task"));
   const date = taskPlanner("Read").getByLabelText("Planned date for “Read”");
   fireEvent.change(date, { target: { value: "2026-10-17" } });
-  // Another tab has saved a different day since this view loaded.
-  placements.push(placement("p1", existing.id, "2026-10-16"));
+  // Another tab has saved this destination since this view loaded.
+  placements.push(placement("p1", existing.id, "2026-10-17"));
   await user.click(taskPlanner("Read").getByRole("button", { name: "Add to day" }));
-  expect(await screen.findByRole("alert")).toHaveTextContent("already planned for 2026-10-16");
-  expect(screen.getByRole("alert")).toHaveTextContent("Use Move placement");
-  expect(screen.getByRole("alert")).toHaveTextContent("split multi-day work into subtasks");
+  expect(await screen.findByRole("alert")).toHaveTextContent("already planned for 2026-10-17");
+  expect(screen.getByRole("alert")).toHaveTextContent("Choose another day");
   expect(date).toHaveValue("2026-10-17");
-  expect(placements).toEqual([placement("p1", existing.id, "2026-10-16")]);
+  expect(placements).toEqual([placement("p1", existing.id, "2026-10-17")]);
   expect(existing.revision).toBe(1);
 });
 
@@ -535,7 +534,7 @@ test("parents are context; only leaves get assignment controls", async () => {
   expect(taskPlanner("Homework").queryByText("Plan task")).not.toBeInTheDocument();
   expect(taskPlanner("Homework").getByText("Plan the subtasks below.")).toBeInTheDocument();
   expect(taskPlanner("Problem 1").getByText("Move or remove plan")).toBeInTheDocument();
-  expect(taskPlanner("Problem 1").queryByRole("button", { name: "Add to day" })).not.toBeInTheDocument();
+  expect(taskPlanner("Problem 1").getByText("Add another planned day")).toBeInTheDocument();
   expect(await board().findByText("Math 55 / Homework")).toBeInTheDocument();
 });
 
@@ -560,7 +559,7 @@ test("moving across weeks keeps one planned day, preserves the task and leaves o
   expect(calls.find((call) => call.method === "PATCH")?.url).toBe("/api/placements/p1");
   expect(await taskPlanner("Read").findByText("Planned: Oct 23, 2026")).toBeInTheDocument();
   await user.click(taskPlanner("Read").getByText("Move or remove plan"));
-  expect(taskPlanner("Read").queryByRole("button", { name: "Add to day" })).not.toBeInTheDocument();
+  expect(taskPlanner("Read").getByText("Add another planned day")).toBeInTheDocument();
   expect(taskPlanner("Read").getByLabelText("Move “Read” from Oct 23, 2026 to")).toHaveValue("2026-10-23");
   await user.click(board().getByRole("button", { name: "Next week" }));
   expect(await board().findByLabelText("Read, planned Oct 23, 2026")).toBeInTheDocument();
@@ -743,4 +742,32 @@ test("a mutation during slow week navigation refreshes the requested week and ig
   release();
   await waitFor(() => expect(screen.getByRole("checkbox", { name: "Read" })).toBeChecked());
   expect(board().getByRole("region", { name: "Monday, Oct 19, 2026" })).toBeInTheDocument();
+});
+
+
+test("keyboard scheduling adds another planned day while preserving identity and synchronizing completion", async () => {
+  const existing = task("00000000-0000-4000-8000-000000000001", "Read", { deadline: "2026-10-20", notes: "Keep notes" });
+  const original = { ...existing };
+  const placements = [placement("p1", existing.id, "2026-10-15")];
+  const calls = fakeService([project(MATH, "Math 55", true)], [existing], undefined, placements);
+  const user = userEvent.setup();
+  render(<App />);
+  await board().findByLabelText("Read, planned Oct 15, 2026");
+  await screen.findByRole("checkbox", { name: "Read" });
+  await user.click(taskPlanner("Read").getByText("Move or remove plan"));
+  await user.click(taskPlanner("Read").getByText("Add another planned day"));
+  fireEvent.change(taskPlanner("Read").getByLabelText("Planned date for “Read”"), { target: { value: "2026-10-16" } });
+  await user.click(taskPlanner("Read").getByRole("button", { name: "Add to day" }));
+  expect(await board().findByLabelText("Read, planned Oct 16, 2026")).toBeInTheDocument();
+  expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeInTheDocument();
+  expect(placements).toHaveLength(2);
+  expect(placements[0]).toEqual(placement("p1", existing.id, "2026-10-15"));
+  expect(placements[1].task_id).toBe(existing.id);
+  expect(existing).toEqual(original);
+  expect(board().getByText("Weekly completion: 0 of 1 work items complete (0%).")).toBeInTheDocument();
+  expect(calls.filter((call) => call.method !== "GET").map((call) => call.url)).toEqual(["/api/placements"]);
+  await user.click(board().getByLabelText("Read, planned Oct 16, 2026"));
+  await waitFor(() => expect(board().getByLabelText("Read, planned Oct 15, 2026")).toBeChecked());
+  expect(board().getByLabelText("Read, planned Oct 16, 2026")).toBeChecked();
+  expect(board().getByText("Weekly completion: 1 of 1 work items complete (100%).")).toBeInTheDocument();
 });

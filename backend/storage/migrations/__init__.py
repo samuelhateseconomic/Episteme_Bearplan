@@ -1,8 +1,9 @@
 """Versioned SQL migrations.
 
-Files are named NNNN_description.sql and applied in order, each in its own
-transaction together with its schema_migrations row. Applied migrations are never
-edited; schema changes add a new file. Migration SQL must not contain BEGIN/COMMIT.
+Files are named NNNN_description.sql and applied in order, normally each in its own
+transaction together with its schema_migrations row. The legacy multi-day upgrade
+groups the superseded 4–7 chain atomically. Applied migrations are never edited;
+schema changes add a new file. Migration SQL must not contain BEGIN/COMMIT.
 """
 
 from __future__ import annotations
@@ -54,6 +55,50 @@ def current_version(db: Database) -> int:
         return conn.execute("SELECT COALESCE(MAX(version), 0) FROM schema_migrations").fetchone()[0]
 
 
+def _upgrade_legacy_multiple_dates(
+    conn: sqlite3.Connection, migrations: list[Migration], applied: dict[int, str],
+) -> set[int]:
+    """Preserve schema-3 multi-day plans through the superseded one-day upgrade.
+
+    Only the exact shipped 4–7 chain qualifies. Its transient unique-task index
+    would fail on valid legacy dates and is removed by 7 anyway. Skip that index
+    while applying and recording the entire chain atomically, so no committed
+    intermediate version claims a constraint it lacks. Applied SQL stays intact;
+    custom migration lists and builds ending before 7 retain their usual behavior.
+    """
+    if set(applied) != {1, 2, 3}:
+        return set()
+    chain = load_migrations()[3:7]
+    if [(item.version, item.name) for item in chain] != [
+        (4, "single_planned_day"), (5, "closed_weeks"),
+        (6, "countdown"), (7, "multiple_planned_days"),
+    ]:
+        return set()
+    supplied = {item.version: item for item in migrations}
+    if any(supplied.get(item.version) != item for item in chain):
+        return set()
+    if not conn.execute("SELECT 1 FROM planned_items GROUP BY task_id HAVING COUNT(*) > 1 LIMIT 1").fetchone():
+        return set()
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        for item in chain:
+            if item.version != 4:
+                conn.executescript(item.sql)
+            conn.execute(
+                "INSERT INTO schema_migrations (version, name, applied_at) VALUES (?, ?, ?)",
+                (item.version, item.name, utc_now()),
+            )
+        conn.execute("COMMIT")
+    except sqlite3.Error as exc:
+        if conn.in_transaction:
+            conn.execute("ROLLBACK")
+        raise MigrationError(
+            f"The legacy multiple-planned-date upgrade failed and was rolled back: {exc}. "
+            "All saved plans were kept. Correct the failure and retry this update.",
+        ) from exc
+    return {item.version for item in chain}
+
+
 def migrate(db: Database, migrations: list[Migration] | None = None) -> int:
     """Apply pending migrations and return the resulting schema version."""
     migrations = load_migrations() if migrations is None else migrations
@@ -77,8 +122,9 @@ def migrate(db: Database, migrations: list[Migration] | None = None) -> int:
                 raise MigrationError(
                     f"Applied migration {version:04d}_{name} does not match this build's migrations."
                 )
+        upgraded = _upgrade_legacy_multiple_dates(conn, migrations, applied)
         for migration in migrations:
-            if migration.version in applied:
+            if migration.version in applied or migration.version in upgraded:
                 continue
             try:
                 conn.execute("BEGIN IMMEDIATE")

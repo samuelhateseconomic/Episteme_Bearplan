@@ -28,7 +28,7 @@ from backend.domain.tasks import (
 from backend.storage.db import Database, open_database
 
 
-def test_moving_the_single_planned_day_preserves_task_identity_and_every_field(db: Database) -> None:
+def test_moving_one_placement_preserves_task_identity_and_every_field(db: Database) -> None:
     project = create_project(db, "Course")
     task = create_task(
         db, "Write proof", project_id=project.id, notes="Keep the original notes",
@@ -63,22 +63,55 @@ def test_moving_to_another_tasks_day_keeps_both_task_identities(db: Database) ->
     assert list_tasks(db) == tasks_before
 
 
-@pytest.mark.parametrize("second_date", ["2026-10-15", "2026-10-16", "2026-10-22"])
 @pytest.mark.parametrize("is_subtask", [False, True])
-def test_second_planned_day_is_rejected_for_each_leaf_with_actionable_conflict(
-    db: Database, second_date: str, is_subtask: bool,
+@pytest.mark.parametrize("complete", [False, True])
+def test_multiple_planned_days_reference_one_leaf_and_keep_each_placement(
+    db: Database, is_subtask: bool, complete: bool,
 ) -> None:
     parent = create_task(db, "Container") if is_subtask else None
     task = create_task(db, "One work item", parent_id=parent.id if parent else None)
+    if complete:
+        set_task_completion(db, task.id, True)
     placed = create_placement(db, task.id, "2026-10-15")
     tasks_before = list_tasks(db)
-    with pytest.raises(PlacementConflict) as excinfo:
-        create_placement(db, task.id, second_date)
-    message = str(excinfo.value)
-    assert "2026-10-15" in message
-    assert "move" in message.lower() and "subtasks" in message.lower()
-    assert list_placements(db) == [placed]
+    another = create_placement(db, task.id, "2026-10-16", source_placement_id=placed.id)
+    future = create_placement(db, task.id, "2026-10-22", source_placement_id=placed.id)
+    assert len({placed.id, another.id, future.id}) == 3
+    assert {placed.task_id, another.task_id, future.task_id} == {task.id}
+    assert list_placements(db) == [placed, another, future]
     assert list_tasks(db) == tasks_before
+    assert list_placements(open_database(db.path)) == [placed, another, future]
+
+
+def test_duplicate_destination_move_and_add_preserve_all_existing_placements(db: Database) -> None:
+    task = create_task(db, "Keep both dates", deadline="2026-10-30", notes="Original")
+    source = create_placement(db, task.id, "2026-10-15")
+    destination = create_placement(db, task.id, "2026-10-16")
+    before = list_placements(db)
+    for action in (
+        lambda: move_placement(db, source.id, "2026-10-16"),
+        lambda: create_placement(db, task.id, "2026-10-16", source_placement_id=source.id),
+    ):
+        with pytest.raises(PlacementConflict, match="2026-10-16") as excinfo:
+            action()
+        assert "kept" in str(excinfo.value).lower()
+        assert list_placements(db) == before
+        assert get_task(db, task.id) == task
+    assert move_placement(db, source.id, source.planned_date) == source
+    assert list_placements(db) == [source, destination]
+
+
+def test_moving_or_removing_one_of_multiple_placements_keeps_all_other_rows(db: Database) -> None:
+    task = create_task(db, "Shared identity")
+    source = create_placement(db, task.id, "2026-10-15")
+    other = create_placement(db, task.id, "2026-10-16")
+    moved = move_placement(db, source.id, "2026-10-22")
+    assert moved.id == source.id and moved.created_at == source.created_at
+    assert moved.revision == source.revision + 1
+    assert list_placements(db) == [other, moved]
+    remove_placement(db, moved.id)
+    assert list_placements(db) == [other]
+    assert get_task(db, task.id) == task
 
 
 def test_duplicate_assignment_is_rejected_but_other_tasks_share_the_day(db: Database) -> None:
@@ -101,10 +134,30 @@ def test_concurrent_assignment_saves_exactly_one_reference(db: Database) -> None
             return exc
 
     with ThreadPoolExecutor(max_workers=2) as workers:
-        results = list(workers.map(assign, ("2026-10-15", "2026-10-22")))
+        results = list(workers.map(assign, ("2026-10-15", "2026-10-15")))
     assert sum(isinstance(result, PlacementConflict) for result in results) == 1
     assert len(list_placements(db)) == 1
     assert list_tasks(db) == [task]
+
+
+def test_concurrent_add_and_move_to_one_destination_preserve_the_losing_source(db: Database) -> None:
+    task = create_task(db, "Shared task")
+    source = create_placement(db, task.id, "2026-10-15")
+
+    def request(add: bool) -> object:
+        try:
+            return (create_placement(db, task.id, "2026-10-16", source_placement_id=source.id)
+                    if add else move_placement(db, source.id, "2026-10-16"))
+        except PlacementConflict as exc:
+            return exc
+
+    with ThreadPoolExecutor(max_workers=2) as workers:
+        results = list(workers.map(request, (True, False)))
+    assert sum(isinstance(result, PlacementConflict) for result in results) == 1
+    placements = list_placements(db)
+    assert len([item for item in placements if item.planned_date == date(2026, 10, 16)]) == 1
+    assert any(item.id == source.id for item in placements)
+    assert get_task(db, task.id) == task
 
 
 def test_moving_to_same_day_is_a_timestamp_and_revision_no_op(db: Database) -> None:

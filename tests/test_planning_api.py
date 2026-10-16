@@ -44,23 +44,65 @@ def test_assign_move_unschedule_keeps_one_task_and_separate_deadline(client: Tes
     assert client.get("/api/tasks").json()["tasks"] == [task]
 
 
-@pytest.mark.parametrize("second_date", ["2026-10-15", "2026-10-16", "2026-10-22"])
 @pytest.mark.parametrize("complete", [False, True])
 def test_second_assignment_returns_clear_conflict_without_mutation(
-    client: TestClient, second_date: str, complete: bool,
+    client: TestClient, complete: bool,
 ) -> None:
     task = make_task(client)
     if complete:
         assert client.put(f"/api/tasks/{task['id']}/completion", json={"complete": True}).status_code == 200
     assign(client, task["id"], "2026-10-15")
     before = client.get("/api/planning").json()
-    response = client.post("/api/placements", json={"task_id": task["id"], "planned_date": second_date})
+    response = client.post("/api/placements", json={"task_id": task["id"], "planned_date": "2026-10-15"})
     assert response.status_code == 409
     error = response.json()["error"]
     assert error["code"] == "placement_conflict"
     assert "2026-10-15" in error["message"]
-    assert "move" in error["message"].lower() and "subtasks" in error["message"].lower()
+    assert "another day" in error["message"].lower() and "kept" in error["message"].lower()
     assert client.get("/api/planning").json() == before
+
+
+def test_add_another_day_and_move_duplicate_keep_source_and_shared_task(client: TestClient) -> None:
+    task = make_task(client)
+    first = assign(client, task["id"], "2026-10-15")
+    response = client.post("/api/placements", json={
+        "task_id": task["id"], "planned_date": "2026-10-16", "source_placement_id": first["id"],
+    })
+    assert response.status_code == 201
+    second = response.json()
+    assert second["task_id"] == task["id"] and second["id"] != first["id"]
+    before = client.get("/api/planning").json()
+    for method, path, payload in (
+        ("PATCH", f"/api/placements/{first['id']}", {"planned_date": "2026-10-16"}),
+        ("POST", "/api/placements", {"task_id": task["id"], "planned_date": "2026-10-16", "source_placement_id": first["id"]}),
+    ):
+        rejected = client.request(method, path, json=payload)
+        assert rejected.status_code == 409
+        assert rejected.json()["error"]["code"] == "placement_conflict"
+        assert client.get("/api/planning").json() == before
+    unchanged = client.patch(f"/api/placements/{first['id']}", json={"planned_date": "2026-10-15"})
+    assert unchanged.status_code == 200 and unchanged.json() == first
+    assert client.get("/api/tasks").json()["tasks"] == [task]
+
+
+@pytest.mark.parametrize("source", ["missing", "other_task", "closed"])
+def test_stale_or_mismatched_add_source_is_rejected_atomically(client: TestClient, source: str) -> None:
+    task = make_task(client)
+    first = assign(client, task["id"], "2026-10-15")
+    other = make_task(client, "Other")
+    other_plan = assign(client, other["id"], "2026-10-16")
+    source_id = "missing" if source == "missing" else (other_plan["id"] if source == "other_task" else first["id"])
+    if source == "closed":
+        preview = client.get("/api/weeks/2026-10-12/close-preview").json()
+        closed = client.post("/api/weeks/2026-10-12/close", json={"preview_token": preview["preview_token"]})
+        assert closed.status_code == 200
+    before = client.get("/api/planning", params={"week": "2026-10-12"}).json()
+    rejected = client.post("/api/placements", json={
+        "task_id": task["id"], "planned_date": "2026-10-22", "source_placement_id": source_id,
+    })
+    assert rejected.status_code == (409 if source == "closed" else 422)
+    assert rejected.json()["error"]["message"]
+    assert client.get("/api/planning", params={"week": "2026-10-12"}).json() == before
 
 
 def test_subtasks_on_separate_days_complete_independently_and_derive_parent(client: TestClient) -> None:
@@ -159,10 +201,9 @@ def test_failed_planning_saves_are_actionable_atomic_and_retryable(client: TestC
 
     task = make_task(client)
     placement = assign(client, task["id"], "2026-10-15")
-    new_task = make_task(client, "Unplanned work") if method == "POST" else None
     before = client.get("/api/planning").json()
     path = "/api/placements" if method == "POST" else f"/api/placements/{placement['id']}"
-    payload = {"task_id": new_task["id"], "planned_date": "2026-10-22"} if new_task else (
+    payload = {"task_id": task["id"], "planned_date": "2026-10-22", "source_placement_id": placement["id"]} if method == "POST" else (
         {"planned_date": "2026-10-22"} if method == "PATCH" else None
     )
     monkeypatch.setattr(storage, "BUSY_TIMEOUT_MS", 10)
@@ -176,7 +217,9 @@ def test_failed_planning_saves_are_actionable_atomic_and_retryable(client: TestC
         blocker.execute("ROLLBACK")
     retried = client.request(method, path, json=payload)
     assert retried.status_code == (201 if method == "POST" else 200)
-    assert client.get("/api/tasks").json()["tasks"] == ([task, new_task] if new_task else [task])
+    assert client.get("/api/tasks").json()["tasks"] == [task]
+    if method == "POST":
+        assert placement in client.get("/api/planning").json()["placements"]
 
 
 @pytest.mark.parametrize("method", ["POST", "PATCH", "DELETE"])

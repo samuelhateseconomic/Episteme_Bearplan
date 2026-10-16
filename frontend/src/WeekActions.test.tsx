@@ -92,12 +92,12 @@ test("the closed board uses frozen details with separate current status and no s
   expect(screen.queryByRole("button", { name: "Start tracking" })).not.toBeInTheDocument();
 });
 
-test("a completed weekly card explains why tracking cannot start", () => {
+test("a completed weekly card disables tracking without extra explanation", () => {
   const onTrack = vi.fn();
   render(<WeeklyPlanner state={boardState(planning({ tasks: [task("leaf", { completed: true })] }))} projects={[]} onRun={run} locked={false} onTrack={onTrack} />);
   const start = screen.getByRole("button", { name: "Start tracking" });
   expect(start).toBeDisabled();
-  expect(start).toHaveAccessibleDescription("Reopen this task to start a new session. An existing session continues.");
+  expect(screen.queryByText("Reopen this task to start a new session. An existing session continues.")).not.toBeInTheDocument();
   fireEvent.click(start);
   expect(onTrack).not.toHaveBeenCalled();
 });
