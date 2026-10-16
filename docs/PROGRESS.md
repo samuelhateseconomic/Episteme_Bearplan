@@ -5,10 +5,13 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
-**M2 first build, normal countdown tracking: implementation review Pass.**
-Implemented and reviewed October 16, 2026 under the user's explicit request.
-Baseline `69c6630`, schema **6**. The local build commit contains this record and
-[the countdown review](reviews/2026-10-16-countdown.md); no push.
+**Countdown eligibility and weekly-card entry refinement: implementation review Pass.**
+Reviewed October 16, 2026 against verified baseline **`c4b7dd3`**. Schema remains
+**6**; no migration. The local commit containing this record includes the
+[current refinement review](reviews/2026-10-16-countdown-eligibility.md).
+No push or next build. The original normal countdown build remains passed; its
+[review](reviews/2026-10-16-countdown.md) and full-suite results are historical
+baseline evidence, not new checks for this refinement.
 
 **Overall M2 countdown/recovery gate: Fail / not passed because required recovery
 and hardware evidence is outstanding.** The recovery build is **not started**.
@@ -28,7 +31,7 @@ Prior projects/tasks operator approval and October 15 overall history approval r
 valid; the latter was “Looks good to me,” not an itemized checklist report.
 
 Pre-existing staged user edits to `BearPlans_Build_Review_Plan.md` and
-`BearPlans_Dated_Roadmap.md`, plus the extra unstaged roadmap checkmark, are preserved
+`BearPlans_Dated_Roadmap.md`, plus the unstaged roadmap checkmarks, are preserved
 outside this build commit. Their staged/unstaged diff hashes are checked before
 commit. `CLAUDE.md` remains substantive and points here.
 
@@ -41,7 +44,8 @@ commit. `CLAUDE.md` remains substantive and points here.
 | Weekly planning + one-day refinement | Implementation Pass; original individual checklist not newly attested | [Refinement](reviews/2026-10-15-single-planned-day.md), `a21cb49`; [weekly evidence](reviews/2026-10-15-weekly-planning.md), `801cbc3` |
 | Weeks/history/carryover | Implementation Pass; overall user acceptance Pass | [History review](reviews/2026-10-15-weeks-history.md), `7155bc2`; acceptance `69c6630` |
 | Joined M1 technical review | Pass; broader operator gate not newly certified | [October 16 review](reviews/2026-10-16-m1-review.md) |
-| M2 normal countdown | Implementation Pass; overall M2 gate not passed | [Countdown review](reviews/2026-10-16-countdown.md), local commit containing this record |
+| M2 normal countdown | Implementation Pass; overall M2 gate not passed | [Countdown review](reviews/2026-10-16-countdown.md), `c4b7dd3` |
+| Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Current review](reviews/2026-10-16-countdown-eligibility.md), local commit containing this record |
 | Recovery and later builds | **Not started** | Future work requires its own authorized scope and acceptance evidence |
 
 ## Implemented countdown behavior
@@ -49,7 +53,14 @@ commit. `CLAUDE.md` remains substantive and points here.
 - Direct Plan/Track navigation (`/#track`), Start tracking from a leaf/subtask,
   existing leaves across projects including unscheduled tasks, whole minutes **1–180**.
   The form suggests 25 minutes as a changeable UI convenience, not a newly confirmed
-  product default. Completed leaves are selectable; containers are rejected.
+  product default. Only **incomplete leaves** are eligible, scheduled or unscheduled.
+  Completed tasks and containers are excluded; the backend revalidates atomically.
+  Completed Plan entries explain reopening and disable new starts. Eligible open
+  weekly-board cards open Track with the same task and existing duration/start flow.
+  Empty choices explain adding/reopening work; stale rejection refreshes choices
+  and retains duration. Completing an actively tracked task leaves its same running,
+  paused or Needs review session visible and controllable. Receipt replay remains safe
+  after completion; starting/finishing never changes completion.
 - Backend-owned running/paused state, remaining time, pause/resume/finish early,
   compact timer while planning, and saved completed/early/interrupted outcome.
   Browser polling/interpolation is display-only. Navigation, refresh, visibility
@@ -79,12 +90,46 @@ integrations and advanced statistics are not in this build.
 
 Relevant implementation: `backend/domain/timer.py`, `backend/routes/timer.py`,
 `backend/storage/migrations/0006_countdown.sql`, app lifecycle and task structure
-guards; `frontend/src/Countdown.tsx`, App navigation, typed API and styles.
+guards; `frontend/src/Countdown.tsx`, App navigation, `WeeklyPlanner.tsx`, typed API
+and styles.
 Relevant tests: `tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
 `tests/test_timer_api.py`, `tests/test_timer_restart.py`, `tests/test_timer_browser.py`,
-`frontend/src/Countdown.test.tsx` and updated App mocks.
+`tests/test_timer_eligibility_browser.py`, `frontend/src/Countdown.test.tsx` and
+updated App mocks. Shared guidance/README carry the refined eligibility rule.
 
-## Checks actually performed
+## Current refinement checks actually performed
+
+Actual environment remains **macOS 26.6.2 (25G83), Darwin arm64**, Python
+**3.13.15**, Node **24.21.0**, installed Chrome **155.0.8059.82**. Disposable data
+only for mutation/failure/browser tests; no new hardware recovery evidence.
+
+- Affected domain/API/planner/history tests:
+  `.venv/bin/python -m pytest -q tests/test_timer.py tests/test_timer_api.py tests/test_tasks.py tests/test_planning.py tests/test_planning_api.py tests/test_weeks.py`
+  → **280 passed**, **6.66 s**, zero failed/skipped. Backend agent's earlier subset
+  was 113 passed, 4.13 s. Completed leaves reject without partial rows; scheduled/
+  unscheduled and subtasks are covered, along with stale clients, reopening/retry,
+  unchanged active state/identity through completion and acknowledged receipt replay.
+- Frontend: **63 passed**, **3.07 s**; typecheck and production build passed. Tests
+  include incomplete choices across projects, disabled visible/accessibly explained
+  Plan/weekly controls, keyboard weekly entry/duration retention, two empty states,
+  stale choice refresh and running/paused/Needs review preservation through completion.
+- New Chrome journey: **1 passed**, **2.30 s**. Inspected 1440/375 px screenshots,
+  keyboard weekly Start + Resume, active completed-task session, stale rejection,
+  retained 17-minute duration, stored empty state and completed weekly-card guidance.
+- Existing timer/restart/weekly/history Chrome regressions: **6 passed**, **20.97 s**.
+  Short real timer saved **2.556639 s** excluding pause; API task writes median
+  **0.002924 s**, maximum **0.014481 s**; browser task creation **0.068 s**.
+- Independent source review: **Pass**, no remaining blocker. Initial new Chrome
+  checkbox helper raced the server-controlled state; waiting for the saved state
+  corrected the test. A frontend table-test setup error was also fixed. No confirmed
+  product defect or data loss arose from either. Exact commands and evidence are in
+  the [current review](reviews/2026-10-16-countdown-eligibility.md).
+- Scoped diff/whitespace, local links, unchanged schema and existing user-file diff
+  hashes are checked before commit. These are **287 distinct affected Python/browser
+  cases**, plus 63 frontend tests. The unaffected real one-minute/full-core baseline
+  was not repeated or claimed as new evidence.
+
+## Countdown baseline checks (historical, c4b7dd3)
 
 Detected **macOS 26.6.2 (25G83), Darwin arm64**, Python **3.13.15**, Node **24.21.0**,
 installed Chrome **155.0.8059.82**. No Windows or new hardware sleep run claimed.
@@ -124,23 +169,32 @@ links and original planning-file diff preservation are checked before commit.
 
 ## Normal running app and preserved user data
 
-The identified old launcher/service on `http://127.0.0.1:8765/` (95317/95319) was
-stopped gracefully. A live WAL-safe SQLite backup and schema-6 rehearsal used a
-private temporary folder; every original SQL field matched and integrity/FKs passed.
-A durable final backup is in the normal data folder:
-`bearplans-pre-countdown-20261016T151846Z.sqlite3`.
+The user's saved data has grown since the countdown handoff. Before this refinement's
+refresh: **nine tasks, two projects, three active placements, two closed weeks, four
+archived placements, three finished sessions, four saved intervals and eight timer
+receipts**; carryover receipts empty. A live SQLite backup in a private temporary
+folder passed integrity/FK checks. No personal content was printed.
 
-Restarted using `python3 launch.py --no-browser`; the normal app now serves schema 6.
-All **seven tasks, two projects, one active placement, two closed weeks and four
-archived placements** match the pre-upgrade hashes exactly, including original
-migration rows; carryover receipts remain empty. Integrity and foreign keys pass.
-All timer tables remain empty: **no personal session was started**. Read-only Chrome
-Track/Plan navigation and enabled task-choice checks passed, with the complete
-planning response unchanged. No personal screenshot was taken. Refresh an existing
-browser tab to load the updated interface.
+Identified service **3284** and launcher **3261** on port 8765. Rechecked that no
+running, paused or Needs review session existed, then gracefully stopped the verified
+launcher and confirmed the port released. Durable SQLite backup in the normal data
+folder: `bearplans-pre-eligibility-20261016T161718Z.sqlite3`; it matched the live
+backup exactly. Restarted with `python3 launch.py --no-browser`. Schema remains **6**.
+
+Read-only Chrome inspection checked exact incomplete-leaf choices, completed entry
+controls, Plan/Track and narrow layout. The entire planning response and **every SQL
+field/hash across all original tables**, including all saved sessions/intervals/
+receipts and closed snapshots, matched the pre-restart backup. Integrity/FKs pass.
+No personal timer was started or task/history changed; no personal screenshot taken.
+The normal app runs the refinement at `http://127.0.0.1:8765/`; refresh existing tabs.
+Earlier schema-6 migration/backup evidence remains in the original countdown review.
 
 ## Pending evidence and next concrete action
 
+- Hands-on refinement: select an incomplete weekly card, start/pause, complete its
+  task in Plan, then return to the same timer and finish. Verify completed work is
+  excluded from new choices and empty guidance appears when no eligible work remains.
+  No new operator acceptance is claimed.
 - Use the [five-minute countdown demonstration](reviews/2026-10-16-countdown.md#five-minute-demonstration)
   for hands-on operator review. Broader M1 real-coursework/week operator evidence is
   still not newly certified; no destructive real-week closure is required merely
@@ -151,7 +205,7 @@ browser tab to load the updated interface.
   battery/standby/hibernate and a longer independent timing reference. Unknown time
   must never silently earn credit; the current conservative fallback remains until
   that gate passes.
-- No known normal-countdown implementation blocker remains. No push and no recovery,
+- No known refinement or normal-countdown implementation blocker remains. No push and no recovery,
   reward, AI or integration implementation is authorized by this handoff alone.
 
 ## Guidance discrepancies retained
@@ -159,7 +213,8 @@ browser tab to load the updated interface.
 - User refinement on October 15 supersedes original multi-day planning: one active
   planned day per leaf, with closed historical placements preserved independently.
 - User-edited roadmap says planned/not tested while checkmark rows say otherwise;
-  the review-plan edit removes an older M1 status paragraph. Preserve these edits;
+  its unstaged checkmarks now include weeks/history and countdown. The review-plan
+  edit removes an older M1 status paragraph. Preserve these edits;
   use this record and linked evidence for actual decisions.
 - Historical Claude projects/tasks draft and earlier next-build text are evidence,
   not current instructions. Review filenames may use target dates. Follow contents,

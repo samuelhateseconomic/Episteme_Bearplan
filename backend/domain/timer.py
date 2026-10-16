@@ -280,6 +280,8 @@ class TimerService:
                 task = _require_task(conn, task_id)
                 if conn.execute("SELECT 1 FROM tasks WHERE parent_id = ? LIMIT 1", (task_id,)).fetchone():
                     raise InvalidInput("task_id", "Select a task without subtasks, or select one of its subtasks.")
+                if task["completed_at"] is not None:
+                    raise InvalidInput("task_id", "This task is complete. Reopen it or choose another incomplete task to start tracking.")
                 project = conn.execute("SELECT name FROM projects WHERE id = ?", (task["project_id"],)).fetchone()
                 parent = conn.execute("SELECT title FROM tasks WHERE id = ?", (task["parent_id"],)).fetchone()
                 session_id = str(uuid4())

@@ -14,7 +14,7 @@ import pytest
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import create_placement, move_placement
 from backend.domain.projects import rename_project
-from backend.domain.tasks import create_task, get_task, list_tasks, remove_subtask, update_task
+from backend.domain.tasks import create_task, get_task, list_tasks, remove_subtask, set_task_completion, update_task
 from backend.domain.timer import ClockSample, TimerConflict, TimerService
 from backend.storage.db import Database, open_database
 from backend.storage.migrations import Migration, MigrationError, current_version, load_migrations, migrate
@@ -99,6 +99,80 @@ def test_missing_task_container_and_bad_operation_rejected(timer, db: Database):
     with pytest.raises(InvalidInput, match="UUID"):
         service.start(child.id, 1, "bad")
     assert not stored(db)["timer_sessions"]
+
+
+@pytest.mark.parametrize("subtask", [False, True])
+@pytest.mark.parametrize("scheduled", [False, True])
+def test_completed_leaf_rejected_without_partial_writes_and_reopen_can_retry(timer, db: Database, subtask, scheduled):
+    service, _ = timer
+    # Retain an earlier saved result and its receipt as well as rejecting new rows.
+    _, earlier = start(service, db)
+    service.control(earlier.id, "finish")
+    parent = create_task(db, "Parent") if subtask else None
+    task = create_task(db, "Finished work", parent_id=parent.id if parent else None)
+    if scheduled:
+        create_placement(db, task.id, "2026-10-16")
+    completed = set_task_completion(db, task.id, True)
+    before = stored(db)
+    key = str(uuid4())
+    with pytest.raises(InvalidInput, match="complete.*Reopen") as error:
+        service.start(task.id, 1, key)
+    assert error.value.field == "task_id"
+    assert stored(db) == before
+    assert get_task(db, task.id) == completed
+    # Rejection did not persist a receipt: explicit reopening permits the same retry.
+    reopened = set_task_completion(db, task.id, False)
+    session = service.start(task.id, 1, key).active_session
+    assert session.task_id == task.id and session.state == "running"
+    assert get_task(db, task.id) == reopened
+
+
+@pytest.mark.parametrize("state", ["running", "paused", "needs_review"])
+def test_completion_during_session_preserves_state_identity_controls_and_replay(timer, db: Database, state):
+    service, clock = timer
+    task = create_task(db, "Work being completed")
+    other = create_task(db, "Other eligible work")
+    start_key = str(uuid4())
+    session = service.start(task.id, 1, start_key).active_session
+    observed(service, clock, 2)
+    if state == "paused":
+        service.control(session.id, "pause", expected_revision=1)
+    elif state == "needs_review":
+        clock.advance(10)
+    current = service.get().active_session
+    assert current.state == state
+    before = stored(db)
+    completed = set_task_completion(db, task.id, True)
+    assert stored(db) == before
+    assert service.get().active_session == current
+    # Receipt replay acknowledges the original start even though new starts for
+    # this task are now ineligible. It never replaces or reassigns the session.
+    assert service.start(task.id, 1, start_key).active_session == current
+    assert stored(db) == before
+    with pytest.raises(TimerConflict, match="already"):
+        service.start(other.id, 1, str(uuid4()))
+    if state == "running":
+        current = service.control(session.id, "pause", expected_revision=current.revision).active_session
+        current = service.control(session.id, "resume", expected_revision=current.revision).active_session
+        observed(service, clock, 1)
+    elif state == "paused":
+        current = service.control(session.id, "resume", expected_revision=current.revision).active_session
+        observed(service, clock, 1)
+    else:
+        with pytest.raises(TimerConflict, match="explicitly"):
+            service.control(session.id, "finish")
+    result = service.control(session.id, "finish", discard_uncertain=state == "needs_review").last_session
+    assert result.id == session.id and result.task_id == task.id
+    assert result.active_seconds == (2 if state == "needs_review" else 3)
+    assert result.outcome == ("interrupted" if state == "needs_review" else "finished_early")
+    assert get_task(db, task.id) == completed
+    after = stored(db)
+    assert service.start(task.id, 1, start_key).last_session == result
+    assert service.control(session.id, "finish").last_session == result
+    with pytest.raises(InvalidInput, match="complete.*Reopen"):
+        service.start(task.id, 1, str(uuid4()))
+    assert stored(db) == after
+    assert get_task(db, task.id) == completed
 
 
 def test_pause_resume_arithmetic_finish_and_completion_are_separate(timer, db: Database):

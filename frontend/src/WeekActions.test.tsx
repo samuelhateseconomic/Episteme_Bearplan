@@ -76,7 +76,7 @@ test("a failed or stale close keeps the preview and exposes refresh for another 
 test("the closed board uses frozen details with separate current status and no scheduling controls", () => {
   const frozen = snapshot();
   const plan = planning({ closed_week: frozen, placements: [], tasks: [task("leaf", { title: "Changed later", notes: "New notes", completed: true, deadline: "2026-11-30" })] });
-  render(<WeeklyPlanner state={boardState(plan)} projects={[]} onRun={run} locked={false} />);
+  render(<WeeklyPlanner state={boardState(plan)} projects={[]} onRun={run} locked={false} onTrack={vi.fn()} />);
   expect(screen.getByText("Closed week · read-only history")).toBeInTheDocument();
   expect(screen.getByText("Read chapter")).toBeInTheDocument();
   expect(screen.getByText("Original notes")).toBeInTheDocument();
@@ -89,6 +89,17 @@ test("the closed board uses frozen details with separate current status and no s
   expect(screen.queryByRole("checkbox")).not.toBeInTheDocument();
   expect(screen.queryByText("Move or remove")).not.toBeInTheDocument();
   expect(screen.queryByRole("button", { name: "End Week" })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Start tracking" })).not.toBeInTheDocument();
+});
+
+test("a completed weekly card explains why tracking cannot start", () => {
+  const onTrack = vi.fn();
+  render(<WeeklyPlanner state={boardState(planning({ tasks: [task("leaf", { completed: true })] }))} projects={[]} onRun={run} locked={false} onTrack={onTrack} />);
+  const start = screen.getByRole("button", { name: "Start tracking" });
+  expect(start).toBeDisabled();
+  expect(start).toHaveAccessibleDescription("Reopen this task to start a new session. An existing session continues.");
+  fireEvent.click(start);
+  expect(onTrack).not.toHaveBeenCalled();
 });
 
 test("closed history navigates to the selected snapshot and an open board counts unique leaves once", async () => {

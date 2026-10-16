@@ -18,7 +18,7 @@ import {
   type TaskEdit,
 } from "./api";
 import { TaskPlanning, WeeklyPlanner, usePlanning } from "./WeeklyPlanner";
-import { CompactTimer, TrackScreen, useCountdown } from "./Countdown";
+import { CompactTimer, StartTrackingButton, TrackScreen, useCountdown } from "./Countdown";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -341,7 +341,7 @@ export default function App() {
             </section>
           ) : null}
         </div>
-      <WeeklyPlanner state={planning} projects={projects ?? []} onRun={run} locked={mutations > 0 || planning.loading || Boolean(loadError) || Boolean(planning.error)} />
+      <WeeklyPlanner state={planning} projects={projects ?? []} onRun={run} locked={mutations > 0 || planning.loading || Boolean(loadError) || Boolean(planning.error)} onTrack={openTrack} />
       </div>
 
       </div>
@@ -412,7 +412,7 @@ function TaskRow({
         {error ? <p className="error" role="alert">{error}</p> : null}
       </div>
       <div className="task-actions">
-        {!derived ? <button type="button" className="link" onClick={onTrack}>Start tracking</button> : null}
+        <StartTrackingButton task={task} onTrack={onTrack} disabled={busy || locked} />
         <button type="button" className="link" onClick={onEdit}>{editing ? "Cancel" : "Edit"}</button>
         {extra}
       </div>

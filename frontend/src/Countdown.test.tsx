@@ -30,8 +30,8 @@ const running = (over: Partial<TimerSession> = {}): TimerState => ({ ...empty(),
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
 interface Call { url: string; method: string; body: Record<string, unknown> }
-function service(initial = empty()) {
-  const holder = { state: initial };
+function service(initial = empty(), initialPlan = plan) {
+  const holder = { state: initial, plan: initialPlan };
   const calls: Call[] = [];
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
     const url = String(input);
@@ -58,8 +58,13 @@ function service(initial = empty()) {
       return json(holder.state);
     }
     if (url === "/api/projects") return json({ projects: [project] });
-    if (url.startsWith("/api/planning")) return json(plan);
-    if (url.startsWith("/api/tasks")) return json({ tasks: plan.tasks, progress: { completed: 0, total: 1 } });
+    if (url.startsWith("/api/planning")) return json(holder.plan);
+    if (url.endsWith("/completion") && method === "PUT") {
+      const id = url.split("/")[3];
+      holder.plan = { ...holder.plan, tasks: holder.plan.tasks.map((item) => item.id === id ? { ...item, completed: Boolean(body.complete), completed_at: body.complete ? NOW : null } : item) };
+      return json(holder.plan.tasks.find((item) => item.id === id));
+    }
+    if (url.startsWith("/api/tasks")) return json({ tasks: holder.plan.tasks, progress: { completed: 0, total: 1 } });
     throw new Error(`Unexpected ${method} ${url}`);
   });
   return { holder, calls };
@@ -109,6 +114,115 @@ test("leaf Start tracking opens Track with that task and keeps the duration acro
   await user.click(screen.getByRole("link", { name: "Plan" }));
   await user.click(screen.getByRole("link", { name: "Track" }));
   expect(screen.getByLabelText("Duration (minutes)")).toHaveValue(12);
+});
+
+test("new-session choices include scheduled and unscheduled incomplete leaves across projects", async () => {
+  const scheduled = { ...task, id: "00000000-0000-4000-8000-000000000006", title: "Scheduled subtask", parent_id: PARENT };
+  const otherProject = { ...task, id: "00000000-0000-4000-8000-000000000007", title: "Other project work", project_id: "another-project" };
+  const completed = { ...task, id: "00000000-0000-4000-8000-000000000008", title: "Finished reading", completed: true };
+  const completedChild = { ...completed, id: "00000000-0000-4000-8000-000000000009", title: "Finished subtask", parent_id: PARENT };
+  service(empty(), { ...plan, tasks: [...plan.tasks, scheduled, otherProject, completed, completedChild], placements: [{ id: "placement", task_id: scheduled.id, planned_date: plan.today, created_at: NOW, updated_at: NOW, revision: 1 }] });
+  window.history.replaceState(null, "", "/#track");
+  render(<App />);
+  const choices = await screen.findByLabelText("Task to track");
+  await waitFor(() => expect(within(choices).getAllByRole("option")).toHaveLength(4));
+  expect(within(choices).getByRole("option", { name: /Unscheduled reading/ })).toBeInTheDocument();
+  expect(within(choices).getByRole("option", { name: /Container \/ Scheduled subtask/ })).toBeInTheDocument();
+  expect(within(choices).getByRole("option", { name: /Other project work/ })).toBeInTheDocument();
+  expect(within(choices).queryByRole("option", { name: /Finished/ })).not.toBeInTheDocument();
+  expect(within(choices).queryByRole("option", { name: "Seminar / Container" })).not.toBeInTheDocument();
+});
+
+test("completed Plan leaves disable new-session entry and explain it visibly and accessibly", async () => {
+  const { calls } = service(empty(), { ...plan, tasks: [{ ...task, completed: true }] });
+  const user = userEvent.setup();
+  render(<App />);
+  const start = await screen.findByRole("button", { name: "Start tracking" });
+  expect(start).toBeDisabled();
+  expect(start).toHaveAccessibleDescription("Reopen this task to start a new session. An existing session continues.");
+  expect(screen.getByText("Reopen this task to start a new session. An existing session continues.")).toBeVisible();
+  await user.click(start);
+  expect(calls.some((call) => call.url === "/api/timer/start")).toBe(false);
+});
+
+test("a weekly card opens Track by keyboard with the same task and existing duration flow", async () => {
+  const { calls } = service(empty(), { ...plan, tasks: [task], placements: [{ id: "placement", task_id: LEAF, planned_date: plan.today, created_at: NOW, updated_at: NOW, revision: 1 }] });
+  const user = userEvent.setup();
+  render(<App />);
+  await user.click(screen.getByRole("link", { name: "Track" }));
+  fireEvent.change(screen.getByLabelText("Duration (minutes)"), { target: { value: "9" } });
+  await user.click(screen.getByRole("link", { name: "Plan" }));
+  const friday = await screen.findByRole("region", { name: /Friday,/ });
+  const start = within(friday).getByRole("button", { name: "Start tracking" });
+  start.focus();
+  await user.keyboard("{Enter}");
+  expect(screen.getByLabelText("Task to track")).toHaveValue(LEAF);
+  expect(screen.getByLabelText("Duration (minutes)")).toHaveValue(9);
+  expect(screen.getByRole("heading", { name: "Track" })).toHaveFocus();
+  expect(calls.some((call) => call.url === "/api/timer/start")).toBe(false);
+  await user.click(screen.getByRole("button", { name: "Start countdown" }));
+  expect(await screen.findByRole("region", { name: "Current session" })).toBeVisible();
+  expect(calls.find((call) => call.url === "/api/timer/start")?.body).toMatchObject({ task_id: LEAF, duration_minutes: 9 });
+});
+
+test.each([{ label: "no tasks", tasks: [] }, { label: "all complete", tasks: [{ ...task, completed: true }] }])("Track explains how to get eligible work when no incomplete leaves exist: $label", async ({ tasks }) => {
+  service(empty(), { ...plan, tasks });
+  window.history.replaceState(null, "", "/#track");
+  render(<App />);
+  expect(await screen.findByText(/No incomplete tasks to track/)).toHaveTextContent("Add a task or reopen a completed task in Plan");
+  expect(screen.getByLabelText("Task to track")).toBeDisabled();
+  expect(screen.getByRole("button", { name: "Start countdown" })).toBeDisabled();
+  expect(screen.getByLabelText("Duration (minutes)")).toBeEnabled();
+});
+
+test("a stale completed-task rejection refreshes choices and preserves duration", async () => {
+  const { holder, calls } = service(empty(), { ...plan, tasks: [task] });
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/timer/start") {
+      holder.plan = { ...holder.plan, tasks: [{ ...task, completed: true }] };
+      return json({ error: { code: "invalid_input", field: "task_id", message: "This task is complete. Reopen it or choose an incomplete task." } }, 422);
+    }
+    return original(input, init);
+  });
+  window.history.replaceState(null, "", "/#track");
+  const user = userEvent.setup();
+  render(<App />);
+  await waitFor(() => expect(screen.getByLabelText("Task to track")).toBeEnabled());
+  await user.selectOptions(screen.getByLabelText("Task to track"), LEAF);
+  fireEvent.change(screen.getByLabelText("Duration (minutes)"), { target: { value: "17" } });
+  await user.click(screen.getByRole("button", { name: "Start countdown" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("This task is complete. Reopen it or choose an incomplete task.");
+  expect(await screen.findByText(/No incomplete tasks to track/)).toBeVisible();
+  expect(screen.getByLabelText("Duration (minutes)")).toHaveValue(17);
+  expect(within(screen.getByLabelText("Task to track")).queryByRole("option", { name: /Unscheduled reading/ })).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Start countdown" })).toBeDisabled();
+  expect(calls.filter((call) => call.url.startsWith("/api/planning"))).toHaveLength(2);
+  expect(calls.some((call) => call.url.includes("/completion"))).toBe(false);
+});
+
+test.each(["running", "paused", "needs_review"] as const)("completing a task preserves its %s session and excludes it from later new-session choices", async (state) => {
+  const active = running({ state, deadline_at: state === "running" ? "2026-10-16T16:01:00.000000Z" : null });
+  const { holder, calls } = service(active, { ...plan, tasks: [task] });
+  const user = userEvent.setup();
+  render(<App />);
+  const compact = await screen.findByRole("complementary", { name: "Active countdown" });
+  await user.click(await screen.findByLabelText(task.title));
+  await waitFor(() => expect(screen.getByRole("button", { name: "Start tracking" })).toBeDisabled());
+  expect(holder.state).toEqual(active);
+  expect(compact).toHaveTextContent(task.title);
+  await user.click(within(compact).getByRole("button", { name: "Open Track" }));
+  expect(screen.getByRole("region", { name: "Current session" })).toHaveTextContent(task.title);
+  expect(screen.queryByLabelText("Task to track")).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Start countdown" })).not.toBeInTheDocument();
+  const finish = state === "needs_review" ? "Save confirmed time and finish" : "Finish early";
+  await user.click(screen.getByRole("button", { name: finish }));
+  expect(await screen.findByRole("region", { name: "Saved session outcome" })).toHaveTextContent(task.title);
+  expect(screen.getByText(/No incomplete tasks to track/)).toBeVisible();
+  expect(holder.plan.tasks[0].completed).toBe(true);
+  expect(calls.filter((call) => call.url.includes("/completion"))).toHaveLength(1);
+  expect(calls.filter((call) => call.url.endsWith("/finish"))).toHaveLength(1);
+  expect(calls.some((call) => call.url === "/api/timer/start")).toBe(false);
 });
 
 test("pause and resume use backend state and revisions; finish saves the outcome without completing the task", async () => {

@@ -294,6 +294,18 @@ a:focus-visible {
   flex-shrink: 0;
 }
 
+.tracking-entry {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.tracking-hint {
+  margin: 0.15rem 0.4rem 0.4rem;
+  max-width: 21rem;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
 .error {
   color: var(--error);
   margin: 0.5rem 0 0;
@@ -567,6 +579,15 @@ details > summary:focus-visible {
 
 .planned-card .form-actions {
   gap: 0.25rem;
+}
+
+.planned-card .tracking-entry {
+  margin-bottom: 0.4rem;
+}
+
+.planned-card .tracking-entry button {
+  white-space: normal;
+  text-align: left;
 }
 
 .empty-day {

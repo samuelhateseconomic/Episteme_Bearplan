@@ -49,8 +49,11 @@ dates; use their contents and commit history to determine which evidence is curr
   an incomplete standalone task with explicit completion control, never a restored
   stale completion. M1 supports confirmed subtask removal; general task/project
   deletion and re-parenting remain deferred.
-- Finishing a timer never automatically completes its task. Timers, rewards, AI
-  and integrations are later builds; do not infer implementation from their plans.
+- New countdown sessions require an incomplete leaf task, scheduled or unscheduled.
+  Completing a task during a running, paused or Needs review session preserves that
+  session and its controls. Starting or finishing a timer never changes task
+  completion. Recovery, rewards, AI and integrations are later builds; do not infer
+  implementation from their plans.
 - Deadlines are date-only `YYYY-MM-DD` and never shift with timezone. Store actual
   instants as UTC ISO-8601 with `Z`, at microsecond precision. Compare timestamps as
   instants, not raw strings with mixed precision.

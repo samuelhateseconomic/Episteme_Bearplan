@@ -9,7 +9,8 @@ immutable history. The joined M1 technical review passed; no new itemized operat
 demonstration is claimed. See
 [shared progress](docs/PROGRESS.md),
 [M1 review](docs/reviews/2026-10-16-m1-review.md) and
-[countdown review](docs/reviews/2026-10-16-countdown.md).
+[countdown review](docs/reviews/2026-10-16-countdown.md). The current interface
+refinement is recorded in the [eligibility review](docs/reviews/2026-10-16-countdown-eligibility.md).
 
 A task without subtasks has an explicit completion checkbox. With subtasks, its
 completion comes from its children; finish every child to complete the parent.
@@ -24,10 +25,15 @@ integrations are later work. Finishing a timer never automatically completes its
 ## Track a countdown
 
 Open **Track** directly using the navigation or `/#track`, or choose **Start tracking**
-on a leaf task/subtask. Select existing work from any project, including unscheduled
-tasks, then choose a whole number of minutes from **1–180**. Start, Pause, Resume
+on an incomplete leaf task/subtask in the task list or an open weekly-board card.
+Select incomplete leaf work from any project, including scheduled and unscheduled
+tasks, then choose a whole number of minutes from **1–180**. Completed tasks explain
+that they must be reopened before a new session can start. If none are eligible,
+Track explains how to add or reopen work. Start, Pause, Resume
 and Finish early control the same backend session across all tabs. Finish saves a
 session result; marking the task complete remains a separate task action.
+Completing a task during tracking leaves its existing session visible and available
+to pause, resume or finish, even though that task is excluded from new-session choices.
 
 The compact timer stays visible while planning. Navigation, a hidden tab, refresh,
 and closing the browser leave the service tracking. Keep the local service running.

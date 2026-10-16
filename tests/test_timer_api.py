@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 
 from backend.app import create_app
 from backend.storage.db import Database
-from tests.test_timer import FakeClock
+from tests.test_timer import FakeClock, stored
 
 
 @pytest.fixture
@@ -61,6 +61,56 @@ def test_api_refresh_cross_client_controls_and_saved_result(timer_client, db: Da
     assert second.post(f"/api/timer/{session['id']}/finish", json=finish_payload).json()["last_session"] == result
     assert client.get("/api/tasks").json()["tasks"] == [work]
     assert client.get("/api/timer").json()["last_session"] == result
+
+
+@pytest.mark.parametrize("subtask", [False, True])
+def test_stale_tab_cannot_start_completed_leaf(timer_client, db: Database, subtask):
+    client, _ = timer_client
+    parent = task(client) if subtask else None
+    work = client.post("/api/tasks", json={
+        "title": "Initially eligible", "parent_id": parent["id"] if parent else None,
+    }).json()
+    # A second tab completes work after the first tab has loaded its choices.
+    stale_choice = next(row for row in client.get("/api/tasks").json()["tasks"] if row["id"] == work["id"])
+    assert not stale_choice["completed"]
+    second = TestClient(client.app, base_url="http://127.0.0.1:8765")
+    completed = second.put(f"/api/tasks/{work['id']}/completion", json={"complete": True})
+    assert completed.status_code == 200
+    before = stored(db)
+    key = str(uuid4())
+    rejected = start(client, stale_choice["id"], operation_id=key)
+    assert rejected.status_code == 422
+    error = rejected.json()["error"]
+    assert error["code"] == "invalid_input" and error["field"] == "task_id"
+    assert "complete" in error["message"] and "Reopen" in error["message"]
+    assert stored(db) == before
+    assert client.get("/api/timer").json()["active_session"] is None
+    assert next(row for row in client.get("/api/tasks").json()["tasks"] if row["id"] == work["id"]) == completed.json()
+    second.put(f"/api/tasks/{work['id']}/completion", json={"complete": False})
+    assert start(client, work["id"], operation_id=key).status_code == 201
+
+
+def test_api_completion_keeps_session_and_acknowledged_start_replay(timer_client, db: Database):
+    client, clock = timer_client
+    work = task(client)
+    key = str(uuid4())
+    original = start(client, work["id"], operation_id=key).json()["active_session"]
+    clock.advance(2)
+    running = client.get("/api/timer").json()["active_session"]
+    completed = client.put(f"/api/tasks/{work['id']}/completion", json={"complete": True}).json()
+    before = stored(db)
+    assert start(client, work["id"], operation_id=key).json()["active_session"] == running
+    assert stored(db) == before
+    paused = client.post(f"/api/timer/{original['id']}/pause", json={"expected_revision": 1})
+    assert paused.status_code == 200 and paused.json()["active_session"]["state"] == "paused"
+    saved = client.post(f"/api/timer/{original['id']}/finish", json={}).json()["last_session"]
+    assert saved["id"] == original["id"] and saved["task_id"] == work["id"]
+    assert saved["active_seconds"] == 2 and saved["outcome"] == "finished_early"
+    assert client.get("/api/tasks").json()["tasks"] == [completed]
+    before = stored(db)
+    assert start(client, work["id"], operation_id=key).json()["last_session"] == saved
+    assert start(client, work["id"]).status_code == 422
+    assert stored(db) == before
 
 
 @pytest.mark.parametrize("body", [

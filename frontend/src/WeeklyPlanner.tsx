@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
 import { WeekActions, WeekTaskDetails, historicalContext } from "./WeekActions";
+import { StartTrackingButton } from "./Countdown";
 
 const fullDate = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 const dayName = new Intl.DateTimeFormat(undefined, { weekday: "long", timeZone: "UTC" });
@@ -155,7 +156,7 @@ function PlacementActions({ task, placement, onRun }: { task: Task; placement: P
   );
 }
 
-function PlannedCard({ task, placement, context, onRun, locked }: { task: Task; placement: Placement; context: string; onRun: Run; locked: boolean }) {
+function PlannedCard({ task, placement, context, onRun, locked, onTrack }: { task: Task; placement: Placement; context: string; onRun: Run; locked: boolean; onTrack?: (taskId: string) => void }) {
   const id = useId();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -176,6 +177,7 @@ function PlannedCard({ task, placement, context, onRun, locked }: { task: Task; 
       <p className="planned-meta muted">Planned {showDate(placement.planned_date)}</p>
       {task.deadline ? <p className="planned-meta muted">Due {showDate(task.deadline)}</p> : null}
       {task.estimate_minutes ? <p className="planned-meta muted">{task.estimate_minutes} min estimated</p> : null}
+      {onTrack ? <StartTrackingButton task={task} onTrack={() => onTrack(task.id)} disabled={busy || locked} /> : null}
       {error ? <p role="alert" className="error">{error}</p> : null}
       <details>
         <summary>Move or remove</summary>
@@ -185,7 +187,7 @@ function PlannedCard({ task, placement, context, onRun, locked }: { task: Task; 
   );
 }
 
-export function WeeklyPlanner({ state, projects, onRun, locked }: { state: ReturnType<typeof usePlanning>; projects: Project[]; onRun: Run; locked: boolean }) {
+export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { state: ReturnType<typeof usePlanning>; projects: Project[]; onRun: Run; locked: boolean; onTrack?: (taskId: string) => void }) {
   const { plan, selectedDay, setSelectedDay, loading, error, navigate, refresh } = state;
   const days = plan ? Array.from({ length: 7 }, (_, index) => addDays(plan.week_start, index)) : [];
   const tasksById = new Map(plan?.tasks.map((task) => [task.id, task]) ?? []);
@@ -257,7 +259,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked }: { state: Retur
                         if (!task) return null;
                         const parent = task.parent_id ? tasksById.get(task.parent_id) : null;
                         const context = [projectById.get(task.project_id) ?? "Project", parent?.title].filter(Boolean).join(" / ");
-                        return <PlannedCard key={placement.id} task={task} placement={placement} context={context} onRun={onRun} locked={locked} />;
+                        return <PlannedCard key={placement.id} task={task} placement={placement} context={context} onRun={onRun} locked={locked} onTrack={onTrack} />;
                       })}
                     </ul>
                   ) : <p className="empty-day muted">Nothing planned</p>}

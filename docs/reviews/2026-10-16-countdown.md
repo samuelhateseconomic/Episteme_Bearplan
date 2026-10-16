@@ -4,6 +4,10 @@ Date: October 16, 2026, America/Los_Angeles. Baseline `69c6630`, schema 5.
 Reviewed source, tests and this record are included together in the local build commit.
 Schema after upgrade: **6**. No dependency change.
 
+Historical first-build evidence. The later [incomplete-leaf/weekly-entry refinement](2026-10-16-countdown-eligibility.md)
+supersedes this build's allowance to start completed leaves; its checks and decision
+are recorded separately below the same overall pending M2 recovery gate.
+
 ## Decisions
 
 **Normal countdown implementation review: Pass.** Required normal-flow, boundary,
