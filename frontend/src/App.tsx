@@ -284,7 +284,7 @@ export default function App() {
                           onCancel={() => setEditing(null)}
                           onSubmit={async (edit) => {
                             await run(() => updateTask(task.id, edit), "Changes saved.");
-                            setEditing(null);
+                            setEditing((current) => current === task.id ? null : current);
                           }}
                         />
                       ) : null}
@@ -326,7 +326,7 @@ export default function App() {
                                   onCancel={() => setEditing(null)}
                                   onSubmit={async (edit) => {
                                     await run(() => updateTask(child.id, edit), "Changes saved.");
-                                    setEditing(null);
+                                    setEditing((current) => current === child.id ? null : current);
                                   }}
                                 />
                               ) : null}

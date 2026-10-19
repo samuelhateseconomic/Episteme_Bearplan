@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import App from "./App";
@@ -231,6 +231,32 @@ test("editing a task sends its changed fields", async () => {
   await waitFor(() => expect(calls.some((c) => c.method === "PATCH" && c.url.includes("/api/tasks/"))).toBe(true));
   const patch = calls.find((c) => c.method === "PATCH" && c.url.includes("/api/tasks/"))!;
   expect(patch.body).toMatchObject({ title: "Write PS7", estimate_minutes: 90 });
+});
+
+test("finishing a child save preserves a different editor opened while it was pending", async () => {
+  const parent = task("00000000-0000-4000-8000-000000000001", "Prepare seminar", { subtask_count: 1 });
+  const child = task("00000000-0000-4000-8000-000000000002", "Read chapter", { parent_id: parent.id });
+  fakeService([project(MATH, "Math 55", true)], [parent, child]);
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let finishSave!: () => void;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === `/api/tasks/${child.id}` && init?.method === "PATCH") await new Promise<void>((resolve) => { finishSave = resolve; });
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<App />);
+  const childRow = (await screen.findByLabelText(child.title)).closest("li")!;
+  await user.click(within(childRow).getByRole("button", { name: "Edit" }));
+  await user.click(screen.getByRole("button", { name: "Save changes" }));
+  const parentRow = screen.getByLabelText(parent.title).closest("li")!;
+  await user.click(within(parentRow).getByRole("button", { name: "Edit" }));
+  const parentTitle = screen.getAllByLabelText("Title").at(-1)!;
+  await user.clear(parentTitle);
+  await user.type(parentTitle, "Seminar draft still open");
+  await act(async () => finishSave());
+  await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Changes saved."));
+  expect(screen.getAllByLabelText("Title").at(-1)).toHaveValue("Seminar draft still open");
+  expect(screen.getByRole("button", { name: "Save changes" })).toBeEnabled();
 });
 
 test("a rejected save shows the service's message and keeps what was typed", async () => {

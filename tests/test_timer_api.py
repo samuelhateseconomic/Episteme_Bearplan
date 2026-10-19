@@ -144,10 +144,89 @@ def test_api_review_requires_explicit_discard_and_retains_confirmed_time(timer_c
     assert review["state"] == "needs_review" and review["active_seconds"] == 2
     response = client.post(f"/api/timer/{session['id']}/finish", json={})
     assert response.status_code == 409 and response.json()["error"]["field"] == "discard_uncertain"
-    saved = client.post(f"/api/timer/{session['id']}/finish", json={"discard_uncertain": True})
+    saved = client.post(f"/api/timer/{session['id']}/finish", json={
+        "discard_uncertain": True, "expected_revision": review["revision"],
+    })
     assert saved.status_code == 200
     assert saved.json()["last_session"]["outcome"] == "interrupted"
     assert saved.json()["last_session"]["active_seconds"] == 2
+
+
+@pytest.mark.parametrize("resolution", ["resume", "finish"])
+def test_api_recovery_retains_session_and_replays_without_duplicate_intervals(timer_client, db: Database, resolution):
+    client, clock = timer_client
+    work = task(client)
+    session = start(client, work["id"]).json()["active_session"]
+    clock.advance(2.5)
+    client.get("/api/timer")
+    clock.advance(30)
+    review = client.get("/api/timer").json()["active_session"]
+    recovery = review["recovery"]
+    assert recovery["kind"] == "checkpoint_gap"
+    assert recovery["confirmed_active_seconds"] == 2.5
+    assert recovery["resolved_at"] is None and recovery["resolution"] is None
+    payload = {"resolution": resolution, "expected_revision": review["revision"],
+               "operation_id": str(uuid4()), "discard_uncertain": True}
+    response = client.post(f"/api/timer/{session['id']}/recover", json=payload)
+    assert response.status_code == 200
+    saved = response.json()["active_session" if resolution == "resume" else "last_session"]
+    assert saved["id"] == session["id"] and saved["active_seconds"] == 2.5
+    assert saved["recovery"]["id"] == recovery["id"]
+    assert saved["recovery"]["resolution"] == resolution
+    assert saved["recovery"]["resolved_at"] is not None
+    assert saved["state"] == ("running" if resolution == "resume" else "finished")
+    assert client.post(f"/api/timer/{session['id']}/recover", json=payload).json() == response.json()
+    with db.read() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM timer_intervals").fetchone()[0] == (2 if resolution == "resume" else 1)
+        assert conn.execute("SELECT COUNT(*) FROM timer_interruptions").fetchone()[0] == 1
+    assert client.get("/api/tasks").json()["tasks"] == [work]
+
+
+@pytest.mark.parametrize("patch", [
+    {"resolution": "pause"}, {"resolution": True}, {"expected_revision": True},
+    {"expected_revision": "2"}, {"expected_revision": 0}, {"expected_revision": 1.5},
+    {"operation_id": "invalid"}, {"discard_uncertain": False}, {"discard_uncertain": "true"},
+    {"discard_uncertain": 1}, {"extra": "invalid"},
+])
+def test_api_recovery_rejects_invalid_payload_without_mutation(timer_client, db: Database, patch):
+    client, clock = timer_client
+    session = start(client, task(client)["id"]).json()["active_session"]
+    clock.advance(10)
+    review = client.get("/api/timer").json()["active_session"]
+    payload = {"resolution": "resume", "expected_revision": review["revision"],
+               "operation_id": str(uuid4()), "discard_uncertain": True, **patch}
+    before = stored(db)
+    response = client.post(f"/api/timer/{session['id']}/recover", json=payload)
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "invalid_input"
+    assert stored(db) == before
+    assert client.get("/api/timer").json()["active_session"] == review
+
+
+def test_api_recovery_requires_every_review_field_and_preserves_origin_boundary(timer_client):
+    client, clock = timer_client
+    session = start(client, task(client)["id"]).json()["active_session"]
+    clock.advance(10)
+    review = client.get("/api/timer").json()["active_session"]
+    payload = {"resolution": "resume", "expected_revision": review["revision"],
+               "operation_id": str(uuid4()), "discard_uncertain": True}
+    for field in payload:
+        incomplete = {key: value for key, value in payload.items() if key != field}
+        assert client.post(f"/api/timer/{session['id']}/recover", json=incomplete).status_code == 422
+    for headers, status in [({"Host": "evil.example"}, 400), ({"Origin": "https://evil.example"}, 403)]:
+        assert client.post(f"/api/timer/{session['id']}/recover", json=payload, headers=headers).status_code == status
+    assert client.get("/api/timer").json()["active_session"] == review
+
+
+def test_api_legacy_review_finish_requires_current_revision(timer_client):
+    client, clock = timer_client
+    session = start(client, task(client)["id"]).json()["active_session"]
+    clock.advance(10)
+    review = client.get("/api/timer").json()["active_session"]
+    for payload in [{"discard_uncertain": True}, {"discard_uncertain": True, "expected_revision": 1}]:
+        response = client.post(f"/api/timer/{session['id']}/finish", json=payload)
+        assert response.status_code == 409 and response.json()["error"]["field"] == "revision"
+    assert client.get("/api/timer").json()["active_session"] == review
 
 
 def test_timer_failed_save_is_actionable_and_same_operation_retries(timer_client, db: Database, monkeypatch):

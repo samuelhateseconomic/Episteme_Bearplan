@@ -124,9 +124,16 @@ def test_project_task_subtask_journey_survives_restart(browser, evidence: Path, 
         expect(page.get_by_text("Ch.4 and Ch.5 exercises, final pass.")).to_be_visible()
         page.screenshot(path=evidence / "02-derived-completion-wide.png", full_page=True)
 
+        # This journey checks persisted records across a full app restart. Close
+        # its page first so the countdown poller does not issue requests to the
+        # deliberately stopped service. Live-page interruption/retry has its own
+        # browser journeys and must not be treated as a console error here.
+        page.close()
         assert service.stop() == 0
         service = Service(data_dir, port).start()
-        page.reload()
+        page = browser.new_page(viewport={"width": 1280, "height": 900})
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.goto(service.url)
         page.get_by_role("button", name="Math 55 — Honors", exact=True).click()
 
         expect(page.get_by_text("Write PS7", exact=True)).to_be_visible()

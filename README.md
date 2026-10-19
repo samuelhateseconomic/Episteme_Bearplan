@@ -2,7 +2,8 @@
 
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
-normal countdown tracking implemented**. Projects, tasks and subtasks retain their
+countdown tracking with checkpoint recovery implemented**. Target-Mac M2 hardware
+acceptance remains pending. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
 immutable history. The joined M1 technical review passed; no new itemized operator
@@ -43,14 +44,36 @@ the backend's remaining time for display; browser ticks do not save or earn time
 Saved UTC active intervals stay where the work occurred when the task is later moved
 or edited. Pause time is excluded, and active time cannot exceed the chosen duration.
 
-**Countdown recovery is provisional.** The service checkpoints about once a second.
-Restarted/interrupted sessions, unexplained service sampling gaps over five seconds,
-and clock inconsistencies become **Needs review** with only previously confirmed time.
-The timer slot remains occupied until you explicitly save confirmed time and finish,
-discarding the unverified gap. Automatic sleep/crash/clock-change reconciliation and
-time corrections are not in this build. Browser visibility is never treated as sleep.
-Actual Mac sleep/wake, battery/standby/hibernate, midnight/DST and longer-session
-acceptance remain gates for the recovery build and overall M2.
+The service saves a checkpoint about once a second. Measured sleep **pauses** the
+countdown at its last saved time; waking the laptop does not resume it. Choose
+**Resume** when you are ready. This also excludes time during brief maintenance
+wakes while the lid is closed. The entire unobserved interval is excluded rather
+than guessing when you stopped working.
+
+A running session interrupted by a service restart, crash, unexplained sampling
+gap over five seconds, or clock inconsistency becomes **Needs review**. Track shows
+the last confirmed active time and interruption details. **Continue with confirmed
+time** keeps the same session and remaining duration while excluding the gap;
+**Save confirmed time and finish** saves an interrupted outcome. Neither option
+adds uncertain time. Already paused sessions stay paused across service restarts.
+Recovery decisions and interruption details persist, including safe retries after
+a lost response. A crash can lose work since the last successful checkpoint; during
+storage failures that interval can be longer than one second. Browser visibility
+never determines sleep or earned time. Manual time corrections are deferred.
+
+M2's target-Mac hardware acceptance remains separate from Linux automated checks.
+Use the disposable evidence tool without touching your normal planner data:
+
+```sh
+.venv/bin/python tools/m2_probe.py precision --seconds 600 --output /tmp/bearplans-m2-precision.json
+.venv/bin/python tools/m2_probe.py sleep --seconds 300 --output /tmp/bearplans-m2-sleep.json
+```
+
+The sleep probe observes a sleep you initiate; it never changes power settings or
+suspends the computer. Check real sleep/wake, repeated maintenance wakes, battery
+and standby/hibernate conditions on the target Mac. The precision probe compares
+against another process on the same host; also compare against an external timer.
+See the [recovery review](docs/reviews/2026-10-18-m2-recovery.md) for the acceptance checklist.
 
 ## Plan your week
 

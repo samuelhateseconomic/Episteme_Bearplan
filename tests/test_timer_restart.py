@@ -71,7 +71,7 @@ def test_crashed_running_session_reopens_in_review_without_gap_credit(tmp_path: 
             assert review["state"] == "needs_review" and review["id"] == session["id"]
             assert review["active_seconds"] == checkpoint_credit / 1_000_000
             assert review["checkpoint_at"] == checkpoint_at
-            payload = {"operation_id": str(uuid4()), "discard_uncertain": True}
+            payload = {"operation_id": str(uuid4()), "discard_uncertain": True, "expected_revision": review["revision"]}
             _, finished = http_json("POST", f"{second.url}/api/timer/{session['id']}/finish", payload)
             result = finished["last_session"]
             assert result["active_seconds"] == review["active_seconds"] and result["outcome"] == "interrupted"

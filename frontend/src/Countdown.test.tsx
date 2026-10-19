@@ -27,12 +27,22 @@ function session(over: Partial<TimerSession> = {}): TimerSession {
 
 const empty = (): TimerState => ({ server_now: NOW, active_session: null, last_session: null });
 const running = (over: Partial<TimerSession> = {}): TimerState => ({ ...empty(), active_session: session(over) });
+const interrupted = (): TimerState => running({
+  state: "needs_review", active_seconds: 15, remaining_seconds: 45, deadline_at: null,
+  review_reason: "The app restarted. The gap has not been counted.",
+  recovery: {
+    id: "00000000-0000-4000-8000-000000000010", kind: "service_restart", reason: "The app restarted. The gap has not been counted.",
+    checkpoint_at: NOW, detected_at: "2026-10-16T16:05:00.000000Z", confirmed_active_seconds: 15,
+    measured_sleep_seconds: null, resolved_at: null, resolution: null,
+  },
+});
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
 interface Call { url: string; method: string; body: Record<string, unknown> }
 function service(initial = empty(), initialPlan = plan) {
   const holder = { state: initial, plan: initialPlan };
   const calls: Call[] = [];
+  const recoveries = new Map<string, string>();
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
     const url = String(input);
     const method = init?.method ?? "GET";
@@ -44,13 +54,27 @@ function service(initial = empty(), initialPlan = plan) {
       holder.state = running({ duration_minutes: Number(body.duration_minutes), requested_seconds: Number(body.duration_minutes) * 60, remaining_seconds: Number(body.duration_minutes) * 60, start_operation_id: String(body.operation_id) });
       return json(holder.state);
     }
+    if (url.endsWith("/recover")) {
+      const operation = String(body.operation_id);
+      const fingerprint = JSON.stringify(body);
+      if (recoveries.has(operation)) return recoveries.get(operation) === fingerprint
+        ? json(holder.state) : json({ error: { field: "operation_id", message: "This request ID was already used." } }, 409);
+      const active = holder.state.active_session;
+      if (!active || active.state !== "needs_review" || active.revision !== body.expected_revision) return json({ error: { field: "revision", message: "The countdown changed in another tab. Review its current state and try again." } }, 409);
+      const recovered = { ...active, recovery: active.recovery ? { ...active.recovery, resolved_at: NOW, resolution: body.resolution as "resume" | "finish" } : null, revision: active.revision + 1 };
+      holder.state = body.resolution === "resume"
+        ? { ...holder.state, active_session: { ...recovered, state: "running", deadline_at: "2026-10-16T16:00:45.000000Z", review_reason: null } }
+        : { ...holder.state, active_session: null, last_session: { ...recovered, state: "finished", outcome: "interrupted", finished_at: NOW, deadline_at: null } };
+      recoveries.set(operation, fingerprint);
+      return json(holder.state);
+    }
     const active = holder.state.active_session;
     if (url.endsWith("/pause") && active) {
       holder.state = { ...holder.state, active_session: { ...active, state: "paused", remaining_seconds: 45, active_seconds: 15, deadline_at: null, revision: active.revision + 1 } };
       return json(holder.state);
     }
     if (url.endsWith("/resume") && active) {
-      holder.state = { ...holder.state, active_session: { ...active, state: "running", deadline_at: "2026-10-16T16:00:45.000000Z", revision: active.revision + 1 } };
+      holder.state = { ...holder.state, active_session: { ...active, state: "running", deadline_at: "2026-10-16T16:00:45.000000Z", recovery: active.recovery ? { ...active.recovery, resolved_at: NOW, resolution: "resume" } : null, revision: active.revision + 1 } };
       return json(holder.state);
     }
     if (url.endsWith("/finish") && active) {
@@ -220,7 +244,7 @@ test.each(["running", "paused", "needs_review"] as const)("completing a task pre
   expect(screen.getByText(/No incomplete tasks to track/)).toBeVisible();
   expect(holder.plan.tasks[0].completed).toBe(true);
   expect(calls.filter((call) => call.url.includes("/completion"))).toHaveLength(1);
-  expect(calls.filter((call) => call.url.endsWith("/finish"))).toHaveLength(1);
+  expect(calls.filter((call) => call.url.endsWith(state === "needs_review" ? "/recover" : "/finish"))).toHaveLength(1);
   expect(calls.some((call) => call.url === "/api/timer/start")).toBe(false);
 });
 
@@ -353,7 +377,7 @@ test("a competing tab conflict refreshes the active session instead of creating 
   expect(screen.queryByRole("button", { name: "Start countdown" })).not.toBeInTheDocument();
 });
 
-test("refresh reconstructs paused state and uncertain sessions offer confirmed-time finish only", async () => {
+test("refresh reconstructs paused state and interrupted sessions explicitly save confirmed time", async () => {
   const { calls, holder } = service(running({ state: "paused", active_seconds: 15, remaining_seconds: 45, deadline_at: null }));
   const user = userEvent.setup();
   const first = render(<Harness />);
@@ -361,12 +385,134 @@ test("refresh reconstructs paused state and uncertain sessions offer confirmed-t
   first.unmount();
   holder.state = running({ state: "needs_review", active_seconds: 15, remaining_seconds: 45, deadline_at: null, review_reason: "The service restarted. Uncertain time is excluded." });
   render(<Harness />);
-  expect(await screen.findByText(/Needs review: The service restarted/)).toBeInTheDocument();
+  expect(await screen.findByRole("status", { name: "Session recovery" })).toHaveTextContent("The service restarted");
   expect(screen.queryByRole("button", { name: "Resume" })).not.toBeInTheDocument();
   expect(screen.queryByRole("button", { name: "Finish early" })).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Save confirmed time and finish" }));
   expect(await screen.findByRole("region", { name: "Saved session outcome" })).toHaveTextContent("Interrupted · uncertain time excluded");
-  expect(calls.find((call) => call.url.endsWith("/finish"))?.body.discard_uncertain).toBe(true);
+  expect(calls.find((call) => call.url.endsWith("/recover"))?.body).toMatchObject({ resolution: "finish", discard_uncertain: true, expected_revision: 1 });
+});
+
+test("interruption review explains confirmed time and continues the same session by keyboard without crediting the gap", async () => {
+  const { calls, holder } = service(interrupted());
+  const user = userEvent.setup();
+  render(<Harness />);
+  const review = await screen.findByRole("status", { name: "Session recovery" });
+  expect(review).toHaveTextContent("Confirmed active time: 00:15");
+  expect(review).toHaveTextContent("Time since the last saved checkpoint is excluded");
+  expect(review).toHaveTextContent("Last confirmed:");
+  expect(screen.getByRole("timer", { name: "Time remaining" })).toHaveTextContent("00:45");
+  expect(screen.queryByRole("button", { name: "Resume" })).not.toBeInTheDocument();
+  const resume = screen.getByRole("button", { name: "Continue with confirmed time" });
+  resume.focus();
+  await user.keyboard("{Enter}");
+  expect(await screen.findByRole("button", { name: "Pause" })).toBeEnabled();
+  expect(holder.state.active_session).toMatchObject({ id: session().id, state: "running", active_seconds: 15, remaining_seconds: 45 });
+  expect(calls.find((call) => call.url.endsWith("/recover"))?.body).toMatchObject({ resolution: "resume", discard_uncertain: true, expected_revision: 1, operation_id: expect.any(String) });
+  expect(calls.some((call) => call.url.includes("/completion"))).toBe(false);
+  expect(screen.queryByRole("status", { name: "Session recovery" })).not.toBeInTheDocument();
+});
+
+test("measured sleep stays paused with an explanation until ordinary Resume", async () => {
+  const state = interrupted();
+  state.active_session = { ...state.active_session!, state: "paused", recovery: { ...state.active_session!.recovery!, kind: "sleep", measured_sleep_seconds: 120 } };
+  const { calls, holder } = service(state);
+  const user = userEvent.setup();
+  render(<Harness />);
+  expect(await screen.findByText("Paused after sleep. Sleep time is excluded. Resume when you are ready.")).toBeVisible();
+  expect(screen.queryByRole("button", { name: "Continue with confirmed time" })).not.toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "Resume" }));
+  expect(await screen.findByRole("button", { name: "Pause" })).toBeEnabled();
+  expect(holder.state.active_session?.active_seconds).toBe(15);
+  expect(calls.filter((call) => call.url.endsWith("/resume"))).toHaveLength(1);
+  expect(calls.some((call) => call.url.endsWith("/recover"))).toBe(false);
+  expect(screen.queryByText(/Paused after sleep/)).not.toBeInTheDocument();
+});
+
+test("a lost recovery response replays the identical request once without adding time or a second resolution", async () => {
+  const { holder } = service(interrupted());
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  const attempts: Record<string, unknown>[] = [];
+  let readsUnavailable = false;
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/timer" && readsUnavailable) throw new TypeError("Disconnected");
+    const response = await original(input, init);
+    if (String(input).endsWith("/recover")) {
+      attempts.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      if (attempts.length === 1) { readsUnavailable = true; throw new TypeError("Lost response"); }
+      readsUnavailable = false;
+    }
+    return response;
+  });
+  const user = userEvent.setup();
+  render(<Harness />);
+  const resume = await screen.findByRole("button", { name: "Continue with confirmed time" });
+  await user.click(resume);
+  expect(await screen.findByRole("alert")).toHaveTextContent("Your inputs are kept");
+  expect(screen.getByRole("timer")).toHaveTextContent("00:45");
+  await user.click(resume);
+  expect(await screen.findByRole("button", { name: "Pause" })).toBeEnabled();
+  expect(attempts).toHaveLength(2);
+  expect(attempts[1]).toEqual(attempts[0]);
+  expect(holder.state.active_session).toMatchObject({ revision: 2, active_seconds: 15, remaining_seconds: 45 });
+});
+
+test("an uncommitted recovery choice survives a page reload and retries its original operation", async () => {
+  service(interrupted());
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  const attempts: Record<string, unknown>[] = [];
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input).endsWith("/recover")) {
+      attempts.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      if (attempts.length === 1) throw new TypeError("Disconnected");
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  const first = render(<Harness />);
+  await user.click(await screen.findByRole("button", { name: "Save confirmed time and finish" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Your inputs are kept");
+  first.unmount();
+  render(<Harness />);
+  await user.click(await screen.findByRole("button", { name: "Save confirmed time and finish" }));
+  expect(await screen.findByRole("region", { name: "Saved session outcome" })).toHaveTextContent("00:15 active time");
+  expect(attempts).toHaveLength(2);
+  expect(attempts[1]).toEqual(attempts[0]);
+});
+
+test("a stale recovery choice refreshes the state resolved in another tab", async () => {
+  const { holder, calls } = service(interrupted());
+  const user = userEvent.setup();
+  render(<Harness />);
+  const resume = await screen.findByRole("button", { name: "Continue with confirmed time" });
+  holder.state = running({ active_seconds: 15, remaining_seconds: 45, revision: 2 });
+  await user.click(resume);
+  expect(await screen.findByRole("alert")).toHaveTextContent("The countdown changed in another tab");
+  expect(await screen.findByRole("button", { name: "Pause" })).toBeEnabled();
+  expect(screen.queryByRole("button", { name: "Continue with confirmed time" })).not.toBeInTheDocument();
+  expect(calls.filter((call) => call.url.endsWith("/recover"))).toHaveLength(1);
+  expect(sessionStorage.getItem("bearplans.timer.pending")).toBeNull();
+});
+
+test("recovery disables both choices while saving and keeps the review if saving fails", async () => {
+  service(interrupted());
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  let rejectRequest!: (error: unknown) => void;
+  vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/recover")
+    ? new Promise<Response>((_resolve, reject) => { rejectRequest = reject; }) : original(input, init));
+  const user = userEvent.setup();
+  render(<Harness />);
+  const resume = await screen.findByRole("button", { name: "Continue with confirmed time" });
+  const finish = screen.getByRole("button", { name: "Save confirmed time and finish" });
+  await user.click(resume);
+  expect(resume).toBeDisabled();
+  expect(finish).toBeDisabled();
+  expect(screen.getByRole("region", { name: "Current session" })).toHaveAttribute("aria-busy", "true");
+  await act(async () => rejectRequest(new TypeError("Disconnected")));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Your inputs are kept");
+  expect(resume).toBeEnabled();
+  expect(finish).toBeEnabled();
+  expect(screen.getByRole("status", { name: "Session recovery" })).toHaveTextContent("00:15");
 });
 
 test("display ticks interpolate service remaining time, stop while paused, and never save expiry locally", async () => {

@@ -49,10 +49,12 @@ export interface NewTask extends TaskEdit {
 
 export class ApiError extends Error {
   readonly field?: string;
+  readonly status?: number;
 
-  constructor(message: string, field?: string) {
+  constructor(message: string, field?: string, status?: number) {
     super(message);
     this.field = field;
+    this.status = status;
   }
 }
 
@@ -71,7 +73,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   if (!response.ok) {
     const error = (body as { error?: { message?: unknown; field?: unknown } } | null)?.error;
     const message = typeof error?.message === "string" ? error.message : `The service returned an error (${response.status}).`;
-    throw new ApiError(message, typeof error?.field === "string" ? error.field : undefined);
+    throw new ApiError(message, typeof error?.field === "string" ? error.field : undefined, response.status);
   }
   return body as T;
 }
@@ -219,6 +221,18 @@ export function removePlacement(id: string): Promise<{ removed: string }> {
   return request<{ removed: string }>(`/api/placements/${encodeURIComponent(id)}`, { method: "DELETE" });
 }
 
+export interface TimerRecovery {
+  id: string;
+  kind: "service_restart" | "sleep" | "clock_change" | "checkpoint_gap";
+  reason: string;
+  checkpoint_at: string;
+  detected_at: string;
+  confirmed_active_seconds: number;
+  measured_sleep_seconds: number | null;
+  resolved_at: string | null;
+  resolution: "resume" | "finish" | null;
+}
+
 export interface TimerSession {
   id: string;
   start_operation_id: string;
@@ -238,6 +252,7 @@ export interface TimerSession {
   finished_at: string | null;
   outcome: "completed" | "finished_early" | "interrupted" | null;
   review_reason: string | null;
+  recovery?: TimerRecovery | null;
   revision: number;
 }
 
@@ -263,4 +278,8 @@ export function startTimer(operationId: string, taskId: string, durationMinutes:
 
 export function controlTimer(id: string, action: "pause" | "resume" | "finish", control: TimerControl): Promise<TimerState> {
   return request<TimerState>(`/api/timer/${encodeURIComponent(id)}/${action}`, json("POST", control));
+}
+
+export function recoverTimer(id: string, resolution: "resume" | "finish", control: TimerControl): Promise<TimerState> {
+  return request<TimerState>(`/api/timer/${encodeURIComponent(id)}/recover`, json("POST", { ...control, resolution, discard_uncertain: true }));
 }

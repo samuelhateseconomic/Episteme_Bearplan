@@ -5,75 +5,41 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
-**Card context/due-date follow-up: implementation review Pass.** The
-grip is now to the left of the project/parent-task line, above the leaf/subtask
-title. Redundant Planned-date metadata is removed from open and historical weekly
-cards; due dates remain, and planned dates stay in task planning, Move controls,
-accessibility labels and saved records. Frontend **74 passed**, 3.33 s; typecheck
-and production build passed (86 ms). Native wide/narrow **2 passed**, 7.68 s;
-affected planner/history/tracking Chrome regressions **7 passed**, 23.14 s. Actual
-parent/subtask context, icon alignment, due-only open/closed cards, unchanged saved
-dates, drag/retry/keyboard and restart/history/session behavior pass. Seven synthetic
-images inspected at 1600/375 px. The running service serves the new interface on
-refresh, with no restart or personal-data operation. See the
-[review follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up).
-The user subsequently requested the local commit; this follow-up and the preceding
-move-only refinement are included in the commit containing this record. No push.
+**M2 recovery implementation review: Pass on Linux; Mac gate pending.** The user explicitly
+requested finishing M2 on October 18, 2026. Baseline is GitHub `main` at `a10c788`;
+the clean cloud checkout was fast-forwarded from `801cbc3`. The user subsequently
+requested the local M2 recovery commit containing this record. No push or next
+milestone was requested.
 
-**Move-only drag interface refinement: implementation review Pass against `a7de8bf`.**
-Removes Option/Alt Add, all Add-another-day controls, the open-board dragging paragraph
-and the visible Drag label. The earlier grip placement by the leaf title is
-superseded by the follow-up above. Initial scheduling, keyboard Move/remove, native Move feedback,
-cancel/conflict/error handling and existing placements remain. Schema stays **7**;
-no new one-active-date constraint or data migration. See the
-[current review](reviews/2026-10-16-drag-simplification.md). Included in the local
-commit containing this record at the user's request. No recovery work or push. The normal service
-serves the rebuilt interface on refresh; no service restart or user-data writes.
+Schema **8** adds durable interruption/resolution records. Measured sleep pauses
+at the last trusted checkpoint and requires explicit Resume, including across
+maintenance wakes. Running restarts, clock changes and unexplained gaps require
+review; Continue with confirmed time resumes the same session while excluding the
+entire gap. Save confirmed time and finish saves it once. Paused restarts stay
+paused. Tasks, completion, placements and closed history retain their identity.
 
-**Preceding drag Move / Option–Alt Add build: implementation review Pass**, commit
-`a7de8bf` against `bbe6059` (countdown ancestor `c4b7dd3`). Its Add interface is
-superseded by this follow-up; saved multi-date records remain supported and intact.
-The [original drag review](reviews/2026-10-16-drag-scheduling.md) retains its actual
-400-test full-core evidence rather than claiming that result for this follow-up.
+Full core **473 passed**, zero failed/skipped, 162.96 s. Frontend **81 passed**,
+typecheck/build passed. New process/browser checks **3 passed**; targeted recovery/
+API/clock checks **120 passed**. Final probe-only reporting regression checks
+**16 passed** after the full-core run. Real ten-minute awake precision passed:
+**600.000000 s** saved versus **600.160698 s** same-host reference (−0.160698 s).
+No timer API requests ran during that observation; the monitor finalized it.
+Source hashes match. Evidence, exact commands,
+fixture corrections and the target-Mac checklist are in the
+[M2 recovery review](reviews/2026-10-18-m2-recovery.md).
 
-The preceding tracking interface and cosmetic follow-up were reverified **Pass**
-before drag edits: frontend **63 passed**, typecheck passed, Chrome **1 passed**,
-1440/375 px inspected. The already-present removal of explanation beneath disabled
-Start tracking controls is preserved, with its tests/review/evidence included in
-`a7de8bf`. See the
-[cosmetic follow-up](reviews/2026-10-16-countdown-eligibility.md#cosmetic-follow-up--remove-disabled-button-explanation).
-No timer eligibility or session behavior changed in this drag build.
+Actual current host: **Linux**. M2 target-Mac sleep/DarkWake, battery/standby/
+hibernate and external timing/operator evidence remain pending. The overall M2
+gate is **not passed** until those results are reviewed. Same-host precision or
+fake-clock tests must never be presented as physical Mac evidence. Rewards,
+statistics, AI and integrations have not started.
 
-**Countdown eligibility and weekly-card entry refinement: implementation review Pass.**
-Committed build: `bbe6059`; its earlier explanation requirement is superseded by
-the cosmetic follow-up above. That refinement was reviewed October 16, 2026 against
-verified baseline **`c4b7dd3`**, then at schema **6** without migration. Its
-[review](reviews/2026-10-16-countdown-eligibility.md) retains the original evidence.
-The original normal countdown build remains passed; its
-[review](reviews/2026-10-16-countdown.md) and full-suite results are historical
-baseline evidence, not new checks for this refinement.
-
-**Overall M2 countdown/recovery gate: Fail / not passed because required recovery
-and hardware evidence is outstanding.** The recovery build is **not started**.
-Normal countdown acceptance does not certify sleep/crash/clock-change recovery,
-midnight/DST, long-session precision or battery/standby/hibernate behavior.
-No new operator acceptance is claimed.
-
-**M1 technical/prerequisite review: Pass.** Before countdown product edits, the
-joined create-task/subtask → schedule → move → close → revisit after edit/restart →
-carryover journey and full baseline passed. No confirmed planner prerequisite defect
-needed correction. [M1 review](reviews/2026-10-16-m1-review.md) records exact saved
-identities, date-only deadlines, derived completion/leaf denominators and immutable
-snapshots. Session-linked movement/editing and unscheduled Track selection now pass
-in countdown integration tests. Broader M1 operator/manual certification remains
-unpassed; no real-coursework demonstration or itemized user evidence was invented.
-Prior projects/tasks operator approval and October 15 overall history approval remain
-valid; the latter was “Looks good to me,” not an itemized checklist report.
-
-Pre-existing staged user edits to `BearPlans_Build_Review_Plan.md` and
-`BearPlans_Dated_Roadmap.md`, plus the unstaged roadmap checkmarks, are preserved
-outside application changes. Their staged/unstaged diff hashes remain unchanged.
-`CLAUDE.md` remains substantive and points here.
+The prepared cloud launcher now serves schema 8 using the existing onboarding data
+folder outside source. A SQLite backup was verified before upgrade; every original
+schema-3 data row and migration record was preserved, with clean integrity/FKs.
+No personal planner or timer action was performed. The older Mac instance/data
+verification below is historical evidence from `a10c788`, not a claim about the
+current cloud process or the user's current Mac.
 
 ## Completed builds
 
@@ -89,7 +55,8 @@ outside application changes. Their staged/unstaged diff hashes remain unchanged.
 | Weekly drag Move / Option–Alt Add | Implementation Pass; Add interface superseded by later follow-up | [Drag review](reviews/2026-10-16-drag-scheduling.md), `a7de8bf` |
 | Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
 | Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
-| Recovery and later builds | **Not started** | Future work requires its own authorized scope and acceptance evidence |
+| M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), local commit containing this record against `a10c788` |
+| Rewards and later builds | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior
 
@@ -117,11 +84,13 @@ outside application changes. Their staged/unstaged diff hashes remain unchanged.
   permitted removal. An unfinished tracked leaf must be finished before adding
   children; an unfinished tracked subtask must be finished before removal. Normal
   editing, completion and scheduling remain responsive.
-- Checkpoints attempted every second. Restart, unexplained service gaps over five
-  seconds, backwards clocks and clock divergence over two seconds conservatively
-  enter Needs review at the last trusted checkpoint. Review occupies the timer slot;
-  explicit Save confirmed time and finish excludes the uncertain gap. Full recovery,
-  automatic sleep reconciliation and time correction are unavailable.
+- Checkpoints are attempted every second. Measured sleep pauses at the last saved
+  checkpoint; neither wake nor maintenance activity resumes tracking. Running
+  restarts, unexplained gaps over five seconds and clock divergence over two seconds
+  require review. Explicit continue or finish excludes the gap and retains a durable
+  schema-8 interruption/resolution record. Review still occupies the timer slot;
+  paused restarts remain paused. Manual time correction is deferred. Actual Mac
+  acceptance is pending; see the current recovery review.
 
 Core planning rules remain in AGENTS: stored dates are unique per task/date; existing
 multiple placements for a leaf stay intact. The latest interface only schedules
@@ -143,7 +112,7 @@ Relevant tests: `tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
 `tests/test_timer_eligibility_browser.py`, `frontend/src/Countdown.test.tsx` and
 updated App mocks. Shared guidance/README carry the refined eligibility rule.
 
-## Move-only refinement checks actually performed
+## Move-only refinement checks (historical, before `a10c788`)
 
 Same **macOS 26.6.2 (25G83), Darwin arm64** host. Backend, schema, timer arithmetic
 and recovery code unchanged. All mutation/browser fixtures use disposable data.
@@ -270,7 +239,7 @@ All failure, corruption, interruption and migration experiments use disposable d
 No personal data/screenshot/database is committed. Scoped whitespace/local document
 links and original planning-file diff preservation are checked before commit.
 
-## Normal running app and preserved user data
+## Historical Mac instance and preserved data at `a10c788`
 
 Before drag upgrade: **nine tasks, two projects, three active placements, two closed
 weeks, four archived placements, three finished sessions, four saved intervals and
@@ -295,32 +264,20 @@ backup evidence remains in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
-- Context-row grip and due-only weekly-card refinement/review are complete, **Pass**.
-  Changes are included in the user-requested local commit containing this record
-  against `a7de8bf`, with unrelated staged/unstaged user planning changes intact
-  outside that commit. No push or subsequent build.
-- Hands-on drag demonstration: move using the grip icon before the project/parent line;
-  Option/Alt still moves, and no Add-another-day option or instructional paragraph
-  appears. Try same-day, Escape/outside and an existing duplicate destination; use
-  keyboard Move/remove. Inspect narrow day-button targets and existing closed history.
-  Weekly cards show Due without a redundant Planned-date line; task-list dates stay.
-  New operator/Windows hardware acceptance is not claimed.
-- Hands-on refinement: select an incomplete weekly card, start/pause, complete its
-  task in Plan, then return to the same timer and finish. Verify completed work is
-  excluded from new choices and empty guidance appears when no eligible work remains.
-  No new operator acceptance is claimed.
-- Use the [five-minute countdown demonstration](reviews/2026-10-16-countdown.md#five-minute-demonstration)
-  for hands-on operator review. Broader M1 real-coursework/week operator evidence is
-  still not newly certified; no destructive real-week closure is required merely
-  for a demo when reopening is unavailable.
-- Recovery is the next eligible M2 build, **not started**. Only begin after an explicit
-  request. Its acceptance must cover real Mac sleep/wake and multiple DarkWake gaps,
-  restart/crash reconciliation, forward/backward clock changes, midnight/DST,
-  battery/standby/hibernate and a longer independent timing reference. Unknown time
-  must never silently earn credit; the current conservative fallback remains until
-  that gate passes.
-- No known normal-countdown implementation blocker remains. No push, recovery,
-  reward, AI or integration implementation is authorized by this handoff alone.
+- Full-core and ten-minute Linux precision verification are complete and recorded
+  in the recovery review. No further automated setup work is blocked.
+- Review and run the target-Mac checklist in the recovery review. The disposable
+  `tools/m2_probe.py` utility collects sanitized evidence without touching normal
+  planner data or changing OS power/clock settings. No sleep observation is a pass
+  if the machine did not actually suspend. Unsupported battery/hibernate conditions
+  remain explicitly unverified until demonstrated.
+- Preserve the earlier projects/tasks and overall history operator acceptances.
+  Broader M1 real-coursework/operator evidence and the latest drag/card refinement
+  demonstration were not newly certified in this Linux task.
+- After the required M2 hardware/operator checks pass, record milestone sign-off.
+  Rewards and later builds require a new request. Do not infer authorization to
+  push or start M3 from this recovery task. The user-requested local recovery
+  commit is authorized.
 
 ## Guidance discrepancies retained
 

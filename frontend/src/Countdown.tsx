@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import { ApiError, controlTimer, getTimer, startTimer, type Planning, type Project, type Task, type TimerSession, type TimerState } from "./api";
+import { ApiError, controlTimer, getTimer, recoverTimer, startTimer, type Planning, type Project, type Task, type TimerSession, type TimerState } from "./api";
 
 const message = (error: unknown) => error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
 const PENDING_KEY = "bearplans.timer.pending";
-interface PendingRequest { fingerprint: string; operationId: string }
+interface PendingRequest { fingerprint: string; operationId: string; expectedRevision?: number }
 
 function readPending(): PendingRequest | null {
   try {
     const value: unknown = JSON.parse(sessionStorage.getItem(PENDING_KEY) ?? "null");
     if (value && typeof value === "object" && "fingerprint" in value && "operationId" in value
-      && typeof value.fingerprint === "string" && typeof value.operationId === "string") return value as PendingRequest;
+      && typeof value.fingerprint === "string" && typeof value.operationId === "string"
+      && (!("expectedRevision" in value) || typeof value.expectedRevision === "number" && Number.isInteger(value.expectedRevision) && value.expectedRevision > 0)) return value as PendingRequest;
   } catch { /* An unavailable browser store does not prevent tracking. */ }
   return null;
 }
@@ -79,7 +80,7 @@ export function useCountdown() {
   const expiredId = active?.state === "running" && remaining <= 0 ? active.id : null;
   useEffect(() => { if (expiredId) void refresh(); }, [expiredId, refresh]);
 
-  async function mutate(fingerprint: string, work: (operationId: string) => Promise<TimerState>) {
+  async function mutate(fingerprint: string, work: (operationId: string, expectedRevision?: number) => Promise<TimerState>, expectedRevision?: number) {
     if (busyRef.current) return false;
     let saved = false;
     busyRef.current = true;
@@ -88,14 +89,17 @@ export function useCountdown() {
     request.current?.abort();
     generation.current += 1;
     if (pending.current?.fingerprint !== fingerprint) {
-      pending.current = { fingerprint, operationId: crypto.randomUUID() };
+      pending.current = { fingerprint, operationId: crypto.randomUUID(), ...(expectedRevision === undefined ? {} : { expectedRevision }) };
       try { sessionStorage.setItem(PENDING_KEY, JSON.stringify(pending.current)); } catch { /* Retry remains safe within this page. */ }
     }
     try {
-      accept(await work(pending.current.operationId));
+      accept(await work(pending.current.operationId, pending.current.expectedRevision));
       clearPending();
       saved = true;
     } catch (caught) {
+      // A rejected request did not commit. The next deliberate attempt may use
+      // refreshed state; an uncertain network/server failure must replay exactly.
+      if (caught instanceof ApiError && caught.status !== undefined && caught.status >= 400 && caught.status < 500) clearPending();
       setActionError(`${message(caught)} Your inputs are kept. Refresh timer to check the saved state, or retry.`);
     } finally {
       busyRef.current = false;
@@ -111,13 +115,20 @@ export function useCountdown() {
 
   function control(action: "pause" | "resume" | "finish", discardUncertain = false) {
     if (!active) return Promise.resolve();
-    return mutate(JSON.stringify([action, active.id, active.revision, discardUncertain]), (id) => controlTimer(active.id, action, {
-      operation_id: id, expected_revision: active.revision, ...(discardUncertain ? { discard_uncertain: true } : {}),
-    }));
+    return mutate(JSON.stringify([action, active.id, active.state, discardUncertain]), (id, revision) => controlTimer(active.id, action, {
+      operation_id: id, expected_revision: revision!, ...(discardUncertain ? { discard_uncertain: true } : {}),
+    }), active.revision);
+  }
+
+  function recover(resolution: "resume" | "finish") {
+    if (!active || active.state !== "needs_review") return Promise.resolve();
+    return mutate(JSON.stringify(["recover", active.id, active.recovery?.id ?? active.checkpoint_at, resolution]), (id, revision) => recoverTimer(active.id, resolution, {
+      operation_id: id, expected_revision: revision!,
+    }), active.revision);
   }
 
   function retry() { setActionError(null); void refresh(); }
-  return { state, active, remaining, busy, error: actionError ?? loadError, start, control, refresh: retry };
+  return { state, active, remaining, busy, error: actionError ?? loadError, start, control, recover, refresh: retry };
 }
 
 export type Countdown = ReturnType<typeof useCountdown>;
@@ -146,9 +157,16 @@ function TimerControls({ timer, compact = false }: { timer: Countdown; compact?:
   const active = timer.active;
   if (!active) return null;
   if (active.state === "needs_review") return compact ? null : <>
-    <p className="error">Needs review: {active.review_reason ?? "This session was interrupted. Its uncertain time has not been credited."}</p>
-    <p className="muted">Save only the confirmed time shown and exclude the uncertain gap. Detailed recovery and correction are part of the next build.</p>
-    <button type="button" disabled={timer.busy} onClick={() => void timer.control("finish", true)}>Save confirmed time and finish</button>
+    <div className="timer-recovery" role="status" aria-label="Session recovery">
+      <p>{active.recovery?.reason ?? active.review_reason ?? "This session was interrupted."}</p>
+      <p>Confirmed active time: <strong>{formatRemaining(Math.floor(active.active_seconds))}</strong></p>
+      <p className="muted">Time since the last saved checkpoint is excluded. Continue this countdown with the confirmed time, or save it and finish.</p>
+      <p className="muted">Last confirmed: {new Date(active.recovery?.checkpoint_at ?? active.checkpoint_at).toLocaleString()}</p>
+    </div>
+    <div className="form-actions">
+      <button type="button" disabled={timer.busy} onClick={() => void timer.recover("resume")}>Continue with confirmed time</button>
+      <button type="button" className="secondary" disabled={timer.busy} onClick={() => void timer.recover("finish")}>Save confirmed time and finish</button>
+    </div>
   </>;
   return <div className="form-actions">
     <button type="button" disabled={timer.busy || active.state === "running" && timer.remaining <= 0} onClick={() => void timer.control(active.state === "running" ? "pause" : "resume")}>
@@ -201,9 +219,9 @@ export function TrackScreen({ timer, plan, projects, requestedTaskId, requestTok
       <h3>{active.task_title}</h3>
       <p className="countdown-time" role="timer" aria-label="Time remaining">{formatRemaining(timer.remaining)}</p>
       <p>{active.state === "needs_review" ? "Needs review" : active.state === "paused" ? "Paused · paused time is excluded" : timer.remaining <= 0 ? "Waiting for the service to save the outcome…" : "Running"} · {active.duration_minutes} minute countdown</p>
-      {active.state === "needs_review" ? <p>Confirmed active time: {formatRemaining(Math.floor(active.active_seconds))}</p> : null}
+      {active.state === "paused" && active.recovery?.kind === "sleep" && !active.recovery.resolved_at ? <p role="status">Paused after sleep. Sleep time is excluded. Resume when you are ready.</p> : null}
       <TimerControls timer={timer} />
-      {active.state !== "needs_review" ? <p className="muted">Tracking continues when you switch screens, hide this tab, or close the browser while the service remains running.</p> : null}
+      {active.state === "running" ? <p className="muted">Tracking continues when you switch screens, hide this tab, or close the browser while the service remains running.</p> : null}
     </section> : <form className="countdown-form" onSubmit={submit} aria-busy={timer.busy}>
       <div className="field">
         <label htmlFor="tracking-task">Task to track</label>
@@ -228,7 +246,6 @@ export function TrackScreen({ timer, plan, projects, requestedTaskId, requestTok
     </form>}
     <p className="tracking-rule">Finishing a countdown saves the session. Complete the task separately in Plan.</p>
     {timer.state?.last_session ? <SavedSession session={timer.state.last_session} /> : null}
-    <p className="recovery-note">Recovery is provisional in this build. Service interruptions or uncertain clock or sleep gaps need review and do not silently earn time. Full sleep, crash, and clock-change recovery has not passed its acceptance checks.</p>
   </section>;
 }
 

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
 
@@ -20,6 +22,14 @@ class ControlRequest(BaseModel):
     expected_revision: StrictInt | None = None
     operation_id: StrictStr | None = None
     discard_uncertain: StrictBool = False
+
+
+class RecoveryRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    resolution: Literal["resume", "finish"]
+    expected_revision: StrictInt
+    operation_id: StrictStr
+    discard_uncertain: StrictBool
 
 
 @router.get("")
@@ -45,3 +55,8 @@ def resume_timer(session_id: str, body: ControlRequest, request: Request) -> Tim
 @router.post("/{session_id}/finish")
 def finish_timer(session_id: str, body: ControlRequest, request: Request) -> TimerView:
     return request.app.state.timer.control(session_id, "finish", **body.model_dump())
+
+
+@router.post("/{session_id}/recover")
+def recover_timer(session_id: str, body: RecoveryRequest, request: Request) -> TimerView:
+    return request.app.state.timer.recover(session_id, **body.model_dump())

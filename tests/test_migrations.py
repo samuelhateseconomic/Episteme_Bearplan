@@ -405,7 +405,6 @@ def test_v6_multi_day_upgrade_preserves_tasks_history_timer_rows_and_retries_aft
     from uuid import uuid4
 
     from backend.domain.planning import create_placement, list_placements
-    from backend.domain.timer import TimerService
     from backend.domain.weeks import close_week, preview_close
 
     db = Database(tmp_path / "v6-upgrade.sqlite3")
@@ -415,9 +414,25 @@ def test_v6_multi_day_upgrade_preserves_tasks_history_timer_rows_and_retries_aft
     historical = create_placement(db, task.id, "2026-10-15")
     close_week(db, "2026-10-12", preview_close(db, "2026-10-12").preview_token)
     current = create_placement(db, task.id, "2026-10-22")
-    timer = TimerService(db)
-    session = timer.start(task.id, 1, str(uuid4())).active_session
-    timer.control(session.id, "finish")
+    # Build genuine schema-6 records directly. Current application functions
+    # require the current schema and cannot construct a historical fixture.
+    session_id, operation_id, interval_id = (str(uuid4()) for _ in range(3))
+    started = "2026-10-18T18:00:00.000000Z"
+    finished = "2026-10-18T18:00:03.125000Z"
+    with db.write() as conn:
+        conn.execute(
+            "INSERT INTO timer_sessions (id, start_operation_id, task_id, task_title, project_id, project_name,"
+            " duration_minutes, state, active_microseconds, started_at, checkpoint_at, finished_at, outcome)"
+            " VALUES (?, ?, ?, ?, ?, 'Inbox', 1, 'finished', 3125000, ?, ?, ?, 'finished_early')",
+            (session_id, operation_id, task.id, task.title, task.project_id, started, finished, finished),
+        )
+        conn.execute(
+            "INSERT INTO timer_intervals (id, session_id, started_at, checkpoint_at, ended_at, active_microseconds)"
+            " VALUES (?, ?, ?, ?, ?, 3125000)",
+            (interval_id, session_id, started, finished, finished),
+        )
+        conn.execute("INSERT INTO timer_operations VALUES (?, ?, 'start', ?)",
+                     (operation_id, session_id, '{"historical_fixture":true}'))
 
     def rows():
         with db.read() as conn:
@@ -433,9 +448,10 @@ def test_v6_multi_day_upgrade_preserves_tasks_history_timer_rows_and_retries_aft
         assert conn.execute("SELECT 1 FROM sqlite_master WHERE name = 'planned_items_one_per_task'").fetchone()
     migrate(db)
     after = rows()
-    assert {name: values for name, values in after.items() if name != "schema_migrations"} == {
+    assert {name: after[name] for name in before if name != "schema_migrations"} == {
         name: values for name, values in before.items() if name != "schema_migrations"
     }
+    assert after["timer_interruptions"] == []
     assert after["schema_migrations"][:6] == before["schema_migrations"]
     added = create_placement(db, task.id, "2026-10-23", source_placement_id=current.id)
     reopened = open_database(db.path)

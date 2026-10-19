@@ -883,17 +883,14 @@ details > summary:focus-visible {
 
 .countdown-card p,
 .saved-session p,
-.tracking-rule,
-.recovery-note {
+.tracking-rule {
   overflow-wrap: anywhere;
 }
 
-.recovery-note {
-  color: var(--muted);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border);
-  margin: 1.25rem 0 0;
-  padding-top: 1rem;
+.timer-recovery {
+  border-left: 3px solid var(--border);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .timer-error {

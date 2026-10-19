@@ -161,7 +161,8 @@ def test_completion_during_session_preserves_state_identity_controls_and_replay(
     else:
         with pytest.raises(TimerConflict, match="explicitly"):
             service.control(session.id, "finish")
-    result = service.control(session.id, "finish", discard_uncertain=state == "needs_review").last_session
+    result = service.control(session.id, "finish", expected_revision=current.revision,
+                             discard_uncertain=state == "needs_review").last_session
     assert result.id == session.id and result.task_id == task.id
     assert result.active_seconds == (2 if state == "needs_review" else 3)
     assert result.outcome == ("interrupted" if state == "needs_review" else "finished_early")
@@ -298,17 +299,18 @@ def test_uncertain_time_never_earns_credit(timer, db: Database, kind):
     else:
         clock.advance(-1)
     review = service.get().active_session
-    assert review.state == "needs_review" and review.active_seconds == 3
+    assert review.state == ("paused" if kind == "sleep" else "needs_review") and review.active_seconds == 3
     assert review.review_reason and review.deadline_at is None
-    with pytest.raises(TimerConflict, match="explicitly"):
-        service.control(session.id, "finish")
-    result = service.control(session.id, "finish", discard_uncertain=True).last_session
+    if kind != "sleep":
+        with pytest.raises(TimerConflict, match="explicitly"):
+            service.control(session.id, "finish")
+    result = service.control(session.id, "finish", expected_revision=review.revision, discard_uncertain=True).last_session
     assert result.outcome == "interrupted" and result.active_seconds == 3
     assert result.review_reason == review.review_reason
 
 
 @pytest.mark.parametrize("state", ["running", "paused"])
-def test_restart_uses_checkpoint_and_requires_explicit_review(timer, db: Database, state):
+def test_restart_uses_checkpoint_and_preserves_an_explicit_pause(timer, db: Database, state):
     service, clock = timer
     _, session = start(service, db)
     observed(service, clock, 2.5)
@@ -317,10 +319,10 @@ def test_restart_uses_checkpoint_and_requires_explicit_review(timer, db: Databas
     clock.advance(3600)
     reopened = TimerService(open_database(db.path), FakeClock(clock.wall))
     review = reopened.get().active_session
-    assert review.state == "needs_review" and review.active_seconds == 2.5
+    assert review.state == ("paused" if state == "paused" else "needs_review") and review.active_seconds == 2.5
     assert review.checkpoint_at == "2026-10-16T20:00:02.500000Z"
-    result = reopened.control(session.id, "finish", discard_uncertain=True).last_session
-    assert result.active_seconds == 2.5 and result.outcome == "interrupted"
+    result = reopened.control(session.id, "finish", expected_revision=review.revision, discard_uncertain=True).last_session
+    assert result.active_seconds == 2.5 and result.outcome == ("finished_early" if state == "paused" else "interrupted")
     assert TimerService(open_database(db.path), clock).get().last_session == result
 
 
@@ -419,7 +421,7 @@ def test_wall_clock_cannot_reverse_interval_endpoints(timer, db: Database, case)
         clock.advance(1, wall=-0.5)
     before = stored(db)["timer_intervals"]
     review = service.get().active_session
-    assert review.state == "needs_review"
+    assert review.state == ("paused" if case == "paused_backward" else "needs_review")
     with db.read() as conn:
         for row in conn.execute("SELECT * FROM timer_intervals"):
             assert row["checkpoint_at"] >= row["started_at"]

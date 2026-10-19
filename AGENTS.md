@@ -52,8 +52,13 @@ dates; use their contents and commit history to determine which evidence is curr
 - New countdown sessions require an incomplete leaf task, scheduled or unscheduled.
   Completing a task during a running, paused or Needs review session preserves that
   session and its controls. Starting or finishing a timer never changes task
-  completion. Recovery, rewards, AI and integrations are later builds; do not infer
-  implementation from their plans.
+  completion. Measured sleep pauses at the last trusted checkpoint; waking or
+  maintenance activity never resumes automatically. Unknown gaps, running-service
+  restarts and clock discontinuities require explicit review. Continuing preserves
+  the same session and excludes the gap; finishing saves confirmed time only.
+  Paused restarts stay paused. Persist interruption records and replay-safe decisions;
+  never estimate missing work or silently award it. Rewards, AI and integrations
+  remain later builds. M2 Mac hardware acceptance requires actual Mac evidence.
 - Deadlines are date-only `YYYY-MM-DD` and never shift with timezone. Store actual
   instants as UTC ISO-8601 with `Z`, at microsecond precision. Compare timestamps as
   instants, not raw strings with mixed precision.
