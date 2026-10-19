@@ -7,9 +7,10 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 **M2 recovery implementation review: Pass on Linux; Mac gate pending.** The user explicitly
 requested finishing M2 on October 18, 2026. Baseline is GitHub `main` at `a10c788`;
-the clean cloud checkout was fast-forwarded from `801cbc3`. The user subsequently
-requested the local M2 recovery commit containing this record. No push or next
-milestone was requested.
+the clean cloud checkout was fast-forwarded from `801cbc3`. Recovery is committed
+as `580b017` (`M2: add checkpoint-based countdown recovery`). The user subsequently
+authorized pushing it to GitHub `main` for the Mac to pull. No next milestone was
+requested; target-Mac acceptance remains pending.
 
 Schema **8** adds durable interruption/resolution records. Measured sleep pauses
 at the last trusted checkpoint and requires explicit Resume, including across
@@ -55,7 +56,7 @@ current cloud process or the user's current Mac.
 | Weekly drag Move / Option–Alt Add | Implementation Pass; Add interface superseded by later follow-up | [Drag review](reviews/2026-10-16-drag-scheduling.md), `a7de8bf` |
 | Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
 | Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
-| M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), local commit containing this record against `a10c788` |
+| M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), `580b017` against `a10c788` |
 | Rewards and later builds | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior
@@ -276,8 +277,8 @@ backup evidence remains in the countdown/eligibility reviews.
   demonstration were not newly certified in this Linux task.
 - After the required M2 hardware/operator checks pass, record milestone sign-off.
   Rewards and later builds require a new request. Do not infer authorization to
-  push or start M3 from this recovery task. The user-requested local recovery
-  commit is authorized.
+  start M3 from this recovery task. Commit `580b017` and its push to GitHub `main`
+  were explicitly authorized in subsequent requests.
 
 ## Guidance discrepancies retained
 
