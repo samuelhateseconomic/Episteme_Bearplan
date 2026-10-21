@@ -443,7 +443,10 @@ def test_v5_upgrade_preserves_all_existing_rows_and_failed_upgrade_retries(tmp_p
     def legacy():
         with db.read() as conn:
             names = [row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table'") if row[0] != "schema_migrations"]
-            return {name: [tuple(row) for row in conn.execute(f"SELECT * FROM {name}")] for name in names if not name.startswith("timer_")}
+            return {
+                name: [tuple(row) for row in conn.execute(f"SELECT * FROM {name}")]
+                for name in names if not name.startswith("timer_") and name != "trees"
+            }
 
     before = legacy()
     broken = Migration(6, migrations[5].name, migrations[5].sql + "\nINSERT INTO missing_table VALUES (1);")
@@ -454,6 +457,8 @@ def test_v5_upgrade_preserves_all_existing_rows_and_failed_upgrade_retries(tmp_p
         assert conn.execute("SELECT name FROM sqlite_master WHERE name = 'timer_sessions'").fetchone() is None
     migrate(db)
     assert current_version(db) == len(load_migrations()) and legacy() == before
+    with db.read() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM trees").fetchone()[0] == 0
     reopened = open_database(db.path)
     assert list_tasks(reopened) == list_tasks(db)
     with reopened.read() as conn:

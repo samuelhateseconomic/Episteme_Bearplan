@@ -100,6 +100,9 @@ def test_weekly_assignment_movement_completion_and_recovery(browser, evidence, t
         monday_card.get_by_role("button", name="Move placement", exact=True).click()
         expect(page.locator(".week-board .planned-card")).to_have_count(1)
         page.get_by_role("button", name="Next week", exact=True).click()
+        # The previous week also has one checked card while navigation is in
+        # flight. Wait for the destination before opening its date controls.
+        expect(page.locator(".planner-heading")).to_contain_text(display(next_monday))
         moved_card = page.locator(".week-board .planned-card")
         expect(moved_card).to_have_count(1)
         expect(moved_card.get_by_role("checkbox")).to_be_checked()

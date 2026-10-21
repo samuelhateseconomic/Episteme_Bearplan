@@ -21,7 +21,7 @@ function session(over: Partial<TimerSession> = {}): TimerSession {
     id: "00000000-0000-4000-8000-000000000004", start_operation_id: "00000000-0000-4000-8000-000000000005", task_id: LEAF, task_title: task.title,
     project_id: PROJECT, project_name: project.name, parent_title: null, state: "running", duration_minutes: 1, requested_seconds: 60,
     active_seconds: 0, remaining_seconds: 60, started_at: NOW, checkpoint_at: NOW, deadline_at: "2026-10-16T16:01:00.000000Z", finished_at: null,
-    outcome: null, review_reason: null, revision: 1, ...over,
+    outcome: null, review_reason: null, revision: 1, tree: null, ...over,
   };
 }
 
@@ -49,6 +49,7 @@ function service(initial = empty(), initialPlan = plan) {
     const body = JSON.parse(String(init?.body ?? "{}")) as Record<string, unknown>;
     calls.push({ url, method, body });
     if (url === "/api/timer" && method === "GET") return json(holder.state);
+    if (url === "/api/forest" && method === "GET") return json({ trees: [] });
     if (url === "/api/timer/start") {
       if (holder.state.active_session) return json({ error: { message: "Another session is active. Open Track to use it." } }, 409);
       holder.state = running({ duration_minutes: Number(body.duration_minutes), requested_seconds: Number(body.duration_minutes) * 60, remaining_seconds: Number(body.duration_minutes) * 60, start_operation_id: String(body.operation_id) });
@@ -552,4 +553,49 @@ test("remaining display handles the three-hour cap and never goes negative", () 
   expect(formatRemaining(10800)).toBe("3:00:00");
   expect(formatRemaining(60.1)).toBe("01:01");
   expect(formatRemaining(-5)).toBe("00:00");
+});
+
+test("browser countdown ticks never advance the confirmed tree stage, including pause and review", async () => {
+  vi.useFakeTimers();
+  let monotonic = 0;
+  vi.spyOn(performance, "now").mockImplementation(() => monotonic);
+  const tree = { id: "pine-1", species: "pine", stage: "seedling", progress: 0.49, outcome: null } as const;
+  const { holder } = service(running({ tree, active_seconds: 29.4, remaining_seconds: 30.6 }));
+  render(<Harness />);
+  await act(async () => { await Promise.resolve(); });
+  const growth = screen.getByRole("progressbar", { name: "Confirmed tree growth" });
+  expect(screen.getByRole("img", { name: "Pine seedling" })).toBeVisible();
+  monotonic = 1200;
+  await act(async () => { vi.advanceTimersByTime(1000); });
+  expect(screen.getByRole("timer")).toHaveTextContent("00:30");
+  expect(growth).toHaveAttribute("value", "0.49");
+  expect(screen.getByRole("img", { name: "Pine seedling" })).toBeVisible();
+  holder.state = running({ tree, state: "paused", active_seconds: 29.4, remaining_seconds: 30.6 });
+  await act(async () => { vi.advanceTimersByTime(1000); });
+  expect(screen.getByText("Growth is preserved while paused.")).toBeVisible();
+  holder.state = { ...interrupted(), active_session: { ...interrupted().active_session!, tree } };
+  monotonic = 90000;
+  await act(async () => { vi.advanceTimersByTime(2000); });
+  expect(screen.getByText(/Growth is frozen at confirmed time/)).toBeVisible();
+  expect(growth).toHaveAttribute("value", "0.49");
+  expect(screen.queryByRole("img", { name: "Pine mature" })).not.toBeInTheDocument();
+});
+
+test.each(["mature", "unfinished"] as const)("saved %s tree displays its server outcome beside the associated session", async (outcome) => {
+  const mature = outcome === "mature";
+  service({ ...empty(), last_session: session({ state: "finished", outcome: mature ? "completed" : "finished_early", active_seconds: mature ? 60 : 59.99,
+    finished_at: NOW, tree: { id: "pine-1", species: "pine", stage: mature ? "mature" : "sapling", progress: mature ? 1 : 0.9998, outcome } }) });
+  render(<Harness />);
+  const saved = await screen.findByRole("region", { name: "Saved session outcome" });
+  expect(within(saved).getByRole("heading", { name: mature ? "Mature Pine" : "Unfinished Pine" })).toBeVisible();
+  expect(within(saved).getByText(mature ? "100% of your countdown confirmed" : "99% of your countdown confirmed")).toBeVisible();
+  expect(within(saved).getByText(task.title, { exact: false })).toBeVisible();
+  if (!mature) expect(screen.queryByRole("img", { name: "Pine mature" })).not.toBeInTheDocument();
+});
+
+test("old active sessions explain eligibility without creating a tree from display time", async () => {
+  service(running({ tree: null, active_seconds: 59, remaining_seconds: 1 }));
+  render(<Harness />);
+  expect(await screen.findByText(/This session began before trees were available/)).toBeVisible();
+  expect(screen.queryByRole("region", { name: "Session tree" })).not.toBeInTheDocument();
 });

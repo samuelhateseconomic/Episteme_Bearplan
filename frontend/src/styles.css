@@ -972,3 +972,37 @@ details > summary:focus-visible {
 
 .day-column.drop-over.drop-conflict,
 .day-choice.drop-over.drop-conflict { outline-style: solid; }
+
+/* Confirmed tree growth and the session-linked forest. */
+.session-tree {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.session-tree > div { flex: 1; min-width: 0; }
+.session-tree h4 { margin: 0; }
+.session-tree p { margin: 0.4rem 0; }
+.session-tree progress { width: min(100%, 18rem); accent-color: var(--accent); }
+.pine-art { display: block; flex: 0 0 8rem; width: 8rem; max-width: 100%; height: 9rem; }
+.tree-ground { fill: var(--border); }
+.tree-trunk { fill: none; stroke: #956b42; stroke-width: 9; stroke-linecap: round; }
+.tree-needles { fill: var(--accent); }
+.tree-highlight { fill: none; stroke: var(--accent-text); stroke-width: 3; opacity: 0.45; stroke-linecap: round; }
+.forest-collection { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.forest-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.forest-heading h3 { margin: 0; }
+.forest-grid { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: 1rem; }
+.forest-tree { min-width: 0; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--bg); padding: 1rem; overflow-wrap: anywhere; }
+.forest-tree .pine-art { margin: 0 auto 0.75rem; }
+.forest-tree h4 { margin: 0.5rem 0; }
+.forest-tree p { margin: 0.5rem 0; }
+.tree-outcome { color: var(--accent); font-weight: 650; }
+
+@media (max-width: 34rem) {
+  .session-tree { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .session-tree .pine-art { align-self: center; flex-basis: auto; }
+}

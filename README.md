@@ -2,8 +2,9 @@
 
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
-countdown tracking with checkpoint recovery implemented**. Target-Mac M2 hardware
-acceptance remains pending. Projects, tasks and subtasks retain their
+countdown tracking with checkpoint recovery, growing Pine trees and a saved forest
+implemented**. Target-Mac M2 hardware acceptance remains pending for combined
+M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
 immutable history. The joined M1 technical review passed; no new itemized operator
@@ -21,8 +22,28 @@ count leaf work items once, excluding containers. Put additional parent work in 
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
 General task/project deletion and re-parenting are deferred. Reopening closed weeks,
-recurring tasks, automatic bulk carryover, advanced reports, rewards, AI and
+recurring tasks, automatic bulk carryover, advanced reports, coins/shop, AI and
 integrations are later work. Finishing a timer never automatically completes its task.
+
+## Grow a tree
+
+Track shows a free Pine tree for each new countdown started with this build
+(schema 9). Earlier sessions, including sessions already in progress during the
+upgrade, keep their saved history without receiving trees.
+
+Confirmed active time drives growth: seedling below half the chosen duration,
+sapling from halfway, then mature only when the entire countdown is confirmed and
+finalized. Pausing preserves growth. Needs review freezes it; explicitly continuing
+after recovery keeps the same tree and excludes uncertain time. Browser animation
+never adds progress. Finishing early or saving an interrupted session keeps the
+tracked work and an unfinished tree.
+
+**Your forest** within Track lists saved mature and unfinished trees with their
+associated session, original task/project context and confirmed time. Session and
+tree finalization save together, once, including retries and restarts. Task edits,
+completion and scheduling do not change saved trees. Use **Refresh forest** to
+reload results from another tab or retry a failed read. Trees do not complete tasks.
+Coins, the tree shop, streaks and advanced statistics are not implemented yet.
 
 ## Track a countdown
 

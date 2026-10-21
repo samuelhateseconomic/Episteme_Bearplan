@@ -23,6 +23,7 @@ from uuid import UUID, uuid4
 from pydantic import BaseModel, ConfigDict
 
 from backend.domain.errors import InvalidInput
+from backend.domain.forest import TreeProgress, enroll_tree, finalize_tree, session_tree
 from backend.domain.tasks import _require_task
 from backend.storage.db import Database, StorageError
 
@@ -132,6 +133,7 @@ class TimerSession(BaseModel):
     review_reason: str | None
     recovery: TimerRecovery | None
     revision: int
+    tree: TreeProgress | None
 
 
 class TimerView(BaseModel):
@@ -189,6 +191,7 @@ def _session(conn: sqlite3.Connection, row: sqlite3.Row | None) -> TimerSession 
         )},
         requested_seconds=row["duration_minutes"] * 60,
         active_seconds=active, remaining_seconds=remaining, deadline_at=deadline, recovery=recovery,
+        tree=session_tree(conn, row),
     )
 
 
@@ -387,6 +390,7 @@ class TimerService:
                     (session_id, key, task_id, task["title"], task["project_id"], project["name"],
                      parent["title"] if parent else None, duration, at, at),
                 )
+                enroll_tree(conn, session_id, at)
                 self._open_interval(conn, session_id, at)
                 self._receipt(conn, key, session_id, "start", fingerprint)
                 self._anchor = sample
@@ -405,6 +409,7 @@ class TimerService:
             "UPDATE timer_sessions SET state = 'finished', finished_at = ?, outcome = ?, revision = revision + 1"
             " WHERE id = ? AND state <> 'finished'", (at, outcome, session_id),
         )
+        finalize_tree(conn, session_id)
         self._anchor = None
 
     @staticmethod

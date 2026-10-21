@@ -5,42 +5,48 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
-**M2 recovery implementation review: Pass on Linux; Mac gate pending.** The user explicitly
-requested finishing M2 on October 18, 2026. Baseline is GitHub `main` at `a10c788`;
-the clean cloud checkout was fast-forwarded from `801cbc3`. Recovery is committed
-as `580b017` (`M2: add checkpoint-based countdown recovery`). The user subsequently
-authorized pushing it to GitHub `main` for the Mac to pull. No next milestone was
-requested; target-Mac acceptance remains pending.
+**M3 first session — growing trees and forest collection: implementation review
+Pass on Linux; actual Mac acceptance deferred.** Baseline `809761d` plus the previous uncommitted
+sequencing note, which is preserved in this handoff. The user explicitly authorized
+M3 implementation, deferring actual Mac testing until M3 is complete, and a local
+commit after passing review. No push is authorized in this session. The authorized local commit containing
+this record is titled `M3: add confirmed tree growth and persistent forest`.
 
-Schema **8** adds durable interruption/resolution records. Measured sleep pauses
-at the last trusted checkpoint and requires explicit Resume, including across
-maintenance wakes. Running restarts, clock changes and unexplained gaps require
-review; Continue with confirmed time resumes the same session while excluding the
-entire gap. Save confirmed time and finish saves it once. Paused restarts stay
-paused. Tasks, completion, placements and closed history retain their identity.
+One free Pine species now grows on Track from backend-confirmed active time:
+seedling below 50%, sapling from 50%, mature only after finalized full-duration
+completion without an unresolved interruption. Early/interrupted finishes preserve
+confirmed work and save an unfinished tree. Pausing and Needs review preserve
+confirmed growth; explicit recovery continues the same tree. The forest within
+Track shows saved outcomes with historical session context, time and dates.
 
-Full core **473 passed**, zero failed/skipped, 162.96 s. Frontend **81 passed**,
-typecheck/build passed. New process/browser checks **3 passed**; targeted recovery/
-API/clock checks **120 passed**. Final probe-only reporting regression checks
-**16 passed** after the full-core run. Real ten-minute awake precision passed:
-**600.000000 s** saved versus **600.160698 s** same-host reference (−0.160698 s).
-No timer API requests ran during that observation; the monitor finalized it.
-Source hashes match. Evidence, exact commands,
-fixture corrections and the target-Mac checklist are in the
-[M2 recovery review](reviews/2026-10-18-m2-recovery.md).
+Schema **9** adds `trees`, with unique `session_id`. Only successful new countdown
+starts using this build enroll a tree, atomically with their interval and receipt.
+All sessions present before the upgrade, including already-running/paused sessions,
+remain ineligible. No reads, retries or historical finalizations backfill trees.
+Session finalization and tree outcome share one serialized transaction. Task edits,
+completion, scheduling and removal do not rewrite tree/session history; trees never
+complete tasks. Existing Move-only dragging and schema-7 multi-date records remain.
 
-Actual current host: **Linux**. M2 target-Mac sleep/DarkWake, battery/standby/
-hibernate and external timing/operator evidence remain pending. The overall M2
-gate is **not passed** until those results are reviewed. Same-host precision or
-fake-clock tests must never be presented as physical Mac evidence. Rewards,
-statistics, AI and integrations have not started.
+**M2 recovery implementation: Pass on Linux; actual Mac verification pending.**
+Recovery remains committed as `580b017`; its historical 473 core / 81 frontend
+passes and Linux ten-minute precision observation are detailed in the
+[M2 review](reviews/2026-10-18-m2-recovery.md). This M3 build does not certify Mac
+power behavior or change M2's gate status. The explicit October 20 sequencing
+choice permits development while preserving the outstanding acceptance scenarios.
 
-The prepared cloud launcher now serves schema 8 using the existing onboarding data
-folder outside source. A SQLite backup was verified before upgrade; every original
-schema-3 data row and migration record was preserved, with clean integrity/FKs.
-No personal planner or timer action was performed. The older Mac instance/data
-verification below is historical evidence from `a10c788`, not a claim about the
-current cloud process or the user's current Mac.
+Actual host: **Linux x86_64**, Python **3.12.14**, Node **24.19.0**, installed
+Chromium **154.0.8037.57**. Final full core: **500 passed**, zero failed/skipped,
+**142.73 s**. Frontend: **90 passed**, typecheck/build passed. Real one-minute
+monitor expiry with browser closed saved exactly **60.000000 s**, observed after
+**60.656 s**, with one mature tree and unchanged task completion. All mutation,
+migration, failure and browser work uses disposable data.
+No personal planner/database or normal running service is used. The current
+[M3 review](reviews/2026-10-20-m3-growing-forest.md) records implementation,
+verification and the separate platform decision.
+
+**Required checkpoint:** after M3 implementation is complete, run combined M2/M3
+verification on the target Mac before release readiness or milestone sign-off.
+Coins/shop, streaks, advanced statistics, AI and integrations remain unimplemented.
 
 ## Completed builds
 
@@ -57,7 +63,8 @@ current cloud process or the user's current Mac.
 | Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
 | Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
 | M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), `580b017` against `a10c788` |
-| Rewards and later builds | **Not started** | Separate authorized scope and acceptance required |
+| Coins/shop, streaks, statistics and later builds | **Not started** | Separate authorized scope and acceptance required |
+| M3 growing trees / forest | Implementation Pass on Linux; Mac acceptance deferred | [M3 review](reviews/2026-10-20-m3-growing-forest.md); local commit containing this record |
 
 ## Implemented countdown behavior
 
@@ -101,8 +108,9 @@ Reviewed carryover creates a new placement for the same current incomplete leaf,
 and still excludes leaves with any active placement. Parent completion derives
 from children, and totals count leaves once. Today is
 service-authoritative, using `BEARPLANS_TIMEZONE` or the OS local timezone. Reopening,
-recurring work, automatic bulk carryover, rewards, trees, coins, streaks, AI,
-integrations and advanced statistics are not in this build.
+recurring work, automatic bulk carryover, coins/shop, streaks, AI, integrations
+and advanced statistics remain deferred. Pine growth and the saved forest are
+included in the M3 first-session scope above.
 
 Relevant implementation: `backend/domain/timer.py`, `backend/routes/timer.py`,
 `backend/storage/migrations/0006_countdown.sql`, app lifecycle and task structure
@@ -265,20 +273,78 @@ backup evidence remains in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
-- Full-core and ten-minute Linux precision verification are complete and recorded
-  in the recovery review. No further automated setup work is blocked.
-- Review and run the target-Mac checklist in the recovery review. The disposable
-  `tools/m2_probe.py` utility collects sanitized evidence without touching normal
-  planner data or changing OS power/clock settings. No sleep observation is a pass
-  if the machine did not actually suspend. Unsupported battery/hibernate conditions
-  remain explicitly unverified until demonstrated.
-- Preserve the earlier projects/tasks and overall history operator acceptances.
-  Broader M1 real-coursework/operator evidence and the latest drag/card refinement
-  demonstration were not newly certified in this Linux task.
-- After the required M2 hardware/operator checks pass, record milestone sign-off.
-  Rewards and later builds require a new request. Do not infer authorization to
-  start M3 from this recovery task. Commit `580b017` and its push to GitHub `main`
-  were explicitly authorized in subsequent requests.
+- Growing-tree/forest implementation and review pass; included in the authorized
+  local commit containing this record. Next eligible work is the coins/shop session
+  below, which remains not started. Do not push or begin it automatically.
+- Actual target-Mac acceptance remains pending. After M3 implementation, run the
+  combined checkpoint before release readiness: sleep/wake and maintenance wakes,
+  battery/standby/hibernate where supported, process interruption/restart and
+  explicit recovery, forward/backward clock changes, midnight/DST, external
+  real-duration acceptance and no duplicate tree/reward outcomes. Preserve the
+  exact commands and operator steps in the [M2 review](reviews/2026-10-18-m2-recovery.md#target-mac-acceptance-still-required).
+- Use disposable data and the existing `tools/m2_probe.py`; never count missing
+  sleep as a pass, estimate uncertain time or infer hardware behavior from fake
+  clocks. Confirm resumed recovery continues its original tree, sleep/review never
+  advances growth, interrupted/early finish stays unfinished and finalized full
+  confirmed work creates one mature tree across refresh/retry/restart.
+- Preserve earlier projects/tasks and history operator acceptance. Broader M1
+  coursework/operator evidence and the latest drag/card demonstration are not newly
+  certified by Linux tests. New forest/Track operator acceptance is also pending.
+
+## Next M3 session — coins and tree shop (not started)
+
+Scope: add a persisted coin ledger, configurable earning rate and species prices,
+three purchasable cosmetic species alongside free Pine, owned-species selection for
+new countdowns and a small shop within Track. Keep one ticket active; do not add
+streaks, statistics, AI or integrations in that session. Derive awards solely from
+confirmed saved session time. Session finalization, tree result and initial coin
+award must share the existing transaction; purchases must serialize debit and
+ownership together. Starting/pausing/reviewing alone must not grant coins.
+
+Dependencies and touchpoints:
+
+- `backend/domain/timer.py`: `TimerService.start`, `_finish`, `recover`, `control`;
+  persistent operation receipts and the shared transaction are the integration path.
+- `backend/domain/forest.py`: `enroll_tree`, `finalize_tree`, `session_tree`,
+  `list_forest`; schema-9 `trees` currently permits Pine only. Add a new versioned
+  migration for species/ownership/ledger without editing applied migrations or
+  changing existing Pine IDs/results. Account for the current Pine-only constraint.
+- `backend/routes/forest.py`, `frontend/src/api.ts`, `Tree.tsx`, `Forest.tsx`,
+  `Countdown.tsx` and styles; shared Python functions own validation and mutations.
+- Regression evidence: `tests/test_forest.py`, forest API/browser tests, timer,
+  recovery, migration and Move-only planner tests. M2 hardware gate remains pending.
+
+Acceptance: independently calculated earning fixtures (including zero/sub-minute,
+full/early/interrupted sessions); repeated/concurrent finalization awards once;
+uncertain/paused time earns nothing; purchase with enough coins succeeds once;
+insufficient/concurrent spending cannot overspend; ownership and selected species
+survive restart; failed writes roll back all affected records; lost responses replay
+safely; upgrades preserve all existing trees/sessions and do not backfill history.
+
+Unresolved decisions: one coin per whole active minute and species prices remain
+proposed defaults, not confirmed product requirements. Document chosen configurable
+defaults before implementation. Define the coin-eligibility cutover explicitly
+without retroactive awards, treatment of prior completed tree sessions, species
+names/prices and when selection is locked (prefer at new-session start). Session
+correction remains a later feature; the plan proposes adjustment-ledger accounting,
+retaining purchases and disabling new spending if a later correction makes the
+balance negative. Preserve that policy without implementing manual correction here.
+
+Ready-to-use continuation prompt:
+
+> Continue BearPlans with M3's next session: coins and the tree shop. Read AGENTS.md,
+> CLAUDE.md, docs/PROGRESS.md, plans and latest reviews; inspect Git status and
+> preserve unrelated work and all saved data. Build only the coin ledger, three
+> purchasable species, owned-species selection and shop within Track. State any
+> configurable proposed defaults and eligibility cutover first. Use confirmed
+> session time only, atomic exactly-once finalization/awards and retry-safe purchases;
+> never award uncertain intervals or backfill old sessions. Preserve existing Pine
+> trees, recovery, task history and Move-only dragging. Test boundaries, concurrency,
+> failed saves, migration/restart preservation and wide/narrow UI. Keep M2 Mac
+> verification pending; require combined M2/M3 Mac checks after M3 implementation,
+> before release readiness. Update progress/review and prepare the next unfinished
+> feature without starting it. Create a local commit only after passing review;
+> do not push. Do not implement streaks, statistics, AI or integrations.
 
 ## Guidance discrepancies retained
 

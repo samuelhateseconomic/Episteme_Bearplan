@@ -499,7 +499,7 @@ def test_schema_seven_upgrade_preserves_original_history_and_retries_after_atomi
         migrate(db, [*migrations[:7], broken])
     assert current_version(db) == 7 and _all_rows(db) == before
     migrate(db)
-    assert current_version(db) == 8
+    assert current_version(db) == len(load_migrations())
     after = _all_rows(db)
     for table, rows in before.items():
         if table == "schema_migrations":

@@ -17,7 +17,7 @@ from backend import __version__
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import planning, projects, tasks, timer, weeks
+from backend.routes import forest, planning, projects, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -158,6 +158,7 @@ def create_app(db: Database, static_dir: Path | None = None, *, timer_clock: Clo
     app.include_router(weeks.router)
     app.include_router(tasks.router)
     app.include_router(timer.router)
+    app.include_router(forest.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

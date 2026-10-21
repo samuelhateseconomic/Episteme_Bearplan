@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { ApiError, controlTimer, getTimer, recoverTimer, startTimer, type Planning, type Project, type Task, type TimerSession, type TimerState } from "./api";
+import { ForestCollection } from "./Forest";
+import { SessionTree } from "./Tree";
 
 const message = (error: unknown) => error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
 const PENDING_KEY = "bearplans.timer.pending";
@@ -220,6 +222,7 @@ export function TrackScreen({ timer, plan, projects, requestedTaskId, requestTok
       <p className="countdown-time" role="timer" aria-label="Time remaining">{formatRemaining(timer.remaining)}</p>
       <p>{active.state === "needs_review" ? "Needs review" : active.state === "paused" ? "Paused · paused time is excluded" : timer.remaining <= 0 ? "Waiting for the service to save the outcome…" : "Running"} · {active.duration_minutes} minute countdown</p>
       {active.state === "paused" && active.recovery?.kind === "sleep" && !active.recovery.resolved_at ? <p role="status">Paused after sleep. Sleep time is excluded. Resume when you are ready.</p> : null}
+      {active.tree ? <SessionTree tree={active.tree} state={active.state} /> : <p className="muted">This session began before trees were available. Your next countdown can grow a tree.</p>}
       <TimerControls timer={timer} />
       {active.state === "running" ? <p className="muted">Tracking continues when you switch screens, hide this tab, or close the browser while the service remains running.</p> : null}
     </section> : <form className="countdown-form" onSubmit={submit} aria-busy={timer.busy}>
@@ -246,6 +249,7 @@ export function TrackScreen({ timer, plan, projects, requestedTaskId, requestTok
     </form>}
     <p className="tracking-rule">Finishing a countdown saves the session. Complete the task separately in Plan.</p>
     {timer.state?.last_session ? <SavedSession session={timer.state.last_session} /> : null}
+    <ForestCollection visible={visible} lastSessionId={timer.state?.last_session?.id ?? null} />
   </section>;
 }
 
@@ -256,5 +260,6 @@ function SavedSession({ session }: { session: TimerSession }) {
     <p><strong>{session.task_title}</strong> · {sessionContext(session)}</p>
     <p>{outcome} · {formatRemaining(Math.floor(session.active_seconds))} active time of {session.duration_minutes} {session.duration_minutes === 1 ? "minute" : "minutes"}.</p>
     <p className="muted">Started {new Date(session.started_at).toLocaleString()}{session.finished_at ? ` · Finished ${new Date(session.finished_at).toLocaleString()}` : ""}. Session history stays attached to when this work occurred.</p>
+    {session.tree ? <SessionTree tree={session.tree} state={session.state} /> : null}
   </section>;
 }

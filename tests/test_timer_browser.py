@@ -198,6 +198,12 @@ def test_real_one_minute_countdown_expires_with_browser_closed(browser, evidence
             time.sleep(0.25)
         elapsed = time.monotonic() - before
         assert terminal == ("finished", "completed", 60_000_000), terminal
+        # The monitor, with no browser or timer API callback, atomically plants
+        # exactly one mature tree alongside that fully confirmed session.
+        with sqlite3.connect(service.data_dir / "bearplans.sqlite3") as conn:
+            assert conn.execute(
+                "SELECT session_id, outcome FROM trees"
+            ).fetchall() == [(session_id, "mature")]
         assert 60 <= elapsed < 64, f"one-minute monitor expiry took {elapsed:.3f}s"
         print(f"real countdown: 60.000000s credited; independent elapsed {elapsed:.3f}s; browser closed")
         _, tasks = http_json("GET", service.url + "/api/tasks")
@@ -207,6 +213,7 @@ def test_real_one_minute_countdown_expires_with_browser_closed(browser, evidence
             page = reopened.new_page(viewport={"width": 1280, "height": 900})
             page.goto(service.url + "/#track")
             expect(page.get_by_role("region", name="Saved session outcome")).to_contain_text("Countdown completed")
+            expect(page.get_by_role("region", name="Forest collection")).to_contain_text("Mature Pine")
             page.screenshot(path=evidence / "timer-05-real-expiry.png", full_page=True)
         finally:
             reopened.close()

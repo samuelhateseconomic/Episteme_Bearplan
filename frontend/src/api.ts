@@ -233,6 +233,29 @@ export interface TimerRecovery {
   resolution: "resume" | "finish" | null;
 }
 
+export interface TreeProgress {
+  id: string;
+  species: "pine";
+  stage: "seedling" | "sapling" | "mature";
+  progress: number;
+  outcome: "mature" | "unfinished" | null;
+}
+
+export interface ForestTree extends TreeProgress {
+  session_id: string;
+  task_title: string;
+  project_name: string;
+  parent_title: string | null;
+  started_at: string;
+  finished_at: string;
+  duration_minutes: number;
+  active_seconds: number;
+}
+
+export async function getForest(signal?: AbortSignal): Promise<ForestTree[]> {
+  return (await request<{ trees: ForestTree[] }>("/api/forest", { signal })).trees;
+}
+
 export interface TimerSession {
   id: string;
   start_operation_id: string;
@@ -253,6 +276,7 @@ export interface TimerSession {
   outcome: "completed" | "finished_early" | "interrupted" | null;
   review_reason: string | null;
   recovery?: TimerRecovery | null;
+  tree: TreeProgress | null;
   revision: number;
 }
 

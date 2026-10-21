@@ -74,6 +74,7 @@ function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; s
     calls.push({ url, method, body });
 
     if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
+    if (url === "/api/forest") return json({ trees: [] });
 
     if (fail && url.startsWith(fail.url) && method !== "GET") return json({ error: fail.error }, fail.status);
     if (url.startsWith("/api/planning") && method === "GET") return json(planningSnapshot(tasks, placements, url));
