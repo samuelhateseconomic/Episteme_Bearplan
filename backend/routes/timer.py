@@ -15,6 +15,7 @@ class StartRequest(BaseModel):
     task_id: StrictStr
     duration_minutes: StrictInt
     operation_id: StrictStr
+    species: StrictStr = "pine"
 
 
 class ControlRequest(BaseModel):
@@ -39,7 +40,7 @@ def get_timer(request: Request) -> TimerView:
 
 @router.post("/start", status_code=201)
 def start_timer(body: StartRequest, request: Request) -> TimerView:
-    return request.app.state.timer.start(body.task_id, body.duration_minutes, body.operation_id)
+    return request.app.state.timer.start(body.task_id, body.duration_minutes, body.operation_id, body.species)
 
 
 @router.post("/{session_id}/pause")

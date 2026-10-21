@@ -3,18 +3,68 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
-## Current state
+## Current state — October 20, 2026
 
-**M3 is partially complete: only its first session, growing Pine trees and the
-persistent forest collection, is implemented and has passed Linux review.**
-Implementation commit: `e0ccf1b`. The remaining M3 sessions have **not started**:
+Base commit: **`138cd3a`**. Following the user's “continue”, **M3 coins and tree shop
+are implemented and their implementation review passes on macOS**. The user then
+requested the local commit containing this record, against that baseline. It
+includes the application, tests, migration and handoff records; unrelated planning
+edits remain outside it. No push is authorized or performed.
+Existing planning edits, documentation handoffs and recovery stash remain
+preserved. The normal app was not restarted and its data was not migrated.
 
-- Coins and the tree shop, including three purchasable species.
+Configurable proposed defaults: **1 coin per whole confirmed active minute**;
+Birch **30**, Oak **60**, Cherry **120** coins, with Pine free. These are chosen
+implementation defaults, not newly confirmed product rules. Only countdowns
+started with the coins-aware build enroll for earnings; all pre-upgrade sessions,
+including unfinished sessions and existing trees, remain ineligible. Capture the
+earning rate and owned species when starting; finishing saves confirmed earnings
+once, atomically with its session/tree result. Purchases revalidate displayed price,
+balance and ownership in the serialized transaction and retain replay receipts.
+Failed saves keep the chosen item for retry; no refund/Undo or manual correction
+surface is added in this ticket. See the
+[coins/shop review](reviews/2026-10-20-coins-shop.md) for acceptance and fresh evidence.
+
+Schema **10** preserves existing tree fields/order while adding coin enrollment,
+ledger, ownership and purchase receipts. Track shows coins, recent activity,
+four cosmetic species and owned-species selection. Purchase requests persist
+through lost responses/reload and refresh the authoritative balance. Default Pine
+starts remain compatible with the earlier service API; the shop explains when an
+older running service needs restarting. No prior sessions or trees are backfilled.
+
+Fresh software evidence on **macOS 26.6.2 (25G83), Darwin arm64**, Python
+**3.13.15**, Node **24.21.0**, Chrome **155.0.8059.82**: full core **553 passed**
+in **144.66 s**, zero failures/skips; final frontend **111 passed**, typecheck/build
+passed. After the Pine/404 compatibility follow-up, final shop/timer/eligibility
+Chrome journeys **3 passed**, **10.01 s**. The full-core browser-closed real minute
+saved **60.000000 s**, one mature Pine and one coin, observed after **60.414 s**.
+All mutation/migration/restart fixtures use disposable data. Actual sleep,
+battery/standby/hibernate and external long-duration acceptance remain pending.
+
+| Milestone | Implementation status | Remaining acceptance or work |
+| --- | --- | --- |
+| M0 — Foundation | Implemented; recorded Mac/operator pass | Historical evidence retained |
+| M1 — Planner and history | Implemented; technical review and recorded operator approvals passed | Broader coursework/week operator certification remains unverified |
+| M2 — Countdown and recovery | Implemented; Linux implementation review and current Mac automated regressions passed | Target-Mac recovery/hardware acceptance pending |
+| M3 — Forest and statistics | Pine/forest and coins/shop implemented; coins/shop review Pass on Mac | Daily streaks next; statistics/session corrections not started; combined Mac acceptance pending |
+| M4 — Personal core release | Release work not started | Backup/restore and seven-day trial pending |
+| M5–M7 — Assistant and connections | Not started | Separate future scope and acceptance |
+
+**Next concrete step:** the daily-streak session below, **not started**. Define its
+saved-session eligibility and application-local date rules before implementation.
+No next feature starts automatically. The earlier
+[progress review](reviews/2026-10-20-project-progress.md) remains documentation-only;
+the latest implementation evidence is the coins/shop review above.
+
+**M3 remains partially complete:** growing trees/forest (`e0ccf1b`) and coins/shop
+(the user-requested local commit against `138cd3a`) are implemented. Remaining M3 sessions have
+**not started**:
+
 - Daily streaks.
 - Statistics and session corrections, including reward/report adjustments.
 
-These belong to M3, not later milestones. The next session is coins and the tree
-shop; this documentation/push request does not start it. M2 Mac verification
+These belong to M3, not later milestones. The next session is daily streaks.
+M2 hardware/operator verification
 remains pending, and combined M2/M3 Mac verification is required after M3
 implementation, before milestone sign-off or release readiness.
 
@@ -23,21 +73,21 @@ Pass on Linux; actual Mac acceptance deferred.** Baseline `809761d` plus the pre
 sequencing note, which is preserved in this handoff. The user explicitly authorized
 M3 implementation, deferring actual Mac testing until M3 is complete, and a local
 commit after passing review. That implementation is committed as `e0ccf1b`,
-`M3: add confirmed tree growth and persistent forest`. The user subsequently
-requested documenting this partial-M3 status and pushing the implementation plus
-the clarification to GitHub `main`; that push is now explicitly authorized.
+`M3: add confirmed tree growth and persistent forest`. The implementation and the
+status clarification (`138cd3a`) are already on GitHub `main` and were pulled into
+this checkout. That prior push request is complete.
 
-One free Pine species now grows on Track from backend-confirmed active time:
+The first-session build introduced free Pine growth from backend-confirmed time:
 seedling below 50%, sapling from 50%, mature only after finalized full-duration
 completion without an unresolved interruption. Early/interrupted finishes preserve
 confirmed work and save an unfinished tree. Pausing and Needs review preserve
 confirmed growth; explicit recovery continues the same tree. The forest within
 Track shows saved outcomes with historical session context, time and dates.
 
-Schema **9** adds `trees`, with unique `session_id`. Only successful new countdown
-starts using this build enroll a tree, atomically with their interval and receipt.
-All sessions present before the upgrade, including already-running/paused sessions,
-remain ineligible. No reads, retries or historical finalizations backfill trees.
+Schema **9** introduced `trees`, with unique `session_id`. Only successful countdown
+starts from tree-aware builds enroll a tree, atomically with their interval and
+receipt. All sessions present before that upgrade, including running/paused ones,
+remain tree-ineligible. No reads, retries or historical finalizations backfill trees.
 Session finalization and tree outcome share one serialized transaction. Task edits,
 completion, scheduling and removal do not rewrite tree/session history; trees never
 complete tasks. Existing Move-only dragging and schema-7 multi-date records remain.
@@ -49,19 +99,44 @@ passes and Linux ten-minute precision observation are detailed in the
 power behavior or change M2's gate status. The explicit October 20 sequencing
 choice permits development while preserving the outstanding acceptance scenarios.
 
-Actual host: **Linux x86_64**, Python **3.12.14**, Node **24.19.0**, installed
-Chromium **154.0.8037.57**. Final full core: **500 passed**, zero failed/skipped,
-**142.73 s**. Frontend: **90 passed**, typecheck/build passed. Real one-minute
+Recorded M3 implementation-review environment: **Linux x86_64**, Python
+**3.12.14**, Node **24.19.0**, installed Chromium **154.0.8037.57**. That review's
+final full core: **500 passed**, zero failed/skipped, **142.73 s**. Frontend:
+**90 passed**, typecheck/build passed. Its real one-minute
 monitor expiry with browser closed saved exactly **60.000000 s**, observed after
 **60.656 s**, with one mature tree and unchanged task completion. All mutation,
-migration, failure and browser work uses disposable data.
-No personal planner/database or normal running service is used. The current
+migration, failure and browser work used disposable data.
+No personal planner/database or normal running service was used in that review. The
 [M3 review](reviews/2026-10-20-m3-growing-forest.md) records implementation,
 verification and the separate platform decision.
 
 **Required checkpoint:** after M3 implementation is complete, run combined M2/M3
 verification on the target Mac before release readiness or milestone sign-off.
-Coins/shop, streaks, advanced statistics, AI and integrations remain unimplemented.
+Streaks, advanced statistics/session correction, AI and integrations remain unimplemented.
+
+## Local Git update — October 20, 2026
+
+User-authorized pull completed on **macOS/Darwin**: `main` fast-forwarded nine
+commits from `861d851` to `138cd3a` and matches `origin/main`. The remote M2 recovery
+and first M3 Pine/forest session are now checked out. The Linux test results above
+remain historical evidence; this update did not perform target-Mac acceptance.
+
+All prior local changes, including untracked recovery files, are preserved in
+stash **`ed5e990c6c1fd649ed60083ec8e61b90bdf2153c`**, currently `stash@{0}`, named
+`before-pull-2026-10-20-local-recovery-and-planning`. Every saved file was verified
+against the pre-pull SHA-256 manifest. The two planning documents were restored
+with exactly their original contents and staged/unstaged patches. The separate
+snapshot remains at `/private/tmp/bearplans-before-pull-20261020-1k5inn3e/`.
+Do not apply the whole stash over this build: it contains a different schema-8
+recovery implementation. Its old progress/reviews describe that preserved branch
+of local work, not the current checked-out build.
+
+At completion of the pull, Git checks confirmed zero ahead/behind and no local
+application-source changes. No application tests, service restart, database
+migration, commit or push occurred during that pull or its documentation refresh.
+See the [sync verification](reviews/2026-10-20-git-sync.md). The subsequent local
+coins/shop implementation is described above. A future normal-app restart may
+apply pending migrations through schema 10; it has not been performed here.
 
 ## Completed builds
 
@@ -75,11 +150,12 @@ Coins/shop, streaks, advanced statistics, AI and integrations remain unimplement
 | M2 normal countdown | Implementation Pass; overall M2 gate not passed | [Countdown review](reviews/2026-10-16-countdown.md), `c4b7dd3` |
 | Countdown eligibility/weekly-card refinement | Implementation Pass; overall M2 pending recovery acceptance | [Eligibility review](reviews/2026-10-16-countdown-eligibility.md), `bbe6059`; cosmetic follow-up in `a7de8bf` |
 | Weekly drag Move / Option–Alt Add | Implementation Pass; Add interface superseded by later follow-up | [Drag review](reviews/2026-10-16-drag-scheduling.md), `a7de8bf` |
-| Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
-| Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
+| Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), `861d851` against `a7de8bf` |
+| Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), `861d851` |
 | M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), `580b017` against `a10c788` |
 | M3 growing trees / forest — first session only | Implementation Pass on Linux; Mac acceptance deferred | [M3 review](reviews/2026-10-20-m3-growing-forest.md); `e0ccf1b` |
-| Remaining M3: coins/shop, streaks, statistics/session corrections | **Not started; M3 incomplete** | Next session: coins/shop; separate acceptance per session |
+| M3 coins/shop | Implementation review Pass on Mac; normal-app rollout and combined hardware/operator gate pending | [Coins/shop review](reviews/2026-10-20-coins-shop.md), local commit containing this record against `138cd3a` |
+| Remaining M3: streaks, statistics/session corrections | **Not started; M3 incomplete** | Next session: daily streaks; separate acceptance per session |
 | M4 and later milestones | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior
@@ -124,15 +200,20 @@ Reviewed carryover creates a new placement for the same current incomplete leaf,
 and still excludes leaves with any active placement. Parent completion derives
 from children, and totals count leaves once. Today is
 service-authoritative, using `BEARPLANS_TIMEZONE` or the OS local timezone. Reopening,
-recurring work, automatic bulk carryover, coins/shop, streaks, AI, integrations
-and advanced statistics remain deferred. Pine growth and the saved forest are
-included in the M3 first-session scope above.
+recurring work, automatic bulk carryover, streaks, AI, integrations
+and advanced statistics remain deferred. Tree growth, saved forest and coins/shop
+are included in the implemented M3 scope above.
 
-Relevant implementation: `backend/domain/timer.py`, `backend/routes/timer.py`,
+Relevant implementation: `backend/domain/rewards.py`, `backend/routes/shop.py`,
+`backend/storage/migrations/0010_coins_and_shop.sql`, `frontend/src/Shop.tsx`,
+`backend/domain/timer.py`, `backend/routes/timer.py`,
 `backend/storage/migrations/0006_countdown.sql`, app lifecycle and task structure
 guards; `frontend/src/Countdown.tsx`, App navigation, `WeeklyPlanner.tsx`, typed API
 and styles.
-Relevant tests: `tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
+Relevant tests: `tests/test_rewards.py`, `tests/test_shop_api.py`,
+`tests/test_shop_restart.py`, `tests/test_shop_browser.py`,
+`frontend/src/Shop.test.tsx`, `frontend/src/api.test.ts`,
+`tests/test_m1_journey_browser.py`, `tests/test_timer.py`,
 `tests/test_timer_api.py`, `tests/test_timer_restart.py`, `tests/test_timer_browser.py`,
 `tests/test_timer_eligibility_browser.py`, `frontend/src/Countdown.test.tsx` and
 updated App mocks. Shared guidance/README carry the refined eligibility rule.
@@ -276,24 +357,29 @@ Identified service **5897**, launcher **5874**, port 8765. Rechecked no running,
 paused or Needs review session, gracefully stopped that launcher and confirmed port
 release. Verified no saved rows had changed since rehearsal. Durable backup in the
 normal data folder: **`bearplans-pre-drag-20261016T164423Z.sqlite3`**, matching the
-baseline exactly. Restarted via `python3 launch.py --no-browser`; schema is now **7**.
+baseline exactly. That restart via `python3 launch.py --no-browser` upgraded the
+normal data to schema **7** at the time of that review.
 
 Read-only Chrome inspected the already-closed current week, next open week's drag
 controls, exact incomplete-leaf Track choices and 1440/375 px layouts. No personal
 task, placement, completion, timer or history action and no personal screenshot.
 **Every original SQL field** (including closed snapshots, sessions, intervals and
 receipts), plus the original six migration rows, still equals the backup. Integrity/
-FKs pass. The planning response stayed identical through navigation. The normal app
-is running at `http://127.0.0.1:8765/`; refresh existing tabs. Earlier schema-6
-backup evidence remains in the countdown/eligibility reviews.
+FKs passed. The planning response stayed identical through navigation. At that
+review, the normal app was running at `http://127.0.0.1:8765/`. Its current process,
+schema and saved rows were not inspected by this documentation refresh; the old
+PIDs and schema version are historical. Earlier schema-6 backup evidence remains
+in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
-- Growing-tree/forest implementation and review pass in `e0ccf1b`. The user now
-  authorizes pushing it and this status clarification to GitHub `main`. This
-  documentation-only clarification needs content/link/diff checks; the recorded
-  500 core / 90 frontend passes are from the implementation review, not rerun here.
-  Next eligible work is the coins/shop session below; do not begin it automatically.
+- Coins/shop implementation and review pass in the local commit against `138cd3a`,
+  with **553 core / 111 frontend** passes and final compatibility browser evidence
+  above. The user explicitly requested this local commit after review; unrelated
+  planning edits remain preserved. No push or normal-app rollout was performed. The earlier
+  Pine/forest implementation and status clarification are already on GitHub `main`;
+  that older push request is complete. Next eligible work is daily streaks below;
+  do not begin it automatically.
 - Actual target-Mac acceptance remains pending. After M3 implementation, run the
   combined checkpoint before release readiness: sleep/wake and maintenance wakes,
   battery/standby/hibernate where supported, process interruption/restart and
@@ -309,60 +395,63 @@ backup evidence remains in the countdown/eligibility reviews.
   coursework/operator evidence and the latest drag/card demonstration are not newly
   certified by Linux tests. New forest/Track operator acceptance is also pending.
 
-## Next M3 session — coins and tree shop (not started)
+<a id="next-m3-session--coins-and-tree-shop-not-started"></a>
 
-Scope: add a persisted coin ledger, configurable earning rate and species prices,
-three purchasable cosmetic species alongside free Pine, owned-species selection for
-new countdowns and a small shop within Track. Keep one ticket active; do not add
-streaks, statistics, AI or integrations in that session. Derive awards solely from
-confirmed saved session time. Session finalization, tree result and initial coin
-award must share the existing transaction; purchases must serialize debit and
-ownership together. Starting/pausing/reviewing alone must not grant coins.
+## Completed M3 session — coins and tree shop
 
-Dependencies and touchpoints:
+The old continuation link is retained above for historical reviews. This ticket
+was authorized by “continue” and is now implemented and reviewed; it is no longer
+the next unstarted session. Its full rules, defaults, evidence, initial failures
+and separate acceptance gates are in the [coins/shop review](reviews/2026-10-20-coins-shop.md).
 
-- `backend/domain/timer.py`: `TimerService.start`, `_finish`, `recover`, `control`;
-  persistent operation receipts and the shared transaction are the integration path.
-- `backend/domain/forest.py`: `enroll_tree`, `finalize_tree`, `session_tree`,
-  `list_forest`; schema-9 `trees` currently permits Pine only. Add a new versioned
-  migration for species/ownership/ledger without editing applied migrations or
-  changing existing Pine IDs/results. Account for the current Pine-only constraint.
-- `backend/routes/forest.py`, `frontend/src/api.ts`, `Tree.tsx`, `Forest.tsx`,
-  `Countdown.tsx` and styles; shared Python functions own validation and mutations.
-- Regression evidence: `tests/test_forest.py`, forest API/browser tests, timer,
-  recovery, migration and Move-only planner tests. M2 hardware gate remains pending.
+New records: `coin_enrollments`, `coin_ledger`, `owned_species`, `shop_operations`;
+schema 10 expands `trees` while preserving all original fields and row order.
+The rate and Birch/Oak/Cherry prices are configured with `BEARPLANS_COINS_PER_MINUTE`,
+`BEARPLANS_BIRCH_PRICE`, `BEARPLANS_OAK_PRICE`, `BEARPLANS_CHERRY_PRICE` before
+launch. Old sessions stay coin-ineligible; new sessions capture their earning rate
+and chosen owned species at start. No manual correction/refund interface was added.
+The plan's future adjustment-ledger policy remains: retain purchases and block
+new spending if a later correction makes the balance negative.
 
-Acceptance: independently calculated earning fixtures (including zero/sub-minute,
-full/early/interrupted sessions); repeated/concurrent finalization awards once;
-uncertain/paused time earns nothing; purchase with enough coins succeeds once;
-insufficient/concurrent spending cannot overspend; ownership and selected species
-survive restart; failed writes roll back all affected records; lost responses replay
-safely; upgrades preserve all existing trees/sessions and do not backfill history.
+## Next M3 session — daily streaks (not started)
 
-Unresolved decisions: one coin per whole active minute and species prices remain
-proposed defaults, not confirmed product requirements. Document chosen configurable
-defaults before implementation. Define the coin-eligibility cutover explicitly
-without retroactive awards, treatment of prior completed tree sessions, species
-names/prices and when selection is locked (prefer at new-session start). Session
-correction remains a later feature; the plan proposes adjustment-ledger accounting,
-retaining purchases and disabling new spending if a later correction makes the
-balance negative. Preserve that policy without implementing manual correction here.
+Scope: daily qualifying-time progress and a consecutive-day streak derived from
+saved confirmed work. The existing requirement is at least one active hour per
+qualifying day. Reuse saved timer intervals and the application's timezone
+(`BEARPLANS_TIMEZONE` or OS local timezone); browser dates are not authoritative.
+Keep reports, estimates versus actuals, manual corrections, AI and integrations
+out of this session.
+
+Before implementation, specify which saved outcomes and legacy sessions qualify,
+the handling of an unfinished current day, and timezone changes. Coin eligibility
+does not by itself decide historical streak eligibility. Do not manufacture or
+edit intervals to fill missing time. Allocate confirmed integer microseconds
+across local midnight and both DST transitions without losing or double-counting
+time; paused/review/uncertain gaps remain excluded. Derive totals from saved
+records, never an independently incremented mutable streak counter.
+
+Acceptance: two saved 30-minute sessions qualify once; 59:59.999999 does not;
+multiple projects/subtasks and early/interrupted confirmed work obey the chosen
+eligibility rule; zero/subminute/paused/uncertain intervals do not inflate totals;
+cross-midnight/DST and missing days produce exact dates/counts. Refresh, repeated
+finish/recovery and restart preserve the same derived result. Existing coins,
+ownership, tree outcomes, task completion and immutable weekly history stay intact.
+Inspect daily-progress states at wide/narrow widths and with keyboard navigation.
 
 Ready-to-use continuation prompt:
 
-> Continue BearPlans with M3's next session: coins and the tree shop. Read AGENTS.md,
-> CLAUDE.md, docs/PROGRESS.md, plans and latest reviews; inspect Git status and
-> preserve unrelated work and all saved data. Build only the coin ledger, three
-> purchasable species, owned-species selection and shop within Track. State any
-> configurable proposed defaults and eligibility cutover first. Use confirmed
-> session time only, atomic exactly-once finalization/awards and retry-safe purchases;
-> never award uncertain intervals or backfill old sessions. Preserve existing Pine
-> trees, recovery, task history and Move-only dragging. Test boundaries, concurrency,
-> failed saves, migration/restart preservation and wide/narrow UI. Keep M2 Mac
-> verification pending; require combined M2/M3 Mac checks after M3 implementation,
-> before release readiness. Update progress/review and prepare the next unfinished
-> feature without starting it. Create a local commit only after passing review;
-> do not push. Do not implement streaks, statistics, AI or integrations.
+> Continue BearPlans with M3's daily-streak session. Read AGENTS.md,
+> docs/PROGRESS.md, plans and latest reviews; inspect the complete working diff,
+> preserve the existing planning edits, committed coins/shop behavior and recovery
+> stash. Define saved-session/legacy eligibility, local-day allocation and current-day
+> behavior first. Build only daily confirmed-time progress and streaks using the
+> service timezone and integer-microsecond intervals; exclude paused/review/uncertain
+> time. Preserve timer recovery, coin cutover/rates, purchases, trees, task history
+> and Move-only planning. Test threshold, midnight/DST, missing days, retries,
+> restart and wide/narrow UI. Keep combined M2/M3 hardware acceptance pending.
+> Update progress/review and prepare statistics/session corrections without starting
+> them. Do not commit or push without explicit authorization. Do not implement
+> reports, manual corrections, AI or integrations in this session.
 
 ## Guidance discrepancies retained
 

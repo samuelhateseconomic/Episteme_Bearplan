@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ApiError, getForest, type ForestTree } from "./api";
 import { formatRemaining } from "./Countdown";
-import { TreeArtwork } from "./Tree";
+import { speciesName, TreeArtwork } from "./Tree";
 
 export function ForestCollection({ visible, lastSessionId }: { visible: boolean; lastSessionId: string | null }) {
   const [trees, setTrees] = useState<ForestTree[] | null>(null);
@@ -38,7 +38,7 @@ export function ForestCollection({ visible, lastSessionId }: { visible: boolean;
     {trees && trees.length > 0 ? <ul className="forest-grid">
       {trees.map((tree) => <li key={tree.id} className="forest-tree" data-session-id={tree.session_id}>
         <TreeArtwork tree={tree} />
-        <p className="tree-outcome">{tree.outcome === "mature" ? "Mature Pine" : "Unfinished Pine"}</p>
+        <p className="tree-outcome">{tree.outcome === "mature" ? "Mature" : "Unfinished"} {speciesName(tree.species)}</p>
         <h4>{tree.task_title}</h4>
         <p className="muted">{[tree.project_name, tree.parent_title].filter(Boolean).join(" / ")}</p>
         <p>{formatRemaining(Math.floor(tree.active_seconds))} confirmed active time · {tree.duration_minutes} minute countdown</p>

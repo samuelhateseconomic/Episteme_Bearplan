@@ -24,6 +24,9 @@ from pydantic import BaseModel, ConfigDict
 
 from backend.domain.errors import InvalidInput
 from backend.domain.forest import TreeProgress, enroll_tree, finalize_tree, session_tree
+from backend.domain.rewards import (
+    RewardConfig, award_session, enroll_coins, normalize_species, require_owned_species, session_award,
+)
 from backend.domain.tasks import _require_task
 from backend.storage.db import Database, StorageError
 
@@ -134,6 +137,7 @@ class TimerSession(BaseModel):
     recovery: TimerRecovery | None
     revision: int
     tree: TreeProgress | None
+    coin_award: int | None
 
 
 class TimerView(BaseModel):
@@ -192,6 +196,7 @@ def _session(conn: sqlite3.Connection, row: sqlite3.Row | None) -> TimerSession 
         requested_seconds=row["duration_minutes"] * 60,
         active_seconds=active, remaining_seconds=remaining, deadline_at=deadline, recovery=recovery,
         tree=session_tree(conn, row),
+        coin_award=session_award(conn, row["id"]),
     )
 
 
@@ -207,8 +212,9 @@ class TimerService:
     callback participates in the clock or finalization path.
     """
 
-    def __init__(self, db: Database, clock: Clock | None = None) -> None:
+    def __init__(self, db: Database, clock: Clock | None = None, *, reward_config: RewardConfig | None = None) -> None:
         self.db = db
+        self.reward_config = RewardConfig.from_environment() if reward_config is None else reward_config
         self.clock = clock or SystemClock()
         self._lock = threading.RLock()
         self._anchor: ClockSample | None = None
@@ -362,16 +368,20 @@ class TimerService:
         if operation_id is not None:
             conn.execute("INSERT INTO timer_operations VALUES (?, ?, ?, ?)", (operation_id, session_id, action, fingerprint))
 
-    def start(self, task_id: str, duration_minutes: int, operation_id: str) -> TimerView:
+    def start(self, task_id: str, duration_minutes: int, operation_id: str, species: str = "pine") -> TimerView:
         duration = _duration(duration_minutes)
         key = _operation_id(operation_id)
-        fingerprint = _fingerprint("start", task_id=task_id, duration_minutes=duration)
+        selected = normalize_species(species)
+        # Pine's request remains byte-compatible with saved pre-shop receipts.
+        fingerprint = _fingerprint("start", task_id=task_id, duration_minutes=duration,
+                                   **({} if selected == "pine" else {"species": selected}))
         with self._lock:
             self._refresh_locked()
             with self._write() as conn:
                 sample = self.clock.sample()
                 if self._replay(conn, key, fingerprint):
                     return self._view(conn, sample)
+                require_owned_species(conn, selected)
                 existing = _active(conn)
                 if existing is not None:
                     raise TimerConflict("session", "A countdown is already running, paused, or needs review. Open Track and finish it before starting another.")
@@ -390,7 +400,8 @@ class TimerService:
                     (session_id, key, task_id, task["title"], task["project_id"], project["name"],
                      parent["title"] if parent else None, duration, at, at),
                 )
-                enroll_tree(conn, session_id, at)
+                enroll_tree(conn, session_id, at, selected)
+                enroll_coins(conn, session_id, self.reward_config)
                 self._open_interval(conn, session_id, at)
                 self._receipt(conn, key, session_id, "start", fingerprint)
                 self._anchor = sample
@@ -410,6 +421,7 @@ class TimerService:
             " WHERE id = ? AND state <> 'finished'", (at, outcome, session_id),
         )
         finalize_tree(conn, session_id)
+        award_session(conn, session_id)
         self._anchor = None
 
     @staticmethod

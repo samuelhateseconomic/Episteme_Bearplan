@@ -74,3 +74,18 @@ test("a superseded forest response cannot replace newer session results", async 
   expect(screen.getByText("Newest saved work")).toBeVisible();
   expect(screen.queryByText(/Your forest is ready to grow/)).not.toBeInTheDocument();
 });
+
+test("saved species keep their own artwork and labels in the forest", async () => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue(json({ trees: [
+    tree({ id: "birch", species: "birch" }),
+    tree({ id: "oak", species: "oak", stage: "sapling", progress: 0.6, outcome: "unfinished" }),
+    tree({ id: "cherry", species: "cherry", stage: "seedling", progress: 0.1, outcome: "unfinished" }),
+  ] }));
+  render(<ForestCollection visible lastSessionId="session-1" />);
+  expect(await screen.findByText("Mature Birch")).toBeVisible();
+  expect(screen.getByText("Unfinished Oak")).toBeVisible();
+  expect(screen.getByText("Unfinished Cherry")).toBeVisible();
+  expect(screen.getByRole("img", { name: "Birch mature" })).toBeVisible();
+  expect(screen.getByRole("img", { name: "Oak sapling" })).toBeVisible();
+  expect(screen.getByRole("img", { name: "Cherry seedling" })).toBeVisible();
+});

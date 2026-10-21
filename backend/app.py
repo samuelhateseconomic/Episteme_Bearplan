@@ -16,8 +16,9 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 from backend import __version__
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import PlacementConflict, WeekConflict
+from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import forest, planning, projects, tasks, timer, weeks
+from backend.routes import forest, planning, projects, shop, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -69,8 +70,12 @@ async def _reject(scope: Scope, receive: Receive, send: Send, status: int, code:
     await response(scope, receive, send)
 
 
-def create_app(db: Database, static_dir: Path | None = None, *, timer_clock: Clock | None = None) -> FastAPI:
-    countdown = TimerService(db, timer_clock)
+def create_app(
+    db: Database, static_dir: Path | None = None, *, timer_clock: Clock | None = None,
+    reward_config: RewardConfig | None = None,
+) -> FastAPI:
+    config = RewardConfig.from_environment() if reward_config is None else reward_config
+    countdown = TimerService(db, timer_clock, reward_config=config)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -90,7 +95,15 @@ def create_app(db: Database, static_dir: Path | None = None, *, timer_clock: Clo
     )
     app.state.db = db
     app.state.timer = countdown
+    app.state.shop = ShopService(db, config)
     app.add_middleware(LocalOnlyMiddleware)
+
+    @app.exception_handler(ShopConflict)
+    async def shop_conflict(_: Request, exc: ShopConflict) -> JSONResponse:
+        return JSONResponse(
+            {"error": {"code": "shop_conflict", "field": exc.field, "message": exc.message}},
+            status_code=409,
+        )
 
     @app.exception_handler(TimerConflict)
     async def timer_conflict(_: Request, exc: TimerConflict) -> JSONResponse:
@@ -159,6 +172,7 @@ def create_app(db: Database, static_dir: Path | None = None, *, timer_clock: Clo
     app.include_router(tasks.router)
     app.include_router(timer.router)
     app.include_router(forest.router)
+    app.include_router(shop.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

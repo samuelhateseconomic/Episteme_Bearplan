@@ -13,6 +13,7 @@ from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict
 
+from backend.domain.rewards import Species
 from backend.storage.db import Database
 
 
@@ -20,7 +21,7 @@ class TreeProgress(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     id: str
-    species: Literal["pine"]
+    species: Species
     stage: Literal["seedling", "sapling", "mature"]
     progress: float
     outcome: Literal["mature", "unfinished"] | None
@@ -37,11 +38,11 @@ class ForestTree(TreeProgress):
     active_seconds: float
 
 
-def enroll_tree(conn: sqlite3.Connection, session_id: str, at: str) -> None:
+def enroll_tree(conn: sqlite3.Connection, session_id: str, at: str, species: Species = "pine") -> None:
     """Enroll only a newly created session, inside its start transaction."""
     conn.execute(
-        "INSERT INTO trees (id, session_id, species, created_at) VALUES (?, ?, 'pine', ?)",
-        (str(uuid4()), session_id, at),
+        "INSERT INTO trees (id, session_id, species, created_at) VALUES (?, ?, ?, ?)",
+        (str(uuid4()), session_id, species, at),
     )
 
 

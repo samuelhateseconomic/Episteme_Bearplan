@@ -2,8 +2,8 @@
 
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
-countdown tracking with checkpoint recovery, growing Pine trees and a saved forest
-implemented**. Target-Mac M2 hardware acceptance remains pending for combined
+countdown tracking with checkpoint recovery, growing trees, a saved forest,
+coins and a species shop implemented**. Target-Mac M2 hardware acceptance remains pending for combined
 M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
@@ -22,14 +22,16 @@ count leaf work items once, excluding containers. Put additional parent work in 
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
 General task/project deletion and re-parenting are deferred. Reopening closed weeks,
-recurring tasks, automatic bulk carryover, advanced reports, coins/shop, AI and
+recurring tasks, automatic bulk carryover, streaks, advanced reports, AI and
 integrations are later work. Finishing a timer never automatically completes its task.
 
 ## Grow a tree
 
-Track shows a free Pine tree for each new countdown started with this build
-(schema 9). Earlier sessions, including sessions already in progress during the
-upgrade, keep their saved history without receiving trees.
+Track grows a tree for each new countdown. Pine is free; choose any owned species
+using **Tree species** before starting. That choice stays with the countdown
+through pauses, recovery and restarts. Tree eligibility began at schema 9; earlier
+sessions, including sessions already in progress at that upgrade, keep their saved
+history without receiving trees.
 
 Confirmed active time drives growth: seedling below half the chosen duration,
 sapling from halfway, then mature only when the entire countdown is confirmed and
@@ -43,10 +45,54 @@ associated session, original task/project context and confirmed time. Session an
 tree finalization save together, once, including retries and restarts. Task edits,
 completion and scheduling do not change saved trees. Use **Refresh forest** to
 reload results from another tab or retry a failed read. Trees do not complete tasks.
-Coins, the tree shop, streaks and advanced statistics are not implemented yet.
-This completes only M3's first session. M3 still includes coins/the tree shop,
-daily streaks, and statistics with session corrections; those sessions have not
-started. Combined M2/M3 Mac verification remains required before release readiness.
+Pine/forest and coins/shop are implemented. M3 remains incomplete: daily streaks
+and statistics with session corrections have not started. Combined M2/M3 Mac
+verification remains required before release readiness.
+
+## Coins and the tree shop
+
+**Tree shop** within Track shows your coins, owned species, prices and recent coin
+activity. Finish a new eligible countdown to earn coins from its saved confirmed
+time, including early or interrupted finishes. With the proposed default rate,
+each whole active minute earns one coin: 59 seconds earns 0, and 2 minutes 30 seconds
+earns 2. Whole minutes are calculated once across the entire session, not separately
+for each interval. Paused, review and uncertain time earn nothing. Starting or
+pausing a countdown does not award coins; its final session, tree and coin award
+save together once, even after retries or restart.
+
+Coin eligibility starts with new countdowns created by the coins-aware build
+(schema 10). All sessions already present at that upgrade stay ineligible,
+including unfinished sessions and completed trees. They keep their existing time,
+tree and task history without retroactive awards.
+
+Birch, Oak and Cherry cost **30, 60 and 120 coins** by default. Review the species
+and displayed price, then select **Buy**. Ownership and the coin deduction save
+together; you cannot buy an owned species twice or spend more coins than you have.
+Owned species become available for future countdowns and remain yours after
+restart. They are cosmetic and do not change earned time or task completion.
+
+Use **Refresh shop** to load changes from another tab or retry a failed read.
+If a purchase response is lost, its exact request stays available after page reload:
+refresh to check the saved result or use **Retry … purchase**. The backend replays
+the saved result without a second charge. Failed purchases keep your selection.
+Refunds, Undo and manual session corrections are not included in this ticket.
+
+Earning rate and prices are configurable proposed defaults, not fixed product
+requirements. Set these environment variables before launching; no settings UI is
+provided yet. The rate is captured for each new session, so a later restart or
+configuration change cannot alter that session's award. Price changes affect new
+purchases; stale displayed prices require a shop refresh before purchase.
+
+| Environment variable | Default | Accepted values |
+| --- | --- | --- |
+| `BEARPLANS_COINS_PER_MINUTE` | 1 | Whole number 0–1,000,000 |
+| `BEARPLANS_BIRCH_PRICE` | 30 | Whole number 0–1,000,000,000 |
+| `BEARPLANS_OAK_PRICE` | 60 | Whole number 0–1,000,000,000 |
+| `BEARPLANS_CHERRY_PRICE` | 120 | Whole number 0–1,000,000,000 |
+
+Invalid configuration stops startup with an actionable error before opening data.
+The [coins/shop review](docs/reviews/2026-10-20-coins-shop.md) records verification
+and the separate outstanding milestone gates.
 
 ## Track a countdown
 

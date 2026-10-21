@@ -18,6 +18,7 @@ import uvicorn
 
 from backend import __version__
 from backend.app import create_app
+from backend.domain.rewards import RewardConfig
 from backend.platform.instance_lock import acquire_instance_lock, running_instance_url
 from backend.platform.paths import (
     DATABASE_FILENAME,
@@ -89,6 +90,11 @@ def main(argv: list[str] | None = None) -> int:
     args = _parse_args(argv)
     _treat_stop_signals_as_interrupt()
     try:
+        reward_config = RewardConfig.from_environment()
+    except ValueError as exc:
+        print(f"BearPlans cannot start: {exc}", file=sys.stderr)
+        return 1
+    try:
         data_dir = ensure_data_dir(resolve_data_dir())
     except DataDirError as exc:
         print(f"BearPlans cannot start: {exc}", file=sys.stderr)
@@ -128,7 +134,7 @@ def main(argv: list[str] | None = None) -> int:
             print("  note:   interface not built; run `python3 launch.py` or `npm run build` in frontend/")
 
         server = uvicorn.Server(
-            uvicorn.Config(create_app(db, FRONTEND_DIST), host=HOST, port=args.port, workers=1, log_level="warning")
+            uvicorn.Config(create_app(db, FRONTEND_DIST, reward_config=reward_config), host=HOST, port=args.port, workers=1, log_level="warning")
         )
         lock.record(url)
         if not args.no_browser:

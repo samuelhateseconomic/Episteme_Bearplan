@@ -57,12 +57,13 @@ dates; use their contents and commit history to determine which evidence is curr
   restarts and clock discontinuities require explicit review. Continuing preserves
   the same session and excludes the gap; finishing saves confirmed time only.
   Paused restarts stay paused. Persist interruption records and replay-safe decisions;
-  never estimate missing work or silently award it. Trees use confirmed session
-  time only; coins, AI and integrations remain later builds. M2 Mac hardware
+  never estimate missing work or silently award it. Trees and coins use confirmed
+  session time only; AI and integrations remain later builds. M2 Mac hardware
   acceptance requires actual Mac evidence. The user authorized M3 development
   before that acceptance, with combined M2/M3 Mac verification required before
   release readiness; deferral does not certify either milestone.
-- One free Pine tree is enrolled atomically with each new forest-aware countdown.
+- One tree is enrolled atomically with each new forest-aware countdown; Pine is
+  free, and the chosen owned species is locked at start.
   Sessions already present at the schema-9 upgrade remain ineligible, including
   unfinished sessions; never backfill on reads, retries or old finalization.
   Seedling is below 50% confirmed progress, sapling is at least 50%; mature requires
@@ -72,7 +73,19 @@ dates; use their contents and commit history to determine which evidence is curr
   persistent tree per session and its outcome share the session transaction.
   Forest lives within Track and uses historical session context; task edits,
   moves and completion do not alter it. Tree artwork never earns time or completes
-  tasks. Coins/shop, streaks, reports and session correction remain later tickets.
+  tasks. Birch, Oak and Cherry are cosmetic purchasable species. Coin eligibility
+  starts only with new coins-aware countdowns after schema 10; all earlier sessions
+  stay ineligible, including unfinished sessions with trees. Capture the configured
+  earning rate at start; multiply it by whole confirmed active minutes from the
+  entire saved session. Persist one award, including zero, atomically with its
+  finalized session/tree. Paused, review and uncertain time never earns coins.
+  Purchases atomically revalidate displayed price, balance and ownership, then
+  persist debit, ownership and replay result. Reused keys replay the original
+  normalized request or conflict on different work; never overspend or backfill
+  awards. Negative balances prevent new purchases. Rate 1 and Birch/Oak/Cherry
+  prices 30/60/120 are configurable proposed defaults. Streaks, reports and manual
+  session correction remain later tickets; preserve the planned adjustment-ledger
+  policy without granting correction actions in the current interface.
 - Deadlines are date-only `YYYY-MM-DD` and never shift with timezone. Store actual
   instants as UTC ISO-8601 with `Z`, at microsecond precision. Compare timestamps as
   instants, not raw strings with mixed precision.

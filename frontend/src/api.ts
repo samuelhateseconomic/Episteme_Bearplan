@@ -233,9 +233,42 @@ export interface TimerRecovery {
   resolution: "resume" | "finish" | null;
 }
 
+export type TreeSpecies = "pine" | "birch" | "oak" | "cherry";
+
+export interface ShopSpecies {
+  id: TreeSpecies;
+  name: string;
+  price: number;
+  owned: boolean;
+}
+
+export interface CoinEntry {
+  id: string;
+  kind: "session_award" | "purchase";
+  amount: number;
+  session_id: string | null;
+  species: TreeSpecies | null;
+  created_at: string;
+}
+
+export interface ShopState {
+  balance: number;
+  coins_per_minute: number;
+  species: ShopSpecies[];
+  recent_entries: CoinEntry[];
+}
+
+export function getShop(signal?: AbortSignal): Promise<ShopState> {
+  return request<ShopState>("/api/shop", { signal });
+}
+
+export function purchaseSpecies(species: TreeSpecies, expectedPrice: number, operationId: string): Promise<{ operation_id: string; species: TreeSpecies; price: number; balance: number }> {
+  return request("/api/shop/purchases", json("POST", { species, expected_price: expectedPrice, operation_id: operationId }));
+}
+
 export interface TreeProgress {
   id: string;
-  species: "pine";
+  species: TreeSpecies;
   stage: "seedling" | "sapling" | "mature";
   progress: number;
   outcome: "mature" | "unfinished" | null;
@@ -277,6 +310,7 @@ export interface TimerSession {
   review_reason: string | null;
   recovery?: TimerRecovery | null;
   tree: TreeProgress | null;
+  coin_award: number | null;
   revision: number;
 }
 
@@ -296,8 +330,11 @@ export function getTimer(signal?: AbortSignal): Promise<TimerState> {
   return request<TimerState>("/api/timer", { signal });
 }
 
-export function startTimer(operationId: string, taskId: string, durationMinutes: number): Promise<TimerState> {
-  return request<TimerState>("/api/timer/start", json("POST", { operation_id: operationId, task_id: taskId, duration_minutes: durationMinutes }));
+export function startTimer(operationId: string, taskId: string, durationMinutes: number, species: TreeSpecies = "pine"): Promise<TimerState> {
+  // Pine is also the service default. Omitting it keeps tracking available when
+  // the browser has updated but the local service has not restarted yet.
+  return request<TimerState>("/api/timer/start", json("POST", { operation_id: operationId, task_id: taskId, duration_minutes: durationMinutes,
+    ...(species === "pine" ? {} : { species }) }));
 }
 
 export function controlTimer(id: string, action: "pause" | "resume" | "finish", control: TimerControl): Promise<TimerState> {

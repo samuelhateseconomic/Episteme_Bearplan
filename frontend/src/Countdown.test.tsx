@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, vi } from "vitest";
 import App from "./App";
 import { formatRemaining, TrackScreen, useCountdown } from "./Countdown";
-import type { Planning, Project, Task, TimerSession, TimerState } from "./api";
+import type { Planning, Project, ShopState, Task, TimerSession, TimerState, TreeSpecies } from "./api";
 
 const NOW = "2026-10-16T16:00:00.000000Z";
 const PROJECT = "00000000-0000-4000-8000-000000000001";
@@ -21,7 +21,7 @@ function session(over: Partial<TimerSession> = {}): TimerSession {
     id: "00000000-0000-4000-8000-000000000004", start_operation_id: "00000000-0000-4000-8000-000000000005", task_id: LEAF, task_title: task.title,
     project_id: PROJECT, project_name: project.name, parent_title: null, state: "running", duration_minutes: 1, requested_seconds: 60,
     active_seconds: 0, remaining_seconds: 60, started_at: NOW, checkpoint_at: NOW, deadline_at: "2026-10-16T16:01:00.000000Z", finished_at: null,
-    outcome: null, review_reason: null, revision: 1, tree: null, ...over,
+    outcome: null, review_reason: null, revision: 1, tree: null, coin_award: null, ...over,
   };
 }
 
@@ -40,7 +40,7 @@ const json = (body: unknown, status = 200) => new Response(JSON.stringify(body),
 
 interface Call { url: string; method: string; body: Record<string, unknown> }
 function service(initial = empty(), initialPlan = plan) {
-  const holder = { state: initial, plan: initialPlan };
+  const holder = { state: initial, plan: initialPlan, shop: { balance: 0, coins_per_minute: 1, species: [{ id: "pine", name: "Pine", price: 0, owned: true }], recent_entries: [] } as ShopState };
   const calls: Call[] = [];
   const recoveries = new Map<string, string>();
   vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
@@ -50,9 +50,11 @@ function service(initial = empty(), initialPlan = plan) {
     calls.push({ url, method, body });
     if (url === "/api/timer" && method === "GET") return json(holder.state);
     if (url === "/api/forest" && method === "GET") return json({ trees: [] });
+    if (url === "/api/shop" && method === "GET") return json(holder.shop);
     if (url === "/api/timer/start") {
       if (holder.state.active_session) return json({ error: { message: "Another session is active. Open Track to use it." } }, 409);
-      holder.state = running({ duration_minutes: Number(body.duration_minutes), requested_seconds: Number(body.duration_minutes) * 60, remaining_seconds: Number(body.duration_minutes) * 60, start_operation_id: String(body.operation_id) });
+      holder.state = running({ duration_minutes: Number(body.duration_minutes), requested_seconds: Number(body.duration_minutes) * 60, remaining_seconds: Number(body.duration_minutes) * 60, start_operation_id: String(body.operation_id),
+        tree: { id: "new-tree", species: (body.species ?? "pine") as TreeSpecies, stage: "seedling", progress: 0, outcome: null } });
       return json(holder.state);
     }
     if (url.endsWith("/recover")) {
@@ -598,4 +600,71 @@ test("old active sessions explain eligibility without creating a tree from displ
   render(<Harness />);
   expect(await screen.findByText(/This session began before trees were available/)).toBeVisible();
   expect(screen.queryByRole("region", { name: "Session tree" })).not.toBeInTheDocument();
+});
+
+test("only owned species are selectable, Start retains the chosen species on failure, and an active tree cannot be changed", async () => {
+  const { holder } = service();
+  holder.shop.species.push({ id: "birch", name: "Birch", price: 30, owned: true }, { id: "cherry", name: "Cherry", price: 120, owned: false });
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  const attempts: Record<string, unknown>[] = [];
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/timer/start") {
+      attempts.push(JSON.parse(String(init?.body)) as Record<string, unknown>);
+      if (attempts.length === 1) throw new TypeError("Disconnected before save");
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<Harness />);
+  const species = screen.getByLabelText("Tree species");
+  await waitFor(() => expect(species).toBeEnabled());
+  expect(within(species).queryByRole("option", { name: "Cherry" })).not.toBeInTheDocument();
+  await user.selectOptions(species, "birch");
+  fireEvent.change(screen.getByLabelText("Duration (minutes)"), { target: { value: "7" } });
+  await user.click(screen.getByRole("button", { name: "Start countdown" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Your inputs are kept");
+  expect(screen.getByLabelText("Task to track")).toHaveValue(LEAF);
+  expect(screen.getByLabelText("Duration (minutes)")).toHaveValue(7);
+  expect(species).toHaveValue("birch");
+  await user.click(screen.getByRole("button", { name: "Start countdown" }));
+  expect(await screen.findByRole("img", { name: "Birch seedling" })).toBeVisible();
+  expect(screen.queryByLabelText("Tree species")).not.toBeInTheDocument();
+  expect(screen.getByText(/This countdown keeps its chosen species/)).toBeVisible();
+  expect(attempts).toHaveLength(2);
+  expect(attempts[0]).toEqual(attempts[1]);
+  expect(attempts[0]).toMatchObject({ task_id: LEAF, duration_minutes: 7, species: "birch" });
+});
+
+test.each([0, 1, 7])("saved outcome shows its confirmed %i coin award and refreshes the wallet", async (coin_award) => {
+  const { calls } = service({ ...empty(), last_session: session({ state: "finished", finished_at: NOW, outcome: "finished_early", coin_award }) });
+  render(<Harness />);
+  const saved = await screen.findByRole("region", { name: "Saved session outcome" });
+  expect(within(saved).getByText(`Earned ${coin_award} ${coin_award === 1 ? "coin" : "coins"} from confirmed active time.`)).toBeVisible();
+  await waitFor(() => expect(calls.some((call) => call.url === "/api/shop")).toBe(true));
+});
+
+test("an older running service explains how to enable the shop while Pine tracking stays available", async () => {
+  service();
+  const original = vi.mocked(fetch).getMockImplementation()!;
+  const starts: Record<string, unknown>[] = [];
+  vi.mocked(fetch).mockImplementation(async (input, init) => {
+    if (String(input) === "/api/shop") return json({ detail: "Not Found" }, 404);
+    if (String(input) === "/api/timer/start") {
+      const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      starts.push(body);
+      // The previous service rejects fields that were not part of its API.
+      if ("species" in body) return json({ error: { message: "Extra inputs are not permitted." } }, 422);
+    }
+    return original(input, init);
+  });
+  const user = userEvent.setup();
+  render(<Harness />);
+  expect(await screen.findByRole("alert")).toHaveTextContent("Restart BearPlans, then use Refresh shop");
+  expect(screen.getByRole("alert")).toHaveTextContent("Pine countdowns are still available");
+  expect(screen.getByLabelText("Tree species")).toHaveValue("pine");
+  expect(screen.getByRole("button", { name: "Start countdown" })).toBeEnabled();
+  await user.click(screen.getByRole("button", { name: "Start countdown" }));
+  expect(await screen.findByRole("region", { name: "Current session" })).toBeVisible();
+  expect(starts).toHaveLength(1);
+  expect(starts[0]).toEqual({ operation_id: expect.any(String), task_id: LEAF, duration_minutes: 25 });
 });

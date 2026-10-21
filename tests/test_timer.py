@@ -440,12 +440,16 @@ def test_v5_upgrade_preserves_all_existing_rows_and_failed_upgrade_retries(tmp_p
     from backend.domain.weeks import close_week, preview_close
     close_week(db, "2026-10-12", preview_close(db, "2026-10-12").preview_token)
 
+    with db.read() as conn:
+        legacy_names = [row[0] for row in conn.execute(
+            "SELECT name FROM sqlite_master WHERE type = 'table' AND name <> 'schema_migrations'",
+        )]
+
     def legacy():
         with db.read() as conn:
-            names = [row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table'") if row[0] != "schema_migrations"]
             return {
                 name: [tuple(row) for row in conn.execute(f"SELECT * FROM {name}")]
-                for name in names if not name.startswith("timer_") and name != "trees"
+                for name in legacy_names
             }
 
     before = legacy()
