@@ -5,12 +5,27 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state
 
+**M3 is partially complete: only its first session, growing Pine trees and the
+persistent forest collection, is implemented and has passed Linux review.**
+Implementation commit: `e0ccf1b`. The remaining M3 sessions have **not started**:
+
+- Coins and the tree shop, including three purchasable species.
+- Daily streaks.
+- Statistics and session corrections, including reward/report adjustments.
+
+These belong to M3, not later milestones. The next session is coins and the tree
+shop; this documentation/push request does not start it. M2 Mac verification
+remains pending, and combined M2/M3 Mac verification is required after M3
+implementation, before milestone sign-off or release readiness.
+
 **M3 first session — growing trees and forest collection: implementation review
 Pass on Linux; actual Mac acceptance deferred.** Baseline `809761d` plus the previous uncommitted
 sequencing note, which is preserved in this handoff. The user explicitly authorized
 M3 implementation, deferring actual Mac testing until M3 is complete, and a local
-commit after passing review. No push is authorized in this session. The authorized local commit containing
-this record is titled `M3: add confirmed tree growth and persistent forest`.
+commit after passing review. That implementation is committed as `e0ccf1b`,
+`M3: add confirmed tree growth and persistent forest`. The user subsequently
+requested documenting this partial-M3 status and pushing the implementation plus
+the clarification to GitHub `main`; that push is now explicitly authorized.
 
 One free Pine species now grows on Track from backend-confirmed active time:
 seedling below 50%, sapling from 50%, mature only after finalized full-duration
@@ -63,8 +78,9 @@ Coins/shop, streaks, advanced statistics, AI and integrations remain unimplement
 | Move-only drag interface refinement | Implementation Pass | [Current review](reviews/2026-10-16-drag-simplification.md), local commit containing this record against `a7de8bf` |
 | Card context/due-only refinement | Implementation Pass | [Follow-up](reviews/2026-10-16-drag-simplification.md#card-context-and-due-date-follow-up), same local commit |
 | M2 recovery | Implementation Pass on Linux; Mac/operator gate pending | [Recovery review](reviews/2026-10-18-m2-recovery.md), `580b017` against `a10c788` |
-| Coins/shop, streaks, statistics and later builds | **Not started** | Separate authorized scope and acceptance required |
-| M3 growing trees / forest | Implementation Pass on Linux; Mac acceptance deferred | [M3 review](reviews/2026-10-20-m3-growing-forest.md); local commit containing this record |
+| M3 growing trees / forest — first session only | Implementation Pass on Linux; Mac acceptance deferred | [M3 review](reviews/2026-10-20-m3-growing-forest.md); `e0ccf1b` |
+| Remaining M3: coins/shop, streaks, statistics/session corrections | **Not started; M3 incomplete** | Next session: coins/shop; separate acceptance per session |
+| M4 and later milestones | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior
 
@@ -273,9 +289,11 @@ backup evidence remains in the countdown/eligibility reviews.
 
 ## Pending evidence and next concrete action
 
-- Growing-tree/forest implementation and review pass; included in the authorized
-  local commit containing this record. Next eligible work is the coins/shop session
-  below, which remains not started. Do not push or begin it automatically.
+- Growing-tree/forest implementation and review pass in `e0ccf1b`. The user now
+  authorizes pushing it and this status clarification to GitHub `main`. This
+  documentation-only clarification needs content/link/diff checks; the recorded
+  500 core / 90 frontend passes are from the implementation review, not rerun here.
+  Next eligible work is the coins/shop session below; do not begin it automatically.
 - Actual target-Mac acceptance remains pending. After M3 implementation, run the
   combined checkpoint before release readiness: sleep/wake and maintenance wakes,
   battery/standby/hibernate where supported, process interruption/restart and

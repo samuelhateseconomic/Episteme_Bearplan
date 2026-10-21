@@ -102,15 +102,20 @@ retaining its original-row assertions. Failed/setup-stalled attempts are not pas
 ## Implementation decision and platform checkpoint
 
 **Implementation review: Pass on Linux.** No unresolved implementation blocker.
-The authorized local commit containing this review is titled
-`M3: add confirmed tree growth and persistent forest`. No push. Shared progress
+The implementation commit is `e0ccf1b`,
+`M3: add confirmed tree growth and persistent forest`. The original request
+authorized a local commit only; the user subsequently authorized documenting the
+partial-M3 status and pushing this implementation plus the clarification to GitHub
+`main`. Shared progress
 and README document eligibility, pending platform evidence and the next session;
 AGENTS records the current tree invariants. Local links and diff checks pass.
 
 **M2 Mac acceptance remains pending; the overall M3 milestone is not complete.**
-Coins/shop, streaks, advanced statistics, AI, integrations and deployment were not
-implemented. Simulated recovery, Linux process restart/stall and same-host timing
-do not establish actual Mac observations.
+Only M3's first session is complete. Remaining M3 work is coins and the tree shop
+(including three purchasable species), daily streaks, and statistics with session
+corrections/reward adjustments. Those sessions have not started. AI, integrations
+and deployment were also not implemented. Simulated recovery, Linux process
+restart/stall and same-host timing do not establish actual Mac observations.
 
 The user authorized proceeding without waiting for Mac testing. After M3
 implementation is complete, combined **M2/M3 verification is required before

@@ -44,6 +44,9 @@ tree finalization save together, once, including retries and restarts. Task edit
 completion and scheduling do not change saved trees. Use **Refresh forest** to
 reload results from another tab or retry a failed read. Trees do not complete tasks.
 Coins, the tree shop, streaks and advanced statistics are not implemented yet.
+This completes only M3's first session. M3 still includes coins/the tree shop,
+daily streaks, and statistics with session corrections; those sessions have not
+started. Combined M2/M3 Mac verification remains required before release readiness.
 
 ## Track a countdown
 
