@@ -17,8 +17,9 @@ from backend import __version__
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
+from backend.domain.streaks import StreakDataError
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import forest, planning, projects, shop, tasks, timer, weeks
+from backend.routes import forest, planning, projects, shop, streaks, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -126,6 +127,12 @@ def create_app(
             status_code=409,
         )
 
+    @app.exception_handler(StreakDataError)
+    async def streak_data_error(_: Request, exc: StreakDataError) -> JSONResponse:
+        return JSONResponse(
+            {"error": {"code": "streak_data_invalid", "message": str(exc)}}, status_code=503,
+        )
+
     @app.exception_handler(sqlite3.Error)
     @app.exception_handler(StorageError)
     async def storage_error(_: Request, exc: Exception) -> JSONResponse:
@@ -173,6 +180,7 @@ def create_app(
     app.include_router(timer.router)
     app.include_router(forest.router)
     app.include_router(shop.router)
+    app.include_router(streaks.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

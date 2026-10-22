@@ -1034,3 +1034,23 @@ details > summary:focus-visible {
 @media (max-width: 34rem) {
   .shop-grid { grid-template-columns: 1fr; }
 }
+
+/* Saved confirmed work, grouped into days by the local service. */
+.daily-streak { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem; overflow-wrap: anywhere; }
+.streak-count { margin-bottom: 0.35rem; font-size: 1.15rem; }
+.streak-count strong { color: var(--accent); font-size: 1.75rem; }
+.streak-progress-label { display: block; margin: 1rem 0 0.35rem; }
+.daily-streak > progress { width: 100%; height: 1rem; accent-color: var(--accent); }
+.streak-days { list-style: none; margin: 1rem 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.5rem; }
+.streak-day { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.6rem 0.45rem; background: var(--bg); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+.streak-day time { font-weight: 650; }
+.streak-day time span { display: block; color: var(--muted); font-weight: 400; }
+.streak-day.qualified { border-color: var(--accent); }
+.streak-day.qualified .streak-day-result { color: var(--accent); font-weight: 650; }
+.streak-day[aria-current="date"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media (max-width: 46rem) {
+  .streak-days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 28rem) {
+  .streak-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

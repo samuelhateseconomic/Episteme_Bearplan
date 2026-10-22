@@ -50,6 +50,7 @@ function service(initial = empty(), initialPlan = plan) {
     calls.push({ url, method, body });
     if (url === "/api/timer" && method === "GET") return json(holder.state);
     if (url === "/api/forest" && method === "GET") return json({ trees: [] });
+    if (url === "/api/streaks" && method === "GET") return json({ today: "2026-10-16", timezone: "America/Los_Angeles", threshold_microseconds: 3_600_000_000, current_streak: 0, streak_through: null, days: [{ date: "2026-10-16", active_microseconds: 0, qualified: false }] });
     if (url === "/api/shop" && method === "GET") return json(holder.shop);
     if (url === "/api/timer/start") {
       if (holder.state.active_session) return json({ error: { message: "Another session is active. Open Track to use it." } }, 409);

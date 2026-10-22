@@ -1,5 +1,5 @@
 import { vi } from "vitest";
-import { startTimer } from "./api";
+import { getStreaks, startTimer } from "./api";
 
 const operationId = "00000000-0000-4000-8000-000000000001";
 const taskId = "00000000-0000-4000-8000-000000000002";
@@ -27,4 +27,12 @@ test.each(["birch", "oak", "cherry"] as const)("new countdowns explicitly send t
   const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValue(json(state));
   await startTimer(operationId, taskId, 25, species);
   expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({ operation_id: operationId, task_id: taskId, duration_minutes: 25, species });
+});
+
+test("daily streak reads preserve service dates and use an abortable same-origin request", async () => {
+  const controller = new AbortController();
+  const streak = { today: "2026-10-21", timezone: "Pacific/Auckland", threshold_microseconds: 3_600_000_000, current_streak: 1, streak_through: "2026-10-21", days: [{ date: "2026-10-21", active_microseconds: 3_600_000_000, qualified: true }] };
+  const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValue(json(streak));
+  await expect(getStreaks(controller.signal)).resolves.toEqual(streak);
+  expect(fetcher).toHaveBeenCalledWith("/api/streaks", { signal: controller.signal, headers: { Accept: "application/json" } });
 });

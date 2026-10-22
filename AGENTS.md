@@ -83,9 +83,19 @@ dates; use their contents and commit history to determine which evidence is curr
   persist debit, ownership and replay result. Reused keys replay the original
   normalized request or conflict on different work; never overspend or backfill
   awards. Negative balances prevent new purchases. Rate 1 and Birch/Oak/Cherry
-  prices 30/60/120 are configurable proposed defaults. Streaks, reports and manual
+  prices 30/60/120 are configurable proposed defaults. Reports and manual
   session correction remain later tickets; preserve the planned adjustment-ledger
   policy without granting correction actions in the current interface.
+- Daily streaks derive from confirmed closed intervals of finalized sessions,
+  including early/interrupted finishes and legacy sessions without coin/tree
+  eligibility. Unfinished sessions and unresolved interruptions do not count.
+  A day qualifies at 3,600,000,000 integer microseconds. Divide saved credit across
+  local dates using UTC interval overlaps, conserving credit when wall duration
+  differs from monotonic duration; never include paused or uncertain gaps.
+  The current service timezone applies to all dates; changing it reattributes
+  historical progress without rewriting records. Today counts when qualified;
+  otherwise yesterday's consecutive run remains while today is unfinished.
+  Derive from saved records rather than persisting a separate streak counter.
 - Deadlines are date-only `YYYY-MM-DD` and never shift with timezone. Store actual
   instants as UTC ISO-8601 with `Z`, at microsecond precision. Compare timestamps as
   instants, not raw strings with mixed precision.

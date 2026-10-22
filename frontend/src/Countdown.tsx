@@ -3,6 +3,7 @@ import { ApiError, controlTimer, getTimer, recoverTimer, startTimer, type Planni
 import { ForestCollection } from "./Forest";
 import { SessionTree } from "./Tree";
 import { TreeShop, useShop } from "./Shop";
+import { DailyStreak } from "./DailyStreak";
 
 const message = (error: unknown) => error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
 const PENDING_KEY = "bearplans.timer.pending";
@@ -260,6 +261,7 @@ export function TrackScreen({ timer, plan, projects, requestedTaskId, requestTok
     </form>}
     <p className="tracking-rule">Finishing a countdown saves the session. Complete the task separately in Plan.</p>
     {timer.state?.last_session ? <SavedSession session={timer.state.last_session} /> : null}
+    <DailyStreak visible={visible} lastSessionId={timer.state?.last_session?.id ?? null} />
     <TreeShop shop={shop} />
     <ForestCollection visible={visible} lastSessionId={timer.state?.last_session?.id ?? null} />
   </section>;

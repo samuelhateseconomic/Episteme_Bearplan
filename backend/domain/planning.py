@@ -8,15 +8,14 @@ planning view share a SQLite read transaction.
 
 from __future__ import annotations
 
-import os
 import re
 import sqlite3
-from datetime import UTC, date, datetime, timedelta
+from datetime import date, datetime, timedelta
 from uuid import uuid4
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from pydantic import BaseModel, ConfigDict
 
+from backend.domain.calendar import application_today
 from backend.domain.errors import InvalidInput
 from backend.domain.tasks import Task, _children_of, _list_tasks, _require_task
 from backend.storage.db import Database, utc_now
@@ -105,31 +104,6 @@ def week_bounds(value: str | date) -> tuple[date, date]:
         return monday, monday + timedelta(days=6)
     except OverflowError:
         raise InvalidInput("week", "That week is outside the supported calendar range.") from None
-
-
-def application_today(now: datetime | None = None) -> tuple[date, str]:
-    """Use configured IANA timezone, otherwise the OS local timezone at this instant.
-
-    No timezone settings record exists yet. The system-local default deliberately
-    uses astimezone() for each instant, including local DST changes, not a fixed
-    offset captured when the service starts. Tests may pass an aware UTC clock.
-    """
-    instant = datetime.now(UTC) if now is None else now
-    if instant.tzinfo is None or instant.utcoffset() is None:
-        raise ValueError("The planning clock must be timezone-aware.")
-    configured = os.environ.get("BEARPLANS_TIMEZONE", "").strip()
-    if configured:
-        try:
-            local = instant.astimezone(ZoneInfo(configured))
-        except (ZoneInfoNotFoundError, ValueError):
-            raise InvalidInput(
-                "timezone",
-                "BEARPLANS_TIMEZONE must name an installed IANA timezone, such as "
-                "America/Los_Angeles. Correct it or unset it to use system local time.",
-            ) from None
-        return local.date(), configured
-    local = instant.astimezone()
-    return local.date(), f"System local ({local.tzname()})"
 
 
 def _placement(row: sqlite3.Row) -> Placement:

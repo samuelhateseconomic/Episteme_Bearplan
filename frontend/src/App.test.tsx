@@ -75,6 +75,7 @@ function fakeService(projects: Project[], tasks: Task[], fail?: { url: string; s
 
     if (url === "/api/timer") return json({ server_now: "2026-10-16T16:00:00.000000Z", active_session: null, last_session: null });
     if (url === "/api/forest") return json({ trees: [] });
+    if (url === "/api/streaks") return json({ today: "2026-10-15", timezone: "America/Los_Angeles", threshold_microseconds: 3_600_000_000, current_streak: 0, streak_through: null, days: [{ date: "2026-10-15", active_microseconds: 0, qualified: false }] });
     if (url === "/api/shop") return json({ balance: 0, coins_per_minute: 1, species: [{ id: "pine", name: "Pine", price: 0, owned: true }], recent_entries: [] });
 
     if (fail && url.startsWith(fail.url) && method !== "GET") return json({ error: fail.error }, fail.status);

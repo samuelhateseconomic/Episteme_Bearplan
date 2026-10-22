@@ -262,6 +262,25 @@ export function getShop(signal?: AbortSignal): Promise<ShopState> {
   return request<ShopState>("/api/shop", { signal });
 }
 
+export interface StreakDay {
+  date: string;
+  active_microseconds: number;
+  qualified: boolean;
+}
+
+export interface StreakState {
+  today: string;
+  timezone: string;
+  threshold_microseconds: number;
+  current_streak: number;
+  streak_through: string | null;
+  days: StreakDay[];
+}
+
+export function getStreaks(signal?: AbortSignal): Promise<StreakState> {
+  return request<StreakState>("/api/streaks", { signal });
+}
+
 export function purchaseSpecies(species: TreeSpecies, expectedPrice: number, operationId: string): Promise<{ operation_id: string; species: TreeSpecies; price: number; balance: number }> {
   return request("/api/shop/purchases", json("POST", { species, expected_price: expectedPrice, operation_id: operationId }));
 }

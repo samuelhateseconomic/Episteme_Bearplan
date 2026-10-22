@@ -3,8 +3,8 @@
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 countdown tracking with checkpoint recovery, growing trees, a saved forest,
-coins and a species shop implemented**. Target-Mac M2 hardware acceptance remains pending for combined
-M2/M3 verification. Projects, tasks and subtasks retain their
+coins, a species shop and daily streaks implemented**. Target-Mac M2 hardware
+acceptance remains pending for combined M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
 immutable history. The joined M1 technical review passed; no new itemized operator
@@ -22,7 +22,7 @@ count leaf work items once, excluding containers. Put additional parent work in 
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
 General task/project deletion and re-parenting are deferred. Reopening closed weeks,
-recurring tasks, automatic bulk carryover, streaks, advanced reports, AI and
+recurring tasks, automatic bulk carryover, advanced reports, AI and
 integrations are later work. Finishing a timer never automatically completes its task.
 
 ## Grow a tree
@@ -45,8 +45,8 @@ associated session, original task/project context and confirmed time. Session an
 tree finalization save together, once, including retries and restarts. Task edits,
 completion and scheduling do not change saved trees. Use **Refresh forest** to
 reload results from another tab or retry a failed read. Trees do not complete tasks.
-Pine/forest and coins/shop are implemented. M3 remains incomplete: daily streaks
-and statistics with session corrections have not started. Combined M2/M3 Mac
+Pine/forest, coins/shop and daily streaks are implemented. M3 remains incomplete:
+statistics with session corrections have not started. Combined M2/M3 Mac
 verification remains required before release readiness.
 
 ## Coins and the tree shop
@@ -93,6 +93,28 @@ purchases; stale displayed prices require a shop refresh before purchase.
 Invalid configuration stops startup with an actionable error before opening data.
 The [coins/shop review](docs/reviews/2026-10-20-coins-shop.md) records verification
 and the separate outstanding milestone gates.
+
+## Daily streaks
+
+**Daily streak** within Track shows today's saved confirmed time toward one hour,
+your consecutive qualifying days and the last seven days. Two saved 30-minute
+sessions qualify a day. A total of 59 minutes 59.999999 seconds does not. Time
+accumulates across projects and tasks; early finishes and explicitly resolved
+interrupted sessions count their confirmed work. Earlier saved sessions with
+recorded intervals count too, independently of tree and coin eligibility.
+
+Running, paused and Needs review sessions contribute after they are finished and
+saved. Pauses and uncertain gaps never count. If today has not reached one hour,
+yesterday's streak remains available to extend today. An unqualified previous day
+breaks the streak; there is no coin penalty.
+
+Dates use the displayed service timezone, `BEARPLANS_TIMEZONE` or the computer's
+local timezone. Sessions spanning midnight split their saved credit between dates,
+including daylight-saving changes. Changing the service timezone recalculates
+historical dates from stored UTC intervals without editing those records; original
+session timezones were not recorded by earlier builds. Use **Refresh streak** to
+retry a failed read. Track also refreshes after saves, on return and while visible.
+Streaks add no saved counter, rewards or correction/Undo action.
 
 ## Track a countdown
 
