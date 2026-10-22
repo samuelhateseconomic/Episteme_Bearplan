@@ -3,7 +3,58 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
-## Current state — October 21, 2026
+## Current state — October 22, 2026
+
+**Launch/schema repair implemented; normal launch and graceful restart verified.**
+The reproduced cause was two different migration-8 definitions sharing the same
+version/name. Keep applied 8/11 unchanged: repair 11 restores the missing current
+table; schema validation now checks required structures before services start.
+New schema **12** records atomic SQL fingerprints for migrations 12 onward, without
+inventing legacy hashes. Legacy recovery audit rows remain intact; canonical
+Resume/Finish decisions are not overwritten or credited again.
+
+Startup now handles schema/storage failures, closes sockets/releases locks and
+announces readiness after successful lifespan/listener startup. The launcher checks
+held-instance build identity before setup/rebuild: same-build launches reuse it;
+different/unknown builds require a deliberate restart. It never replaces a service
+automatically. See [implementation review](reviews/2026-10-22-launch-hardening.md)
+and the earlier [diagnosis](reviews/2026-10-22-launch-diagnosis-plan.md).
+
+A durable SQLite backup was verified before normal-data changes. Private-copy
+upgrade/launcher/restart preserved all original fields. The normal app now serves
+**http://127.0.0.1:8765/** at schema **12**, with matching build identity, integrity
+`ok` and zero foreign-key issues. Its prior saved running session entered
+**Needs review**, retaining all confirmed credit. All other original fields,
+including tasks, snapshots, rewards and legacy gaps, matched the pre-launch copy.
+A second launch reused this build; graceful stop/restart did not duplicate recovery.
+The session still requires the user's explicit Resume or confirmed-time finish.
+
+**Launch repair implementation review: Pass on Mac.** Final full core: **699 passed,
+zero failures/skips, 158.03 s**. Frontend **122 passed**; typecheck/build passed.
+The initial full run had one shop-browser retry test race; test-only synchronization
+now holds wallet reads until the intended replay POST. Four focused passes and the
+clean full rerun verify that branch. Independent final source review and **93
+focused tests passed**. This ticket changes no timer policy, task completion,
+rewards or Move-only dragging behavior.
+
+This user-authorized scoped local repair commit is reviewed against `aaf9b67`.
+Existing staged/unstaged planning edits and the recovery stash remain preserved
+outside this commit; no push or next feature is authorized. M3 forest, coins/shop and streaks remain
+implemented; statistics/session corrections are not started. **Overall M2 is not
+newly passed**: target-Mac hardware/long-duration acceptance remains outstanding,
+separately from M1's broader hands-on planner certification.
+
+## Prior state — October 21, 2026
+
+**Launch recovery-table repair added.** The reported launch traceback means the
+database recorded schema 10 while lacking `timer_interruptions`, a table created
+by migration 8. The traceback cannot establish why the saved database's schema
+history and actual tables diverged. New migration 11 recreates that table and its
+indexes only when missing. A saved `Needs review` timer then records the existing
+confirmed checkpoint as a `checkpoint_gap`; no uncertain time is credited.
+The normal app database was not opened or changed in this session; the repair
+applies on its next launch. Disposable macOS tests passed; see the
+[launch recovery review](reviews/2026-10-21-launch-recovery-table.md).
 
 **Daily streaks are implemented; implementation review Pass on Mac.** The user
 requested checking the next session and proceeding. It derives daily progress

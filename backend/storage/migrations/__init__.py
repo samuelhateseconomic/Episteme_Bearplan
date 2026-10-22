@@ -8,6 +8,7 @@ schema changes add a new file. Migration SQL must not contain BEGIN/COMMIT.
 
 from __future__ import annotations
 
+import hashlib
 import re
 import sqlite3
 from dataclasses import dataclass
@@ -17,6 +18,7 @@ from backend.storage.db import Database, StorageError, utc_now
 
 MIGRATIONS_DIR = Path(__file__).parent
 _FILENAME = re.compile(r"^(\d{4})_([a-z0-9_]+)\.sql$")
+FINGERPRINT_START_VERSION = 12
 
 
 class MigrationError(StorageError):
@@ -28,6 +30,28 @@ class Migration:
     version: int
     name: str
     sql: str
+
+
+def _sql_fingerprint(migration: Migration) -> str:
+    return hashlib.sha256(migration.sql.encode("utf-8")).hexdigest()
+
+
+def _check_fingerprints(conn: sqlite3.Connection, migrations: list[Migration], applied: dict[int, str]) -> None:
+    protected = {item.version: item for item in migrations if item.version in applied and item.version >= FINGERPRINT_START_VERSION}
+    if not protected:
+        return
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'migration_fingerprints'").fetchone():
+        raise MigrationError("Saved schema is missing migration_fingerprints. Keep the database and a backup for a reviewed repair; no migration was retried.")
+    try:
+        saved = dict(conn.execute("SELECT version, sha256 FROM migration_fingerprints"))
+    except sqlite3.Error as exc:
+        raise MigrationError("Saved migration_fingerprints has an incompatible schema. Keep the database and a backup for a reviewed repair.") from exc
+    for version, migration in protected.items():
+        if saved.get(version) != _sql_fingerprint(migration):
+            raise MigrationError(
+                f"Applied migration {version:04d}_{migration.name} has a missing or different SQL fingerprint. "
+                "Keep the database and backup; restore the matching migration file instead of editing an applied upgrade.",
+            )
 
 
 def load_migrations(directory: Path = MIGRATIONS_DIR) -> list[Migration]:
@@ -122,6 +146,7 @@ def migrate(db: Database, migrations: list[Migration] | None = None) -> int:
                 raise MigrationError(
                     f"Applied migration {version:04d}_{name} does not match this build's migrations."
                 )
+        _check_fingerprints(conn, migrations, applied)
         upgraded = _upgrade_legacy_multiple_dates(conn, migrations, applied)
         for migration in migrations:
             if migration.version in applied or migration.version in upgraded:
@@ -133,6 +158,9 @@ def migrate(db: Database, migrations: list[Migration] | None = None) -> int:
                     "INSERT INTO schema_migrations (version, name, applied_at) VALUES (?, ?, ?)",
                     (migration.version, migration.name, utc_now()),
                 )
+                if migration.version >= FINGERPRINT_START_VERSION:
+                    conn.execute("INSERT INTO migration_fingerprints (version, sha256) VALUES (?, ?)",
+                                 (migration.version, _sql_fingerprint(migration)))
                 conn.execute("COMMIT")
             except sqlite3.Error as exc:
                 if conn.in_transaction:

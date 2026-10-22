@@ -78,6 +78,7 @@ class Database:
 def open_database(path: Path) -> Database:
     """Open (creating if needed) the database in WAL mode and apply pending migrations."""
     from backend.storage.migrations import migrate
+    from backend.storage.schema import validate_schema
 
     created = not path.exists()
     db = Database(path)
@@ -95,6 +96,7 @@ def open_database(path: Path) -> Database:
             except OSError:
                 pass
         migrate(db)
+        validate_schema(db)
     except sqlite3.Error as exc:
         raise StorageError(f"Cannot open database {path}: {exc}. It was not changed.") from exc
     return db

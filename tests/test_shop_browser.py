@@ -89,12 +89,15 @@ def test_shop_lost_response_reload_stale_balance_species_and_restart(browser, ev
 
         def record_retry(route):
             purchase_payloads.append(route.request.post_data_json)
+            # A focus/last-session refresh may acknowledge the owned species.
+            # Keep wallet reads unavailable until this intended replay is sent.
+            blocked["reads"] = False
             route.continue_()
 
         page.route("**/api/shop/purchases", record_retry)
-        blocked["reads"] = False
         retry.focus()
-        page.keyboard.press("Enter")
+        with page.expect_request(lambda request: request.method == "POST" and request.url.endswith("/api/shop/purchases")):
+            page.keyboard.press("Enter")
         expect(shop).to_contain_text("Your coins: 30")
         expect(retry).to_have_count(0)
         expect(shop.locator(".shop-species").filter(has_text="Birch")).to_contain_text("Owned")

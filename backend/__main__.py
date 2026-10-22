@@ -9,9 +9,10 @@ import argparse
 import os
 import signal
 import socket
+import sqlite3
 import sys
 import threading
-import time
+from collections.abc import Callable
 import webbrowser
 
 import uvicorn
@@ -19,7 +20,7 @@ import uvicorn
 from backend import __version__
 from backend.app import create_app
 from backend.domain.rewards import RewardConfig
-from backend.platform.instance_lock import acquire_instance_lock, running_instance_url
+from backend.platform.instance_lock import acquire_instance_lock, describe_running_instance, report_running_instance
 from backend.platform.paths import (
     DATABASE_FILENAME,
     FRONTEND_DIST,
@@ -75,15 +76,23 @@ def _bind(port: int) -> socket.socket:
     return sock
 
 
-def _open_browser_when_ready(server: uvicorn.Server, url: str) -> None:
-    def wait_and_open() -> None:
-        deadline = time.monotonic() + 30
-        while not server.started and not server.should_exit and time.monotonic() < deadline:
-            time.sleep(0.1)
-        if server.started:
-            webbrowser.open(url)
+class _ReadyServer(uvicorn.Server):
+    """Announce readiness only after app lifespan and listener startup succeed."""
 
-    threading.Thread(target=wait_and_open, daemon=True).start()
+    def __init__(self, config: uvicorn.Config, on_ready: Callable[[], None]) -> None:
+        super().__init__(config)
+        self._on_ready = on_ready
+
+    async def startup(self, sockets: list[socket.socket] | None = None) -> None:
+        await super().startup(sockets=sockets)
+        if self.started and not self.should_exit:
+            try:
+                self._on_ready()
+            except BaseException:
+                # Metadata/readiness failure must also drain the app lifespan;
+                # closing the socket alone would leave its timer monitor alive.
+                await self.shutdown(sockets=sockets)
+                raise
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -100,14 +109,15 @@ def main(argv: list[str] | None = None) -> int:
         print(f"BearPlans cannot start: {exc}", file=sys.stderr)
         return 1
 
-    lock = acquire_instance_lock(data_dir)
+    try:
+        lock = acquire_instance_lock(data_dir)
+    except OSError as exc:
+        print(f"BearPlans cannot start: cannot access the data-directory lock ({exc}).", file=sys.stderr)
+        return 1
     if lock is None:
-        existing = running_instance_url(data_dir)
-        print(f"BearPlans is already running for {data_dir}" + (f" at {existing}" if existing else "") + ".")
-        if existing and not args.no_browser:
-            webbrowser.open(existing)
-        return 0
+        return report_running_instance(describe_running_instance(data_dir), open_browser=not args.no_browser)
 
+    sock = None
     try:
         try:
             db = open_database(data_dir / DATABASE_FILENAME)
@@ -125,30 +135,50 @@ def main(argv: list[str] | None = None) -> int:
             )
             return 1
 
-        url = f"http://{HOST}:{args.port}/"
-        print(f"BearPlans {__version__}")
-        print(f"  data:   {data_dir}")
-        print(f"  schema: version {current_version(db)}")
-        print(f"  open:   {url}  (Ctrl+C to stop)")
-        if not (FRONTEND_DIST / "index.html").is_file():
-            print("  note:   interface not built; run `python3 launch.py` or `npm run build` in frontend/")
-
-        server = uvicorn.Server(
-            uvicorn.Config(create_app(db, FRONTEND_DIST, reward_config=reward_config), host=HOST, port=args.port, workers=1, log_level="warning")
-        )
-        lock.record(url)
-        if not args.no_browser:
-            _open_browser_when_ready(server, url)
         try:
-            server.run(sockets=[sock])
-        except KeyboardInterrupt:
-            pass
+            # Binding precedes TimerService initialization: a busy port must not
+            # turn a saved running countdown into a recovered session.
+            app = create_app(db, FRONTEND_DIST, reward_config=reward_config)
+            schema = current_version(db)
+            url = f"http://{HOST}:{args.port}/"
+
+            def announce_ready() -> None:
+                lock.record(url)
+                print(f"BearPlans {__version__}")
+                print(f"  data:   {data_dir}")
+                print(f"  schema: version {schema}")
+                print(f"  open:   {url}  (Ctrl+C to stop)", flush=True)
+                if not (FRONTEND_DIST / "index.html").is_file():
+                    print("  note:   interface not built; run `python3 launch.py` or `npm run build` in frontend/")
+                if not args.no_browser:
+                    threading.Thread(target=webbrowser.open, args=(url,), daemon=True).start()
+
+            server = _ReadyServer(
+                uvicorn.Config(app, host=HOST, port=args.port, workers=1, log_level="warning"),
+                announce_ready,
+            )
+            try:
+                server.run(sockets=[sock])
+            except KeyboardInterrupt:
+                pass
+        except (StorageError, sqlite3.Error, OSError) as exc:
+            print(
+                f"BearPlans cannot start: {exc}\n"
+                "Saved data was not reset. Keep the data folder and check the database/update before retrying.",
+                file=sys.stderr,
+            )
+            return 1
         if not server.started:
+            print("BearPlans cannot start: the local service did not finish starting.", file=sys.stderr)
             return 1
         print("BearPlans stopped.")
         return 0
     finally:
-        lock.release()
+        try:
+            if sock is not None:
+                sock.close()
+        finally:
+            lock.release()
 
 
 if __name__ == "__main__":

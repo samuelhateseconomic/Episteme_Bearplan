@@ -19,6 +19,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+from backend.platform.instance_lock import probe_running_instance, report_running_instance
+from backend.platform.paths import DataDirError, resolve_data_dir
+
 MIN_PYTHON = (3, 12)
 ROOT = Path(__file__).resolve().parent
 VENV = ROOT / ".venv"
@@ -119,6 +122,16 @@ def main(argv: list[str]) -> int:
     if sys.version_info < MIN_PYTHON:
         print(f"BearPlans needs Python {'.'.join(map(str, MIN_PYTHON))}+; this is {sys.version.split()[0]}.")
         return 1
+    # Rebuilding dist while an older backend keeps running can mix incompatible
+    # API/UI versions. Resolve a held instance before changing setup/build files.
+    try:
+        data_dir = resolve_data_dir()
+    except DataDirError:
+        data_dir = None
+    if data_dir is not None and "--help" not in argv and "-h" not in argv:
+        existing = probe_running_instance(data_dir)
+        if existing is not None:
+            return report_running_instance(existing, open_browser="--no-browser" not in argv)
     try:
         python = ensure_python_env()
         ensure_frontend()

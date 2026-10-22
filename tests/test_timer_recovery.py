@@ -16,6 +16,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+from backend.app import create_app
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import create_placement
 from backend.domain.tasks import create_task, get_task
@@ -110,6 +111,33 @@ def test_running_restart_preserves_confirmed_checkpoint_and_one_durable_review(d
         interval = conn.execute("SELECT * FROM timer_intervals").fetchone()
         assert interval["ended_at"] == interval["checkpoint_at"] == checkpoint
         assert interval["active_microseconds"] == 7_250_000
+
+
+def test_missing_recovery_table_is_repaired_before_legacy_review_startup(tmp_path: Path):
+    db = Database(tmp_path / "missing-recovery-table.sqlite3")
+    migrate(db, load_migrations()[:10])
+    timer, clock, task, session = _start(db)
+    _observe(timer, clock, 7.25)
+    with db.write() as conn:
+        conn.execute(
+            "UPDATE timer_sessions SET state = 'needs_review', review_reason = ? WHERE id = ?",
+            ("Legacy uncertain checkpoint", session.id),
+        )
+        conn.execute("DROP TABLE timer_interruptions")
+
+    repaired_db = open_database(db.path)
+    assert current_version(repaired_db) == len(load_migrations())
+    restarted = create_app(repaired_db, timer_clock=RecoveryClock(clock.wall)).state.timer
+    review = restarted.get().active_session
+
+    assert review is not None and review.id == session.id and review.state == "needs_review"
+    assert review.active_seconds == 7.25
+    assert review.recovery is not None and review.recovery.kind == "checkpoint_gap"
+    assert review.recovery.confirmed_active_seconds == 7.25
+    assert get_task(repaired_db, task.id) == task
+    with repaired_db.read() as conn:
+        assert conn.execute("SELECT COUNT(*) FROM timer_interruptions").fetchone()[0] == 1
+        assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
 
 
 def test_review_resume_uses_same_session_new_interval_and_excludes_all_offline_time(db: Database):

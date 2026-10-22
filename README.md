@@ -267,7 +267,13 @@ py launch.py             # Windows (or: python launch.py)
 
 On first run this creates `.venv`, installs the pinned Python packages (`requirements.lock`), installs and builds the interface (`frontend/package-lock.json`), applies database migrations, and opens <http://127.0.0.1:8765/>. Later launches skip setup unless those inputs changed, so they work offline. Stop with Ctrl+C.
 
-Options: `--port N` (or `BEARPLANS_PORT`), `--no-browser`. Launching again while BearPlans is running opens the existing instance instead of starting a second one.
+Options: `--port N` (or `BEARPLANS_PORT`), `--no-browser`. Launching again reuses an existing instance only when its recorded source build, checkout and supported schema match this launch. The launcher checks this before installing dependencies or rebuilding the interface. A different or unknown running build stays running, and the launcher explains that a deliberate restart is needed; it does not rebuild over that service or open its interface. Finish or pause active work before stopping the existing service with Ctrl+C, then launch again. A service still starting may need a moment before its build identity is available. `--no-browser` also applies when reusing the same build. No instance is stopped or restarted automatically.
+
+Migration 11 repairs the known case of a schema-10 database missing its timer-interruption table. It preserves saved tasks, session checkpoints, trees and coins. An affected active timer stays in **Needs review**, and no unconfirmed time is added. The repair does not reconstruct missing interruption history.
+
+Startup also checks the resulting database structure against the current migrations before starting the timer. Other missing or incompatible tables, columns, foreign keys, required indexes, validation checks or history-protection triggers produce a clear storage error instead of a late timer traceback. Extra legacy tables and columns are retained. If startup reports a schema problem, keep the full error and the existing database; do not delete it or create replacement records. Review a SQLite-safe backup or restore a verified backup before trying to repair unsupported damage.
+
+Migrations from version 12 onward also record a content fingerprint. Startup refuses a changed file for an already applied migration. Earlier migration records retain their original names and timestamps; their historical file contents cannot be verified retroactively, so startup checks the resulting structure without inventing old fingerprints.
 
 ## Where your data lives
 
