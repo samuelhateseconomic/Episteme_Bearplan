@@ -1049,6 +1049,12 @@ details > summary:focus-visible {
 .stats-task-list li { display: flex; flex-direction: column; gap: 0.35rem; border: 1px solid var(--border); border-radius: 0.6rem; padding: 1rem; min-width: 0; }
 .stats-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
 .stats-filter select { max-width: 100%; }
+.session-corrections { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem; min-width: 0; }
+.correction-interval { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.7rem 0; }
+.session-corrections fieldset { min-width: 0; border: 1px solid var(--border); border-radius: 0.5rem; margin: 1rem 0; }
+.session-corrections textarea { display: block; width: 100%; min-height: 5rem; }
+.correction-review { border: 2px solid var(--accent); border-radius: 0.6rem; padding: 1rem; margin: 1rem 0; }
+.session-corrections button { white-space: normal; }
 
 .daily-streak { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem; overflow-wrap: anywhere; }
 .streak-count { margin-bottom: 0.35rem; font-size: 1.15rem; }

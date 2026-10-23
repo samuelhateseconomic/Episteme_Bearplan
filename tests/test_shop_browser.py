@@ -95,9 +95,11 @@ def test_shop_lost_response_reload_stale_balance_species_and_restart(browser, ev
             route.continue_()
 
         page.route("**/api/shop/purchases", record_retry)
-        retry.focus()
         with page.expect_request(lambda request: request.method == "POST" and request.url.endswith("/api/shop/purchases")):
-            page.keyboard.press("Enter")
+            # Reload can schedule another last-session wallet refresh between
+            # focus and Enter, briefly disabling this control. Click waits for
+            # actionability; the first purchase above still covers keyboard use.
+            retry.click()
         expect(shop).to_contain_text("Your coins: 30")
         expect(retry).to_have_count(0)
         expect(shop.locator(".shop-species").filter(has_text="Birch")).to_contain_text("Owned")

@@ -14,6 +14,7 @@ Neither exit 0 nor a Linux run certifies the complete Mac M2 acceptance gate.
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import hashlib
 import json
 import math
@@ -169,8 +170,11 @@ class OwnedService:
         path = self.data_dir / DATABASE_FILENAME
         if not path.is_file():
             return {}
-        with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as conn:
+        # sqlite3's transaction context does not close its connection. Explicit
+        # close is required before TemporaryDirectory removes files on Windows.
+        with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as conn:
             conn.row_factory = sqlite3.Row
+            conn.execute("BEGIN")
             sessions = [dict(row) for row in conn.execute(
                 "SELECT id, state, duration_minutes, active_microseconds, started_at, checkpoint_at,"
                 " finished_at, outcome, review_reason, revision FROM timer_sessions ORDER BY rowid"

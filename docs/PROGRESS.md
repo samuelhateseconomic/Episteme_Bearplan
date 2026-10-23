@@ -5,6 +5,50 @@ This is the single mutable work/handoff record. Detailed reviews retain evidence
 
 ## Current state — October 23, 2026
 
+**Saved-session corrections implemented; implementation review Pass on Windows.**
+User authorized the next session under AGENTS.md, baseline `9cade8c` (local
+statistics commit; main was one ahead of origin). Checkout was clean before work.
+Stats now offers reason → preview → apply, permanent history and reviewed reversal.
+Corrections reduce saved interval credit or restore earlier reductions within
+immutable original confirmed ceilings. No added unrecorded time, gap filling or
+timestamp edits. Preview includes affected day/streak totals, tree and wallet;
+apply revalidates revision and reviewed effects atomically with session/interval,
+existing-tree, audit/receipt and captured-rate adjustment changes. Initial awards,
+eligibility cutovers, purchased species, task completion and closed snapshots stay.
+
+New schema **13** is additive: interval baselines, correction audit/results and
+coin adjustments with immutable-row triggers. Shop balances/activity include the
+adjustments and prevent negative-balance spending. Network/lost-response retries
+persist independently per operation across reload; definitive rejection restores
+the draft for fresh review. Another reviewed correction reverses an earlier one.
+
+Final full core: **753 passed, 4 skipped, 589.26 s**, no failures. Skips are the
+POSIX SIGINT probe, POSIX stop/continue recovery and two Unix `tzset` cases; they
+are not claimed as Windows or Mac operator evidence. Frontend **136 passed** in
+10 files with two workers; typecheck/build, pip check, unchanged applied SQL 1–12,
+whitespace and local documentation links pass. Source stayed fixed during the
+clean full run. Both shop/correction real-browser journeys pass, including response
+loss, reload/replay, negative-balance purchase blocking, reversal and restart.
+Wide/narrow/dark/error screenshots inspected. Full-core follow-ups fixed historical
+schema-10 reward-read compatibility while preserving activity insertion order, and
+closed the diagnostic probe's SQLite handle before Windows temporary cleanup.
+Current-schema missing adjustment ledgers fail reads/purchases rather than hiding
+deductions. No acceptance requirement was weakened.
+See [correction scope and evidence](reviews/2026-10-23-session-corrections.md).
+
+No normal data/service rollout, backup/restore, AI or integration in this session.
+User subsequently requested a local commit of the correction work, verification
+follow-ups and documentation against `9cade8c`; no push requested.
+M3/M2 combined target-Mac hardware/long-duration acceptance remains
+pending. **Next checkpoint: combined target-Mac M2/M3 verification**, including
+actual sleep/wake, battery/standby/hibernate, external long-duration timing and the
+joined correction/reward/report workflow. M3 implementation is reviewed; its
+milestone/operator gate is not passed by Windows tests. M4 backup/restore is the
+following build, not started. Roadmap Oct 21/23 scopes now carry implementation
+checkmarks with the manual gates still explicit; no dates were silently shifted.
+
+## Prior ticket — October 23, 2026: statistics
+
 **Statistics implemented; session corrections are next.** User authorized executing
 the next M3 work under AGENTS.md. First ticket adds Stats (`/#stats`): read-only
 all-time leaf completion, saved time by local date/project/task, and current
@@ -575,10 +619,11 @@ reward records. Inspected 1440/375 px light/dark previews; no overflow/page erro
 See the [daily-streak review](reviews/2026-10-21-daily-streaks.md) for commands,
 initial failures, legacy compatibility and remaining hardware/operator gates.
 
-## Next M3 ticket — session corrections (not started)
+## Correction handoff scope (implemented October 23; verification above)
 
-Read-only statistics are implemented as recorded in the October 23 entry above.
-Remaining scope is explicit saved-session corrections with reward adjustments.
+The original correction handoff below is retained for context. Current implementation
+and verification are recorded in the latest October 23 entry above.
+Its scope was explicit saved-session corrections with reward adjustments.
 Keep one small ticket active and define correction semantics before
 writing code: eligible historical sessions, exact interval/date attribution,
 preview, revision/replay checks, audit/reversal behavior, and tree/coin cutovers.
@@ -586,10 +631,10 @@ Do not silently credit an uncertain gap. Derive streaks and reports from the sam
 corrected source; count leaf task completion once. Preserve closed snapshots and
 historical task/project context. Corrections must use the planned adjustment
 ledger, never repeat an initial award; retain purchases and prevent spending when
-an adjustment makes the balance negative. These are future requirements, not
-features available in the current interface.
+an adjustment makes the balance negative. These requirements now have the bounded
+correction implementation described above; added/unrecorded manual time is outside it.
 
-Ready-to-use continuation prompt for a later authorized session:
+Historical continuation prompt (fulfilled by the correction ticket above):
 
 > Continue BearPlans with M3's session-correction ticket. Read AGENTS.md,
 > docs/PROGRESS.md, plans and latest reviews; inspect the complete working diff,

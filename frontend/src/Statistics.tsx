@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ApiError, getStatistics, type StatisticsState } from "./api";
+import { Corrections } from "./Corrections";
+import { savedDuration } from "./savedTime";
 
 const dayLabel = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
-export function savedDuration(microseconds: number): string {
-  const minutes = Math.floor(microseconds / 60_000_000);
-  const seconds = (microseconds % 60_000_000) / 1_000_000;
-  return `${minutes} min ${seconds.toLocaleString(undefined, { maximumFractionDigits: 6 })} s`;
-}
-
 export function Statistics({ visible }: { visible: boolean }) {
+  const [showCorrections, setShowCorrections] = useState(false);
   const [state, setState] = useState<StatisticsState | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -101,5 +98,8 @@ export function Statistics({ visible }: { visible: boolean }) {
         <span>Actual: {savedDuration(task.active_microseconds)} · {task.session_count} saved {task.session_count === 1 ? "session" : "sessions"}</span>
       </li>)}</ul> : <p>No task details in this project.</p>}
     </> : null}
+    <button type="button" aria-expanded={showCorrections} onClick={() => setShowCorrections((value) => !value)}>
+      {showCorrections ? "Hide saved session corrections" : "Saved session corrections"}</button>
+    {showCorrections ? <Corrections visible={visible} onApplied={() => void refresh()} /> : null}
   </section>;
 }

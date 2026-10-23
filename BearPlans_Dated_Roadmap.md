@@ -4,14 +4,14 @@ Schedule revised October 13, 2026. Status updated October 23, 2026. Start: Octob
 Dates use America/Los_Angeles. Dates below are targets, not proof of completion.
 
 Current status (2026-10-23): foundation, projects/tasks, weekly planning/history,
-countdown/recovery, forest, coins/shop and daily streaks are implemented. Read-only
-statistics now pass implementation review on Windows. **Session corrections and
-their reward adjustments are next and not started**, so the Oct 21 and Oct 23
-scope rows remain partial. Combined M2/M3 target-Mac hardware/long-duration
+countdown/recovery, forest, coins/shop, daily streaks and statistics are implemented.
+**Reviewed session corrections, reversals and reward adjustments are implemented;
+implementation review Pass on Windows.** Corrections stay within original confirmed
+interval ceilings. Combined M2/M3 target-Mac hardware/long-duration
 acceptance and broader M1 operator certification remain pending. Backup/restore,
 the core trial, AI and integrations have not started. See
 [shared progress](docs/PROGRESS.md) for the authoritative handoff and
-[statistics review](docs/reviews/2026-10-23-statistics.md) for the latest evidence.
+[correction review](docs/reviews/2026-10-23-session-corrections.md) for the latest evidence.
 
 ## 1. Revised delivery approach
 
@@ -35,7 +35,7 @@ The local laptop architecture, product rules and review standards remain. This r
 
 Status marks: ✅ implemented scope; ◐ partially implemented; ☐ not started.
 An implementation checkmark does not certify pending hardware/operator or release
-gates. Dates remain targets; unfinished corrections and acceptance must be resolved
+gates. Dates remain targets; combined target-Mac M2/M3 acceptance must be resolved
 before freezing a core trial candidate. Later target dates are provisional.
 
 | Date (2026) | Main feature | One-day scope | End-of-day demonstration/review |
@@ -47,9 +47,9 @@ before freezing a core trial candidate. Later target dates are provisional.
 | Oct 18 | ✅ Countdown | Dedicated Track screen; start from a task or direct navigation; 1–180 minutes; pause/resume/finish; compact timer. | Both entry points work, an unscheduled task can be tracked, and only one active/paused session exists across tabs. |
 | Oct 19 | ✅ Session recovery | Timestamp/interval persistence, expiry, refresh/restart recovery, sleep pause or Needs review fallback, retry-safe finish. | Reopen an interrupted session; uncertain gaps are not silently credited; repeated finish saves once. |
 | Oct 20 | ✅ Growing forest | One free species, three growth stages and a session-linked tree collection. | A completed countdown plants one tree; early finish keeps time with an unfinished tree. |
-| Oct 21 | ◐ Coins and shop | Coin ledger, three purchasable species, balance/ownership and reward adjustments. | Earn once, buy a species, reject insufficient funds and review correction behavior. |
+| Oct 21 | ✅ Coins and shop | Coin ledger, three purchasable species, balance/ownership and reward adjustments. | Earn once, buy a species, reject insufficient funds and review correction behavior. |
 | Oct 22 | ✅ Daily streak | Accumulate 60 active minutes; progress indicator; configured timezone and midnight allocation. | Two 30-minute sessions qualify; 59 minutes does not; paused time is excluded. |
-| Oct 23 | ◐ Statistics | Completion and tracked-time totals by day/project/task; estimates versus actual time; session correction. | Known fixture totals match reports; correcting a session updates rewards and streaks consistently. |
+| Oct 23 | ✅ Statistics | Completion and tracked-time totals by day/project/task; estimates versus actual time; session correction. | Known fixture totals match reports; correcting a session updates rewards and streaks consistently. |
 | Oct 24 | ☐ Backup and core launch | Database backup/restore, data separate from code, migration safeguards, offline startup and basic local request protection. | Restore to a clean location; run without internet or model; review core regressions. Freeze a core trial candidate. |
 | Oct 25 | ☐ Local assistant chat | Ollama connection, contextual panel, typed read tools for task/day/week lookup and exact summaries; bounded calls and model errors. | Ask about today's work and time totals; results match Python; unavailable model leaves the core operational. |
 | Oct 26 | ☐ Assistant actions | A small tool set: create/update/assign tasks and start/pause/finish timers; revision/replay validation. Larger replans use a reviewed structured proposal. | Explicit requests work; ambiguous targets ask for clarification; edits have Undo; stale proposals cannot overwrite new work. |

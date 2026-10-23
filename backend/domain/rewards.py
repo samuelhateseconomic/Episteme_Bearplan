@@ -71,7 +71,7 @@ class ShopSpecies(BaseModel):
 
 class LedgerEntry(BaseModel):
     id: str
-    kind: Literal["session_award", "purchase"]
+    kind: Literal["session_award", "purchase", "session_adjustment"]
     amount: int
     session_id: str | None
     species: Species | None
@@ -135,11 +135,25 @@ def award_session(conn: sqlite3.Connection, session_id: str) -> None:
 
 def session_award(conn: sqlite3.Connection, session_id: str) -> int | None:
     row = conn.execute("SELECT amount FROM coin_ledger WHERE session_id = ? AND kind = 'session_award'", (session_id,)).fetchone()
-    return None if row is None else row["amount"]
+    if row is None:
+        return None
+    if not _has_adjustments(conn):
+        return row["amount"]
+    return row["amount"] + conn.execute(
+        "SELECT COALESCE(SUM(amount), 0) FROM coin_adjustments WHERE session_id = ?", (session_id,),
+    ).fetchone()[0]
+
+
+def _has_adjustments(conn: sqlite3.Connection) -> bool:
+    # Historical upgrade fixtures also exercise the original schema-10 domain.
+    # Use the recorded version, not table existence: a missing current ledger must
+    # fail instead of silently restoring coins that corrections deducted.
+    return conn.execute("SELECT COALESCE(MAX(version), 0) >= 13 FROM schema_migrations").fetchone()[0]
 
 
 def _balance(conn: sqlite3.Connection) -> int:
-    return conn.execute("SELECT COALESCE(SUM(amount), 0) FROM coin_ledger").fetchone()[0]
+    original = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM coin_ledger").fetchone()[0]
+    return original + (conn.execute("SELECT COALESCE(SUM(amount), 0) FROM coin_adjustments").fetchone()[0] if _has_adjustments(conn) else 0)
 
 
 class ShopService:
@@ -153,13 +167,22 @@ class ShopService:
             # when a second tab finishes or buys a species during this request.
             conn.execute("BEGIN")
             owned = {row[0] for row in conn.execute("SELECT species FROM owned_species")}
+            entries = "SELECT * FROM coin_ledger ORDER BY rowid DESC LIMIT 50"
+            if _has_adjustments(conn):
+                # Preserve saved ledger insertion order even across wall-clock
+                # changes. An adjustment is positioned after the last ledger row
+                # present at commit, with its own sequence for multiple edits.
+                entries = (
+                    "SELECT id, kind, amount, session_id, species, created_at FROM ("
+                    "SELECT id, kind, amount, session_id, species, created_at, rowid AS position, 0 AS adjustment, 0 AS sequence FROM coin_ledger "
+                    "UNION ALL SELECT id, 'session_adjustment', amount, session_id, NULL, created_at, ledger_position, 1, rowid "
+                    "FROM coin_adjustments) ORDER BY position DESC, adjustment DESC, sequence DESC LIMIT 50"
+                )
             return ShopView(
                 balance=_balance(conn), coins_per_minute=self.config.coins_per_minute,
                 species=[ShopSpecies(id=key, name=name, price=self.config.price(key), owned=key == "pine" or key in owned)
                          for key, name in SPECIES_NAMES.items()],
-                recent_entries=[LedgerEntry(**dict(row)) for row in conn.execute(
-                    "SELECT * FROM coin_ledger ORDER BY rowid DESC LIMIT 50",
-                )],
+                recent_entries=[LedgerEntry(**dict(row)) for row in conn.execute(entries)],
             )
 
     def purchase(self, species: object, expected_price: object, operation_id: object) -> PurchaseResult:

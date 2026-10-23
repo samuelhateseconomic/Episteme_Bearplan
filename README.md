@@ -3,7 +3,7 @@
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 countdown tracking with checkpoint recovery, growing trees, a saved forest,
-coins, a species shop, daily streaks and read-only statistics implemented**. Target-Mac M2 hardware
+coins, a species shop, daily streaks, statistics and reviewed session corrections implemented**. Target-Mac M2 hardware
 acceptance remains pending for combined M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
@@ -45,8 +45,8 @@ associated session, original task/project context and confirmed time. Session an
 tree finalization save together, once, including retries and restarts. Task edits,
 completion and scheduling do not change saved trees. Use **Refresh forest** to
 reload results from another tab or retry a failed read. Trees do not complete tasks.
-Pine/forest, coins/shop, daily streaks and statistics are implemented. M3 remains incomplete:
-session corrections have not started. Combined M2/M3 Mac
+Pine/forest, coins/shop, daily streaks, statistics and saved-session corrections are implemented.
+Combined M2/M3 Mac
 verification remains required before release readiness.
 
 ## View statistics
@@ -65,8 +65,38 @@ completion dates, so reopening/removing a task changes them. Closed-week history
 remains frozen and separate.
 
 Use **Refresh statistics** after saving in another tab. A failed read retains and
-labels the last report until a successful retry. Reports are read-only; manual
-session corrections are the next M3 ticket.
+labels the last report until a successful retry. Reports are read-only; reviewed
+edits are available separately through **Saved session corrections**.
+
+## Correct saved session time
+
+In **Stats → Saved session corrections**, choose a saved session and **Correct
+saved time**. Change each interval's active seconds, enter a reason, then choose
+**Review correction**. Decimal seconds support up to six places. Correct time
+within each interval's original confirmed maximum; dates and gaps stay fixed.
+Only finalized sessions with complete, consistent intervals and resolved
+interruptions are eligible. Missing/unconfirmed work cannot be added here.
+
+The preview shows saved time, affected daily totals and streak qualification,
+tree outcome, coin adjustment and resulting wallet balance. **Apply correction**
+revalidates these effects before saving them together. A changed session, wallet,
+timezone or affected daily total requires a fresh review. Cancel changes nothing.
+Reports and streaks then use the corrected intervals. Task completion and
+closed-week history stay unchanged. Original session context/outcome is retained.
+
+Corrections retain the original coin award and create explicit adjustments using
+the earning rate captured at session start. Legacy sessions stay ineligible for
+new coins/trees. Existing tree identity/species stay; corrected time can change its
+growth/outcome. If already-spent coins create a negative balance, purchased
+species stay owned and new purchases wait until the balance recovers.
+
+Lost responses retain the exact request for **Retry correction**, including after
+reload. Each pending request has its own browser record; a retry cannot erase
+another tab's request. Retries return the original receipt and refresh current
+records. A browser that cannot persist this retry request must allow local storage
+before applying. Under **Correction history**, **Prepare reversal of latest
+correction** restores its prior interval values for another preview/apply. This
+adds a new audit/adjustment; original history is never deleted.
 
 ## Coins and the tree shop
 
@@ -94,7 +124,8 @@ Use **Refresh shop** to load changes from another tab or retry a failed read.
 If a purchase response is lost, its exact request stays available after page reload:
 refresh to check the saved result or use **Retry … purchase**. The backend replays
 the saved result without a second charge. Failed purchases keep your selection.
-Refunds, Undo and manual session corrections are not included in this ticket.
+Shop refunds and purchase Undo remain unavailable; session corrections and their
+reviewed reversals are separate actions in Stats.
 
 Earning rate and prices are configurable proposed defaults, not fixed product
 requirements. Set these environment variables before launching; no settings UI is
@@ -133,7 +164,8 @@ including daylight-saving changes. Changing the service timezone recalculates
 historical dates from stored UTC intervals without editing those records; original
 session timezones were not recorded by earlier builds. Use **Refresh streak** to
 retry a failed read. Track also refreshes after saves, on return and while visible.
-Streaks add no saved counter, rewards or correction/Undo action.
+Streaks add no saved counter or independent reward. Saved-session corrections in
+Stats update the intervals from which streaks are derived.
 
 ## Track a countdown
 
@@ -170,7 +202,8 @@ adds uncertain time. Already paused sessions stay paused across service restarts
 Recovery decisions and interruption details persist, including safe retries after
 a lost response. A crash can lose work since the last successful checkpoint; during
 storage failures that interval can be longer than one second. Browser visibility
-never determines sleep or earned time. Manual time corrections are deferred.
+never determines sleep or earned time. Saved-time corrections are available in
+Stats within original confirmed interval ceilings; they cannot fill unknown gaps.
 
 M2's target-Mac hardware acceptance remains separate from Linux automated checks.
 Use the disposable evidence tool without touching your normal planner data:

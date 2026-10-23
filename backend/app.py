@@ -14,12 +14,13 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 from backend import __version__
+from backend.domain.corrections import CorrectionConflict
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
 from backend.domain.streaks import StreakDataError
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import forest, planning, projects, shop, statistics, streaks, tasks, timer, weeks
+from backend.routes import corrections, forest, planning, projects, shop, statistics, streaks, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -98,6 +99,10 @@ def create_app(
     app.state.timer = countdown
     app.state.shop = ShopService(db, config)
     app.add_middleware(LocalOnlyMiddleware)
+
+    @app.exception_handler(CorrectionConflict)
+    async def correction_conflict(_: Request, exc: CorrectionConflict) -> JSONResponse:
+        return JSONResponse({"error": {"code": "correction_conflict", "field": exc.field, "message": exc.message}}, status_code=409)
 
     @app.exception_handler(ShopConflict)
     async def shop_conflict(_: Request, exc: ShopConflict) -> JSONResponse:
@@ -182,6 +187,7 @@ def create_app(
     app.include_router(shop.router)
     app.include_router(streaks.router)
     app.include_router(statistics.router)
+    app.include_router(corrections.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

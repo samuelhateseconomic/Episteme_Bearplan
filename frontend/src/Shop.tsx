@@ -151,7 +151,7 @@ export function TreeShop({ shop }: { shop: Shop }) {
     {shop.state && shop.state.recent_entries.length > 0 ? <details className="coin-history">
       <summary>Recent coin activity</summary>
       <ul>{shop.state.recent_entries.map((entry) => <li key={entry.id}>
-        <span>{entry.kind === "purchase" && entry.species ? `${speciesName(entry.species)} purchase` : "Session saved"}</span>
+        <span>{entry.kind === "purchase" && entry.species ? `${speciesName(entry.species)} purchase` : entry.kind === "session_adjustment" ? "Session correction" : "Session saved"}</span>
         <strong>{entry.amount > 0 ? "+" : ""}{entry.amount} coins</strong>
         <time dateTime={entry.created_at}>{new Date(entry.created_at).toLocaleString()}</time>
       </li>)}</ul>

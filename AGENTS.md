@@ -85,10 +85,16 @@ dates; use their contents and commit history to determine which evidence is curr
   awards. Negative balances prevent new purchases. Rate 1 and Birch/Oak/Cherry
   prices 30/60/120 are configurable proposed defaults. Read-only statistics report
   current leaf completion/estimates and all-time saved intervals, with historical
-  time retained after task removal. Manual session correction remains a later
-  ticket; preserve the planned adjustment-ledger
-  policy without granting correction actions in the current interface.
-- Daily streaks derive from confirmed closed intervals of finalized sessions,
+  time retained after task removal. Saved-session corrections require a reason
+  and reviewed preview, then revalidate revision, wallet and affected date totals
+  inside the write transaction. Correct only consistent, finalized sessions with
+  resolved interruptions. Retain immutable original interval ceilings and allow
+  reductions/restoration within them; never add unconfirmed time, move dates or
+  fill gaps. Persist before/after audit and replay result atomically with interval,
+  session, existing-tree and captured-rate coin adjustments. Preserve the initial
+  award, eligibility cutovers, purchases, task completion and closed snapshots.
+  Reverse via another reviewed correction; never delete audit or adjustment rows.
+- Daily streaks derive from corrected confirmed closed intervals of finalized sessions,
   including early/interrupted finishes and legacy sessions without coin/tree
   eligibility. Unfinished sessions and unresolved interruptions do not count.
   A day qualifies at 3,600,000,000 integer microseconds. Divide saved credit across

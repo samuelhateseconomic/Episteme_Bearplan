@@ -74,6 +74,37 @@ export function getStatistics(signal?: AbortSignal): Promise<StatisticsState> {
   return request<StatisticsState>("/api/statistics", { signal });
 }
 
+export interface IntervalEdit { id: string; active_microseconds: number }
+export interface CorrectionDraft { expected_revision: number; reason: string; intervals: IntervalEdit[] }
+export interface SavedSession {
+  id: string; task_title: string; project_name: string; parent_title: string | null; finished_at: string;
+  duration_minutes: number; active_microseconds: number; outcome: string; revision: number;
+  blocked_reason: string | null; coin_contribution: number | null;
+  intervals: (IntervalEdit & { started_at: string; ended_at: string | null; maximum_microseconds: number })[];
+  history: { operation_id: string; reason: string; created_at: string; before: IntervalEdit[]; after: IntervalEdit[] }[];
+}
+export interface CorrectionPreview {
+  session_id: string; preview_token: string; before_microseconds: number; after_microseconds: number;
+  coin_delta: number; balance_before: number; balance_after: number; coin_contribution_after: number | null;
+  tree_before: string | null; tree_after: string | null; timezone: string;
+  days: { date: string; before_microseconds: number; after_microseconds: number;
+    day_total_before_microseconds: number; day_total_after_microseconds: number; qualified_before: boolean; qualified_after: boolean }[];
+}
+export interface PendingCorrection { session_id: string; draft: CorrectionDraft; preview_token: string; operation_id: string }
+export interface CorrectionResult { operation_id: string; session_id: string; revision: number; active_microseconds: number;
+  coin_delta: number; balance_at_save: number; tree_outcome: string | null }
+export async function getSavedSessions(signal?: AbortSignal): Promise<SavedSession[]> {
+  return (await request<{ sessions: SavedSession[] }>("/api/sessions", { signal })).sessions;
+}
+export function previewCorrection(id: string, draft: CorrectionDraft): Promise<CorrectionPreview> {
+  return request<CorrectionPreview>(`/api/sessions/${encodeURIComponent(id)}/correction/preview`, json("POST", draft));
+}
+export function applyCorrection(pending: PendingCorrection): Promise<CorrectionResult> {
+  return request<CorrectionResult>(`/api/sessions/${encodeURIComponent(pending.session_id)}/correction`, json("POST", {
+    ...pending.draft, preview_token: pending.preview_token, operation_id: pending.operation_id,
+  }));
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
   try {
@@ -260,7 +291,7 @@ export interface ShopSpecies {
 
 export interface CoinEntry {
   id: string;
-  kind: "session_award" | "purchase";
+  kind: "session_award" | "purchase" | "session_adjustment";
   amount: number;
   session_id: string | null;
   species: TreeSpecies | null;
