@@ -1036,6 +1036,20 @@ details > summary:focus-visible {
 }
 
 /* Saved confirmed work, grouped into days by the local service. */
+.statistics { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: clamp(1rem, 3vw, 2rem); min-width: 0; overflow-wrap: anywhere; }
+.statistics h3 { margin-top: 2rem; }
+.stats-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; }
+.stats-summary > div { background: var(--bg); border: 1px solid var(--border); border-radius: 0.6rem; padding: 1rem; }
+.stats-summary dt { color: var(--muted); }
+.stats-summary dd { margin: 0.5rem 0 0; font-size: 1.2rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+.stats-list, .stats-task-list { list-style: none; margin: 1rem 0; padding: 0; }
+.stats-list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1.5rem; border-bottom: 1px solid var(--border); padding: 0.8rem 0; }
+.stats-list li > :first-child { flex: 1 1 12rem; }
+.stats-task-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1rem; }
+.stats-task-list li { display: flex; flex-direction: column; gap: 0.35rem; border: 1px solid var(--border); border-radius: 0.6rem; padding: 1rem; min-width: 0; }
+.stats-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
+.stats-filter select { max-width: 100%; }
+
 .daily-streak { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem; overflow-wrap: anywhere; }
 .streak-count { margin-bottom: 0.35rem; font-size: 1.15rem; }
 .streak-count strong { color: var(--accent); font-size: 1.75rem; }

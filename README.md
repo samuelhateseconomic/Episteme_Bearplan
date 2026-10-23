@@ -3,7 +3,7 @@
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 countdown tracking with checkpoint recovery, growing trees, a saved forest,
-coins, a species shop and daily streaks implemented**. Target-Mac M2 hardware
+coins, a species shop, daily streaks and read-only statistics implemented**. Target-Mac M2 hardware
 acceptance remains pending for combined M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
@@ -45,9 +45,28 @@ associated session, original task/project context and confirmed time. Session an
 tree finalization save together, once, including retries and restarts. Task edits,
 completion and scheduling do not change saved trees. Use **Refresh forest** to
 reload results from another tab or retry a failed read. Trees do not complete tasks.
-Pine/forest, coins/shop and daily streaks are implemented. M3 remains incomplete:
-statistics with session corrections have not started. Combined M2/M3 Mac
+Pine/forest, coins/shop, daily streaks and statistics are implemented. M3 remains incomplete:
+session corrections have not started. Combined M2/M3 Mac
 verification remains required before release readiness.
+
+## View statistics
+
+Open **Stats** for all-time saved active time by service-local date, project and
+task, plus current leaf completion counts/percentages and estimates versus actual
+saved time. Parent containers and repeated planned dates do not duplicate work.
+The task-detail project filter leaves the overall summaries visible.
+
+Saved early finishes, resolved interruptions and legacy closed intervals count;
+unfinished sessions and uncertain gaps do not. Historical time remains after task
+removal. Current names/estimates describe existing leaves; historical-only rows
+contribute time without current completion or estimates. A missing estimate stays
+unspecified. Daily completions reflect currently complete leaves on their saved
+completion dates, so reopening/removing a task changes them. Closed-week history
+remains frozen and separate.
+
+Use **Refresh statistics** after saving in another tab. A failed read retains and
+labels the last report until a successful retry. Reports are read-only; manual
+session corrections are the next M3 ticket.
 
 ## Coins and the tree shop
 

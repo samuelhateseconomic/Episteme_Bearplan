@@ -1,12 +1,17 @@
 # BearPlans — One-Day Feature Roadmap
 
-Revised October 13, 2026. Start: October 14, 2026. 
+Schedule revised October 13, 2026. Status updated October 23, 2026. Start: October 14, 2026.
 Dates use America/Los_Angeles. Dates below are targets, not proof of completion.
 
-Current status (2026-10-13): M0 has a recorded target-Mac pass. The Oct 15 projects/tasks
-build has passing implementation and operator reviews; all six hands-on checks passed.
-See [the M1 takeover review](docs/reviews/2026-10-13-m1-takeover.md) for verified evidence.
-Oct 16 onward remains planned. No next build was started.
+Current status (2026-10-23): foundation, projects/tasks, weekly planning/history,
+countdown/recovery, forest, coins/shop and daily streaks are implemented. Read-only
+statistics now pass implementation review on Windows. **Session corrections and
+their reward adjustments are next and not started**, so the Oct 21 and Oct 23
+scope rows remain partial. Combined M2/M3 target-Mac hardware/long-duration
+acceptance and broader M1 operator certification remain pending. Backup/restore,
+the core trial, AI and integrations have not started. See
+[shared progress](docs/PROGRESS.md) for the authoritative handoff and
+[statistics review](docs/reviews/2026-10-23-statistics.md) for the latest evidence.
 
 ## 1. Revised delivery approach
 
@@ -28,26 +33,31 @@ The local laptop architecture, product rules and review standards remain. This r
 
 ## 3. Daily builds
 
+Status marks: ✅ implemented scope; ◐ partially implemented; ☐ not started.
+An implementation checkmark does not certify pending hardware/operator or release
+gates. Dates remain targets; unfinished corrections and acceptance must be resolved
+before freezing a core trial candidate. Later target dates are provisional.
+
 | Date (2026) | Main feature | One-day scope | End-of-day demonstration/review |
 | --- | --- | --- | --- |
-| Oct 14 | Local foundation | Frontend/backend skeleton, SQLite migration, launcher, local-only access. Prepare model setup/download if needed. | Launch locally, save a record, restart and retrieve it. Record a quick Mac sleep-handling experiment. |
-| Oct 15 | Projects and tasks | Create/edit projects, tasks and subtasks; notes, deadline, estimate and completion. | Create a real course task and subtask; edits persist; completion does not double-count parent and child. |
-| Oct 16 | Weekly planning | Projects beside the weekly board, Today, selected day, assignment and moving work. | Assign a task to a day, move it and preserve its deadline/identity. |
-| Oct 17 | Weeks and history | Previous-week navigation, close-week snapshot, carry unfinished work forward. | Close a sample week, revisit its counts and move work without duplication. |
-| Oct 18 | Countdown | Dedicated Track screen; start from a task or direct navigation; 1–180 minutes; pause/resume/finish; compact timer. | Both entry points work, an unscheduled task can be tracked, and only one active/paused session exists across tabs. |
-| Oct 19 | Session recovery | Timestamp/interval persistence, expiry, refresh/restart recovery, sleep pause or Needs review fallback, retry-safe finish. | Reopen an interrupted session; uncertain gaps are not silently credited; repeated finish saves once. |
-| Oct 20 | Growing forest | One free species, three growth stages and a session-linked tree collection. | A completed countdown plants one tree; early finish keeps time with an unfinished tree. |
-| Oct 21 | Coins and shop | Coin ledger, three purchasable species, balance/ownership and reward adjustments. | Earn once, buy a species, reject insufficient funds and review correction behavior. |
-| Oct 22 | Daily streak | Accumulate 60 active minutes; progress indicator; configured timezone and midnight allocation. | Two 30-minute sessions qualify; 59 minutes does not; paused time is excluded. |
-| Oct 23 | Statistics | Completion and tracked-time totals by day/project/task; estimates versus actual time; session correction. | Known fixture totals match reports; correcting a session updates rewards and streaks consistently. |
-| Oct 24 | Backup and core launch | Database backup/restore, data separate from code, migration safeguards, offline startup and basic local request protection. | Restore to a clean location; run without internet or model; review core regressions. Freeze a core trial candidate. |
-| Oct 25 | Local assistant chat | Ollama connection, contextual panel, typed read tools for task/day/week lookup and exact summaries; bounded calls and model errors. | Ask about today's work and time totals; results match Python; unavailable model leaves the core operational. |
-| Oct 26 | Assistant actions | A small tool set: create/update/assign tasks and start/pause/finish timers; revision/replay validation. Larger replans use a reviewed structured proposal. | Explicit requests work; ambiguous targets ask for clarification; edits have Undo; stale proposals cannot overwrite new work. |
-| Oct 27 | Google Calendar connection | Read-only selected calendars, Keychain credentials, local event cache, source IDs, manual sync and visible status. | Sync twice without duplicates; show stale/offline state; test cancellation and revoked-access behavior. Scope live-account completion on access working. |
-| Oct 28 | Canvas connection | Selected-course assignment import, source links, due dates, review inbox and duplicate prevention. | Repeat an import; preserve user edits on a changed deadline; missing dates remain explicit. Conditional on permitted API access. |
-| Oct 29 | Gmail connection | Selected labels/filters, local extraction into suggested tasks, source links and manual review. | Uncertain dates are reviewed, duplicate messages do not duplicate tasks, and source text cannot authorize actions. Conditional on permitted access. |
-| Oct 30 | Regression and AI evaluation | Run core and integration fixtures, 30 AI scenarios, slow-model responsiveness checks and high-priority fixes. | Exact stats match; no unauthorized mutations in the fixed set; evaluate the proposed 90% AI success gate. Record failures openly. |
-| Oct 31 | Personal alpha release | Review seven-day trial, verify backup restore, fix remaining release blockers and tag the passing build. | Demonstrate a real plan-to-countdown-to-reward workflow and list included, provisional and deferred features. |
+| Oct 14 | ✅ Local foundation | Frontend/backend skeleton, SQLite migration, launcher, local-only access. Prepare model setup/download if needed. | Launch locally, save a record, restart and retrieve it. Record a quick Mac sleep-handling experiment. |
+| Oct 15 | ✅ Projects and tasks | Create/edit projects, tasks and subtasks; notes, deadline, estimate and completion. | Create a real course task and subtask; edits persist; completion does not double-count parent and child. |
+| Oct 16 | ✅ Weekly planning | Projects beside the weekly board, Today, selected day, assignment and moving work. | Assign a task to a day, move it and preserve its deadline/identity. |
+| Oct 17 | ✅ Weeks and history | Previous-week navigation, close-week snapshot, carry unfinished work forward. | Close a sample week, revisit its counts and move work without duplication. |
+| Oct 18 | ✅ Countdown | Dedicated Track screen; start from a task or direct navigation; 1–180 minutes; pause/resume/finish; compact timer. | Both entry points work, an unscheduled task can be tracked, and only one active/paused session exists across tabs. |
+| Oct 19 | ✅ Session recovery | Timestamp/interval persistence, expiry, refresh/restart recovery, sleep pause or Needs review fallback, retry-safe finish. | Reopen an interrupted session; uncertain gaps are not silently credited; repeated finish saves once. |
+| Oct 20 | ✅ Growing forest | One free species, three growth stages and a session-linked tree collection. | A completed countdown plants one tree; early finish keeps time with an unfinished tree. |
+| Oct 21 | ◐ Coins and shop | Coin ledger, three purchasable species, balance/ownership and reward adjustments. | Earn once, buy a species, reject insufficient funds and review correction behavior. |
+| Oct 22 | ✅ Daily streak | Accumulate 60 active minutes; progress indicator; configured timezone and midnight allocation. | Two 30-minute sessions qualify; 59 minutes does not; paused time is excluded. |
+| Oct 23 | ◐ Statistics | Completion and tracked-time totals by day/project/task; estimates versus actual time; session correction. | Known fixture totals match reports; correcting a session updates rewards and streaks consistently. |
+| Oct 24 | ☐ Backup and core launch | Database backup/restore, data separate from code, migration safeguards, offline startup and basic local request protection. | Restore to a clean location; run without internet or model; review core regressions. Freeze a core trial candidate. |
+| Oct 25 | ☐ Local assistant chat | Ollama connection, contextual panel, typed read tools for task/day/week lookup and exact summaries; bounded calls and model errors. | Ask about today's work and time totals; results match Python; unavailable model leaves the core operational. |
+| Oct 26 | ☐ Assistant actions | A small tool set: create/update/assign tasks and start/pause/finish timers; revision/replay validation. Larger replans use a reviewed structured proposal. | Explicit requests work; ambiguous targets ask for clarification; edits have Undo; stale proposals cannot overwrite new work. |
+| Oct 27 | ☐ Google Calendar connection | Read-only selected calendars, Keychain credentials, local event cache, source IDs, manual sync and visible status. | Sync twice without duplicates; show stale/offline state; test cancellation and revoked-access behavior. Scope live-account completion on access working. |
+| Oct 28 | ☐ Canvas connection | Selected-course assignment import, source links, due dates, review inbox and duplicate prevention. | Repeat an import; preserve user edits on a changed deadline; missing dates remain explicit. Conditional on permitted API access. |
+| Oct 29 | ☐ Gmail connection | Selected labels/filters, local extraction into suggested tasks, source links and manual review. | Uncertain dates are reviewed, duplicate messages do not duplicate tasks, and source text cannot authorize actions. Conditional on permitted access. |
+| Oct 30 | ☐ Regression and AI evaluation | Run core and integration fixtures, 30 AI scenarios, slow-model responsiveness checks and high-priority fixes. | Exact stats match; no unauthorized mutations in the fixed set; evaluate the proposed 90% AI success gate. Record failures openly. |
+| Oct 31 | ☐ Personal alpha release | Review seven-day trial, verify backup restore, fix remaining release blockers and tag the passing build. | Demonstrate a real plan-to-countdown-to-reward workflow and list included, provisional and deferred features. |
 
 Connection rows allocate a one-day prototype slot. Provider setup/approval is not under the developer's control. Full incremental sync, recurrence coverage and resilience must pass their required cases before the connection is described as reliable. A prototype failing that gate stays disabled or explicitly provisional; the local core can still ship.
 

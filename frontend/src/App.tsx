@@ -19,6 +19,7 @@ import {
 } from "./api";
 import { TaskPlanning, WeeklyPlanner, usePlanning } from "./WeeklyPlanner";
 import { CompactTimer, StartTrackingButton, TrackScreen, useCountdown } from "./Countdown";
+import { Statistics } from "./Statistics";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -41,7 +42,8 @@ function formatEstimate(minutes: number): string {
 export default function App() {
   const planning = usePlanning();
   const timer = useCountdown();
-  const [screen, setScreen] = useState(() => window.location.hash === "#track" ? "track" : "plan");
+  const readScreen = () => window.location.hash === "#track" ? "track" : window.location.hash === "#stats" ? "stats" : "plan";
+  const [screen, setScreen] = useState(readScreen);
   const [trackingTaskId, setTrackingTaskId] = useState<string | null>(null);
   const [trackingRequest, setTrackingRequest] = useState(0);
   const [projects, setProjects] = useState<Project[] | null>(null);
@@ -64,7 +66,7 @@ export default function App() {
   const selected = projects?.find((p) => p.id === selectedId) ?? null;
 
   useEffect(() => {
-    const navigate = () => setScreen(window.location.hash === "#track" ? "track" : "plan");
+    const navigate = () => setScreen(readScreen());
     window.addEventListener("hashchange", navigate);
     return () => window.removeEventListener("hashchange", navigate);
   }, []);
@@ -160,12 +162,14 @@ export default function App() {
         <nav className="main-navigation" aria-label="Main navigation">
           <a href="#plan" aria-current={screen === "plan" ? "page" : undefined} onClick={() => setScreen("plan")}>Plan</a>
           <a href="#track" aria-current={screen === "track" ? "page" : undefined} onClick={() => openTrack()}>Track</a>
+          <a href="#stats" aria-current={screen === "stats" ? "page" : undefined} onClick={() => setScreen("stats")}>Stats</a>
         </nav>
       </header>
 
       {timer.error ? <p role="alert" className="error timer-error">{timer.error}{" "}<button type="button" className="link" onClick={timer.refresh}>Refresh timer</button></p> : null}
       {screen !== "track" ? <CompactTimer timer={timer} onOpen={() => openTrack()} /> : null}
       <TrackScreen timer={timer} plan={planning.plan} projects={projects ?? []} requestedTaskId={trackingTaskId} requestToken={trackingRequest} visible={screen === "track"} planError={planning.error} onRefreshTasks={() => void planning.refresh()} />
+      <Statistics visible={screen === "stats"} />
 
       <div hidden={screen !== "plan"}>
 

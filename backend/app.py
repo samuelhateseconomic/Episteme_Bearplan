@@ -19,7 +19,7 @@ from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
 from backend.domain.streaks import StreakDataError
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import forest, planning, projects, shop, streaks, tasks, timer, weeks
+from backend.routes import forest, planning, projects, shop, statistics, streaks, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -181,6 +181,7 @@ def create_app(
     app.include_router(forest.router)
     app.include_router(shop.router)
     app.include_router(streaks.router)
+    app.include_router(statistics.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

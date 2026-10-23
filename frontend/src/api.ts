@@ -58,6 +58,22 @@ export class ApiError extends Error {
   }
 }
 
+export interface StatisticsState {
+  today: string;
+  timezone: string;
+  completion: { completed: number; total: number; percent: number };
+  active_microseconds: number;
+  session_count: number;
+  days: { date: string; active_microseconds: number; completed: number }[];
+  projects: { project_id: string; name: string; completion: StatisticsState["completion"]; active_microseconds: number }[];
+  tasks: { task_id: string; project_id: string; title: string; parent_title: string | null; current_leaf: boolean; completed: boolean | null;
+    estimate_minutes: number | null; active_microseconds: number; session_count: number }[];
+}
+
+export function getStatistics(signal?: AbortSignal): Promise<StatisticsState> {
+  return request<StatisticsState>("/api/statistics", { signal });
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
   try {

@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn>=0.30",
+    "tzdata>=2026.1; sys_platform == 'win32'",
 ]
 
 [project.optional-dependencies]

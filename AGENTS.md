@@ -83,8 +83,10 @@ dates; use their contents and commit history to determine which evidence is curr
   persist debit, ownership and replay result. Reused keys replay the original
   normalized request or conflict on different work; never overspend or backfill
   awards. Negative balances prevent new purchases. Rate 1 and Birch/Oak/Cherry
-  prices 30/60/120 are configurable proposed defaults. Reports and manual
-  session correction remain later tickets; preserve the planned adjustment-ledger
+  prices 30/60/120 are configurable proposed defaults. Read-only statistics report
+  current leaf completion/estimates and all-time saved intervals, with historical
+  time retained after task removal. Manual session correction remains a later
+  ticket; preserve the planned adjustment-ledger
   policy without granting correction actions in the current interface.
 - Daily streaks derive from confirmed closed intervals of finalized sessions,
   including early/interrupted finishes and legacy sessions without coin/tree

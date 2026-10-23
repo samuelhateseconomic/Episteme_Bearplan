@@ -3,7 +3,44 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
-## Current state — October 22, 2026
+## Current state — October 23, 2026
+
+**Statistics implemented; session corrections are next.** User authorized executing
+the next M3 work under AGENTS.md. First ticket adds Stats (`/#stats`): read-only
+all-time leaf completion, saved time by local date/project/task, and current
+estimates versus saved actual time. Historical/removed work stays visible;
+repeated placements and containers do not duplicate leaf totals. Daily allocation
+reuses the exact streak allocator. No report schema or derived counters added.
+
+Windows verification found and fixed two launch prerequisites: pinned Windows
+IANA tzdata and realtime clock API-contract loading. Disposable browser launch and
+restart now pass; Mac/Linux clock policy is unchanged. Normal user data and any
+existing service were not opened/restarted. Current checkout is Windows, not Mac.
+
+Final checks: statistics/streak domain/API **64 passed, 2 tzset-only skips**;
+frontend **127 passed**; typecheck/build pass; real Stats browser/native clock
+checks **7 passed**; affected planner/timer/reward/history/restart **291 passed**;
+launch/schema/migration/recovery **154 passed**. Total selected backend/browser
+checks: **516 passed, 2 skipped**. This is selected regression evidence, not a full
+core or milestone run. Screenshots inspected at 1440/375 px, light/dark and read
+failure. Frozen SQL fixture LF bytes are now protected from Windows conversion.
+See [scope, commands and evidence](reviews/2026-10-23-statistics.md).
+
+Roadmap status refreshed on October 23 at the user's request: daily rows now use
+implementation checkmarks, partial markers and not-started markers. Coins/shop
+and statistics remain partial because reward adjustments/session corrections are
+unimplemented. Target dates and scopes are retained; pending acceptance and later
+dates are explicitly provisional. Roadmap diff and local links checked; no
+application tests rerun for this documentation-only follow-up.
+
+Next ticket: explicit saved-session corrections with durable audit/retry handling,
+reward adjustments and consistent derived reports/streaks. **Not started**; the
+read-only statistics ticket is complete, implementation review **Pass on Windows**.
+M3 and combined target-Mac M2/M3
+hardware/long-duration acceptance remain incomplete. User requested a local commit
+of this statistics/Windows-fix/documentation work against `d20eddf`; no push requested.
+
+## Prior state — October 22, 2026
 
 **Launch/schema repair implemented; normal launch and graceful restart verified.**
 The reproduced cause was two different migration-8 definitions sharing the same
@@ -538,11 +575,11 @@ reward records. Inspected 1440/375 px light/dark previews; no overflow/page erro
 See the [daily-streak review](reviews/2026-10-21-daily-streaks.md) for commands,
 initial failures, legacy compatibility and remaining hardware/operator gates.
 
-## Next M3 session — statistics and session corrections (not started)
+## Next M3 ticket — session corrections (not started)
 
-Scope remains the planned completion/confirmed-time totals by day, project and
-task; estimates versus actuals; and explicit saved-session corrections with reward
-adjustments. Keep one small ticket active and define correction semantics before
+Read-only statistics are implemented as recorded in the October 23 entry above.
+Remaining scope is explicit saved-session corrections with reward adjustments.
+Keep one small ticket active and define correction semantics before
 writing code: eligible historical sessions, exact interval/date attribution,
 preview, revision/replay checks, audit/reversal behavior, and tree/coin cutovers.
 Do not silently credit an uncertain gap. Derive streaks and reports from the same
@@ -554,7 +591,7 @@ features available in the current interface.
 
 Ready-to-use continuation prompt for a later authorized session:
 
-> Continue BearPlans with M3's statistics/session-correction session. Read AGENTS.md,
+> Continue BearPlans with M3's session-correction ticket. Read AGENTS.md,
 > docs/PROGRESS.md, plans and latest reviews; inspect the complete working diff,
 > preserve planning edits, the recovery stash and current coins/streak behavior.
 > Define a small first ticket and the correction preview/audit/revision/replay

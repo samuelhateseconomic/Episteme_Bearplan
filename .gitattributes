@@ -1,0 +1,2 @@
+# Frozen historical SQL fixtures are verified byte-for-byte on every platform.
+tests/fixtures/*.sql text eol=lf

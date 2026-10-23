@@ -1,8 +1,11 @@
 """Platform clock selection and conservative fallback without real OS sleep."""
 
 import ctypes
+import sys
 from datetime import UTC, datetime
 from uuid import uuid4
+
+import pytest
 
 from backend.domain.tasks import create_task
 from backend.domain.timer import ClockSample, SystemClock, TimerService
@@ -16,7 +19,7 @@ def test_linux_clock_uses_sleep_inclusive_boottime(monkeypatch):
     monkeypatch.setattr(timer.sys, "platform", "linux")
     monkeypatch.setattr(timer.time, "CLOCK_BOOTTIME", 71, raising=False)
     monkeypatch.setattr(timer.time, "monotonic_ns", lambda: 12_000_000_000)
-    monkeypatch.setattr(timer.time, "clock_gettime_ns", lambda clock_id: calls.append(clock_id) or 90_000_000_000)
+    monkeypatch.setattr(timer.time, "clock_gettime_ns", lambda clock_id: calls.append(clock_id) or 90_000_000_000, raising=False)
     sample = SystemClock().sample()
     assert calls == [71]
     assert sample.monotonic_ns == 12_000_000_000 and sample.continuous_ns == 90_000_000_000
@@ -28,9 +31,9 @@ def test_mac_clock_preserves_measured_monotonic_pair(monkeypatch):
 
     calls = []
     monkeypatch.setattr(timer.sys, "platform", "darwin")
-    monkeypatch.setattr(timer.time, "CLOCK_MONOTONIC", 72)
+    monkeypatch.setattr(timer.time, "CLOCK_MONOTONIC", 72, raising=False)
     monkeypatch.setattr(timer.time, "monotonic_ns", lambda: 20_000_000_000)
-    monkeypatch.setattr(timer.time, "clock_gettime_ns", lambda clock_id: calls.append(clock_id) or 120_000_000_000)
+    monkeypatch.setattr(timer.time, "clock_gettime_ns", lambda clock_id: calls.append(clock_id) or 120_000_000_000, raising=False)
     sample = SystemClock().sample()
     assert calls == [72]
     assert sample.monotonic_ns == 20_000_000_000 and sample.continuous_ns == 120_000_000_000
@@ -57,6 +60,14 @@ def test_windows_clock_excludes_suspend_from_credit(monkeypatch):
     sample = SystemClock().sample()
     assert sample.monotonic_ns == 12_345_000_000 and sample.continuous_ns == 98_765_000_000
     assert sample.sleep_detection
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="requires the real Windows API")
+def test_windows_native_realtime_contract_loads_and_samples():
+    first, second = SystemClock().sample(), SystemClock().sample()
+    assert first.sleep_detection and second.sleep_detection
+    assert second.monotonic_ns >= first.monotonic_ns > 0
+    assert second.continuous_ns >= first.continuous_ns >= first.monotonic_ns
 
 
 def test_unsupported_platform_has_no_measured_sleep_claim(monkeypatch):

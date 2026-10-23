@@ -64,7 +64,7 @@ def _microseconds(value: timedelta) -> int:
     return (value.days * 86_400 + value.seconds) * 1_000_000 + value.microseconds
 
 
-def _allocate(
+def allocate_confirmed_time(
     totals: dict[date, int], calendar: ApplicationCalendar,
     started_at: object, ended_at: object, credit: object,
 ) -> None:
@@ -130,7 +130,7 @@ def get_streaks(db: Database, *, now: datetime | None = None) -> StreakView:
             "WHERE interruption.session_id = s.id AND interruption.resolved_at IS NULL)"
         ).fetchall()
     for row in rows:
-        _allocate(totals, calendar, row["started_at"], row["ended_at"], row["active_microseconds"])
+        allocate_confirmed_time(totals, calendar, row["started_at"], row["ended_at"], row["active_microseconds"])
     qualifying = {day for day, credit in totals.items() if credit >= THRESHOLD_MICROSECONDS}
     through = today if today in qualifying else today - timedelta(days=1) if today > date.min else None
     current, cursor = 0, through

@@ -61,7 +61,10 @@ class SystemClock:
             # 100 ns units and need no native power-event subscription.
             import ctypes
 
-            kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+            # Resolve the realtime API contract. Some Windows builds export
+            # QueryInterruptTime through this contract/KernelBase but not the
+            # kernel32 compatibility DLL. Both clocks keep their 100 ns units.
+            kernel = ctypes.WinDLL("api-ms-win-core-realtime-l1-1-1", use_last_error=True)
             awake = kernel.QueryUnbiasedInterruptTime
             continuous = kernel.QueryInterruptTime
             for function in (awake, continuous):
