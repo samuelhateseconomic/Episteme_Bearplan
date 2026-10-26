@@ -48,6 +48,8 @@ reload results from another tab or retry a failed read. Trees do not complete ta
 Pine/forest, coins/shop, daily streaks, statistics and saved-session corrections are implemented.
 Combined M2/M3 Mac
 verification remains required before release readiness.
+Use the [combined Mac verification runbook](docs/MAC_CORE_VERIFICATION.md) for
+disposable hardware, timing and correction/reward checks.
 
 ## View statistics
 

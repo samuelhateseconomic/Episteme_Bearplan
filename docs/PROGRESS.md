@@ -3,7 +3,30 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
-## Current state — October 23, 2026
+## Current state — October 26, 2026
+
+Resumed at `635e1e7` on Windows `10.0.26300`; local `main` matches the last
+verified GitHub head and the checkout was clean. The user authorized picking up
+the next work. The recorded next checkpoint is combined M2/M3 target-Mac
+acceptance; this Windows workspace cannot supply the required hardware evidence.
+
+Prepared the [combined Mac verification runbook](MAC_CORE_VERIFICATION.md):
+disposable setup, one full milestone run, AC/battery/standby observations,
+ten-minute/external long-duration timing and the joined recovery/reward/correction
+workflow. It reuses the existing probes and tests. No application code, personal
+data or running service changed; no new test cases were added. Content, command
+references, local links and whitespace were checked; application tests were not
+rerun for this documentation-only preparation. See the
+[preparation review](reviews/2026-10-26-mac-verification-preparation.md).
+
+Combined Mac acceptance remains **not passed**; M1 operator certification remains
+pending. The user explicitly chose **Prepare the Mac verification handoff**;
+M4 backup/restore is **not started**. Next concrete action: run the linked
+verification on the target Mac and review its evidence before advancing M4.
+The user subsequently authorized committing and pushing this documentation-only
+handoff against `635e1e7`.
+
+## Prior ticket — October 23, 2026: saved-session corrections
 
 **Saved-session corrections implemented; implementation review Pass on Windows.**
 User authorized the next session under AGENTS.md, baseline `9cade8c` (local
