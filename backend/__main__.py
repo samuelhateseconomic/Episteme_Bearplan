@@ -19,6 +19,7 @@ import uvicorn
 
 from backend import __version__
 from backend.app import create_app
+from backend.domain.backups import automatic_backups
 from backend.domain.rewards import RewardConfig
 from backend.platform.instance_lock import acquire_instance_lock, describe_running_instance, report_running_instance
 from backend.platform.paths import (
@@ -120,9 +121,20 @@ def main(argv: list[str] | None = None) -> int:
     sock = None
     try:
         try:
+            try:
+                daily_keep = int(os.environ.get("BEARPLANS_BACKUP_DAILY_KEEP", "7"))
+                weekly_keep = int(os.environ.get("BEARPLANS_BACKUP_WEEKLY_KEEP", "4"))
+            except ValueError as exc:
+                raise ValueError("BEARPLANS_BACKUP_DAILY_KEEP and BEARPLANS_BACKUP_WEEKLY_KEEP must be positive integers.") from exc
+            if daily_keep < 1 or weekly_keep < 1:
+                raise ValueError("Backup retention must keep at least one daily and one weekly copy.")
+            automatic_backups(data_dir, before_open=True)
             db = open_database(data_dir / DATABASE_FILENAME)
-        except StorageError as exc:
-            print(f"BearPlans cannot start: {exc}", file=sys.stderr)
+            automatic_backups(data_dir, before_open=False, daily_keep=daily_keep, weekly_keep=weekly_keep)
+        except (StorageError, sqlite3.Error, OSError, ValueError) as exc:
+            print(f"BearPlans cannot start: {exc}\n"
+                  "Saved data was not reset. Check disk space, folder permissions and the backups folder before retrying.",
+                  file=sys.stderr)
             return 1
 
         try:

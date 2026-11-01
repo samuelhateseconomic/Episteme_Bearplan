@@ -38,13 +38,7 @@ Pass: reproducible startup, durable task identity, duplicate-instance handling a
 
 Evidence: startup transcript with secrets omitted, schema/migration version, saved record, and a short sleep/wake observation. Repeat on the Mac; the development environment cannot certify Mac power-event behavior.
 
-### M1 — Weekly planner (gate pending)
-
-The daily roadmap splits this gate across Oct 15 projects/tasks, Oct 16 weekly
-planning, and Oct 17 history. Passing the projects/tasks implementation alone does
-not certify the complete planner gate. The Oct 15 projects/tasks build has passed
-implementation and operator review; Oct 16/17 remain pending. Current build evidence is in
-[the M1 takeover review](docs/reviews/2026-10-13-m1-takeover.md).
+### M1 — Weekly planner ✅
 
 Review: projects, parent/subtasks, completion semantics, date assignment versus deadlines, previous-week snapshots and movement of unfinished work.
 
@@ -54,7 +48,7 @@ Pass: no lost or duplicate tasks; correct completion denominator; moving work re
 
 Evidence: before/after week views and relevant saved IDs/counts. Early versions may use assignment buttons before drag-and-drop.
 
-### M2 — Countdown and recovery
+### M2 — Countdown and recovery 
 
 Review: backend-authoritative timing, lifecycle transitions, interval records, one-session enforcement and restart recovery.
 
@@ -154,3 +148,4 @@ Use separate test data and database copies for migrations, interruptions and res
 During the seven-day trial, keep a two-minute daily note. At the weekly review, identify the single largest friction or risk, correct it, and update the relevant regression case if it represents a meaningful failure. Then select the next three small tickets.
 
 Budget routine review inside each milestone's existing acceptance work. The earlier build estimates already include basic verification. Re-estimate if new defects, Mac sleep support or integration behavior require additional engineering; do not promise that thorough review has zero cost.
+/

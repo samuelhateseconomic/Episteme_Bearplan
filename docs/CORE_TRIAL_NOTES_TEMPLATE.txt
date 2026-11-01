@@ -1,0 +1,36 @@
+BearPlans private seven-day trial notes
+Edit the Desktop copy, not this repository template.
+
+Candidate: bearplans-local-core-2026-11-01
+Build: 4ba3c8054da2b3db3ffa00beb480485fb376bc9d59567548078a0e860aab05da
+Actual start date: NOT STARTED
+Actual data folder:
+Candidate verification result:
+Baseline backup path/result:
+Timezone: America/Los_Angeles
+Trial configuration: rate 1; Birch/Oak/Cherry 30/60/120; retention 7 daily/4 weekly
+Power coverage: Deep Idle/Hibernate observed; separate Standby 5 unverified
+
+Copy this blank entry for each actual day. A blank is not a pass.
+
+Day number and actual local date:
+Real work/workflows used (private details optional):
+Planner usefulness/friction:
+Saved time checked / unexpected time:
+Missing/changed records after reload/restart:
+Tree/coin consistency (or Not used):
+Sleep/recovery behavior (or Not encountered):
+Reviewed corrections and reasons (or None):
+Backup created/checked (or Not due / Not checked):
+Exact errors and what happened before them (or None observed):
+Candidate/config changes (or None):
+Follow-up needed:
+
+Closing review (complete after seven actual daily entries)
+Actual date range:
+Seven daily entries present:
+Plan/move/close/history/carryover usefulness:
+Saved time/tree/coin/statistics comparison:
+Backup coverage:
+Unresolved problems:
+Decision: PENDING REVIEW

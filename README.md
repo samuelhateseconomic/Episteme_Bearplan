@@ -3,7 +3,8 @@
 A personal, local-only laptop planner. Your data stays on your computer.
 Current state: **weekly planning, closed-week history, reviewed carryover and
 countdown tracking with checkpoint recovery, growing trees, a saved forest,
-coins, a species shop, daily streaks, statistics and reviewed session corrections implemented**. Target-Mac M2 hardware
+coins, a species shop, daily streaks, statistics, reviewed session corrections and
+full-database backup/restore commands implemented**. Target-Mac M2 hardware
 acceptance remains pending for combined M2/M3 verification. Projects, tasks and subtasks retain their
 previously passed behavior.
 A Monday–Sunday board supports date assignment, drag Move, unscheduling, End Week and
@@ -22,8 +23,32 @@ count leaf work items once, excluding containers. Put additional parent work in 
 explicit subtask. Subtask removal is available through Edit and requires confirmation;
 removing the last child leaves an incomplete task with an enabled checkbox.
 General task/project deletion and re-parenting are deferred. Reopening closed weeks,
-recurring tasks, automatic bulk carryover, advanced reports, AI and
+recurring tasks, automatic bulk carryover, advanced reports, assistant writes and
 integrations are later work. Finishing a timer never automatically completes its task.
+
+## Project folder
+
+On this Mac, open the repository directly at
+`/Users/hiberkeley/Desktop/Projects/Episteme_Bearplan`.
+The duplicate inner `Episteme_Bearplan` directory was removed on November 1, 2026.
+
+```text
+Episteme_Bearplan/
+├── frontend/       React/TypeScript interface
+├── backend/        Python API, domain rules, storage and platform code
+├── tests/          Python and browser integration tests
+├── docs/           Shared progress, operator guides and review evidence
+├── tools/          Development and verification utilities
+├── AGENTS.md       Shared rules for all AI agents
+├── CLAUDE.md       Claude resumption entrypoint
+└── launch.py       Local app launcher
+```
+
+Run commands from this root unless a guide explicitly names another directory.
+Frontend tests remain alongside frontend source. Subsystem documentation and
+agent-guide organization are a separate follow-up; this relocation changes no
+application rules or saved-data locations. See the
+[relocation review](docs/reviews/2026-11-01-repository-relocation.md).
 
 ## Grow a tree
 
@@ -50,6 +75,71 @@ Combined M2/M3 Mac
 verification remains required before release readiness.
 Use the [combined Mac verification runbook](docs/MAC_CORE_VERIFICATION.md) for
 disposable hardware, timing and correction/reward checks.
+
+## Local assistant preview
+
+The local read-only assistant preview is available alongside the core trial.
+The [assistant preview guide](docs/LOCAL_ASSISTANT.md) explains the separate code
+and data folders; [shared progress](docs/PROGRESS.md) records current acceptance.
+Use the preserved Desktop core copy for the trial rather than the evolving
+development checkout. Assistant writes and integrations remain later work.
+
+## Back up and restore
+
+The full-database maintenance commands work offline after setup. Use the same
+Python environment as the app; on Windows replace `.venv/bin/python` with
+`.venv\Scripts\python.exe`. Set `BEARPLANS_DATA_DIR` if you use a custom data folder.
+Choose backup and restore locations outside this repository.
+
+```sh
+.venv/bin/python -m backend.backup create /absolute/path/BearPlans-backup.sqlite3
+.venv/bin/python -m backend.backup inspect /absolute/path/BearPlans-backup.sqlite3
+.venv/bin/python -m backend.backup restore /absolute/path/BearPlans-backup.sqlite3 --into /absolute/path/BearPlans-restored
+```
+
+**Create** saves a consistent full snapshot, including committed records in a live
+WAL database. The app may keep running; later changes are outside that snapshot.
+Existing backup filenames are never overwritten. **Inspect** checks integrity,
+relationships and compatibility on a temporary copy and reports schema/table
+counts without task contents. **Restore** checks and upgrades its temporary copy,
+then publishes into an empty data folder. It never replaces your current database
+or modifies the selected backup. If restore fails, keep both and retry into a
+clean folder. Corrupt, incompatible and newer-schema backups are rejected.
+
+To use the restored data, stop your existing BearPlans service deliberately and
+launch with the restored folder selected:
+
+```sh
+BEARPLANS_DATA_DIR=/absolute/path/BearPlans-restored python3 launch.py
+```
+
+On Windows PowerShell, set `$env:BEARPLANS_DATA_DIR` to that folder, then run
+`py launch.py`. Check the startup data path before making new changes. The original
+folder remains available for rollback by selecting it on a later launch. Running
+sessions in a snapshot reopen in Needs review with only checkpointed time;
+paused sessions stay paused. Restore does not award missing time or repeat rewards.
+
+Startup saves a daily copy when due and one copy per ISO week, using the operating
+system's local calendar, under your data
+folder's `backups/`. It also saves a separate copy before applying an upgrade to
+an existing older database. Proposed retention defaults are **seven daily and
+four weekly** copies; configure positive integers with `BEARPLANS_BACKUP_DAILY_KEEP`
+and `BEARPLANS_BACKUP_WEEKLY_KEEP`. Only matching automatic daily/weekly files are
+pruned, after due copies validate. Manual exports and pre-upgrade copies are kept.
+An unavailable or corrupt required backup stops startup with an actionable error;
+keep the data and bad copy, check disk space/permissions, and move the bad copy to
+a separate recovery location before retrying. A snapshot attempt times out after
+30 seconds if it cannot finish; no incomplete snapshot replaces an existing file.
+
+Backups contain the full database: task/project details, plans and closed history,
+sessions/intervals, trees, ownership, ledger, corrections and migration records.
+They contain private content and are not encrypted by BearPlans. Keep exported
+copies in a private location. Files use private permissions where supported.
+OS Keychain, browser storage, environment variables, lock files and other data-folder
+files are not included. Plan-only import/export is a separate deferred ticket.
+Publication requires a filesystem that supports hard links, such as the Mac's
+normal APFS volume; unsupported destinations fail while preserving existing data.
+These commands do not certify the personal core release or its seven-day trial.
 
 ## View statistics
 

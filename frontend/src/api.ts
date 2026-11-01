@@ -58,6 +58,21 @@ export class ApiError extends Error {
   }
 }
 
+export interface AssistantStatus {
+  available: boolean; read_only: boolean; prompt_version: string;
+  models: { name: string; digest: string; details: Record<string, unknown> }[];
+}
+export interface AssistantSource { tool: string; arguments: Record<string, unknown>; data: Record<string, unknown> }
+export interface AssistantReply {
+  answer: string; sources: AssistantSource[]; model: string; elapsed_seconds: number; read_only: boolean; rounds: number;
+}
+export function getAssistantStatus(signal?: AbortSignal): Promise<AssistantStatus> {
+  return request<AssistantStatus>("/api/assistant/status", { signal });
+}
+export function askAssistant(model: string, prompt: string, context: { project_id: string | null; date: string | null }, signal?: AbortSignal): Promise<AssistantReply> {
+  return request<AssistantReply>("/api/assistant/chat", { ...json("POST", { model, prompt, context }), signal });
+}
+
 export interface StatisticsState {
   today: string;
   timezone: string;

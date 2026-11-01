@@ -782,8 +782,42 @@ details > summary:focus-visible {
 
 .main-navigation {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0 0 1.25rem;
+}
+
+.assistant {
+  max-width: 54rem;
+  margin: 0 auto;
+}
+
+.assistant-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.assistant select, .assistant textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.assistant-answer {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.assistant-source {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin: 0.75rem 0;
+  overflow-wrap: anywhere;
+}
+
+.assistant-source li {
+  margin-bottom: 0.75rem;
 }
 
 .main-navigation a {

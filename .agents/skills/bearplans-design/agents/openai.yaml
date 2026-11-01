@@ -1,0 +1,6 @@
+interface:
+  display_name: "BearPlans Design"
+  short_description: "Plan and review editable BearPlans Figma designs"
+  default_prompt: "Use $bearplans-design to work on the next authorized BearPlans UX ticket from the canonical design plan."
+policy:
+  allow_implicit_invocation: true

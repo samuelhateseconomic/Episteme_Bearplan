@@ -226,3 +226,23 @@ def test_real_corrupt_database_startup_exits_without_binding_or_traceback(tmp_pa
     assert "cannot start" in result.stderr and "Traceback" not in result.stderr
     assert "open:" not in result.stdout and "schema:" not in result.stdout
     assert path.read_bytes() == original and not (data_dir / "instance.json").exists()
+
+
+def test_failed_automatic_backup_blocks_open_and_releases_instance_lock(startup, monkeypatch, capsys):
+    def fail(*args, **kwargs):
+        raise StorageError("synthetic automatic backup failure")
+
+    monkeypatch.setattr(entry, "automatic_backups", fail)
+    assert entry.main(["--no-browser"]) == 1
+    output = capsys.readouterr()
+    assert "automatic backup failure" in output.err and "backups folder" in output.err
+    assert "Traceback" not in output.err and startup.events == ["lock-release"]
+
+
+@pytest.mark.parametrize("value", ["0", "-1", "several"])
+def test_invalid_retention_stops_before_database_open(startup, monkeypatch, capsys, value):
+    monkeypatch.setenv("BEARPLANS_BACKUP_DAILY_KEEP", value)
+    assert entry.main(["--no-browser"]) == 1
+    message = capsys.readouterr().err
+    assert "positive integers" in message or "at least one" in message
+    assert startup.events == ["lock-release"]

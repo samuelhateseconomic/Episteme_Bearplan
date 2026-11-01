@@ -24,6 +24,45 @@ requirements. Record discrepancies in progress instead of silently weakening a
 gate or rewriting historical evidence. Review filenames may use future target
 dates; use their contents and commit history to determine which evidence is current.
 
+## UX redesign and Figma handoff
+
+- Read the [frontend UX plan](frontend/BEARPLANS_UX_PLAN.md) for design work and use
+  the [BearPlans design skill](.agents/skills/bearplans-design/SKILL.md).
+  The plan holds stable decisions/tickets; `docs/PROGRESS.md` remains the only
+  mutable status and handoff record. Keep proposed defaults distinct from confirmed
+  user choices; current status comes from progress, not an old plan snapshot.
+- The UX roadmap covers Figma design, prototype review and implementation handoff.
+  Saving the plan or creating these guides does not start Figma work or authorize
+  application, API, schema, saved-data or desktop-wrapper changes. Keep later app
+  implementation separately scoped; do not alter the preserved core-trial copy.
+- Preserve the confirmed split-screen-first, Today-first, compact top navigation,
+  project/task controls, planned-week Done, prominent streak and on-demand rewards
+  direction. The accepted design includes Earlier unfinished and one Save for task
+  details/planning. Document the needed domain/persistence work; do not present a
+  prototype as evidence that these capabilities are implemented.
+- Done uses planned weeks, preserving shared task identity and unique leaf totals;
+  it is a live completion view, separate from immutable closed-week history.
+  Parent completion, deadlines versus planned dates, confirmed time and recovery,
+  corrections/replay and rewards retain the rules below.
+- The accepted future drag design includes both within-day ordering and date
+  moves. Current same-day drops remain no-ops until a separately scoped build
+  implements persisted ordering. Cancellation/outside drops and unchanged-position
+  drops remain no-ops; retain grip/date/keyboard alternatives and conflict handling.
+- Keep one design ticket active and one Figma writer. Other agents may inspect or
+  review that ticket independently; serialize Figma writes. Load the applicable
+  installed creation, library/component, screen-generation and `figma-use` skills.
+  Reuse editable components/tokens and exact returned IDs; inspect rendered output
+  and reconcile the canvas before retrying uncertain writes.
+- Distinguish documentation completion, Figma construction, prototype verification
+  and user acceptance. A written screen specification does not complete a visual
+  ticket. Keep secondary explanations on demand while actionable errors, recovery
+  choices and reviewed consequences stay visible. Use the current read-only
+  Assistant surface; persistent chat/actions are separate capabilities.
+- Record checks, actual reviewed widths/themes, node/evidence links, limitations
+  and the next concrete step in progress. Design evidence does not advance core,
+  release, model or Mac hardware gates. Routine work within existing authorization
+  does not require repeated permission for equivalent edits.
+
 ## Product scope and completion rules
 
 - BearPlans is a personal, local laptop productivity app. The primary target is the
@@ -127,7 +166,9 @@ dates; use their contents and commit history to determine which evidence is curr
   their column identifies the planned day; omit redundant Planned-date metadata
   on open and historical cards. Keep planned dates in task planning, date controls,
   accessibility labels and saved records.
-  Cancel, outside drops and same-day drops change nothing. Reject an
+  In the current implementation, cancel, outside drops and same-day drops change
+  nothing; the future ordering contract above is design-only until implemented.
+  Reject an
   occupied task/date destination atomically, explain the conflict and preserve all
   existing placements. Different tasks may share a date. Removing a placement keeps
   its task. Scheduling preserves task identity, project, notes, deadline, completion,

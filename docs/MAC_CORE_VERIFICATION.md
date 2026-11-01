@@ -75,6 +75,15 @@ not certify them. Do not change system power or clock configuration just to make
 a probe pass. A 300-second run is a collection window, not a claim that standby
 occurred; use a longer supported window when necessary.
 
+Assess the target platform's state-selection policy before proposing another
+distinct-state cycle. A `standby` preference/capability name alone does not prove
+that separate numeric Standby type 5 is exposed. The reviewed public ARM64 default
+selects Deep Idle/Hibernate; see the [target-Mac capability assessment](reviews/2026-11-01-standby5-capability.md)
+for source-version limits and actual state evidence. If no supported trigger is
+established, record the unexercised condition and platform limitation for explicit
+candidate-scope review. Do not keep requesting identical lid cycles, claim a
+physical pass or silently drop an acceptance requirement.
+
 Use an independent stopwatch for the ten-minute and real long-duration runs.
 Start it with the observed countdown start, record start/stop uncertainty and the
 external elapsed time, and keep the Mac awake throughout precision collection:

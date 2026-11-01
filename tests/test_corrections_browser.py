@@ -1,4 +1,5 @@
 """A real saved-time correction, lost response, reload/replay and audited reversal."""
+from datetime import UTC, datetime, timedelta
 import re
 from uuid import uuid4
 
@@ -24,7 +25,10 @@ def test_reviewed_correction_lost_response_reload_reversal_and_restart(browser, 
     data_dir = tmp_path / "CorrectionJourney"
     data_dir.mkdir()
     db = open_database(data_dir / DATABASE_FILENAME)
-    session, task = seeded(db)
+    # Keep this saved fixture inside the API's rolling seven-day window without
+    # assuming the test runs on the historical unit-fixture date or near midnight.
+    saved_end = (datetime.now(UTC) - timedelta(days=1)).replace(hour=12, minute=0, second=0, microsecond=0)
+    session, task = seeded(db, start=saved_end - timedelta(hours=1), end=saved_end)
     shop = ShopService(db, RewardConfig(birch_price=60))
     shop.purchase("birch", 60, str(uuid4()))
     create_placement(db, task.id, "2026-10-23")
@@ -81,7 +85,9 @@ def test_reviewed_correction_lost_response_reload_reversal_and_restart(browser, 
         expect(correction.get_by_text(re.compile("Correction saved"))).to_be_visible()
         assert packets[0] == packets[1] and all_rows(db) == after_apply
         assert http_json("GET", service.url + "/api/statistics")[1]["active_microseconds"] == HOUR // 2
-        assert http_json("GET", service.url + "/api/streaks")[1]["days"][-1]["active_microseconds"] == HOUR // 2
+        saved_day = next(day for day in http_json("GET", service.url + "/api/streaks")[1]["days"]
+                         if day["date"] == saved_end.date().isoformat())
+        assert saved_day["active_microseconds"] == HOUR // 2 and not saved_day["qualified"]
         # The actual shop reflects the adjustment and blocks new purchases.
         page.get_by_role("link", name="Track", exact=True).click()
         expect(page.get_by_role("button", name="Buy Oak for 60 coins", exact=True)).to_be_disabled()
