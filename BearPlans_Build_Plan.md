@@ -113,7 +113,7 @@ Estimates assume one developer comfortable with Python but learning parts of the
 | M4: Personal core release | 8–12 h | Single launch command, migrations, backup/restore, useful errors, seven-day trial | Use the app for seven days; restore a backup in a clean location; no unresolved data-loss, timer or reward errors. |
 | M5: Local assistant | 20–35 h | Bounded tool coordinator, local model setup, contextual chat, read and action tools | Pass evaluation cases; no unauthorized tools; invalid arguments cause no mutation; core remains responsive during inference. |
 | M6: Google Calendar | 12–20 h | Read-only selected calendars, local event cache and occupied-time view | Repeated sync does not duplicate events; revoked access and offline operation produce clear status. |
-| M7: Canvas and Gmail | Estimate after access spike | Selected-source imports, source links, change review and duplicate prevention | Access works, uncertain dates are reviewed, local edits survive resync, tokens are protected. |
+| M7: Canvas (bCourses) and Gmail | Estimate after access spike | Selected-source imports, source links, change review and duplicate prevention | Access works, uncertain dates are reviewed, local edits survive resync, tokens are protected. |
 
 Core work totals 58–88 focused hours; reserve about 25% contingency, giving approximately **73–110 hours**. At 10 hours/week that is roughly 8–11 weeks; at 15 hours/week roughly 5–8 weeks. The seven-day trial may add calendar time. These are capacity scenarios, not commitments. M5 and M6 are additional work; M7 is deliberately uncommitted.
 
@@ -134,17 +134,86 @@ Each tool has an explicit schema, bounded result size, stable IDs, expected revi
 
 Flow: request → relevant context → model tool selection → schema/intent validation → application function → result → response. Bound the loop initially to five tool rounds; timeout and cancellation return a useful error instead of repeating forever. Serialize mutations. A model cancellation does not undo a mutation already committed; report its outcome.
 
-Direct requests such as “Start Math 55 for 45 minutes” may execute after valid task resolution. Ambiguous task names prompt for selection. Suggested week-wide changes require a reviewed preview. Recheck record revisions before applying an old preview. Calendar-write, email-send, deletion of connection data and reward-grant tools are not in the first assistant surface.
+Direct requests such as “Start Math 55 for 45 minutes” prepare a change card after valid task resolution; **every change requires the user's Apply** (user decision, 2026-11-01, superseding immediate execution). Ambiguous task names prompt for selection. Suggested week-wide changes require a reviewed preview. Recheck record revisions before applying an old preview. Calendar-write, email-send, deletion of connection data and reward-grant tools are not in the first assistant surface.
 
 Select the local model by evaluating actual BearPlans requests, not parameter count. Compare two tool-capable candidates on the Mac. Record model/version, quantization, context limit, schema, prompts, latency and errors. Start with modest context and tune based on retrieval and memory measurements.
 
 Create 30 fixed evaluation scenarios: 10 retrieval/statistics, 10 task changes/replanning, 5 timers, and 5 ambiguity or injected-source instructions. Require every exact statistic to match its Python result, zero unauthorized actions in the set, and at least 90% end-to-end success overall before using assistant writes daily. These are release gates on a limited test set, not proof of general reliability. Evaluate responsiveness under model load separately; timer controls must not wait for generation.
+
+### Assistant architecture: orchestrator and specialists (user-approved direction, 2026-11-01)
+
+One orchestrator routes each request to a narrow specialist instead of one
+general agent holding every tool. All agents use the same local model unless a
+measurement justifies otherwise.
+
+```
+Request
+  │
+  ▼
+Orchestrator (router: classify + copy stated details, no tools, thinking off)
+  ├─ plan question   → Plan specialist    (day/week plan tools)
+  ├─ task question   → Task specialist    (list/search/get task tools)
+  ├─ time question   → Time specialist    (saved-time/statistics tools)
+  ├─ source question → Sources specialist (cached Calendar/bCourses/Gmail, read-only; after M6/M7)
+  ├─ common lookup   → Direct answer      (code, no model)
+  └─ change request  → Grounding → Action library → Sufficiency gate → card → Apply
+```
+
+Rules:
+
+- At most **two model calls per request** (orchestrator plus one specialist);
+  no agent-to-agent conversation loops, so latency stays predictable.
+- Specialists are read-only with one or two tools and a short prompt. Changes are
+  prepared only by the code gate and saved only by the user's Apply, with
+  revision checks, replay and Undo as implemented in M5.
+- Every specialist keeps the bounded rounds/lookups/context, source cards and
+  the untrusted-data boundary for titles, notes and imported text.
+- Routing decisions (intent, agents, ignored details) are recorded so the M5
+  evaluation can score routing separately from answers.
+
+Delivery order (each step measured before the next):
+
+1. **Speed fixes:** send `think: false` explicitly for the question agent
+   (omitting it enables qwen3 thinking), let read tools accept exact project
+   names, and keep the model loaded longer between questions. Measured on
+   2026-11-01 (qwen3:8b, same questions): thinking on 19.8–78.7 s with one
+   output-limit failure; thinking off 6.2–9.6 s, with the remaining failure
+   caused by the missing project-name lookup.
+2. **Specialists and direct answers:** split the question agent into Plan, Task
+   and Time specialists; answer the most common lookups directly in code.
+3. **30-case M5 evaluation** (gate below), including routing accuracy.
+4. Proposed, pending measurement: a smaller orchestrator model (qwen3:4b) only
+   if it classifies as accurately as 8B. Larger local models are not planned for
+   speed; cloud models remain out of scope (local/offline privacy promise).
 
 ## 9. Connections and local privacy
 
 Connections are separate adapters, not an open plugin system. Fetch provider data outside database transactions; normalize into source items; apply changes through application functions. Use stable IDs and unique constraints, source-versus-user ownership of fields, retries with backoff and visible last-success timestamps.
 
 Calendar first: read selected calendars and events. Canvas next: selected course assignments and due dates when authorization is available. Gmail last: selected labels/filters with suggested actions in an inbox. Preserve source links. A due-date update cannot erase user subtasks or scheduled dates. Prompt review on conflicts and unclear extraction. An unavailable source differs from a source with no published assignment.
+
+### Connections roadmap (user-approved direction, 2026-11-01)
+
+Order after the M5 evaluation: **M6 Google Calendar** → **bCourses access spike**
+→ **Canvas (bCourses)** → **Gmail**. bCourses is Berkeley's Canvas instance, so
+the Canvas adapter is the bCourses connection. The access spike checks whether a
+student can obtain API access (for example a Canvas personal access token, which
+some institutions disable) before any Canvas build is estimated. **CalCentral** is
+not planned: no public student API is known; it needs a separate investigation
+and is added only if a supported access route exists.
+
+- Adapters fetch into a local source cache outside database transactions. The
+  assistant reads that cache through the read-only Sources specialist; it never
+  calls a provider directly and never sees tokens.
+- Imported items arrive as suggestions/cards the user reviews and applies; source
+  text is data and can never authorize an action.
+- **MCP** may be used only as a transport *behind* an adapter boundary BearPlans
+  controls (for example a locally running Canvas MCP server), never exposed to
+  the model as open tools. Each server is vetted first: author, data it sends and
+  where, local execution and token handling. This keeps “separate adapters, not
+  an open plugin system.”
+- The Gmail connector available to the Claude Code development tool is not part
+  of BearPlans and is not the app's integration path.
 
 Use Mac Keychain for tokens. SQLite and backups contain private content and are not automatically encrypted by local storage. Use restrictive file permissions, avoid content/credential logging, document backup contents and rely on the owner's disk-encryption policy; evaluate app-level encryption only if the threat model requires it. Disconnect revokes when supported and removes stored tokens; cached-source deletion is a separate explicit choice.
 

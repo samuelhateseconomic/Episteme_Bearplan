@@ -3,6 +3,23 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
+## Planned next — November 1, 2026: assistant orchestrator and connections roadmap
+
+User approved adding to the plan (now in the [build plan §8–9](../BearPlans_Build_Plan.md#assistant-architecture-orchestrator-and-specialists-user-approved-direction-2026-11-01)):
+an orchestrator routing to narrow read-only specialists (Plan, Task, Time, later
+Sources), direct code answers for common lookups, at most two model calls per
+request, and the existing gate/Apply path for every change. Connections order:
+M6 Google Calendar → bCourses access spike → Canvas (bCourses) → Gmail;
+CalCentral only after an access investigation; MCP only behind a vetted adapter
+boundary. Not started; no application change in this entry. `list_tasks` fix
+committed by the user as `d682a2a`.
+
+**Ordered next steps:** (1) speed fixes — explicit `think: false` for the question
+agent, project names in read tools, longer model keep-alive; (2) Plan/Task/Time
+specialists and direct answers; (3) 30-case M5 evaluation incl. routing;
+(4) M6 Google Calendar; (5) bCourses access spike; (6) Canvas; (7) Gmail.
+Next concrete action: step 1, with before/after latency measurements.
+
 ## Current work — November 1, 2026: reader can list subtasks by status
 
 Pipeline committed by the user as `cf3178b`. User found "Check the incomplete
