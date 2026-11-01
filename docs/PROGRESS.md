@@ -3,6 +3,72 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
+## Current work — November 1, 2026: assistant actions restructured as a multi-agent pipeline
+
+User confirmed **every action requires Apply** and directed a multi-agent design:
+classify the request, look up its tool and required information in a library,
+and ask the user until information is sufficient. Implemented: router agent
+(structured JSON, no tools) → grounding (code drops invented/misplaced details)
+→ action library (`backend/domain/action_library.py`) → sufficiency gate
+(exact record resolution, deterministic day parsing, questions/choice buttons
+with returned `pending` state, ≤4 rounds, no-op/rule blocks) → proposal → Apply.
+The reader agent answers questions with read tools only. Prompt `router-v2`.
+Details and live findings: [actions review](reviews/2026-11-01-assistant-actions.md#pipeline-restructure-same-day-after-user-direction).
+
+**Files added/changed since the entry below:** `backend/domain/action_library.py`
+(new), `backend/domain/assistant.py`, `backend/domain/assistant_actions.py`,
+`backend/platform/ollama.py` (`classify`), `backend/routes/assistant.py`
+(`pending`/`choice`), `frontend/src/{Assistant.tsx,Assistant.test.tsx,api.ts,styles.css}`,
+`tests/test_assistant.py` (fake router), `tests/test_assistant_actions.py`, the
+skill, review, this record and `docs/LOCAL_ASSISTANT.md`.
+
+**Checks:** pytest **842 passed, 1 Windows-only skip, 175.36 s**; Vitest **145
+passed**; typecheck/build pass; live qwen3:8b 17/17 pipeline cases as intended.
+Still not run: 30-case M5 evaluation; daily writes not certified. Uncommitted
+(user commits). Next: user review in the preview, then the 30-case evaluation.
+
+## Current work — November 1, 2026: M5 assistant actions (Apply/replay/Undo) implemented
+
+User authorized building assistant actions after checking skills. No specific
+skill existed (only Figma `bearplans-design`), so
+[`bearplans-assistant-actions`](../.agents/skills/bearplans-assistant-actions/SKILL.md)
+was created (Claude link: `.claude/skills/bearplans-assistant-actions`), then the
+ticket was implemented per that skill. Implementation review: **Pass with
+follow-ups** — [assistant actions review](reviews/2026-11-01-assistant-actions.md).
+
+**What changed.** Seven action tools (create/update/assign date/complete task,
+start/pause/finish timer) produce *proposals only*; nothing is written during
+inference. The user applies a proposal (`POST /api/assistant/actions/apply`):
+expected revisions, mutation and an immutable receipt commit in one serialized
+transaction; reused request IDs replay, conflicting reuse → 409. Task/plan
+actions offer Undo (`POST /api/assistant/actions/{id}/undo`) only while the
+target is unchanged since the action; timer actions have no Undo. Schema **14**
+(`0014_assistant_actions.sql`). Proposed defaults (every action needs Apply;
+unused-only Undo of created tasks; ≤3 proposals/question) are listed in the
+review for user confirmation.
+
+**Files:** `backend/domain/assistant_actions.py` (new), `backend/domain/assistant.py`,
+`backend/domain/tasks.py`, `backend/domain/planning.py` (tx helpers),
+`backend/routes/assistant.py`, `backend/app.py`,
+`backend/storage/migrations/0014_assistant_actions.sql`,
+`frontend/src/{Assistant.tsx,Assistant.test.tsx,api.ts,App.tsx,styles.css}`,
+`tests/test_assistant_actions.py` (new), `tests/test_corrections.py`,
+`docs/LOCAL_ASSISTANT.md`, the new skill and review.
+
+**Checks (macOS 26.6.2, Python 3.13.15):** full pytest **831 passed, 1
+Windows-only skip, 174.85 s**; frontend Vitest **144 passed**; typecheck and build
+pass. Live `qwen3:8b` smoke on disposable data: 5/5 intents correct after one
+retry (complete+Undo, plan date, ambiguous name asked, create, timer start with
+Undo refused); one first-try 503 output-limit failure on the timer request.
+
+**Not done / gates:** full 30-case M5 evaluation not run; daily assistant writes
+not certified; output-limit tuning and prompt wording follow-ups; larger replans
+and integrations not started. Core trial Day 1 still unreported; Standby 5
+unverified. The user later committed the earlier M4/M5 read-only work and docs
+as `7e38d7c`; **this actions ticket is uncommitted** — the user commits/pushes;
+suggested message given in chat. Next concrete step: user review of proposed defaults, then the
+30-case M5 evaluation on the Mac.
+
 ## Status check — November 1, 2026: backend progress refreshed
 
 User asked for a backend progress update. Read-only review of this record, the
@@ -28,12 +94,11 @@ checks were not rerun for this status check.
 **Commit:** a local backend commit was made and then reverted at the user's
 request (`git reset --soft`, changes kept in the working tree). Committing and
 pushing to GitHub is the user's responsibility; agents provide the commit
-message only. All M4/M5 backend, frontend, test and doc work is uncommitted.
+message only. (Superseded: the user committed that work as `7e38d7c`.)
 No push.
 
-**Open backend items:** completion-count assistant query that hit the generation limit; assistant actions
-with explicit intent, revision checks, durable replay and Undo, then the full M5
-evaluation; actual core-trial Day 1 report and seven-day review; Standby type 5
+**Open backend items (superseded above for actions):** completion-count assistant query that hit the generation limit; assistant actions
+(now implemented — see current work above), then the full M5 evaluation; actual core-trial Day 1 report and seven-day review; Standby type 5
 unverified. Next concrete backend step remains the M5 actions/Undo ticket when
 authorized. No commit/push; existing work, index and stashes preserved.
 
@@ -1586,7 +1651,8 @@ apply pending migrations through schema 10; it has not been performed here.
 | M4 backup/inspection/restore | Implementation review Pass on Mac; uncommitted | [Backup review](reviews/2026-10-31-backup-restore.md); offline restore operator Pass |
 | M4 local-core trial | Candidate recorded; seven-day real-use trial **not started/reported** | [Candidate manifest](reviews/2026-11-01-core-trial-candidate.json) |
 | M5 read-only assistant preview | Adapter/UI Pass; model preview Pass with follow-ups; full M5 not passed; backend and UI uncommitted | [Assistant review](reviews/2026-11-01-local-assistant-readonly.md) |
-| M5 actions/Undo, integrations, plan-only transfer | **Not started** | Separate authorized scope and acceptance required |
+| M5 actions/Apply/Undo | Implementation Pass with follow-ups; uncommitted; 30-case evaluation not run | [Actions review](reviews/2026-11-01-assistant-actions.md) |
+| M5 larger replans, integrations, plan-only transfer | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior
 

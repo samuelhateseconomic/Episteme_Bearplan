@@ -69,3 +69,21 @@ class OllamaProvider:
         # Ollama separates model reasoning into `thinking`; never return it to the
         # coordinator/browser. A token-limited partial response is not an answer.
         return {"content": message.get("content", ""), "tool_calls": message.get("tool_calls", [])}
+
+    async def classify(self, model: str, messages: list[dict], schema: dict) -> dict:
+        """Router call: JSON constrained to schema, no tools, no separated reasoning."""
+        payload = {"model": model, "messages": messages, "format": schema, "stream": False, "keep_alive": "2m",
+                   "options": {"temperature": 0, "num_ctx": 4096, "num_predict": 512}}
+        if self._thinking.get(model):
+            payload["think"] = False
+        result = await self._json("POST", "/api/chat", payload, timeout=60)
+        message = result.get("message")
+        if result.get("done") is not True or result.get("done_reason") == "length" or not isinstance(message, dict):
+            raise AssistantError("ollama_response", "Ollama returned an incomplete classification. Rephrase the request more briefly.")
+        try:
+            parsed = json.loads(message.get("content") or "")
+        except (TypeError, ValueError):
+            raise AssistantError("assistant_route", "The local model could not classify that request. Rephrase it; nothing was changed.") from None
+        if not isinstance(parsed, dict):
+            raise AssistantError("assistant_route", "The local model could not classify that request. Rephrase it; nothing was changed.")
+        return parsed

@@ -63,14 +63,37 @@ export interface AssistantStatus {
   models: { name: string; digest: string; details: Record<string, unknown> }[];
 }
 export interface AssistantSource { tool: string; arguments: Record<string, unknown>; data: Record<string, unknown> }
+/** A change the model prepared. Nothing is saved until the user applies it. */
+export interface AssistantProposal {
+  kind: string; arguments: Record<string, unknown>; summary: string; undoable: boolean;
+  expected: { tasks: Record<string, number>; session_id: string | null; session_revision: number | null };
+  preview: Record<string, unknown>;
+}
+/** The gate's questions when a change request lacks details; pending is returned on the next turn. */
+export interface AssistantClarification {
+  questions: string[]; choices: Record<string, { value: string; label: string }[]> | null; pending: Record<string, unknown>;
+}
 export interface AssistantReply {
-  answer: string; sources: AssistantSource[]; model: string; elapsed_seconds: number; read_only: boolean; rounds: number;
+  answer: string; sources: AssistantSource[]; proposals?: AssistantProposal[]; model: string; elapsed_seconds: number; read_only: boolean; rounds: number;
+  kind?: "answer" | "proposal" | "clarify" | "blocked" | "unsupported" | "stopped";
+  clarification?: AssistantClarification | null;
+  route?: { intent: string; agents: string[] };
+}
+export interface AssistantTurn { pending?: Record<string, unknown> | null; choice?: { slot: string; value: string } | null }
+export interface AssistantActionResult { operation_id: string; kind: string; summary: string; applied_at: string; undoable: boolean; replayed: boolean }
+export interface AssistantUndoResult { operation_id: string; action_operation_id: string; undone_at: string; summary: string; replayed: boolean }
+export function applyAssistantAction(proposal: AssistantProposal, operationId: string): Promise<AssistantActionResult> {
+  return request<AssistantActionResult>("/api/assistant/actions/apply", json("POST", { proposal, operation_id: operationId }));
+}
+export function undoAssistantAction(operationId: string, undoOperationId: string): Promise<AssistantUndoResult> {
+  return request<AssistantUndoResult>(`/api/assistant/actions/${encodeURIComponent(operationId)}/undo`, json("POST", { undo_operation_id: undoOperationId }));
 }
 export function getAssistantStatus(signal?: AbortSignal): Promise<AssistantStatus> {
   return request<AssistantStatus>("/api/assistant/status", { signal });
 }
-export function askAssistant(model: string, prompt: string, context: { project_id: string | null; date: string | null }, signal?: AbortSignal): Promise<AssistantReply> {
-  return request<AssistantReply>("/api/assistant/chat", { ...json("POST", { model, prompt, context }), signal });
+export function askAssistant(model: string, prompt: string, context: { project_id: string | null; date: string | null }, signal?: AbortSignal, turn: AssistantTurn = {}): Promise<AssistantReply> {
+  const body = { model, prompt, context, ...(turn.pending ? { pending: turn.pending } : {}), ...(turn.choice ? { choice: turn.choice } : {}) };
+  return request<AssistantReply>("/api/assistant/chat", { ...json("POST", body), signal });
 }
 
 export interface StatisticsState {

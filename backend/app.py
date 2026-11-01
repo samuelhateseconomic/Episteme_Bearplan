@@ -15,6 +15,7 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 
 from backend import __version__
 from backend.domain.assistant import AssistantError, AssistantService, Provider
+from backend.domain.assistant_actions import ActionConflict
 from backend.platform.ollama import OllamaProvider
 from backend.domain.corrections import CorrectionConflict
 from backend.domain.errors import InvalidInput
@@ -101,12 +102,16 @@ def create_app(
     app.state.db = db
     app.state.timer = countdown
     app.state.shop = ShopService(db, config)
-    app.state.assistant = AssistantService(db, assistant_provider or OllamaProvider())
+    app.state.assistant = AssistantService(db, assistant_provider or OllamaProvider(), countdown)
     app.add_middleware(LocalOnlyMiddleware)
 
     @app.exception_handler(AssistantError)
     async def assistant_error(_: Request, exc: AssistantError) -> JSONResponse:
         return JSONResponse({"error": {"code": exc.code, "message": exc.message}}, status_code=exc.status)
+
+    @app.exception_handler(ActionConflict)
+    async def action_conflict(_: Request, exc: ActionConflict) -> JSONResponse:
+        return JSONResponse({"error": {"code": "assistant_action_conflict", "field": exc.field, "message": exc.message}}, status_code=409)
 
     @app.exception_handler(CorrectionConflict)
     async def correction_conflict(_: Request, exc: CorrectionConflict) -> JSONResponse:

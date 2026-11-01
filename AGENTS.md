@@ -231,6 +231,8 @@ dates; use their contents and commit history to determine which evidence is curr
 - Future AI/connections call the same application functions, stay outside write
   transactions while fetching/generating, and follow the build plan's bounded tools,
   revision/replay checks, preview/Undo and credential/privacy requirements.
+  For assistant write actions use the
+  [assistant actions skill](.agents/skills/bearplans-assistant-actions/SKILL.md).
 
 ## Commands and dependencies
 

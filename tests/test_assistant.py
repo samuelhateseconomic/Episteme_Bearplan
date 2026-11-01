@@ -33,9 +33,15 @@ def lookup(name, arguments=None):
 
 
 class FakeProvider:
-    def __init__(self, replies=None):
+    def __init__(self, replies=None, routes=None):
         self.replies = list(replies or [{"content": "No changes can be made here."}])
+        self.routes = list(routes or [])
         self.messages = []
+        self.route_messages = []
+
+    async def classify(self, model, messages, schema):
+        self.route_messages.append(json.loads(json.dumps(messages)))
+        return self.routes.pop(0) if self.routes else {"intent": "question"}
 
     async def models(self):
         return [{"name": "fixture:local", "digest": "test", "details": {}}]

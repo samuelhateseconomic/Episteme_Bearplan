@@ -1,0 +1,6 @@
+interface:
+  display_name: "BearPlans Assistant Actions"
+  short_description: "Build or review confirmed, replay-safe assistant actions with Undo"
+  default_prompt: "Use $bearplans-assistant-actions to work on the next authorized BearPlans assistant action ticket."
+policy:
+  allow_implicit_invocation: true

@@ -103,3 +103,85 @@ test("task sources render plain untrusted text, preserve dates and explain trunc
   expect(screen.getByText(/Due 2026-11-20/)).toBeVisible();
   expect(screen.getByText(/More records exist/)).toBeVisible();
 });
+
+const proposal = { kind: "complete_task", arguments: { task_id: "t1", complete: true }, summary: 'Mark "Essay" complete', undoable: true,
+  expected: { tasks: { t1: 3 }, session_id: null, session_revision: null }, preview: {} };
+const proposing = { ...reply, sources: [], proposals: [proposal] };
+
+async function ask(user: ReturnType<typeof userEvent.setup>) {
+  await screen.findByRole("option", { name: "qwen3:4b" });
+  await user.type(screen.getByRole("textbox", { name: "Question" }), "Complete Essay");
+  await user.click(screen.getByRole("button", { name: "Ask" }));
+  return await screen.findByRole("article", { name: 'Proposed change: Mark "Essay" complete' });
+}
+
+test("proposals save nothing until Apply; a failed apply retries with the same key, then Undo refreshes", async () => {
+  const applied = { operation_id: "op", kind: "complete_task", summary: 'Mark "Essay" complete', applied_at: "x", undoable: true, replayed: false };
+  const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(json(status)).mockResolvedValueOnce(json(proposing))
+    .mockRejectedValueOnce(new TypeError("network")).mockResolvedValueOnce(json(applied)).mockResolvedValueOnce(json({ operation_id: "u", action_operation_id: "op", undone_at: "y", summary: "Undid", replayed: false }));
+  const changed = vi.fn();
+  const user = userEvent.setup();
+  render(<Assistant visible projectId={null} onChanged={changed} />);
+  const card = await ask(user);
+  expect(card).toHaveTextContent("Not applied");
+  expect(fetcher).toHaveBeenCalledTimes(2);
+  await user.click(screen.getByRole("button", { name: "Apply" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("never applied twice");
+  expect(changed).not.toHaveBeenCalled();
+  await user.click(screen.getByRole("button", { name: "Apply" }));
+  expect(await screen.findByText("Applied.")).toBeVisible();
+  const first = JSON.parse((fetcher.mock.calls[2][1] as RequestInit).body as string);
+  const second = JSON.parse((fetcher.mock.calls[3][1] as RequestInit).body as string);
+  expect(second.operation_id).toBe(first.operation_id);
+  expect(second.proposal.expected).toEqual({ tasks: { t1: 3 }, session_id: null, session_revision: null });
+  expect(changed).toHaveBeenCalledTimes(1);
+  await user.click(screen.getByRole("button", { name: "Undo" }));
+  expect(await screen.findByText(/Undone/)).toBeVisible();
+  expect(fetcher.mock.calls[4][0]).toBe("/api/assistant/actions/op/undo");
+  expect(changed).toHaveBeenCalledTimes(2);
+});
+
+test("stale proposal conflict stays visible; dismiss sends nothing", async () => {
+  const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(json(status)).mockResolvedValueOnce(json(proposing))
+    .mockResolvedValueOnce(json({ error: { code: "assistant_action_conflict", message: '"Essay" changed after this proposal was prepared.' } }, 409));
+  const user = userEvent.setup();
+  render(<Assistant visible projectId={null} />);
+  await ask(user);
+  await user.click(screen.getByRole("button", { name: "Apply" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("changed after this proposal");
+  expect(screen.getByText("A model reply.")).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Dismiss" }));
+  expect(screen.getByText("Dismissed. Nothing was changed.")).toBeVisible();
+  expect(fetcher).toHaveBeenCalledTimes(3);
+});
+
+test("gate questions keep the request pending; a choice continues it without retyping, then Start over clears it", async () => {
+  const pending = { intent: "complete_task", slots: { task: "Reading" }, round: 1 };
+  const clarify = { ...reply, sources: [], kind: "clarify", answer: "Several tasks match “Reading”. Which one do you mean?",
+    route: { intent: "complete_task", agents: ["router", "action_library", "gate"] },
+    clarification: { questions: ["Several tasks match “Reading”. Which one do you mean?"], pending,
+      choices: { task_id: [{ value: "a", label: "Reading — Writing (incomplete)" }, { value: "b", label: "Reading — History (incomplete)" }] } } };
+  const ready = { ...proposing, kind: "proposal", clarification: null, route: { intent: "complete_task", agents: ["action_library", "gate"] } };
+  const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(json(status)).mockResolvedValueOnce(json(clarify))
+    .mockResolvedValueOnce(json(ready)).mockResolvedValueOnce(json(clarify));
+  const user = userEvent.setup();
+  render(<Assistant visible projectId={null} />);
+  await screen.findByRole("option", { name: "qwen3:4b" });
+  await user.type(screen.getByRole("textbox", { name: "Question" }), "Complete Reading");
+  await user.click(screen.getByRole("button", { name: "Ask" }));
+  expect(await screen.findByRole("heading", { name: "Details needed" })).toBeVisible();
+  expect(screen.queryByRole("button", { name: "Apply" })).not.toBeInTheDocument();
+  expect(screen.getByText(/A change is waiting for details/)).toBeVisible();
+  await user.click(screen.getByRole("button", { name: "Reading — History (incomplete)" }));
+  expect(await screen.findByRole("button", { name: "Apply" })).toBeVisible();
+  const choiceBody = JSON.parse((fetcher.mock.calls[2][1] as RequestInit).body as string);
+  expect(choiceBody).toMatchObject({ prompt: "", pending, choice: { slot: "task_id", value: "b" } });
+  expect(screen.queryByText(/A change is waiting for details/)).not.toBeInTheDocument();
+
+  await user.type(screen.getByRole("textbox", { name: "Question" }), "Complete Reading");
+  await user.click(screen.getByRole("button", { name: "Ask" }));
+  await screen.findByRole("heading", { name: "Details needed" });
+  await user.click(screen.getByRole("button", { name: "Start over" }));
+  expect(screen.queryByText(/A change is waiting for details/)).not.toBeInTheDocument();
+  expect(JSON.parse((fetcher.mock.calls[3][1] as RequestInit).body as string).pending).toBeUndefined();
+});

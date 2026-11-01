@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ApiError, askAssistant, getAssistantStatus, type AssistantReply, type AssistantSource, type AssistantStatus } from "./api";
+import {
+  ApiError, applyAssistantAction, askAssistant, getAssistantStatus, undoAssistantAction,
+  type AssistantActionResult, type AssistantProposal, type AssistantReply, type AssistantSource, type AssistantStatus,
+} from "./api";
 import { savedDuration } from "./savedTime";
 
 const labels: Record<string, string> = {
@@ -35,7 +38,67 @@ function Source({ source }: { source: AssistantSource }) {
   </details>;
 }
 
-export function Assistant({ visible, projectId, date }: { visible: boolean; projectId: string | null; date?: string }) {
+interface CardState {
+  phase: "ready" | "applying" | "applied" | "undoing" | "undone" | "dismissed";
+  error?: string;
+  // Keys persist across retries so a lost response replays instead of repeating.
+  applyKey?: string;
+  undoKey?: string;
+  result?: AssistantActionResult;
+}
+
+function Proposal({ proposal, onChanged }: { proposal: AssistantProposal; onChanged?: () => void }) {
+  const [state, setState] = useState<CardState>({ phase: "ready" });
+  const failure = (caught: unknown) => !(caught instanceof ApiError) ? "The request could not finish. Try again."
+    : caught.status === undefined ? `${caught.message} Trying again safely repeats the same request; it is never applied twice.`
+    : caught.message;
+
+  async function apply() {
+    const applyKey = state.applyKey ?? crypto.randomUUID();
+    setState((current) => ({ ...current, phase: "applying", applyKey, error: undefined }));
+    try {
+      const result = await applyAssistantAction(proposal, applyKey);
+      setState((current) => ({ ...current, phase: "applied", result }));
+      onChanged?.();
+    } catch (caught) {
+      setState((current) => ({ ...current, phase: "ready", error: failure(caught) }));
+    }
+  }
+
+  async function undo() {
+    if (!state.result) return;
+    const undoKey = state.undoKey ?? crypto.randomUUID();
+    setState((current) => ({ ...current, phase: "undoing", undoKey, error: undefined }));
+    try {
+      await undoAssistantAction(state.result.operation_id, undoKey);
+      setState((current) => ({ ...current, phase: "undone" }));
+      onChanged?.();
+    } catch (caught) {
+      setState((current) => ({ ...current, phase: "applied", error: failure(caught) }));
+    }
+  }
+
+  const { phase } = state;
+  return <article className="assistant-proposal" aria-label={`Proposed change: ${proposal.summary}`}>
+    <p><strong>{proposal.summary}</strong></p>
+    {phase === "ready" || phase === "applying" ? <>
+      <p className="muted">Not applied. Review it, then choose Apply.{proposal.undoable ? "" : " Timer changes cannot be undone here; use Track afterward."}</p>
+      <div className="form-actions">
+        <button type="button" disabled={phase === "applying"} onClick={() => void apply()}>{phase === "applying" ? "Applying…" : "Apply"}</button>
+        <button type="button" className="link" disabled={phase === "applying"} onClick={() => setState({ phase: "dismissed" })}>Dismiss</button>
+      </div>
+    </> : null}
+    {phase === "applied" || phase === "undoing" ? <>
+      <p role="status">Applied.{state.result?.undoable ? "" : " Use Track to change this countdown."}</p>
+      {state.result?.undoable ? <button type="button" disabled={phase === "undoing"} onClick={() => void undo()}>{phase === "undoing" ? "Undoing…" : "Undo"}</button> : null}
+    </> : null}
+    {phase === "undone" ? <p role="status">Undone. The earlier saved state was restored.</p> : null}
+    {phase === "dismissed" ? <p className="muted">Dismissed. Nothing was changed.</p> : null}
+    {state.error ? <p role="alert" className="error">{state.error}</p> : null}
+  </article>;
+}
+
+export function Assistant({ visible, projectId, date, onChanged }: { visible: boolean; projectId: string | null; date?: string; onChanged?: () => void }) {
   const [status, setStatus] = useState<AssistantStatus | null>(null);
   const [model, setModel] = useState("");
   const [prompt, setPrompt] = useState("");
@@ -43,6 +106,7 @@ export function Assistant({ visible, projectId, date }: { visible: boolean; proj
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [pending, setPending] = useState<Record<string, unknown> | null>(null);
   const request = useRef<AbortController | null>(null);
   const statusRequest = useRef<AbortController | null>(null);
 
@@ -77,15 +141,19 @@ export function Assistant({ visible, projectId, date }: { visible: boolean; proj
 
   useEffect(() => { if (!visible) { setBusy(false); setLoading(false); } }, [visible]);
 
-  async function submit(event: FormEvent) {
-    event.preventDefault();
-    if (busy || !model || !prompt.trim()) return;
+  async function send(text: string, choice?: { slot: string; value: string }) {
+    if (busy || !model) return;
     const controller = new AbortController();
     request.current = controller;
     setBusy(true); setError(null); setReply(null);
     try {
-      const result = await askAssistant(model, prompt.trim(), { project_id: projectId, date: date ?? null }, controller.signal);
-      if (!controller.signal.aborted) setReply(result);
+      const result = await askAssistant(model, text, { project_id: projectId, date: date ?? null }, controller.signal, { pending, choice });
+      if (!controller.signal.aborted) {
+        setReply(result);
+        // The service returns pending state only while a change still needs details.
+        setPending(result.clarification?.pending ?? null);
+        if (result.clarification?.questions.length || choice) setPrompt("");
+      }
     } catch (caught) {
       if (!controller.signal.aborted) setError(caught instanceof ApiError ? caught.message : "The question could not finish. Your input is kept; try again.");
     } finally {
@@ -93,9 +161,18 @@ export function Assistant({ visible, projectId, date }: { visible: boolean; proj
     }
   }
 
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    if (prompt.trim()) void send(prompt.trim());
+  }
+
+  function startOver() {
+    setPending(null); setReply(null); setError(null);
+  }
+
   return <section hidden={!visible} className="assistant" aria-label="Local assistant">
     <div className="forest-heading"><h2>Local assistant</h2><button type="button" className="link" disabled={loading || busy} onClick={() => void refresh()}>Refresh models</button></div>
-    <p className="muted">Ask about your plans, tasks and saved time. This version can read records. Use Plan and Track to make changes.</p>
+    <p className="muted">Ask about your plans, tasks and saved time. The assistant can also prepare small changes; nothing is saved until you choose Apply.</p>
     {loading ? <p role="status">Checking local models…</p> : null}
     {error ? <p role="alert" className="error">{error}</p> : null}
     {status && !status.models.length ? <p>No local models are installed. Add a tools-capable model in Ollama, then refresh. BearPlans does not download models automatically.</p> : null}
@@ -106,17 +183,33 @@ export function Assistant({ visible, projectId, date }: { visible: boolean; proj
         {status?.models.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}
       </select>
       <label htmlFor="assistant-question">Question</label>
-      <textarea id="assistant-question" rows={4} maxLength={2000} disabled={busy} value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="What is planned today? How much work have I saved?" />
+      <textarea id="assistant-question" rows={4} maxLength={2000} disabled={busy} value={prompt} onChange={(event) => setPrompt(event.target.value)}
+        placeholder={pending ? "Answer the question above, or ask something new." : "What is planned today? Plan Essay on Tuesday. Start Math for 45 minutes."} />
+      {pending ? <p className="muted">A change is waiting for details. <button type="button" className="link" disabled={busy} onClick={startOver}>Start over</button></p> : null}
       <p className="muted">Uses your selected project and week as context. Each question is independent. Questions and replies stay in this page until you reload.</p>
       <div className="form-actions"><button type="submit" disabled={!status || !model || !prompt.trim() || busy || loading}>{busy ? "Looking up…" : "Ask"}</button>
         {busy ? <button type="button" onClick={cancel}>Cancel question</button> : null}</div>
     </form>
     {busy ? <p role="status">Reading saved records… You can still use Plan, Track and Stats.</p> : null}
     {reply ? <div className="assistant-reply" aria-live="polite">
-      <h3>Model reply</h3><p className="assistant-answer">{reply.answer}</p>
-      <p className="muted">{reply.model} · {reply.elapsed_seconds} s · Read only</p>
-      <h3>Saved records used</h3><p className="muted">These values come directly from BearPlans. Check them when a model's wording is unclear.</p>
-      {reply.sources.length ? reply.sources.map((source, index) => <Source key={index} source={source} />) : <p>No saved records were read for this reply.</p>}
+      <h3>{reply.route && !reply.route.agents.includes("reader") ? "Assistant" : "Model reply"}</h3>
+      {reply.kind !== "clarify" ? <p className="assistant-answer">{reply.answer}</p> : null}
+      <p className="muted">{reply.model} · {reply.elapsed_seconds} s · {reply.proposals?.length ? "Changes wait for Apply" : "Read only"}{reply.route ? ` · ${reply.route.agents.join(" → ")}` : ""}</p>
+      {reply.clarification?.questions.length ? <div className="assistant-clarify" aria-label="Details needed">
+        <h3>Details needed</h3>
+        <ul>{reply.clarification.questions.map((question) => <li key={question}>{question}</li>)}</ul>
+        {Object.entries(reply.clarification.choices ?? {}).map(([slot, options]) => <div key={slot} className="assistant-choices">
+          {options.map((option) => <button type="button" key={option.value} disabled={busy} onClick={() => void send("", { slot, value: option.value })}>{option.label}</button>)}
+        </div>)}
+      </div> : null}
+      {reply.proposals?.length ? <>
+        <h3>Proposed changes</h3>
+        {reply.proposals.map((proposal, index) => <Proposal key={`${reply.elapsed_seconds}-${index}`} proposal={proposal} onChanged={onChanged} />)}
+      </> : null}
+      {!reply.kind || reply.kind === "answer" ? <>
+        <h3>Saved records used</h3><p className="muted">These values come directly from BearPlans. Check them when a model's wording is unclear.</p>
+        {reply.sources.length ? reply.sources.map((source, index) => <Source key={index} source={source} />) : <p>No saved records were read for this reply.</p>}
+      </> : null}
     </div> : null}
   </section>;
 }

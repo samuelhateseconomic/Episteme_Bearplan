@@ -185,23 +185,29 @@ def create_placement(
     db: Database, task_id: str, planned_date: str | date, *, source_placement_id: str | None = None,
 ) -> Placement:
     day = _planned_date(planned_date)
-    now = utc_now()
-    placement_id = str(uuid4())
     with db.write() as conn:
         if source_placement_id is not None:
             source = _require_placement(conn, source_placement_id)
             _require_open_week(conn, source["planned_date"])
             if source["task_id"] != task_id:
                 raise InvalidInput("source_placement_id", "The source placement belongs to a different task. Refresh the plan; nothing was changed.")
-        _require_open_week(conn, day)
-        _require_leaf(conn, task_id)
-        _check_already_planned(conn, task_id, day)
-        conn.execute(
-            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision) "
-            "VALUES (?, ?, ?, ?, ?, 1)",
-            (placement_id, task_id, day, now, now),
-        )
-        return _placement(_require_placement(conn, placement_id))
+        return _create_placement_tx(conn, task_id, day)
+
+
+def _create_placement_tx(conn: sqlite3.Connection, task_id: str, planned_date: str | date) -> Placement:
+    """create_placement inside a caller's write transaction (shared with assistant actions)."""
+    day = _planned_date(planned_date)
+    now = utc_now()
+    placement_id = str(uuid4())
+    _require_open_week(conn, day)
+    _require_leaf(conn, task_id)
+    _check_already_planned(conn, task_id, day)
+    conn.execute(
+        "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision) "
+        "VALUES (?, ?, ?, ?, ?, 1)",
+        (placement_id, task_id, day, now, now),
+    )
+    return _placement(_require_placement(conn, placement_id))
 
 
 def move_placement(db: Database, placement_id: str, planned_date: str | date) -> Placement:
@@ -222,7 +228,13 @@ def move_placement(db: Database, placement_id: str, planned_date: str | date) ->
 
 def remove_placement(db: Database, placement_id: str) -> str:
     with db.write() as conn:
-        row = _require_placement(conn, placement_id)
-        _require_open_week(conn, row["planned_date"])
-        conn.execute("DELETE FROM planned_items WHERE id = ?", (placement_id,))
+        _remove_placement_tx(conn, placement_id)
     return placement_id
+
+
+def _remove_placement_tx(conn: sqlite3.Connection, placement_id: str) -> sqlite3.Row:
+    """remove_placement inside a caller's write transaction; returns the removed row."""
+    row = _require_placement(conn, placement_id)
+    _require_open_week(conn, row["planned_date"])
+    conn.execute("DELETE FROM planned_items WHERE id = ?", (placement_id,))
+    return row

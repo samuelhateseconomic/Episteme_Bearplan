@@ -275,6 +275,22 @@ def create_task(
     Every value is validated before anything is written, so a rejected field
     leaves the database untouched.
     """
+    with db.write() as conn:
+        return _create_task_tx(conn, title, project_id=project_id, parent_id=parent_id, notes=notes,
+                               deadline=deadline, estimate_minutes=estimate_minutes)
+
+
+def _create_task_tx(
+    conn: sqlite3.Connection,
+    title: str,
+    *,
+    project_id: str | None = None,
+    parent_id: str | None = None,
+    notes: str | None = None,
+    deadline: str | date | None = None,
+    estimate_minutes: int | None = None,
+) -> Task:
+    """create_task inside a caller's write transaction (shared with assistant actions)."""
     cleaned_title = _clean_title(title)
     cleaned_notes = _clean_notes(notes)
     cleaned_deadline = _clean_deadline(deadline)
@@ -282,49 +298,48 @@ def create_task(
     task_id = str(uuid4())
     now = utc_now()
 
-    with db.write() as conn:
-        if parent_id is not None:
-            parent = _resolve_parent(conn, parent_id, task_id=None)
-            _reject_tracked_structure_change(conn, parent_id, "parent_id")
-            if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (parent_id,)).fetchone():
-                raise InvalidInput(
-                    "parent_id",
-                    "This task has planned dates. Remove its placements before adding subtasks, "
-                    "then plan its subtasks instead.",
-                )
-            if project_id is not None and project_id != parent["project_id"]:
-                raise InvalidInput("project_id", "A subtask belongs to the same project as its parent.")
-            resolved_project = parent["project_id"]
-        elif project_id is not None:
-            resolved_project = require_project(conn, project_id)
-        else:
-            resolved_project = default_project_id(conn)
-
-        conn.execute(
-            "INSERT INTO tasks (id, project_id, parent_id, title, notes, deadline,"
-            " estimate_minutes, completed_at, created_at, updated_at, revision)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, 1)",
-            (
-                task_id,
-                resolved_project,
-                parent_id,
-                cleaned_title,
-                cleaned_notes,
-                cleaned_deadline,
-                cleaned_estimate,
-                now,
-                now,
-            ),
-        )
-        if parent_id is not None:
-            # The parent's completion is derived from now on, so a stored one would be
-            # stale. Clearing it here keeps the row honest about what it holds.
-            conn.execute(
-                "UPDATE tasks SET completed_at = NULL, updated_at = ?, revision = revision + 1"
-                " WHERE id = ?",
-                (now, parent_id),
+    if parent_id is not None:
+        parent = _resolve_parent(conn, parent_id, task_id=None)
+        _reject_tracked_structure_change(conn, parent_id, "parent_id")
+        if conn.execute("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", (parent_id,)).fetchone():
+            raise InvalidInput(
+                "parent_id",
+                "This task has planned dates. Remove its placements before adding subtasks, "
+                "then plan its subtasks instead.",
             )
-        return _read_task(conn, task_id)
+        if project_id is not None and project_id != parent["project_id"]:
+            raise InvalidInput("project_id", "A subtask belongs to the same project as its parent.")
+        resolved_project = parent["project_id"]
+    elif project_id is not None:
+        resolved_project = require_project(conn, project_id)
+    else:
+        resolved_project = default_project_id(conn)
+
+    conn.execute(
+        "INSERT INTO tasks (id, project_id, parent_id, title, notes, deadline,"
+        " estimate_minutes, completed_at, created_at, updated_at, revision)"
+        " VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?, 1)",
+        (
+            task_id,
+            resolved_project,
+            parent_id,
+            cleaned_title,
+            cleaned_notes,
+            cleaned_deadline,
+            cleaned_estimate,
+            now,
+            now,
+        ),
+    )
+    if parent_id is not None:
+        # The parent's completion is derived from now on, so a stored one would be
+        # stale. Clearing it here keeps the row honest about what it holds.
+        conn.execute(
+            "UPDATE tasks SET completed_at = NULL, updated_at = ?, revision = revision + 1"
+            " WHERE id = ?",
+            (now, parent_id),
+        )
+    return _read_task(conn, task_id)
 
 
 def update_task(
@@ -352,15 +367,29 @@ def update_task(
         updates["estimate_minutes"] = _clean_estimate(estimate_minutes)
 
     with db.write() as conn:
-        _require_task(conn, task_id)
-        if not updates:
-            return _read_task(conn, task_id)
-        assignments = ", ".join(f"{column} = ?" for column in updates)
-        conn.execute(
-            f"UPDATE tasks SET {assignments}, updated_at = ?, revision = revision + 1 WHERE id = ?",
-            (*updates.values(), utc_now(), task_id),
-        )
+        return _apply_task_updates(conn, task_id, updates)
+
+
+def _update_task_tx(conn: sqlite3.Connection, task_id: str, fields: dict[str, Any]) -> Task:
+    """update_task inside a caller's write transaction; fields maps names to new values."""
+    cleaners = {"title": _clean_title, "notes": _clean_notes, "deadline": _clean_deadline,
+                "estimate_minutes": _clean_estimate}
+    unknown = set(fields) - set(cleaners)
+    if unknown:
+        raise InvalidInput(sorted(unknown)[0], "Only title, notes, deadline and estimate can be edited.")
+    return _apply_task_updates(conn, task_id, {name: cleaners[name](value) for name, value in fields.items()})
+
+
+def _apply_task_updates(conn: sqlite3.Connection, task_id: str, updates: dict[str, object]) -> Task:
+    _require_task(conn, task_id)
+    if not updates:
         return _read_task(conn, task_id)
+    assignments = ", ".join(f"{column} = ?" for column in updates)
+    conn.execute(
+        f"UPDATE tasks SET {assignments}, updated_at = ?, revision = revision + 1 WHERE id = ?",
+        (*updates.values(), utc_now(), task_id),
+    )
+    return _read_task(conn, task_id)
 
 
 def set_task_completion(db: Database, task_id: str, complete: bool) -> Task:
@@ -368,30 +397,41 @@ def set_task_completion(db: Database, task_id: str, complete: bool) -> Task:
 
     Rejected for a task that has subtasks: its completion is derived from theirs.
     """
+    with db.write() as conn:
+        return _set_completion_tx(conn, task_id, complete)
+
+
+def _set_completion_tx(
+    conn: sqlite3.Connection, task_id: str, complete: bool, *, completed_at: str | None = None,
+) -> Task:
+    """set_task_completion inside a caller's write transaction.
+
+    completed_at restores a previously recorded instant (assistant Undo); normal
+    completion records the current instant.
+    """
     if not isinstance(complete, bool):
         raise InvalidInput("complete", "Completion must be true or false.")
-    with db.write() as conn:
-        row = _require_task(conn, task_id)
-        if _children_of(conn, task_id):
-            raise InvalidInput(
-                "complete",
-                "This task is complete when all of its subtasks are. Complete its subtasks instead.",
-            )
-        # Idempotent: repeating a completion must not move the recorded instant, or a
-        # retried request would shift the derived completion time of its parent.
-        if (row["completed_at"] is not None) == complete:
-            return _read_task(conn, task_id)
-        now = utc_now()
-        conn.execute(
-            "UPDATE tasks SET completed_at = ?, updated_at = ?, revision = revision + 1 WHERE id = ?",
-            (now if complete else None, now, task_id),
+    row = _require_task(conn, task_id)
+    if _children_of(conn, task_id):
+        raise InvalidInput(
+            "complete",
+            "This task is complete when all of its subtasks are. Complete its subtasks instead.",
         )
-        if row["parent_id"] is not None:
-            conn.execute(
-                "UPDATE tasks SET updated_at = ?, revision = revision + 1 WHERE id = ?",
-                (now, row["parent_id"]),
-            )
+    # Idempotent: repeating a completion must not move the recorded instant, or a
+    # retried request would shift the derived completion time of its parent.
+    if (row["completed_at"] is not None) == complete:
         return _read_task(conn, task_id)
+    now = utc_now()
+    conn.execute(
+        "UPDATE tasks SET completed_at = ?, updated_at = ?, revision = revision + 1 WHERE id = ?",
+        ((completed_at or now) if complete else None, now, task_id),
+    )
+    if row["parent_id"] is not None:
+        conn.execute(
+            "UPDATE tasks SET updated_at = ?, revision = revision + 1 WHERE id = ?",
+            (now, row["parent_id"]),
+        )
+    return _read_task(conn, task_id)
 
 
 def remove_subtask(db: Database, task_id: str) -> Task:
@@ -415,3 +455,29 @@ def remove_subtask(db: Database, task_id: str) -> Task:
             (utc_now(), parent_id),
         )
         return _read_task(conn, parent_id)
+
+
+def _delete_unused_task_tx(conn: sqlite3.Connection, task_id: str) -> None:
+    """Remove a task nothing depends on, for Undo of an assistant-created task.
+
+    General deletion stays deferred. This refuses any task with subtasks, active
+    or closed placements, or countdown history, so no plan, snapshot or recorded
+    work can lose its subject. A removed subtask's parent never regains a stale
+    completion, matching remove_subtask.
+    """
+    row = _require_task(conn, task_id)
+    dependents = (
+        ("SELECT 1 FROM tasks WHERE parent_id = ? LIMIT 1", "it now has subtasks"),
+        ("SELECT 1 FROM planned_items WHERE task_id = ? LIMIT 1", "it has planned dates"),
+        ("SELECT 1 FROM closed_placements WHERE task_id = ? LIMIT 1", "it appears in a closed week"),
+        ("SELECT 1 FROM timer_sessions WHERE task_id = ? LIMIT 1", "it has countdown history"),
+    )
+    for sql, reason in dependents:
+        if conn.execute(sql, (task_id,)).fetchone():
+            raise InvalidInput("task_id", f"This task can no longer be removed because {reason}. Nothing was changed.")
+    conn.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    if row["parent_id"] is not None:
+        conn.execute(
+            "UPDATE tasks SET completed_at = NULL, updated_at = ?, revision = revision + 1 WHERE id = ?",
+            (utc_now(), row["parent_id"]),
+        )

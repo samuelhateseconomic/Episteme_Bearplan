@@ -172,7 +172,8 @@ export default function App() {
       {screen !== "track" ? <CompactTimer timer={timer} onOpen={() => openTrack()} /> : null}
       <TrackScreen timer={timer} plan={planning.plan} projects={projects ?? []} requestedTaskId={trackingTaskId} requestToken={trackingRequest} visible={screen === "track"} planError={planning.error} onRefreshTasks={() => void planning.refresh()} />
       <Statistics visible={screen === "stats"} />
-      <Assistant visible={screen === "assistant"} projectId={selectedId} date={planning.plan?.week_start} />
+      <Assistant visible={screen === "assistant"} projectId={selectedId} date={planning.plan?.week_start}
+        onChanged={() => { if (selectedId) void refreshTasks(selectedId); void planning.refresh(); void timer.refresh(); }} />
 
       <div hidden={screen !== "plan"}>
 

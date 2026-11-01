@@ -272,7 +272,7 @@ def test_upgrade_from_12_preserves_every_existing_row_and_failure_retries_atomic
     after = all_rows(db)
     for name, rows in before.items():
         assert (after[name][:len(rows)] if name in ("schema_migrations", "migration_fingerprints") else after[name]) == rows
-    assert current_version(db) == 13
+    assert current_version(db) == len(load_migrations())
     assert all_rows(open_database(db.path)) == after
 
 

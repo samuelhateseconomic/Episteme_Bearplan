@@ -816,6 +816,20 @@ details > summary:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.assistant-proposal {
+  border: 1px solid var(--accent);
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin: 0.75rem 0;
+  overflow-wrap: anywhere;
+}
+
+.assistant-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .assistant-source li {
   margin-bottom: 0.75rem;
 }

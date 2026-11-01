@@ -1,8 +1,19 @@
 # Local assistant development preview
 
-The first M5 ticket adds read-only questions about day/week plans, task search,
-task details and exact saved-time totals. Assistant actions, Undo, larger replans
-and the full 30-case write-acceptance gate remain later tickets. Each question is
+The first M5 ticket added read-only questions about day/week plans, task search,
+task details and exact saved-time totals. The second adds **proposed changes**:
+create/edit/plan/complete a task and start/pause/finish a countdown. A router
+model classifies each request; BearPlans then checks that every needed detail
+was actually stated and matches exactly one record. If something is missing or
+several tasks match, it asks a question or shows choice buttons and keeps the
+request waiting (**Start over** clears it). Only then does a proposal card
+appear, showing every field it will set; nothing is saved until you choose **Apply**.
+Ask for one change at a time. Day words such as “Tuesday”, “next Friday” or
+“November 12” are converted by BearPlans, not the model; check the weekday on
+the card. Numeric dates like 11/12 are ambiguous and will be asked.
+Task and plan changes show **Undo** while the record is unchanged since; timer
+changes are controlled in Track afterward. Larger replans and the full 30-case
+write-acceptance gate remain later tickets. Each question is
 independent; selected project/week IDs provide context. Conversation text is not
 written to the database or browser storage.
 
@@ -52,6 +63,7 @@ not advertise tools and are rejected for this assistant. Example questions:
 - Show this week's plan.
 - Find tasks titled Reading and distinguish their projects.
 - How much saved active time do I have in total?
+- Plan Essay for Tuesday. · Start Math 55 for 45 minutes. · Reopen Reading in History.
 
 Each answer shows **Saved records used**, calculated by BearPlans domain functions.
 Those source cards retain exact saved totals and service-local dates independently
@@ -69,9 +81,13 @@ slot, five model rounds, ten lookups, a 90-second request deadline, bounded cont
 and response sizes; the HTTP transport is pinned to `127.0.0.1:11434`, without
 environment proxies or redirects. It never pulls models automatically.
 
-The assistant has no mutation tools, SQL execution, shell, filesystem or external
-provider access. It cannot start/finish timers, alter tasks, mint rewards or apply
-corrections. Use the existing app controls for those operations. Notes and task
+The assistant has no SQL execution, shell, filesystem or external provider
+access, and its change tools never write by themselves. Each proposal names exact
+task IDs and the revisions it was based on; if the task or countdown changed
+before you apply it, BearPlans refuses with a message and changes nothing.
+Applying twice (for example after a lost response) never repeats the change.
+It cannot delete tasks, close weeks, buy trees, mint rewards or apply corrections.
+If several tasks share a name, it asks which one you mean. Notes and task
 titles are treated as untrusted records. The model only receives bounded records
 returned by requested lookups; local questions still contain private content, so
 choose locally stored weights. Remote/cloud model configurations are rejected.
