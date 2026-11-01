@@ -7,6 +7,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from backend.domain.calendar import application_today
+from backend.domain.errors import InvalidInput
 from backend.domain.planning import _date, get_planning, week_bounds
 from backend.domain.projects import list_projects
 from backend.domain.statistics import get_statistics
@@ -25,6 +26,7 @@ class PlanArguments(Arguments):
 class SearchArguments(Arguments):
     query: str = Field(min_length=1, max_length=200)
     project_id: str | None = Field(default=None, max_length=100)
+    project: str | None = Field(default=None, max_length=100)
     offset: int = Field(default=0, ge=0, le=10000)
     limit: int = Field(default=10, ge=1, le=20)
 
@@ -33,6 +35,7 @@ class ListArguments(Arguments):
     status: Literal["incomplete", "complete", "any"] = "incomplete"
     level: Literal["subtasks", "top_level", "work_items", "any"] = "any"
     project_id: str | None = Field(default=None, max_length=100)
+    project: str | None = Field(default=None, max_length=100)
     offset: int = Field(default=0, ge=0, le=10000)
     limit: int = Field(default=20, ge=1, le=20)
 
@@ -44,8 +47,8 @@ class TaskArguments(Arguments):
 TOOL_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "get_day_plan": (PlanArguments, "Read planned work on a date; omit date for service Today. Includes frozen history for a closed week."),
     "get_week_plan": (PlanArguments, "Read a Monday–Sunday plan containing date; omit date for this service week. Includes frozen history if closed."),
-    "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Returns stable IDs and pagination; duplicate names are distinct."),
-    "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Omit project_id to cover all projects. Returns totals and pagination."),
+    "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Optional project (exact name) or project_id limits the search. Returns stable IDs and pagination; duplicate names are distinct."),
+    "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Give project (exact name) or project_id only when the user limits it to one project; omit both for all projects. Returns totals and pagination."),
     "get_task": (TaskArguments, "Read one current task by its exact stable ID, including notes, deadline and completion."),
     "get_time_summary": (Arguments, "Read exact all-time saved active microseconds, current leaf completion and the latest 31 dated totals. Running/uncertain time is excluded."),
 }
@@ -54,6 +57,19 @@ TOOL_MODELS: dict[str, tuple[type[Arguments], str]] = {
 def tool_schemas() -> list[dict]:
     return [{"type": "function", "function": {"name": name, "description": description,
              "parameters": model.model_json_schema()}} for name, (model, description) in TOOL_MODELS.items()]
+
+
+def _project_scope(name: str | None, project_id: str | None, projects: dict[str, str]) -> str | None:
+    """Resolve an exact project name (case-insensitive) so the model needs no ID lookup."""
+    if name is None or not name.strip():
+        return project_id
+    found = [key for key, value in projects.items() if value.casefold() == name.strip().casefold()]
+    if len(found) != 1:
+        names = ", ".join(sorted(projects.values())[:20])
+        raise InvalidInput("project", f"No single project is named “{name.strip()}”. Projects: {names}.")
+    if project_id is not None and project_id != found[0]:
+        raise InvalidInput("project", "project and project_id name different projects. Give only one.")
+    return found[0]
 
 
 def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None) -> dict[str, Any]:
@@ -70,6 +86,8 @@ def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None
                 "days": [day.model_dump(mode="json") for day in report.days[-31:]],
                 "days_truncated": len(report.days) > 31}
     projects = {p.id: p.name for p in list_projects(db)}
+    if "project" in args:
+        args["project_id"] = _project_scope(args.pop("project"), args["project_id"], projects)
     if name == "get_task":
         task = get_task(db, args["task_id"])
         return {"task": {**task.model_dump(mode="json"), "project_name": projects.get(task.project_id, "")}}

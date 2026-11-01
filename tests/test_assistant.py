@@ -14,6 +14,7 @@ from backend.domain import assistant as module
 from backend.domain.assistant import AssistantError, AssistantService
 from backend.domain.assistant_tools import read_tool, tool_schemas
 from backend.domain.planning import create_placement
+from backend.domain.errors import InvalidInput
 from backend.domain.projects import create_project
 from backend.domain.tasks import create_task, set_task_completion, update_task
 from backend.domain.weeks import close_week, preview_close
@@ -282,3 +283,49 @@ def test_list_tasks_filters_by_completion_and_level_across_projects(db):
     with pytest.raises(ValidationError):
         read_tool(db, "list_tasks", {"limit": 500})
     assert rows(db) == before
+
+
+def test_provider_disables_thinking_explicitly_and_keeps_model_loaded():
+    from backend.platform.ollama import KEEP_ALIVE
+    provider = OllamaProvider()
+    sent = []
+    async def response(method, path, payload, **kwargs):
+        sent.append(payload)
+        return {"done": True, "done_reason": "stop", "message": {"content": "Answer"}}
+    provider._json = response
+    provider._thinking["thinker:local"] = True
+    asyncio.run(provider.chat("thinker:local", [], []))
+    asyncio.run(provider.chat("plain:local", [], []))
+    assert sent[0]["think"] is False and "think" not in sent[1]
+    assert sent[0]["keep_alive"] == KEEP_ALIVE == "15m"
+
+
+def test_read_tools_accept_exact_project_names(db):
+    history = create_project(db, "History")
+    create_project(db, "Writing")
+    create_task(db, "Reading")
+    target = create_task(db, "Reading", project_id=history.id)
+    sub = create_task(db, "Notes", parent_id=target.id)
+    found = read_tool(db, "search_tasks", {"query": "reading", "project": "history"})
+    assert [t["id"] for t in found["tasks"]] == [target.id] and found["scope_project_name"] == "History"
+    listed = read_tool(db, "list_tasks", {"level": "subtasks", "project": " HISTORY "})
+    assert [t["id"] for t in listed["tasks"]] == [sub.id]
+    with pytest.raises(InvalidInput, match="Projects: History, Inbox, Writing"):
+        read_tool(db, "list_tasks", {"project": "Hist"})
+    with pytest.raises(InvalidInput, match="different projects"):
+        read_tool(db, "search_tasks", {"query": "x", "project": "History", "project_id": "other"})
+
+
+def test_reader_sees_actionable_lookup_errors(db):
+    create_project(db, "History")
+    provider = FakeProvider([lookup("list_tasks", {"project": "Hist"}), {"content": "Which project?"}])
+    asyncio.run(AssistantService(db, provider).ask("fixture:local", "List History subtasks"))
+    assert "Projects: History" in provider.messages[-1][-1]["content"]
+
+
+def test_invalid_lookup_errors_name_the_accepted_arguments(db):
+    provider = FakeProvider([lookup("search_tasks", {"query": "x", "level": "subtasks"}), lookup("drop_tables"), {"content": "Done."}])
+    asyncio.run(AssistantService(db, provider).ask("fixture:local", "List subtasks"))
+    first, second = provider.messages[1][-1]["content"], provider.messages[2][-1]["content"]
+    assert "accepts only: query, project_id, project, offset, limit" in first and "use list_tasks" in first
+    assert "Available lookups: get_day_plan" in second

@@ -101,12 +101,19 @@ for `BearPlans stopped.`. The trial copy and normal database remain separate.
 The adapter uses Ollama's documented [local chat/tool messages](https://docs.ollama.com/api/chat)
 and [tool calling protocol](https://docs.ollama.com/capabilities/tool-calling).
 Qwen documents the [/no_think soft control](https://qwenlm.github.io/blog/qwen3/).
-The adapter requests separated thinking, discards that field and rejects
-token-limited partial answers rather than displaying them as completed replies.
+The adapter explicitly disables thinking for thinking-capable models (Ollama
+`think: false`; omitting it lets qwen3 think), discards any reasoning field and
+rejects token-limited partial answers rather than displaying them as completed
+replies. Models stay loaded for 15 minutes between questions.
 Model quality and latency results belong in the implementation review; this
 preview alone does not certify all of M5 or a production release.
 
-Current comparison recommends **Qwen3 8B** for the preview: nine of ten final
+After the November 1 speed fixes (thinking off, project names in lookups,
+actionable lookup errors), qwen3:8b answered six synthetic questions twice each
+in **6.3–10.7 seconds**, 12/12 with correct lookups; change requests take about
+1 second. See the [actions review](reviews/2026-11-01-assistant-actions.md).
+
+Earlier comparison (with thinking on) recommended **Qwen3 8B** for the preview: nine of ten final
 retrieval cases completed with exact sources; one completion-count question hit
 the output limit and returned an error. Use Stats directly if that happens.
 Successful final comparison responses took 25.483 seconds at the median and

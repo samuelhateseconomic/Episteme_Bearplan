@@ -185,3 +185,32 @@ Follow-up: the model presented a UTC completion time as local ("10:58 PM" vs
 
 Checks: pytest 843 passed, 1 skipped (176.17 s); Vitest 145 passed;
 typecheck/build pass.
+
+
+## Speed fixes (plan step 1)
+
+Changes: question agent sends `think: false` explicitly for thinking-capable
+models (omission enabled qwen3 thinking); model keep-alive 2 min → 15 min
+(`KEEP_ALIVE`); `search_tasks`/`list_tasks` accept an exact project name
+(`project`), with unknown names listing available projects; lookup validation
+errors now name the tool's accepted arguments and point to `list_tasks` for
+status/level filters (previously a generic error the model could not correct).
+Prompt `router-v4`.
+
+Measurements, qwen3:8b, same synthetic data, warm model:
+
+| Question | Before (thinking on) | After, run 1 / run 2 |
+| --- | --- | --- |
+| Check the incomplete subtasks | 53.1 s, output-limit failure | 8.3 / 8.4 s, correct |
+| Which subtasks are done in Writing? | 78.7 s, correct | 10.4 / 10.7 s, correct (`project: Writing`) |
+| What is planned today? | 19.8 s | 6.3 / 6.3 s |
+| Show this week's plan. | — | 6.3 / 6.5 s |
+| How much saved active time do I have in total? | — | 6.3 / 6.5 s |
+| Find tasks titled Reading and tell me their projects. | — | 9.5 / 9.8 s |
+
+An intermediate run without the actionable errors failed "done in Writing" both
+times (`search_tasks` called with `level`). After: 12/12 correct, no output-limit
+failures. Wording follow-up: the time summary said "0 microseconds" instead of
+a readable duration.
+
+Checks: pytest 847 passed, 1 skipped (176.52 s). Frontend unchanged.

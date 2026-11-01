@@ -9,6 +9,8 @@ from backend.domain.assistant import AssistantError
 
 BASE_URL = "http://127.0.0.1:11434"
 MAX_RESPONSE = 262144
+# Keep weights loaded between questions; reloading 8B weights adds seconds per turn.
+KEEP_ALIVE = "15m"
 
 
 class OllamaProvider:
@@ -59,9 +61,11 @@ class OllamaProvider:
 
     async def chat(self, model: str, messages: list[dict], tools: list[dict]) -> dict:
         payload = {"model": model, "messages": messages, "tools": tools,
-                   "stream": False, "keep_alive": "2m", "options": {"temperature": 0, "num_ctx": 8192, "num_predict": 1536}}
+                   "stream": False, "keep_alive": KEEP_ALIVE, "options": {"temperature": 0, "num_ctx": 8192, "num_predict": 1536}}
+        # Thinking-capable models (qwen3) think unless told not to. Measured on
+        # 2026-11-01, thinking made lookups 3–8x slower and exhausted num_predict.
         if self._thinking.get(model):
-            payload["think"] = True
+            payload["think"] = False
         result = await self._json("POST", "/api/chat", payload, timeout=60)
         message = result.get("message")
         if result.get("done") is not True or result.get("done_reason") == "length" or not isinstance(message, dict):
@@ -72,7 +76,7 @@ class OllamaProvider:
 
     async def classify(self, model: str, messages: list[dict], schema: dict) -> dict:
         """Router call: JSON constrained to schema, no tools, no separated reasoning."""
-        payload = {"model": model, "messages": messages, "format": schema, "stream": False, "keep_alive": "2m",
+        payload = {"model": model, "messages": messages, "format": schema, "stream": False, "keep_alive": KEEP_ALIVE,
                    "options": {"temperature": 0, "num_ctx": 4096, "num_predict": 512}}
         if self._thinking.get(model):
             payload["think"] = False

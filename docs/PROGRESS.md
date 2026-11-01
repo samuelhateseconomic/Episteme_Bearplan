@@ -20,6 +20,14 @@ specialists and direct answers; (3) 30-case M5 evaluation incl. routing;
 (4) M6 Google Calendar; (5) bCourses access spike; (6) Canvas; (7) Gmail.
 Next concrete action: step 1, with before/after latency measurements.
 
+**Step 1 done (uncommitted):** explicit `think: false`, 15-min keep-alive,
+project names in read tools, actionable lookup errors (`router-v4`). qwen3:8b
+questions now 6.3–10.7 s, 12/12 correct (were 19.8–78.7 s with failures).
+Files: `backend/platform/ollama.py`, `backend/domain/assistant.py`,
+`backend/domain/assistant_tools.py`, `tests/test_assistant.py`,
+`docs/LOCAL_ASSISTANT.md`, actions review. pytest **847 passed, 1 skip**.
+Next: step 2, Plan/Task/Time specialists and direct answers.
+
 ## Current work — November 1, 2026: reader can list subtasks by status
 
 Pipeline committed by the user as `cf3178b`. User found "Check the incomplete
