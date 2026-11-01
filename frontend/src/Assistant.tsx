@@ -193,7 +193,7 @@ export function Assistant({ visible, projectId, date, onChanged }: { visible: bo
     </form>
     {busy ? <p role="status">Reading saved records… You can still use Plan, Track and Stats.</p> : null}
     {reply ? <div className="assistant-reply" aria-live="polite">
-      <h3>{reply.route && !reply.route.agents.includes("reader") ? "Assistant" : "Model reply"}</h3>
+      <h3>{reply.route && !reply.route.agents.some((agent) => agent === "reader" || agent.endsWith("_specialist")) ? "Assistant" : "Model reply"}</h3>
       {reply.kind !== "clarify" ? <p className="assistant-answer">{reply.answer}</p> : null}
       <p className="muted">{reply.model} · {reply.elapsed_seconds} s · {reply.proposals?.length ? "Changes wait for Apply" : "Read only"}{reply.route ? ` · ${reply.route.agents.join(" → ")}` : ""}</p>
       {reply.clarification?.questions.length ? <div className="assistant-clarify" aria-label="Details needed">

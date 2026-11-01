@@ -1,7 +1,7 @@
 """Bounded read tools shared by assistant adapters. No write capability is exposed."""
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -36,6 +36,8 @@ class ListArguments(Arguments):
     level: Literal["subtasks", "top_level", "work_items", "any"] = "any"
     project_id: str | None = Field(default=None, max_length=100)
     project: str | None = Field(default=None, max_length=100)
+    has_deadline: bool | None = None
+    order: Literal["created", "deadline"] = "created"
     offset: int = Field(default=0, ge=0, le=10000)
     limit: int = Field(default=20, ge=1, le=20)
 
@@ -48,7 +50,7 @@ TOOL_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "get_day_plan": (PlanArguments, "Read planned work on a date; omit date for service Today. Includes frozen history for a closed week."),
     "get_week_plan": (PlanArguments, "Read a Monday–Sunday plan containing date; omit date for this service week. Includes frozen history if closed."),
     "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Optional project (exact name) or project_id limits the search. Returns stable IDs and pagination; duplicate names are distinct."),
-    "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Give project (exact name) or project_id only when the user limits it to one project; omit both for all projects. Returns totals and pagination."),
+    "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Give project (exact name) or project_id only when the user limits it to one project; omit both for all projects. has_deadline=true with order=deadline lists upcoming deadlines earliest first. Returns totals and pagination."),
     "get_task": (TaskArguments, "Read one current task by its exact stable ID, including notes, deadline and completion."),
     "get_time_summary": (Arguments, "Read exact all-time saved active microseconds, current leaf completion and the latest 31 dated totals. Running/uncertain time is excluded."),
 }
@@ -97,9 +99,13 @@ def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None
         level = {"subtasks": lambda t: t.parent_id is not None, "top_level": lambda t: t.parent_id is None,
                  "work_items": lambda t: not t.is_parent, "any": lambda t: True}[args["level"]]
         status = {"incomplete": lambda t: not t.completed, "complete": lambda t: t.completed, "any": lambda t: True}[args["status"]]
-        tasks = [t for t in everything if level(t) and status(t)]
+        tasks = [t for t in everything if level(t) and status(t)
+                 and (args["has_deadline"] is None or (t.deadline is not None) == args["has_deadline"])]
+        if args["order"] == "deadline":
+            tasks.sort(key=lambda t: (t.deadline is None, t.deadline or date.max))
         page = tasks[args["offset"]:args["offset"] + args["limit"]]
         return {"total": len(tasks), "offset": args["offset"], "status": args["status"], "level": args["level"],
+                "has_deadline": args["has_deadline"], "order": args["order"],
                 "scope_project_id": args["project_id"], "scope_project_name": projects.get(args["project_id"]),
                 "next_offset": args["offset"] + len(page) if args["offset"] + len(page) < len(tasks) else None,
                 "tasks": [{**t.model_dump(mode="json"), "notes": t.notes[:200], "notes_truncated": len(t.notes) > 200,

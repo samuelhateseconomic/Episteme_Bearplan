@@ -108,6 +108,13 @@ replies. Models stay loaded for 15 minutes between questions.
 Model quality and latency results belong in the implementation review; this
 preview alone does not certify all of M5 or a production release.
 
+Questions are now routed: common, fully specified lookups (today's or this
+week's plan, all-time saved time, tasks/subtasks by status, tasks titled X,
+upcoming deadlines) are answered directly by BearPlans in under a second, with
+no model; anything else goes to a plan, tasks or time specialist (about 4–9
+seconds). The footer shows the path, for example `router → direct` or
+`router → time_specialist`.
+
 After the November 1 speed fixes (thinking off, project names in lookups,
 actionable lookup errors), qwen3:8b answered six synthetic questions twice each
 in **6.3–10.7 seconds**, 12/12 with correct lookups; change requests take about

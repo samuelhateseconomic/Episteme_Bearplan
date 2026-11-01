@@ -45,8 +45,10 @@ and acts:
    `MAX_CLARIFICATION_ROUNDS`. No-op and rule-violating requests are blocked.
 5. **Proposal → Apply**: a sufficient request becomes one proposal card; **every
    action requires the user's Apply** (confirmed decision).
-6. **Reader agent** (`assistant._read`): questions only, with the bounded read
-   tools (including `list_tasks` for status/level listings); it has no change tools.
+6. **Questions** (not changes): a direct code answer (`assistant_answers`) when
+   the request is fully specified, else one read-only specialist (plan, tasks or
+   time, each with only its own lookups), else the general reader. None of them
+   holds change tools. At most two model calls per request.
 
 When adding an action: add its schema to `assistant_actions`, its spec to
 `LIBRARY` and `ALLOWED`, questions for its required slots, router intent text

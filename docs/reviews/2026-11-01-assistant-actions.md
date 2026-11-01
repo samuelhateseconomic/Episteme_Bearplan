@@ -214,3 +214,30 @@ failures. Wording follow-up: the time summary said "0 microseconds" instead of
 a readable duration.
 
 Checks: pytest 847 passed, 1 skipped (176.52 s). Frontend unchanged.
+
+
+## Specialists and direct answers (plan step 2)
+
+Orchestrator adds a question `topic` (plan, tasks, time). Code then answers
+fully specified lookups directly (`backend/domain/assistant_answers.py`):
+today's/this week's plan, all-time saved time, tasks/subtasks by status,
+"titled/named/called X" searches and upcoming deadlines (new `list_tasks`
+`has_deadline`/`order=deadline`). Filters come from the user's own words
+(regexes), project scope from an exact project name in the message; anything
+unclear, relative ("last week") or project-scoped plan/time questions go to a
+specialist with only its own tools (plan: day/week; tasks: list/search/get;
+time: summary), and unclassified questions to the general reader. Readable
+durations and singular/plural wording in code. Prompt `router-v5`.
+
+Live finding: qwen3:8b's router returned only `{"intent": "question", "topic":
+"tasks"}` for questions — no project or title — so the first run answered
+"done in Writing" across all projects and sent "titled Reading" to a specialist
+that failed. Code-side extraction fixed both.
+
+Live qwen3:8b, synthetic data, 11 requests: 7 direct (0.4–2.5 s: incomplete
+subtasks, done subtasks in Writing, today, this week, all-time total, titled
+Reading, due soonest), plan specialist for last week (4.2 s, Oct 19–25 correct),
+time specialist for this week (6.1 s), change requests blocked/clarified as
+expected (0.6–0.7 s). All 11 as intended.
+
+Checks: pytest 855 passed, 1 skipped (176.87 s); Vitest 145 passed; typecheck/build pass.

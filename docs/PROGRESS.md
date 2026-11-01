@@ -28,6 +28,16 @@ Files: `backend/platform/ollama.py`, `backend/domain/assistant.py`,
 `docs/LOCAL_ASSISTANT.md`, actions review. pytest **847 passed, 1 skip**.
 Next: step 2, Plan/Task/Time specialists and direct answers.
 
+**Step 2 done (uncommitted):** orchestrator `topic`; direct code answers for
+today/this week, all-time time, tasks by status, titled searches and upcoming
+deadlines (`list_tasks` deadline order); plan/tasks/time specialists with only
+their own tools; general reader fallback (`router-v5`). Live qwen3:8b: 11/11 as
+intended; direct 0.4–2.5 s, specialists 4.2–6.1 s. New
+`backend/domain/assistant_answers.py`, `tests/test_assistant_answers.py`;
+changed `assistant.py`, `assistant_tools.py`, `action_library.py`,
+`frontend/src/Assistant.tsx`, docs. pytest **855 passed, 1 skip**; Vitest 145.
+Next: step 3, the 30-case M5 evaluation (incl. routing accuracy).
+
 ## Current work — November 1, 2026: reader can list subtasks by status
 
 Pipeline committed by the user as `cf3178b`. User found "Check the incomplete

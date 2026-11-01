@@ -125,6 +125,7 @@ ALLOWED = {
     "start_timer": ("task", "duration_minutes"),
     "pause_timer": (),
     "finish_timer": (),
+    "question": ("task", "project", "date"),
 }
 _REOPEN = re.compile(r"\b(re-?open|undo|unmark|uncheck|incomplete|unfinished|uncomplete|not\s+(yet\s+)?(done|complete|completed|finished))\b")
 _NUMBER_WORDS = {"a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "half": 0.5}
