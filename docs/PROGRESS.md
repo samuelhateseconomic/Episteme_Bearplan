@@ -3,6 +3,19 @@
 Read [AGENTS.md](../AGENTS.md) first; Claude also reads [CLAUDE.md](../CLAUDE.md).
 This is the single mutable work/handoff record. Detailed reviews retain evidence.
 
+## Current work — November 1, 2026: reader can list subtasks by status
+
+Pipeline committed by the user as `cf3178b`. User found "Check the incomplete
+subtasks" failed (literal search for "subtask"). Added read tool `list_tasks`
+(status/level/project filters, bounded pages) and reader guidance; prompt
+`router-v3`. Live qwen3:8b now lists the right subtasks across projects.
+Files: `backend/domain/assistant_tools.py`, `backend/domain/assistant.py`,
+`frontend/src/Assistant.tsx`, `tests/test_assistant.py`,
+`tests/test_assistant_actions.py`, skill, review, `docs/LOCAL_ASSISTANT.md`.
+pytest **843 passed, 1 skip**; Vitest 145 passed; typecheck/build pass.
+Uncommitted. Follow-up: UTC completion time shown as local by the model.
+Next: 30-case M5 evaluation.
+
 ## Current work — November 1, 2026: assistant actions restructured as a multi-agent pipeline
 
 User confirmed **every action requires Apply** and directed a multi-agent design:

@@ -6,7 +6,7 @@ import {
 import { savedDuration } from "./savedTime";
 
 const labels: Record<string, string> = {
-  get_day_plan: "Day plan", get_week_plan: "Week plan", search_tasks: "Task search",
+  get_day_plan: "Day plan", get_week_plan: "Week plan", search_tasks: "Task search", list_tasks: "Task list",
   get_task: "Task details", get_time_summary: "Saved time and completion",
 };
 
@@ -22,7 +22,8 @@ function Source({ source }: { source: AssistantSource }) {
       <ul>{(data.days as Record<string, unknown>[]).map((day) => <li key={String(day.date)}>{String(day.date)}: {savedDuration(day.active_microseconds as number)}</li>)}</ul>
       {data.days_truncated ? <p>Showing the latest 31 dates; the total includes all saved dates.</p> : null}
     </> : <>
-      {source.tool === "search_tasks" ? <p>Search scope: {data.scope_project_name ? String(data.scope_project_name) : "All projects"}</p> : null}
+      {source.tool === "list_tasks" ? <p>{String(data.status) === "any" ? "All" : String(data.status)[0].toUpperCase() + String(data.status).slice(1)} · {String(data.level).replace("_", " ")}</p> : null}
+      {source.tool === "search_tasks" || source.tool === "list_tasks" ? <p>Search scope: {data.scope_project_name ? String(data.scope_project_name) : "All projects"}</p> : null}
       {data.start_date ? <p>{String(data.start_date)}{data.end_date !== data.start_date ? ` – ${String(data.end_date)}` : ""} · {String(data.timezone)} · {data.historical ? "Frozen history" : "Current plan"}</p> : null}
       {typeof data.unique_leaf_total === "number" ? <p>{String(data.completed_leaf_total)} of {data.unique_leaf_total} unique planned work items complete</p> : null}
       <ul>{items.map((item, index) => <li key={`${String(item.task_id ?? item.id)}-${index}`}>
@@ -186,7 +187,7 @@ export function Assistant({ visible, projectId, date, onChanged }: { visible: bo
       <textarea id="assistant-question" rows={4} maxLength={2000} disabled={busy} value={prompt} onChange={(event) => setPrompt(event.target.value)}
         placeholder={pending ? "Answer the question above, or ask something new." : "What is planned today? Plan Essay on Tuesday. Start Math for 45 minutes."} />
       {pending ? <p className="muted">A change is waiting for details. <button type="button" className="link" disabled={busy} onClick={startOver}>Start over</button></p> : null}
-      <p className="muted">Uses your selected project and week as context. Each question is independent. Questions and replies stay in this page until you reload.</p>
+      <p className="muted">Uses your selected project and week as context. Each question is independent unless a change is waiting for details. Questions and replies stay in this page until you reload.</p>
       <div className="form-actions"><button type="submit" disabled={!status || !model || !prompt.trim() || busy || loading}>{busy ? "Looking up…" : "Ask"}</button>
         {busy ? <button type="button" onClick={cancel}>Cancel question</button> : null}</div>
     </form>

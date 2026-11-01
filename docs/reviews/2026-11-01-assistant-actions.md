@@ -163,3 +163,25 @@ Checks after the restructure (macOS 26.6.2, Python 3.13.15):
 | `.venv/bin/python -m pytest -q` | 842 passed, 1 skipped (Windows-only), 175.36 s |
 | `npm --prefix frontend test -- --run` | 11 files, 145 tests passed |
 | `npm --prefix frontend run typecheck` / `build` | Pass / Pass |
+
+
+## Follow-up fix: listing subtasks by status
+
+User report: "Check the incomplete subtasks" (selected project in context)
+answered that no tasks matched — the reader only had `search_tasks`, so it
+searched the literal word "subtask" and also scoped to the selected project.
+Fix: new bounded read tool `list_tasks(status, level, project_id?, offset,
+limit≤20)` with levels `subtasks`/`top_level`/`work_items`/`any`, parent titles
+and project names, plus reader guidance to use it instead of search. Prompt
+`router-v3`. Tests: filtering across projects, pagination, invalid values,
+no writes.
+
+Live qwen3:8b (disposable data): with and without a selected project, the
+question called `list_tasks(level=subtasks, status=incomplete)` across all
+projects and listed both open subtasks with parents (24.5 s, 33.1 s); "Which
+subtasks are done in Writing?" scoped to that project correctly (63.5 s).
+Follow-up: the model presented a UTC completion time as local ("10:58 PM" vs
+2:58 PM Pacific); a service-local completion date field would prevent this.
+
+Checks: pytest 843 passed, 1 skipped (176.17 s); Vitest 145 passed;
+typecheck/build pass.

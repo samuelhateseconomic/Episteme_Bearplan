@@ -62,6 +62,7 @@ not advertise tools and are rejected for this assistant. Example questions:
 - What is planned for today?
 - Show this week's plan.
 - Find tasks titled Reading and distinguish their projects.
+- Check the incomplete subtasks. (Lists across all projects unless you name one.)
 - How much saved active time do I have in total?
 - Plan Essay for Tuesday. · Start Math 55 for 45 minutes. · Reopen Reading in History.
 
@@ -77,7 +78,7 @@ releases its assistant slot. Switching screens also cancels a pending question.
 Plan, Track and Stats remain usable during generation. If Ollama is absent, a
 model lacks tools, an answer is incomplete or inference times out, the input is
 kept with a useful error. Refresh/retry explicitly. There is one assistant request
-slot, five model rounds, ten lookups, a 90-second request deadline, bounded context
+slot, five model rounds, ten lookups, a 120-second request deadline, bounded context
 and response sizes; the HTTP transport is pinned to `127.0.0.1:11434`, without
 environment proxies or redirects. It never pulls models automatically.
 

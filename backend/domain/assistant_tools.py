@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -29,6 +29,14 @@ class SearchArguments(Arguments):
     limit: int = Field(default=10, ge=1, le=20)
 
 
+class ListArguments(Arguments):
+    status: Literal["incomplete", "complete", "any"] = "incomplete"
+    level: Literal["subtasks", "top_level", "work_items", "any"] = "any"
+    project_id: str | None = Field(default=None, max_length=100)
+    offset: int = Field(default=0, ge=0, le=10000)
+    limit: int = Field(default=20, ge=1, le=20)
+
+
 class TaskArguments(Arguments):
     task_id: str = Field(min_length=1, max_length=100)
 
@@ -37,6 +45,7 @@ TOOL_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "get_day_plan": (PlanArguments, "Read planned work on a date; omit date for service Today. Includes frozen history for a closed week."),
     "get_week_plan": (PlanArguments, "Read a Monday–Sunday plan containing date; omit date for this service week. Includes frozen history if closed."),
     "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Returns stable IDs and pagination; duplicate names are distinct."),
+    "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Omit project_id to cover all projects. Returns totals and pagination."),
     "get_task": (TaskArguments, "Read one current task by its exact stable ID, including notes, deadline and completion."),
     "get_time_summary": (Arguments, "Read exact all-time saved active microseconds, current leaf completion and the latest 31 dated totals. Running/uncertain time is excluded."),
 }
@@ -50,7 +59,7 @@ def tool_schemas() -> list[dict]:
 def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None) -> dict[str, Any]:
     """Validate before reading. Callers cannot select SQL, file paths or mutations."""
     if name not in TOOL_MODELS:
-        raise ValueError("Only the five documented read tools are available. No changes were made.")
+        raise ValueError("Only the documented read tools are available. No changes were made.")
     args = TOOL_MODELS[name][0].model_validate(raw).model_dump()
     instant = datetime.now(UTC) if now is None else now
     if name == "get_time_summary":
@@ -64,6 +73,20 @@ def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None
     if name == "get_task":
         task = get_task(db, args["task_id"])
         return {"task": {**task.model_dump(mode="json"), "project_name": projects.get(task.project_id, "")}}
+    if name == "list_tasks":
+        everything = list_tasks(db, args["project_id"])
+        by_id = {t.id: t for t in everything}
+        level = {"subtasks": lambda t: t.parent_id is not None, "top_level": lambda t: t.parent_id is None,
+                 "work_items": lambda t: not t.is_parent, "any": lambda t: True}[args["level"]]
+        status = {"incomplete": lambda t: not t.completed, "complete": lambda t: t.completed, "any": lambda t: True}[args["status"]]
+        tasks = [t for t in everything if level(t) and status(t)]
+        page = tasks[args["offset"]:args["offset"] + args["limit"]]
+        return {"total": len(tasks), "offset": args["offset"], "status": args["status"], "level": args["level"],
+                "scope_project_id": args["project_id"], "scope_project_name": projects.get(args["project_id"]),
+                "next_offset": args["offset"] + len(page) if args["offset"] + len(page) < len(tasks) else None,
+                "tasks": [{**t.model_dump(mode="json"), "notes": t.notes[:200], "notes_truncated": len(t.notes) > 200,
+                           "project_name": projects.get(t.project_id, ""),
+                           "parent_title": by_id[t.parent_id].title if t.parent_id in by_id else None} for t in page]}
     if name == "search_tasks":
         query = args["query"].strip().casefold()
         if not query:

@@ -42,7 +42,7 @@ def test_reader_agent_has_only_read_tools(db):
     provider = RecordingProvider()
     reply = ask(db, provider, "What is planned today?")
     assert reply["kind"] == "answer" and reply["route"] == {"intent": "question", "agents": ["router", "reader"]}
-    assert provider.tools == ["get_day_plan", "get_week_plan", "search_tasks", "get_task", "get_time_summary"]
+    assert provider.tools == ["get_day_plan", "get_week_plan", "search_tasks", "list_tasks", "get_task", "get_time_summary"]
 
 
 def test_sufficient_request_becomes_proposal_without_writing(db):

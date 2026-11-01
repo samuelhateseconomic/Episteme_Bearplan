@@ -123,7 +123,7 @@ def test_coordinator_validates_hostile_calls_and_returns_only_successful_sources
     assert "untrusted data" in provider.messages[0][0]["content"]
     assert rows(db) == before
     assert {schema["function"]["name"] for schema in tool_schemas()} == {
-        "get_day_plan", "get_week_plan", "get_task", "search_tasks", "get_time_summary"}
+        "get_day_plan", "get_week_plan", "get_task", "search_tasks", "list_tasks", "get_time_summary"}
 
 
 def test_loop_limit_busy_cancellation_and_timeout_release_slot(db, monkeypatch):
@@ -255,3 +255,30 @@ def test_provider_drops_reasoning_and_rejects_token_limited_partial_answer():
     provider._json = partial
     with pytest.raises(AssistantError, match="incomplete"):
         asyncio.run(provider.chat("fixture:local", [], []))
+
+
+def test_list_tasks_filters_by_completion_and_level_across_projects(db):
+    other = create_project(db, "History")
+    seminar = create_task(db, "Seminar")
+    draft = create_task(db, "Draft", parent_id=seminar.id)
+    done = create_task(db, "Check", parent_id=seminar.id)
+    set_task_completion(db, done.id, True)
+    essay = create_task(db, "Essay", project_id=other.id)
+    reading = create_task(db, "Reading", project_id=other.id, notes="n" * 300)
+    read_child = create_task(db, "Chapter 1", parent_id=reading.id)
+    before = rows(db)
+    open_subtasks = read_tool(db, "list_tasks", {"level": "subtasks"})
+    assert [t["id"] for t in open_subtasks["tasks"]] == [draft.id, read_child.id] and open_subtasks["total"] == 2
+    assert open_subtasks["tasks"][0]["parent_title"] == "Seminar" and open_subtasks["scope_project_name"] is None
+    assert open_subtasks["tasks"][1]["project_name"] == "History"
+    assert [t["id"] for t in read_tool(db, "list_tasks", {"status": "complete", "level": "any"})["tasks"]] == [done.id]
+    work = read_tool(db, "list_tasks", {"level": "work_items", "status": "any", "project_id": other.id})
+    assert [t["id"] for t in work["tasks"]] == [essay.id, read_child.id] and work["scope_project_name"] == "History"
+    page = read_tool(db, "list_tasks", {"status": "any", "limit": 2})
+    assert page["total"] == 6 and page["next_offset"] == 2
+    assert read_tool(db, "list_tasks", {"status": "any", "level": "top_level"})["total"] == 3
+    with pytest.raises(ValidationError):
+        read_tool(db, "list_tasks", {"status": "open"})
+    with pytest.raises(ValidationError):
+        read_tool(db, "list_tasks", {"limit": 500})
+    assert rows(db) == before
