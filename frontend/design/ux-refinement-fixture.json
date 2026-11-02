@@ -1,0 +1,885 @@
+{
+  "fixture_id": "bearplans-ux-refinement-20261101-v1",
+  "scope": "Synthetic Figma-only facts; keys are not real database IDs. No personal data. No app/schema changes.",
+  "service_today": "2026-11-01",
+  "service_timezone": "America/Los_Angeles",
+  "as_of_utc": "2026-11-01T20:00:00.000000Z",
+  "source_week": {
+    "start": "2026-10-26",
+    "end": "2026-11-01",
+    "baseline_state": "open"
+  },
+  "next_week": {
+    "start": "2026-11-02",
+    "end": "2026-11-08",
+    "initial_placements": []
+  },
+  "projects": [
+    {
+      "id": "history",
+      "name": "History seminar"
+    },
+    {
+      "id": "cs61a",
+      "name": "CS61A"
+    },
+    {
+      "id": "economics",
+      "name": "Economics"
+    },
+    {
+      "id": "personal",
+      "name": "Personal"
+    }
+  ],
+  "parents": [
+    {
+      "id": "seminar",
+      "project_id": "history",
+      "title": "Prepare seminar discussion",
+      "children": [
+        "read",
+        "outline",
+        "theme"
+      ]
+    },
+    {
+      "id": "cs-ps6",
+      "project_id": "cs61a",
+      "title": "Problem set 6",
+      "children": [
+        "recursion"
+      ]
+    },
+    {
+      "id": "econ-ps4",
+      "project_id": "economics",
+      "title": "Problem set 4",
+      "children": [
+        "problem-answers"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "read",
+      "title": "Read the primary source",
+      "project_id": "history",
+      "parent_id": "seminar",
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-10-31",
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "outline",
+      "title": "Outline the discussion",
+      "project_id": "history",
+      "parent_id": "seminar",
+      "deadline": "2026-11-04",
+      "estimate_minutes": 20,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "recursion",
+      "title": "Test recursion exercises",
+      "project_id": "cs61a",
+      "parent_id": "cs-ps6",
+      "deadline": "2026-11-04",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "elasticity",
+      "title": "Review elasticity notes",
+      "project_id": "economics",
+      "parent_id": null,
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "problem-answers",
+      "title": "Draft problem-set answers",
+      "project_id": "economics",
+      "parent_id": "econ-ps4",
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "reflection",
+      "title": "Write a reflection on the two arguments in this week\u2019s reading",
+      "project_id": "history",
+      "parent_id": null,
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "file-notes",
+      "title": "File reading notes",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "lab",
+      "title": "Prepare lab materials",
+      "project_id": "cs61a",
+      "parent_id": null,
+      "deadline": "2026-11-03",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "theme",
+      "title": "Choose the seminar theme",
+      "project_id": "history",
+      "parent_id": "seminar",
+      "deadline": null,
+      "estimate_minutes": 10,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "chapter4",
+      "title": "Summarize chapter 4",
+      "project_id": "history",
+      "parent_id": null,
+      "deadline": "2026-10-30",
+      "estimate_minutes": 25,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [
+        "2026-11-01"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "citations",
+      "title": "Check citation list",
+      "project_id": "history",
+      "parent_id": null,
+      "deadline": "2026-10-30",
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [
+        "2026-10-28"
+      ],
+      "foreground": true
+    },
+    {
+      "id": "inbox",
+      "title": "Clear reading inbox",
+      "project_id": "history",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": null,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": true
+    },
+    {
+      "id": "room-history",
+      "title": "Book study room",
+      "project_id": "history",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 10,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": true
+    },
+    {
+      "id": "cs-done-1",
+      "title": "Review recursion trace",
+      "project_id": "cs61a",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "cs-done-2",
+      "title": "Check lecture examples",
+      "project_id": "cs61a",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "cs-done-3",
+      "title": "Organize lab notes",
+      "project_id": "cs61a",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "econ-done-1",
+      "title": "Read demand chapter",
+      "project_id": "economics",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "econ-done-2",
+      "title": "Review supply graph",
+      "project_id": "economics",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "econ-done-3",
+      "title": "Check equilibrium exercise",
+      "project_id": "economics",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": true,
+      "completed_at": "2026-10-30T19:00:00.000000Z",
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "room-economics",
+      "title": "Book study room",
+      "project_id": "economics",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 10,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "personal-open-1",
+      "title": "Sort desk notes",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "personal-open-2",
+      "title": "Prepare reading list",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "personal-open-3",
+      "title": "Organize reference folder",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "personal-open-4",
+      "title": "Check study supplies",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    },
+    {
+      "id": "personal-open-5",
+      "title": "Review next month\u2019s commitments",
+      "project_id": "personal",
+      "parent_id": null,
+      "deadline": null,
+      "estimate_minutes": 30,
+      "completed": false,
+      "completed_at": null,
+      "active_planned_dates": [],
+      "foreground": false
+    }
+  ],
+  "active_placements": [
+    {
+      "id": "placement-read-2026-10-31",
+      "task_id": "read",
+      "planned_date": "2026-10-31"
+    },
+    {
+      "id": "placement-read-2026-11-01",
+      "task_id": "read",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-outline-2026-11-01",
+      "task_id": "outline",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-recursion-2026-11-01",
+      "task_id": "recursion",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-elasticity-2026-11-01",
+      "task_id": "elasticity",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-problem-answers-2026-11-01",
+      "task_id": "problem-answers",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-reflection-2026-11-01",
+      "task_id": "reflection",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-file-notes-2026-11-01",
+      "task_id": "file-notes",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-lab-2026-11-01",
+      "task_id": "lab",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-theme-2026-11-01",
+      "task_id": "theme",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-chapter4-2026-11-01",
+      "task_id": "chapter4",
+      "planned_date": "2026-11-01"
+    },
+    {
+      "id": "placement-citations-2026-10-28",
+      "task_id": "citations",
+      "planned_date": "2026-10-28"
+    }
+  ],
+  "today_order": [
+    "read",
+    "outline",
+    "recursion",
+    "elasticity",
+    "problem-answers",
+    "reflection",
+    "file-notes",
+    "lab"
+  ],
+  "completed_today_placement_tasks": [
+    "theme",
+    "chapter4"
+  ],
+  "earlier_unfinished": [
+    "citations"
+  ],
+  "historical_closed_weeks": [
+    {
+      "week_start": "2026-10-19",
+      "week_end": "2026-10-25",
+      "closed_at": "2026-10-26T03:00:00.000000Z",
+      "total": 1,
+      "completed": 0,
+      "missed": 1,
+      "tasks": [
+        {
+          "task_id": "chapter4",
+          "title": "Summarize chapter 4 notes",
+          "project_name": "History seminar",
+          "parent_title": null,
+          "deadline": "2026-10-29",
+          "estimate_minutes": 20,
+          "completed": false,
+          "completed_at": null
+        }
+      ],
+      "placements": [
+        {
+          "id": "archived-chapter4-2026-10-23",
+          "task_id": "chapter4",
+          "planned_date": "2026-10-23"
+        }
+      ],
+      "intentional_difference": "Current title/deadline/estimate/completion changed after closure. Historical values stay frozen."
+    }
+  ],
+  "baseline_totals": {
+    "current_leaves": 25,
+    "current_completed_leaves": 9,
+    "foreground_leaves": 13,
+    "foreground_completed_leaves": 3,
+    "source_unique_leaves": 11,
+    "source_placement_rows": 12,
+    "source_completed": 2,
+    "source_percent": 18,
+    "parent_seminar_completed": 1,
+    "parent_seminar_total": 3,
+    "history_project_done_unique": 3,
+    "history_project_done_membership_rows": 4,
+    "stats_missed": 1
+  },
+  "read_completed_branch": {
+    "current_completed_leaves": 10,
+    "source_completed": 3,
+    "source_total": 11,
+    "source_percent": 27,
+    "parent_seminar_completed": 2,
+    "active_session": "preserved"
+  },
+  "theme_reopened_branch": {
+    "current_completed_leaves": 8,
+    "source_completed": 1,
+    "source_total": 11,
+    "source_percent": 9,
+    "parent_seminar_completed": 0,
+    "note": "If Read is also completed, totals are9/25,2/11,18%,parent1/3."
+  },
+  "done_history_project": {
+    "overall_unique": 3,
+    "groups": [
+      {
+        "year": 2026,
+        "month": "October",
+        "week_start": "2026-10-26",
+        "week_end": "2026-11-01",
+        "task_ids": [
+          "theme",
+          "chapter4"
+        ]
+      },
+      {
+        "year": 2026,
+        "month": "October",
+        "week_start": "2026-10-19",
+        "week_end": "2026-10-25",
+        "task_ids": [
+          "chapter4"
+        ]
+      },
+      {
+        "label": "No planned week",
+        "task_ids": [
+          "inbox"
+        ]
+      }
+    ],
+    "monday_month_filing": "proposed default"
+  },
+  "after_closing_source_baseline": {
+    "source_completed": 2,
+    "source_total": 11,
+    "source_missed": 9,
+    "overall_missed": 10,
+    "eligible_selected_count": 9,
+    "default_selections": [
+      {
+        "task_id": "read",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "outline",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-04"
+      },
+      {
+        "task_id": "recursion",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-04"
+      },
+      {
+        "task_id": "elasticity",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "problem-answers",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "reflection",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "file-notes",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "lab",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "citations",
+        "selected": true,
+        "suggested_date": "2026-11-04",
+        "deadline": "2026-10-30"
+      }
+    ],
+    "new_destination_placements_before_apply": 0,
+    "chapter4_missed_count": 1,
+    "note": "End Week opens these choices. Neither opening nor defaults create placements."
+  },
+  "after_closing_with_read_complete": {
+    "source_completed": 3,
+    "source_total": 11,
+    "source_missed": 8,
+    "overall_missed": 9,
+    "eligible_selected_count": 8,
+    "default_selections": [
+      {
+        "task_id": "outline",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-04"
+      },
+      {
+        "task_id": "recursion",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-04"
+      },
+      {
+        "task_id": "elasticity",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "problem-answers",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "reflection",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "file-notes",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "lab",
+        "selected": true,
+        "suggested_date": "2026-11-08",
+        "deadline": "2026-11-03"
+      },
+      {
+        "task_id": "citations",
+        "selected": true,
+        "suggested_date": "2026-11-04",
+        "deadline": "2026-10-30"
+      }
+    ]
+  },
+  "explicit_two_task_carryover_branch": {
+    "steps": [
+      "Deselect seven of nine eligible leaves",
+      "Redate Read from Nov8 to Nov3",
+      "Redate Test recursion from Nov8 to Nov2",
+      "Review exact dates",
+      "Apply"
+    ],
+    "selections": [
+      {
+        "task_id": "read",
+        "planned_date": "2026-11-03"
+      },
+      {
+        "task_id": "recursion",
+        "planned_date": "2026-11-02"
+      }
+    ],
+    "created_placements": 2,
+    "tasks_created": 0,
+    "source_snapshot": "unchanged",
+    "deadlines": "unchanged",
+    "overall_missed": 10
+  },
+  "focus_aggregates": {
+    "all_time_minutes": 753,
+    "all_time_label": "12h 33m",
+    "finalized_sessions": 24,
+    "project_minutes": {
+      "history": 315,
+      "cs61a": 248,
+      "economics": 190,
+      "personal": 0
+    },
+    "week_start": "2026-10-26",
+    "week_end": "2026-11-01",
+    "week_minutes": 390,
+    "week_label": "6h 30m",
+    "days": [
+      {
+        "date": "2026-10-26",
+        "minutes": 20
+      },
+      {
+        "date": "2026-10-27",
+        "minutes": 35
+      },
+      {
+        "date": "2026-10-28",
+        "minutes": 75
+      },
+      {
+        "date": "2026-10-29",
+        "minutes": 60
+      },
+      {
+        "date": "2026-10-30",
+        "minutes": 90
+      },
+      {
+        "date": "2026-10-31",
+        "minutes": 65
+      },
+      {
+        "date": "2026-11-01",
+        "minutes": 45
+      }
+    ],
+    "saved_today_minutes": 45,
+    "current_streak_days": 4,
+    "qualifying_dates": [
+      "2026-10-28",
+      "2026-10-29",
+      "2026-10-30",
+      "2026-10-31"
+    ],
+    "note": "Aggregate synthetic baseline. Do not treat these aggregates as 24 individually audited interval records."
+  },
+  "session": {
+    "id": "session-read-new",
+    "task_id": "read",
+    "planned_minutes": 30,
+    "planned_seconds": 1800,
+    "confirmed_seconds": 720,
+    "remaining_seconds": 1080,
+    "uncertain_gap_seconds": 300,
+    "species": "Pine",
+    "eligible_for_tree": true,
+    "eligible_for_coins": true,
+    "captured_coins_per_minute": 1,
+    "current_award": null,
+    "baseline_wallet": 33,
+    "baseline_owned_species": [
+      "Pine"
+    ],
+    "states": [
+      "idle",
+      "running",
+      "paused",
+      "needs_review",
+      "paused_after_sleep",
+      "finished_early"
+    ],
+    "finish_early": {
+      "confirmed_seconds": 720,
+      "minutes": 12,
+      "coin_award": 12,
+      "wallet": 45,
+      "saved_today_minutes": 57,
+      "streak_days": 4,
+      "tree_stage": "seedling",
+      "tree_outcome": "unfinished",
+      "task_completion": "unchanged"
+    },
+    "boundary_scenario": {
+      "name": "Two trusted minutes and a five-minute gap",
+      "confirmed_seconds": 120,
+      "uncertain_gap_seconds": 300,
+      "planned_seconds": 1800,
+      "remaining_seconds": 1680,
+      "note": "Alternate checkpoint scenario; do not combine with the twelve-minute state."
+    },
+    "prior_saved_session_for_correction": {
+      "id": "session-read-saved",
+      "task_id": "read",
+      "date": "2026-11-01",
+      "planned_minutes": 30,
+      "confirmed_minutes": 12,
+      "original_confirmed_ceiling_minutes": 12,
+      "captured_coins_per_minute": 1,
+      "initial_award": 12,
+      "tree_outcome": "unfinished"
+    },
+    "correction_branch_from_baseline": {
+      "saved_session_id": "session-read-saved",
+      "before_minutes": 12,
+      "after_minutes": 10,
+      "reason": "Paused to answer a call",
+      "saved_today_before": 45,
+      "saved_today_after": 43,
+      "wallet_before": 33,
+      "wallet_after": 31,
+      "streak_before": 4,
+      "streak_after": 4,
+      "task_completion": "unchanged",
+      "closed_snapshots": "unchanged",
+      "note": "Independent baseline branch, not after finishing session-read-new."
+    }
+  },
+  "new_task_save_branch": {
+    "id": "new-seminar-questions",
+    "title": "Draft seminar questions",
+    "project_id": "history",
+    "parent_id": null,
+    "deadline": "2026-11-03",
+    "estimate_minutes": 25,
+    "planned_date": "2026-11-01",
+    "completed": false,
+    "after_save_current_leaves": 26,
+    "after_save_current_completed": 9,
+    "after_save_source_unique_leaves": 12,
+    "after_save_source_completed": 2,
+    "after_save_source_percent": 17,
+    "note": "Independent branch; do not overlay counts onto the unchanged25-leaf baseline."
+  },
+  "provenance": {
+    "strong_existing_facts": [
+      "Read: dueNov3,30min",
+      "Outline: dueNov4,20min",
+      "Summarizechapter4: dueOct30,25min",
+      "BookstudyroomHistory: unscheduled,10min",
+      "TestrecursionNextweek: dueNov4"
+    ],
+    "default_other_sunday_estimate_minutes": 30,
+    "default_other_sunday_deadline": "2026-11-03",
+    "background_tasks": "Explicit fixture additions preserving the existing25/9 global summary; no source record claims.",
+    "assistant": "App carryover with Apply/Undo now implemented; this Figma sample remains intentionally read-only."
+  },
+  "repeated_miss_alternate": {
+    "as_of": "2026-11-09",
+    "independent_branch": true,
+    "source_closed_missed": 9,
+    "prior_closed_missed": 1,
+    "next_closed_week": {
+      "start": "2026-11-02",
+      "end": "2026-11-08",
+      "planned_tasks": [
+        "read",
+        "recursion"
+      ],
+      "complete_at_closure": [
+        "recursion"
+      ],
+      "unfinished_at_closure": [
+        "read"
+      ],
+      "missed": 1
+    },
+    "read_current_completed_later": true,
+    "read_missed_count": 2,
+    "overall_missed": 11,
+    "note": "Read had two source dates but counts once in that week; one further miss in the next closed week. Later completion changes neither snapshot."
+  }
+}

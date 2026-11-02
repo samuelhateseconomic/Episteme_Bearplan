@@ -112,6 +112,7 @@ and an example, card summary fields, Undo rules, and tests for each stage.
 ## Hand off
 
 Write `docs/reviews/YYYY-MM-DD-assistant-actions.md` (scenario, decisions marked
-proposed vs confirmed, commands/results, gaps) and update `docs/PROGRESS.md` and
+proposed vs confirmed, commands/results, gaps), update `docs/PROGRESS.md` (current
+state/next step), add the finished work to the top of `docs/COMPLETED.md`, and update
 `docs/LOCAL_ASSISTANT.md`. Mark remaining gates (live model evaluation, daily
 writes) explicitly unpassed.

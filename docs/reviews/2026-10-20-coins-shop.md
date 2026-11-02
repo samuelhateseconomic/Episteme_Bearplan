@@ -182,7 +182,7 @@ externally referenced long-duration acceptance and the full combined checklist i
 the [M2 review](2026-10-18-m2-recovery.md#target-mac-acceptance-still-required).
 Current deterministic and Mac software regressions do not substitute for it.
 
-Next eligible ticket is [daily streaks](../PROGRESS.md#next-m3-session--daily-streaks-not-started),
+Next eligible ticket is [daily streaks](../COMPLETED.md#next-m3-session--daily-streaks-not-started),
 prepared in shared progress and not started. Preserve existing awards, purchases,
 species and session history when deriving later reports or adjustment ledgers.
 

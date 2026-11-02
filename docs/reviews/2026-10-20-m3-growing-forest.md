@@ -129,4 +129,4 @@ completion creates exactly one mature result. Preserve the detailed
 
 Next eligible session is **coins and the tree shop**, not started. Scope,
 dependencies, relevant functions, acceptance cases, unresolved proposed defaults
-and a continuation prompt are in [shared progress](../PROGRESS.md#next-m3-session--coins-and-tree-shop-not-started).
+and a continuation prompt are in [shared progress](../COMPLETED.md#next-m3-session--coins-and-tree-shop-not-started).

@@ -5,9 +5,10 @@ architecture, commands, data safety and verification requirements now live in
 [AGENTS.md](AGENTS.md). Read that file as part of these instructions; do not maintain
 a second copy of its shared rules here.
 
-The single current-work and handoff record is [docs/PROGRESS.md](docs/PROGRESS.md).
-Use it to find completed work, active work, recorded checks, pending manual gates,
-known guidance discrepancies and the next build. Historical reviews are linked
+The single current-work and handoff record is [docs/PROGRESS.md](docs/PROGRESS.md):
+active work, next steps, open follow-ups, pending manual gates, decisions waiting on
+the user, build status and known guidance discrepancies. Finished work, with its
+recorded checks and commits, is logged newest first in [docs/COMPLETED.md](docs/COMPLETED.md). Historical reviews are linked
 there; do not pick the newest-looking filename and assume its claims are current.
 
 ## Resuming after Codex or a usage limit
@@ -28,8 +29,9 @@ there; do not pick the newest-looking filename and assume its claims are current
 ## Leaving a useful handoff
 
 Before pausing, reaching a usage limit or transferring work back to Codex, update
-`docs/PROGRESS.md` with the exact work state, changed files, commit references,
-commands/results, failures/skips, pending manual checks and next concrete action.
+`docs/PROGRESS.md` with the exact work state, pending manual checks and next
+concrete action, and record finished work at the top of `docs/COMPLETED.md` with
+changed files, commit references, commands/results and failures/skips.
 Keep incomplete work clearly marked; do not claim completion because usage ran out.
 Link the detailed review record and separate implementation and milestone decisions.
 Do not rely on Claude's chat/session memory as the only record of a product decision.

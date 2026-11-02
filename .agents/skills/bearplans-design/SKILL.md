@@ -80,6 +80,7 @@ APIs, storage, application code, or additional Assistant capabilities as a side
 effect of design work.
 
 Close the ticket with its reviewed node links, checks actually performed, findings,
-and next step in `docs/PROGRESS.md`. Put detailed evidence in the dated review
+and next step in `docs/PROGRESS.md`, and log the finished ticket at the top of
+`docs/COMPLETED.md`. Put detailed evidence in the dated review
 record and stable design definitions in the canonical plan. Preserve existing
 release and hardware acceptance status; design evidence certifies design only.

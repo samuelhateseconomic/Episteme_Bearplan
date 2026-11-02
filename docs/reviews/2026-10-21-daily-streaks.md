@@ -189,7 +189,7 @@ conditions, real interruption/recovery, clock changes and externally referenced
 long-duration behavior. Automated date/retry checks do not certify those gates.
 M3 still lacks statistics/session corrections; backup/restore and the seven-day
 trial remain later release work. The next session is prepared in
-[shared progress](../PROGRESS.md#next-m3-session--statistics-and-session-corrections-not-started)
+[shared progress](../COMPLETED.md#next-m3-session--statistics-and-session-corrections-not-started)
 and has not started.
 
 ## Local commit authorization
