@@ -2,8 +2,10 @@
 
 Applies throughout this repository to Codex, Claude and other contributors.
 Keep shared rules here; retain Claude's entrypoint in [CLAUDE.md](CLAUDE.md).
-Use [docs/PROGRESS.md](docs/PROGRESS.md) as the single shared progress and handoff
-record. Detailed review records remain evidence, not parallel task trackers.
+Use [docs/PROGRESS.md](docs/PROGRESS.md) as the single shared record of current
+work and handoff (active work, next steps, open gates and decisions) and
+[docs/COMPLETED.md](docs/COMPLETED.md) as the append-only log of finished work,
+newest first. Detailed review records remain evidence, not parallel task trackers.
 
 ## Read before working
 
@@ -44,6 +46,12 @@ dates; use their contents and commit history to determine which evidence is curr
   it is a live completion view, separate from immutable closed-week history.
   Parent completion, deadlines versus planned dates, confirmed time and recovery,
   corrections/replay and rewards retain the rules below.
+- Accepted completed-current-task design: compact leaf rows to an enabled checked
+  checkbox plus a readable gray, struck-through title. Hide per-row metadata and
+  secondary actions; unchecking reopens the same task and restores normal eligible
+  details/controls after a confirmed save. Preserve accessible context, focus,
+  error recovery, shared completion, active timers and frozen read-only history.
+  This is a specification until separately implemented, not a current UI claim.
 - The accepted future drag design includes both within-day ordering and date
   moves. Current same-day drops remain no-ops until a separately scoped build
   implements persisted ordering. Cancellation/outside drops and unchanged-position
@@ -162,7 +170,7 @@ dates; use their contents and commit history to determine which evidence is curr
   Add behavior (latest user refinement, 2026-10-16). Keep keyboard Move/remove date
   controls. Show the icon to the left of the project/parent-task context line,
   above the leaf/subtask title, with an accessible name and no visible Drag text;
-  omit the open-board dragging instructions. Weekly cards show the due date, while
+  omit the open-board dragging instructions. Current weekly cards show the due date, while
   their column identifies the planned day; omit redundant Planned-date metadata
   on open and historical cards. Keep planned dates in task planning, date controls,
   accessibility labels and saved records.
@@ -193,7 +201,10 @@ dates; use their contents and commit history to determine which evidence is curr
   the original snapshot. Reopening is deferred; closure may be past, current or
   future because no date restriction was requested.
 - Carryover requires a closed source, explicit selection and preview of destination
-  dates in the immediately following Monday–Sunday week. Include only work that
+  dates in the immediately following Monday–Sunday week. Closing a week opens the
+  carryover choices next; every eligible task starts selected on the same weekday
+  next week as its last planned day, and the user may uncheck or redate any before
+  reviewing and applying (user decision, 2026-11-01). Deadlines never move. Include only work that
   was unfinished at closure and still exists as an incomplete leaf. Explain current
   completion, removed tasks, new containers, closed destinations and existing active
   placements. Preserve task identity/fields/history and the closed source; create
@@ -202,7 +213,10 @@ dates; use their contents and commit history to determine which evidence is curr
   or failed writes leave no partial closure/carryover. Persist carryover operation
   IDs and results atomically; retries of the same normalized source/selections
   return the original result, while key reuse with different work/dates conflicts.
-  Recurring work, advanced reports and bulk automatic carryover remain deferred.
+  Recurring work, advanced reports and carryover without review remain deferred.
+- Stats "Missed" (user wording, 2026-11-01) counts planned leaves still unfinished
+  when their week closed, once per closed week, from the frozen snapshots only; a
+  later carryover or completion never erases it. Open weeks are not counted.
 
 ## Architecture and data safety
 
@@ -290,9 +304,10 @@ package manager or rebuild the project from scratch on resumption.
   milestone/operator review. Use **Pass / Pass with follow-ups / Fail** honestly;
   missing required evidence cannot become a pass to keep the calendar. Complete
   independent work and explicitly identify any remaining manual gate.
-- Before stopping or transferring agents, update `docs/PROGRESS.md` with completed
-  work, current work, relevant files/commits, checks actually run, pending manual
-  evidence, blockers and the next concrete step. Link detailed reviews rather than
+- Before stopping or transferring agents, update `docs/PROGRESS.md` with current
+  work, pending manual evidence, blockers and the next concrete step, and add each
+  finished item to the top of `docs/COMPLETED.md` with relevant files/commits and
+  checks actually run. Link detailed reviews rather than
   maintaining duplicate status in each agent's instructions. Mark planned work as
   not started until implementation actually begins.
 - Commit only when explicitly asked/authorized; scope the commit to relevant changes.

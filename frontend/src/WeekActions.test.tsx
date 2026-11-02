@@ -135,7 +135,7 @@ test("carryover explains completed/conflicting tasks and requires reviewing sele
   expect(await screen.findByRole("checkbox", { name: "Done now" })).toBeDisabled();
   expect(screen.getByRole("checkbox", { name: "Already planned" })).toBeDisabled();
   expect(screen.getByText(/Existing plan: Oct 21, 2026/)).toBeInTheDocument();
-  await user.click(screen.getByRole("checkbox", { name: "Read chapter" }));
+  expect(screen.getByRole("checkbox", { name: "Read chapter" })).toBeChecked();  // Eligible work starts selected.
   const date = screen.getByLabelText("Carry “Read chapter” to");
   expect(date).toHaveAttribute("min", "2026-10-19");
   expect(date).toHaveAttribute("max", "2026-10-25");
@@ -168,7 +168,7 @@ test("failed carryover retains selections and retry reuses the reviewed operatio
   const user = userEvent.setup();
   render(<WeekActions plan={planning({ closed_week: snapshot() })} onRun={run} locked={false} />);
   await user.click(screen.getByRole("button", { name: "Carry unfinished work" }));
-  await user.click(await screen.findByRole("checkbox", { name: "Read chapter" }));
+  expect(await screen.findByRole("checkbox", { name: "Read chapter" })).toBeChecked();
   await user.click(screen.getByRole("button", { name: "Review carryover" }));
   await user.click(await screen.findByRole("button", { name: "Apply carryover" }));
   expect(await screen.findByRole("alert")).toHaveTextContent("Your selections are kept");
@@ -178,4 +178,37 @@ test("failed carryover retains selections and retry reuses the reviewed operatio
   expect(applied[0]).toEqual(applied[1]);
   expect(applied[0].operation_id).toMatch(/^[\da-f-]{36}$/i);
   expect(await screen.findByRole("status")).toHaveTextContent("Carried over 1 work item");
+});
+
+
+test("eligible work starts on the same weekday next week and can be unchecked", async () => {
+  const tuesday = { task_id: "tue", snapshot_task: historical({ id: "tue", title: "Tuesday work" }), task: task("tue", { title: "Tuesday work" }),
+    eligible: true, reason: null, existing_planned_date: null, suggested_date: "2026-10-20" };
+  vi.spyOn(globalThis, "fetch").mockResolvedValue(json(options({ candidates: [...options().candidates, tuesday] })));
+  const user = userEvent.setup();
+  render(<WeekActions plan={planning({ closed_week: snapshot() })} onRun={run} locked={false} />);
+  await user.click(screen.getByRole("button", { name: "Carry unfinished work" }));
+  expect(await screen.findByLabelText("Carry “Tuesday work” to")).toHaveValue("2026-10-20");
+  await user.click(screen.getByRole("checkbox", { name: "Tuesday work" }));
+  expect(screen.queryByLabelText("Carry “Tuesday work” to")).not.toBeInTheDocument();
+  await user.click(screen.getByRole("checkbox", { name: "Tuesday work" }));
+  expect(screen.getByLabelText("Carry “Tuesday work” to")).toHaveValue("2026-10-20");
+});
+
+test("closing a week with unfinished work opens the carryover choices next", async () => {
+  vi.spyOn(globalThis, "fetch").mockImplementation(async (url) => {
+    const path = String(url);
+    if (path.endsWith("close-preview")) return json({ preview_token: "reviewed", snapshot: snapshot({ closed_at: null }) });
+    if (path.endsWith("carryover")) return json(options());
+    return json(snapshot());
+  });
+  const user = userEvent.setup();
+  const { rerender } = render(<WeekActions plan={planning()} onRun={run} locked={false} />);
+  await user.click(screen.getByRole("button", { name: "End Week" }));
+  expect(await screen.findByText("After closing, choose which unfinished tasks to carry to next week.")).toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "Close week" }));
+  rerender(<WeekActions plan={planning({ closed_week: snapshot() })} onRun={run} locked={false} />);
+  const choices = within(await screen.findByRole("region", { name: "Carryover choices" }));
+  expect(choices.getByRole("checkbox", { name: "Read chapter" })).toBeChecked();
+  expect(choices.getByLabelText("Carry “Read chapter” to")).toHaveValue("2026-10-19");
 });

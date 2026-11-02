@@ -137,3 +137,34 @@ def test_bad_interval_fails_closed_without_writes(db):
     with pytest.raises(StreakDataError):
         get_statistics(db, now=NOW)
     assert all_rows(db) == before
+
+
+def test_missed_counts_unfinished_planned_leaves_per_closed_week_even_after_carryover(db):
+    from uuid import uuid4 as new_id
+    from backend.domain.weeks import apply_carryover, close_week, preview_carryover, preview_close
+
+    def close(week):
+        close_week(db, week, preview_close(db, week).preview_token)
+
+    parent = create_task(db, "Container")
+    missed_twice = create_task(db, "Proof", parent_id=parent.id)
+    done = create_task(db, "Reading")
+    open_only = create_task(db, "Not closed yet")
+    create_placement(db, missed_twice.id, "2026-10-13")
+    create_placement(db, missed_twice.id, "2026-10-14")  # Two days in one week still count once.
+    create_placement(db, done.id, "2026-10-15")
+    set_task_completion(db, done.id, True)
+    close("2026-10-12")
+    chosen = [{"task_id": missed_twice.id, "planned_date": "2026-10-21"}]
+    apply_carryover(db, "2026-10-12", chosen, preview_carryover(db, "2026-10-12", chosen).preview_token, str(new_id()))
+    close("2026-10-19")
+    set_task_completion(db, missed_twice.id, True)  # Finishing later does not erase the misses.
+    create_placement(db, open_only.id, "2026-10-28")
+    before = all_rows(db)
+    view = get_statistics(db, now=NOW)
+    assert view.missed == 2
+    assert [(str(w.week_start), w.completed, w.total, w.missed) for w in view.weeks] == [
+        ("2026-10-19", 0, 1, 1), ("2026-10-12", 1, 2, 1)]
+    counts = {row.title: row.missed_count for row in view.tasks}
+    assert counts == {"Proof": 2, "Reading": 0, "Not closed yet": 0}
+    assert all_rows(db) == before

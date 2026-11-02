@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ApiError, applyCarryover, closeWeek, getCarryover, previewCarryover, previewCloseWeek,
   type CarryoverOptions, type CarryoverPreview, type CarryoverSelection, type ClosePreview,
@@ -23,12 +23,14 @@ export function WeekTaskDetails({ task, context }: { task: Task; context: string
 export const historicalContext = (task: HistoricalTask) => [task.project_name, task.parent_title].filter(Boolean).join(" / ");
 
 export function WeekActions({ plan, onRun, locked }: { plan: Planning; onRun: Run; locked: boolean }) {
+  // Closing here opens the carryover choices next, so End Week is one review flow.
+  const [justClosed, setJustClosed] = useState(false);
   return plan.closed_week
-    ? <Carryover week={plan.week_start} onRun={onRun} locked={locked} />
-    : <EndWeek week={plan.week_start} onRun={onRun} locked={locked} />;
+    ? <Carryover week={plan.week_start} onRun={onRun} locked={locked} openOnMount={justClosed} />
+    : <EndWeek week={plan.week_start} onRun={onRun} locked={locked} onClosed={() => setJustClosed(true)} />;
 }
 
-function EndWeek({ week, onRun, locked }: { week: string; onRun: Run; locked: boolean }) {
+function EndWeek({ week, onRun, locked, onClosed }: { week: string; onRun: Run; locked: boolean; onClosed: () => void }) {
   const [preview, setPreview] = useState<ClosePreview | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +46,10 @@ function EndWeek({ week, onRun, locked }: { week: string; onRun: Run; locked: bo
     if (!preview || busy || locked) return;
     setBusy(true);
     setError(null);
-    try { await onRun(() => closeWeek(week, preview.preview_token), "Week closed. Its plan and completion are preserved in history."); }
-    catch (caught) { setError(message(caught)); }
+    try {
+      await onRun(() => closeWeek(week, preview.preview_token), "Week closed. Its plan and completion are preserved in history.");
+      onClosed();
+    } catch (caught) { setError(message(caught)); }
     finally { setBusy(false); }
   }
   const tasks = new Map(preview?.snapshot.tasks.map((task) => [task.id, task]));
@@ -55,7 +59,8 @@ function EndWeek({ week, onRun, locked }: { week: string; onRun: Run; locked: bo
       <h3>Review before closing</h3>
       <p>{showDate(preview.snapshot.week_start)} – {showDate(preview.snapshot.week_end)}</p>
       <p>{preview.snapshot.completed} of {preview.snapshot.total} work items complete ({preview.snapshot.total ? Math.round(preview.snapshot.completed / preview.snapshot.total * 100) : 0}%).</p>
-      <p className="muted">Closing saves this plan and its completion as history. Tasks stay unchanged. This build cannot reopen a closed week.</p>
+      <p className="muted">Closing saves this plan and its completion as history; unfinished work counts as missed in Stats. Tasks stay unchanged. This build cannot reopen a closed week.</p>
+      {preview.snapshot.total > preview.snapshot.completed ? <p>After closing, choose which unfinished tasks to carry to next week.</p> : null}
       {preview.snapshot.placements.length ? <ul className="week-review-items">{preview.snapshot.placements.map((placement) => {
         const task = tasks.get(placement.task_id);
         return task ? <li key={placement.id}>
@@ -72,7 +77,7 @@ function EndWeek({ week, onRun, locked }: { week: string; onRun: Run; locked: bo
   </div>;
 }
 
-function Carryover({ week, onRun, locked }: { week: string; onRun: Run; locked: boolean }) {
+function Carryover({ week, onRun, locked, openOnMount = false }: { week: string; onRun: Run; locked: boolean; openOnMount?: boolean }) {
   const [options, setOptions] = useState<CarryoverOptions | null>(null);
   const [selected, setSelected] = useState<Record<string, string>>({});
   const [review, setReview] = useState<{ preview: CarryoverPreview; selections: CarryoverSelection[]; operationId: string } | null>(null);
@@ -83,10 +88,22 @@ function Carryover({ week, onRun, locked }: { week: string; onRun: Run; locked: 
     if (busy || locked) return;
     setBusy(true);
     setError(null);
-    try { setOptions(await getCarryover(week)); setSelected({}); setReview(null); }
+    try {
+      const loaded = await getCarryover(week);
+      setOptions(loaded);
+      // Every eligible task starts selected on the same weekday next week; uncheck or change any.
+      setSelected(Object.fromEntries(loaded.candidates.filter((c) => c.eligible)
+        .map((c) => [c.task_id, c.suggested_date ?? loaded.destination_start])));
+      setReview(null);
+    }
     catch (caught) { setError(message(caught)); }
     finally { setBusy(false); }
   }
+  const [autoOpened, setAutoOpened] = useState(false);
+  useEffect(() => {
+    // Opened right after End Week; the planner stays locked until its refresh finishes.
+    if (openOnMount && !autoOpened && !locked) { setAutoOpened(true); void load(); }
+  }, [openOnMount, autoOpened, locked]);  // eslint-disable-line react-hooks/exhaustive-deps
   function select(taskId: string, date: string | null) {
     setSelected((current) => {
       const next = { ...current };
@@ -128,13 +145,13 @@ function Carryover({ week, onRun, locked }: { week: string; onRun: Run; locked: 
     {options ? <section className="week-review" aria-label="Carryover choices">
       <h3>Choose unfinished work to carry over</h3>
       <p>Destination: {showDate(options.destination_start)} – {showDate(options.destination_end)}.</p>
-      <p className="muted">Choose dates and review before applying. Carryover keeps the same task, deadline and notes; the closed source week stays unchanged. Currently completed work is excluded.</p>
+      <p className="muted">Each unfinished task starts on the same weekday next week. Uncheck any you don't want to carry or change its date, then review before applying. Carryover keeps the same task, deadline and notes; the closed week still counts it as missed. Currently completed work is excluded.</p>
       {options.candidates.length ? <ul className="week-review-items">{options.candidates.map((candidate) => {
         const task = candidate.task ?? candidate.snapshot_task;
         const checked = candidate.task_id in selected;
         return <li key={candidate.task_id}>
           <label className="carryover-choice">
-            <input type="checkbox" checked={checked} disabled={!candidate.eligible || busy || locked} onChange={(event) => select(candidate.task_id, event.target.checked ? options.destination_start : null)} />
+            <input type="checkbox" checked={checked} disabled={!candidate.eligible || busy || locked} onChange={(event) => select(candidate.task_id, event.target.checked ? candidate.suggested_date ?? options.destination_start : null)} />
             <span>{task.title}</span>
           </label>
           <p className="planned-context muted">{historicalContext(candidate.snapshot_task)}</p>

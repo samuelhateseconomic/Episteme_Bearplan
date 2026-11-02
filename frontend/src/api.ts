@@ -105,7 +105,9 @@ export interface StatisticsState {
   days: { date: string; active_microseconds: number; completed: number }[];
   projects: { project_id: string; name: string; completion: StatisticsState["completion"]; active_microseconds: number }[];
   tasks: { task_id: string; project_id: string; title: string; parent_title: string | null; current_leaf: boolean; completed: boolean | null;
-    estimate_minutes: number | null; active_microseconds: number; session_count: number }[];
+    estimate_minutes: number | null; active_microseconds: number; session_count: number; missed_count?: number }[];
+  missed?: number;
+  weeks?: { week_start: string; week_end: string; completed: number; total: number; missed: number }[];
 }
 
 export function getStatistics(signal?: AbortSignal): Promise<StatisticsState> {
@@ -257,6 +259,7 @@ export interface CarryoverCandidate {
   eligible: boolean;
   reason: string | null;
   existing_planned_date: string | null;
+  suggested_date?: string | null;
 }
 export interface CarryoverOptions {
   week_start: string;

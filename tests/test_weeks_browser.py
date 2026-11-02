@@ -56,6 +56,15 @@ def test_closed_week_and_reviewed_carryover_survive_changes_restart_and_lost_res
         _, after_close = http_json("GET", service.url + "/api/planning")
         frozen = after_close["closed_week"]
         assert after_close["placements"] == []
+        # Closing opens carryover next: unfinished work preselected on the same weekday next week.
+        opened = page.get_by_role("region", name="Carryover choices")
+        expect(opened.get_by_role("checkbox", name="Draft proof", exact=True)).to_be_checked()
+        expect(opened.get_by_label('Carry “Draft proof” to')).to_have_value(following.isoformat())
+        expect(opened.get_by_role("checkbox", name="Reading", exact=True)).to_be_checked()
+        expect(opened.get_by_label('Carry “Reading” to')).to_have_value((following + timedelta(days=2)).isoformat())
+        page.screenshot(path=evidence / "history-01b-carryover-opened.png", full_page=True)
+        _, untouched = http_json("GET", service.url + "/api/planning")
+        assert untouched["placements"] == []  # Preselection alone saves nothing.
 
         # All later edits affect current tasks only, including current completion.
         http_json("PATCH", service.url + f"/api/tasks/{draft['id']}", {"title": "Revise proof", "notes": "Current notes", "deadline": "2026-12-31"})

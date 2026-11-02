@@ -98,3 +98,28 @@ test("empty report and old service error have usable recovery instructions", asy
   expect(screen.getByText("No saved time or completed tasks yet.")).toBeVisible();
   expect(fetcher).toHaveBeenCalledTimes(2);
 });
+
+test("shows missed work from closed weeks overall, per week and per task", async () => {
+  const base = report();
+  vi.spyOn(globalThis, "fetch").mockResolvedValue(json(report({
+    missed: 3,
+    weeks: [{ week_start: "2026-10-19", week_end: "2026-10-25", completed: 4, total: 6, missed: 2 },
+            { week_start: "2026-10-12", week_end: "2026-10-18", completed: 2, total: 3, missed: 1 }],
+    tasks: base.tasks.map((task) => task.task_id === "two" ? { ...task, missed_count: 2 } : { ...task, missed_count: 0 }),
+  })));
+  render(<Statistics visible />);
+  expect(await screen.findByText("3", { selector: "dd" })).toBeVisible();
+  expect(screen.getByText("Missed", { selector: "dt" })).toBeVisible();
+  const weeks = within(screen.getByRole("list", { name: "Weekly statistics" }));
+  expect(weeks.getByText("4 of 6 finished as planned")).toBeVisible();
+  expect(weeks.getByText("Missed: 2")).toBeVisible();
+  const tasks = within(screen.getByRole("list", { name: "Task statistics" }));
+  expect(tasks.getByText("Missed: 2×")).toBeVisible();
+  expect(tasks.getAllByText(/^Missed:/)).toHaveLength(1);  // Zero misses are not listed.
+});
+
+test("before any week is closed, missed is zero and the weekly list explains End Week", async () => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue(json(report({ missed: 0, weeks: [] })));
+  render(<Statistics visible />);
+  expect(await screen.findByText("No closed weeks yet. Use End Week on the plan to record one.")).toBeVisible();
+});

@@ -674,3 +674,22 @@ def test_locked_week_save_is_actionable_atomic_and_retryable(client: TestClient,
         assert saved_content(db) == before
         blocker.execute("ROLLBACK")
     assert client.post(f"/api/weeks/{SOURCE}/{operation}", json=payload).status_code == 200
+
+
+def test_carryover_suggests_the_same_weekday_next_week_from_the_last_planned_day(db: Database) -> None:
+    # User rule (2026-11-01): unfinished Tuesday work defaults to next Tuesday.
+    tuesday = create_task(db, "Tuesday work", deadline="2026-10-15")
+    twice = create_task(db, "Wednesday then Sunday")
+    already = create_task(db, "Already next week")
+    create_placement(db, tuesday.id, "2026-10-13")
+    create_placement(db, twice.id, "2026-10-14")
+    create_placement(db, twice.id, "2026-10-18")
+    create_placement(db, already.id, "2026-10-16")
+    closed(db)
+    create_placement(db, already.id, "2026-10-21")
+    candidates = {c.task_id: c for c in get_carryover(db, SOURCE).candidates}
+    assert candidates[tuesday.id].suggested_date == date(2026, 10, 20)
+    assert candidates[twice.id].suggested_date == date(2026, 10, 25)
+    assert candidates[already.id].eligible is False and candidates[already.id].suggested_date is None
+    carried(db, selections((tuesday.id, "2026-10-20"), (twice.id, "2026-10-25")))
+    assert get_task(db, tuesday.id).deadline == date(2026, 10, 15)  # The due date never moves.

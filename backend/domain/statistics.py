@@ -3,6 +3,8 @@
 Completion/estimates describe current leaves. Time describes historical sessions,
 including work whose task was removed or became a container. Project attribution
 is the project at session start. Closed-week snapshots are never reinterpreted.
+Missed work comes only from closed weeks: a planned leaf still unfinished when its
+week closed counts once for that week, even if it was later carried over and done.
 """
 from __future__ import annotations
 
@@ -12,6 +14,7 @@ from datetime import UTC, date, datetime
 from pydantic import BaseModel, ConfigDict
 
 from backend.domain.calendar import ApplicationCalendar
+from backend.domain.planning import ClosedWeek
 from backend.domain.streaks import allocate_confirmed_time
 from backend.domain.tasks import _list_tasks
 from backend.storage.db import Database
@@ -39,6 +42,15 @@ class TaskStatistics(BaseModel):
     estimate_minutes: int | None
     active_microseconds: int = 0
     session_count: int = 0
+    missed_count: int = 0
+
+
+class WeekStatistics(BaseModel):
+    week_start: date
+    week_end: date
+    completed: int
+    total: int
+    missed: int
 
 
 class ProjectStatistics(BaseModel):
@@ -59,6 +71,8 @@ class StatisticsView(BaseModel):
     days: list[DailyStatistics]
     projects: list[ProjectStatistics]
     tasks: list[TaskStatistics]
+    missed: int = 0
+    weeks: list[WeekStatistics] = []
 
 
 def _completion(tasks) -> Completion:
@@ -83,6 +97,8 @@ def get_statistics(db: Database, *, now: datetime | None = None) -> StatisticsVi
             "AND NOT EXISTS (SELECT 1 FROM timer_interruptions x "
             "WHERE x.session_id = s.id AND x.resolved_at IS NULL) ORDER BY s.rowid, i.rowid"
         ).fetchall()
+        closed = [ClosedWeek.model_validate_json(row["snapshot_json"])
+                  for row in conn.execute("SELECT snapshot_json FROM closed_weeks ORDER BY week_start DESC")]
 
     leaves = [task for task in current if not task.is_parent]
     by_id = {task.id: task for task in current}
@@ -121,10 +137,22 @@ def get_statistics(db: Database, *, now: datetime | None = None) -> StatisticsVi
         task_sessions[key].add(row["session_id"])
     for key, row in task_rows.items():
         row.session_count = len(task_sessions[key])
+    weeks: list[WeekStatistics] = []
+    missed_by_task: dict[str, int] = defaultdict(int)
+    for week in closed:
+        placed = {p.task_id for p in week.placements}
+        for task in week.tasks:
+            if task.id in placed and not task.is_parent and not task.completed:
+                missed_by_task[task.id] += 1
+        weeks.append(WeekStatistics(week_start=week.week_start, week_end=week.week_end, completed=week.completed,
+                                    total=week.total, missed=week.total - week.completed))
+    for (_, task_id), row in task_rows.items():
+        row.missed_count = missed_by_task.get(task_id, 0)
     days = sorted(daily_time.keys() | daily_completed.keys(), reverse=True)
     return StatisticsView(
         today=today, timezone=calendar.label(instant), completion=_completion(leaves),
         active_microseconds=sum(daily_time.values()), session_count=len(sessions),
         days=[DailyStatistics(date=day, active_microseconds=daily_time.get(day, 0), completed=daily_completed.get(day, 0)) for day in days],
         projects=list(project_rows.values()), tasks=list(task_rows.values()),
+        missed=sum(week.missed for week in weeks), weeks=weeks,
     )

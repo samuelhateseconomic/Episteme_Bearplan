@@ -297,7 +297,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
           <option value="">Choose a closed week</option>
           {plan.closed_weeks.map((week) => <option key={week.week_start} value={week.week_start}>{showDate(week.week_start)} – {showDate(week.week_end)} · {week.completed}/{week.total} complete</option>)}
         </select></div> : null}
-        <WeekActions key={`${plan.week_start}-${closed ? "closed" : "open"}`} plan={plan} onRun={onRun} locked={locked || loading} />
+        <WeekActions key={plan.week_start} plan={plan} onRun={onRun} locked={locked || loading} />
       </> : null}
       {dragged ? <p className="drag-indicator" role="status"><strong>Move</strong> “{dragged.title}”{overDay ? ` · ${showDate(overDay)}` : " · drop on a highlighted day"}{overDay === dragged.placement.planned_date ? " · same day: no change" : overDay && duplicateDay(overDay) ? " · already planned here; choose another day" : ""}</p> : null}
       {dragBusy ? <p className="planning-hint muted" role="status">Saving planned date…</p> : null}

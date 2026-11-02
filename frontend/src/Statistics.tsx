@@ -69,6 +69,7 @@ export function Statistics({ visible }: { visible: boolean }) {
         <div><dt>Current leaf completion</dt><dd>{state.completion.completed} of {state.completion.total} complete ({state.completion.percent}%)</dd></div>
         <div><dt>Saved active time</dt><dd>{savedDuration(state.active_microseconds)}</dd></div>
         <div><dt>Saved sessions with intervals</dt><dd>{state.session_count}</dd></div>
+        <div><dt>Missed</dt><dd>{state.missed ?? 0}</dd></div>
       </dl>
       <p className="muted">Completion and estimates use current leaf tasks; parent containers are excluded. Saved time includes early finishes, resolved interruptions and earlier sessions. Running, paused, Needs review sessions, pauses and uncertain gaps are excluded.</p>
       <h3>By day</h3>
@@ -77,6 +78,12 @@ export function Statistics({ visible }: { visible: boolean }) {
         <time dateTime={day.date}>{dayLabel.format(new Date(`${day.date}T00:00:00Z`))}</time>
         <span>{savedDuration(day.active_microseconds)}</span><span>{day.completed} completed</span>
       </li>)}</ul> : <p>No saved time or completed tasks yet.</p>}
+      <h3>By week</h3>
+      <p className="muted">Missed counts planned work still unfinished when its week closed, once per week, even if it was carried over and finished later. Open weeks are not counted.</p>
+      {state.weeks?.length ? <ul className="stats-list" aria-label="Weekly statistics">{state.weeks.map((week) => <li key={week.week_start}>
+        <span>{dayLabel.format(new Date(`${week.week_start}T00:00:00Z`))} – {dayLabel.format(new Date(`${week.week_end}T00:00:00Z`))}</span>
+        <span>{week.completed} of {week.total} finished as planned</span><span>Missed: {week.missed}</span>
+      </li>)}</ul> : <p>No closed weeks yet. Use End Week on the plan to record one.</p>}
       <h3>By project</h3>
       <p className="muted">Time belongs to the project recorded when tracking began. Task edits and removal do not erase saved work.</p>
       <ul className="stats-list" aria-label="Project statistics">{state.projects.map((project) => <li key={project.project_id}>
@@ -96,6 +103,7 @@ export function Statistics({ visible }: { visible: boolean }) {
         <span>{task.current_leaf ? task.completed ? "Complete" : "Incomplete" : "Historical work · no current leaf"}</span>
         <span>Estimate: {task.estimate_minutes === null ? "Not set" : `${task.estimate_minutes} min`}</span>
         <span>Actual: {savedDuration(task.active_microseconds)} · {task.session_count} saved {task.session_count === 1 ? "session" : "sessions"}</span>
+        {task.missed_count ? <span>Missed: {task.missed_count}×</span> : null}
       </li>)}</ul> : <p>No task details in this project.</p>}
     </> : null}
     <button type="button" aria-expanded={showCorrections} onClick={() => setShowCorrections((value) => !value)}>

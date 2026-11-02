@@ -36,6 +36,7 @@ class CarryoverCandidate(BaseModel):
     eligible: bool
     reason: str | None
     existing_planned_date: date | None
+    suggested_date: date | None = None  # Same weekday next week as its last planned day (user rule, 2026-11-01).
 
 
 class CarryoverOptions(BaseModel):
@@ -167,6 +168,9 @@ def _carryover_options(conn: sqlite3.Connection, week: str | date) -> CarryoverO
     planned = {p.task_id: p for p in _list_placements(conn)}
     destination_closed = _closed_week(conn, start.isoformat()) is not None
     placed = {p.task_id for p in snapshot.placements}
+    last_day: dict[str, date] = {}
+    for placement in snapshot.placements:
+        last_day[placement.task_id] = max(last_day.get(placement.task_id, placement.planned_date), placement.planned_date)
     candidates = []
     for frozen in snapshot.tasks:
         if frozen.id not in placed or frozen.is_parent or frozen.completed:
@@ -187,6 +191,7 @@ def _carryover_options(conn: sqlite3.Connection, week: str | date) -> CarryoverO
         candidates.append(CarryoverCandidate(
             task_id=frozen.id, snapshot_task=frozen, task=task, eligible=reason is None,
             reason=reason, existing_planned_date=existing.planned_date if existing else None,
+            suggested_date=last_day[frozen.id] + timedelta(days=7) if reason is None else None,
         ))
     return CarryoverOptions(week_start=snapshot.week_start, destination_start=start, destination_end=end, candidates=candidates)
 
