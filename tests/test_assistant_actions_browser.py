@@ -114,3 +114,81 @@ def test_choice_proposal_apply_undo_and_dismiss(browser, evidence, tmp_path, mon
     finally:
         page.close()
         app.stop()
+
+
+def test_week_carryover_card_apply_and_undo(browser, evidence, tmp_path, monkeypatch):
+    """"Move last week's unfinished to next week": list → Apply → Undo against the real service."""
+    from datetime import date
+
+    from backend.domain import action_library
+    from backend.domain.planning import create_placement, list_placements
+    from backend.domain.tasks import set_task_completion
+    from backend.domain.weeks import close_week, preview_close
+
+    monkeypatch.setenv("BEARPLANS_TIMEZONE", "America/Los_Angeles")
+    real = action_library.evaluate
+    monkeypatch.setattr("backend.domain.assistant.evaluate",
+                        lambda db_, timer, pending, today=None, message="": real(db_, timer, pending, date(2026, 10, 19), message))
+    expect = playwright_sync.expect
+    data_dir = tmp_path / "AssistantCarryover"
+    data_dir.mkdir()
+    db = open_database(data_dir / DATABASE_FILENAME)
+    seminar = create_project(db, "Seminar")
+    parent = create_task(db, "Assignment", project_id=seminar.id)
+    proof = create_task(db, "Proof", parent_id=parent.id, deadline="2026-10-30")
+    reading = create_task(db, "Reading", project_id=seminar.id)
+    done = create_task(db, "Done task")
+    create_placement(db, proof.id, "2026-10-13")     # Tuesday → Tue Oct 20
+    create_placement(db, reading.id, "2026-10-16")   # Friday → Fri Oct 23
+    create_placement(db, done.id, "2026-10-14")
+    set_task_completion(db, done.id, True)
+    close_week(db, "2026-10-12", preview_close(db, "2026-10-12").preview_token)
+
+    service = AssistantService(db, FakeProvider(routes=[{"intent": "carry_over_week"}]))
+    reply = run(service.ask("fixture:local", "Move last week's unfinished tasks to next week"))
+    assert reply["kind"] == "proposal", reply
+    summary = reply["proposals"][0]["summary"]
+    assert summary == "Carry 2 unfinished tasks from the week of Mon 2026-10-12 to the same weekday next week"
+    before = all_rows(db)
+
+    app = Service(data_dir, free_port()).start()
+    page = browser.new_page(viewport={"width": 1440, "height": 1000}, locale="en-US")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    try:
+        page.route("**/api/assistant/status", lambda route: route.fulfill(json=STATUS))
+        page.route("**/api/assistant/chat", lambda route: route.fulfill(json=reply))
+        page.goto(app.url + "/#assistant")
+        page.get_by_label("Local model").select_option("fixture:local")
+        page.get_by_label("Question", exact=True).fill("Move last week's unfinished tasks to next week")
+        page.get_by_role("button", name="Ask", exact=True).click()
+
+        card = page.get_by_role("article", name=f"Proposed change: {summary}")
+        items = card.get_by_role("list", name="Tasks to carry over").get_by_role("listitem")
+        expect(items).to_have_count(2)
+        proof_item = items.filter(has_text="Proof")
+        expect(proof_item).to_contain_text("Seminar / Assignment")
+        expect(proof_item).to_contain_text("Tue, Oct 20")
+        expect(proof_item).to_contain_text("due Fri, Oct 30 (unchanged)")
+        expect(items.filter(has_text="Reading")).to_contain_text("Fri, Oct 23")
+        assert all_rows(db) == before  # Showing the card changes nothing.
+        assert no_horizontal_overflow(page)
+        page.screenshot(path=str(evidence / "assistant-carryover-01-proposal.png"), full_page=True)
+
+        card.get_by_role("button", name="Apply", exact=True).click()
+        expect(card.get_by_role("status")).to_contain_text("Applied.")
+        assert {(p.task_id, str(p.planned_date)) for p in list_placements(db)} == {
+            (proof.id, "2026-10-20"), (reading.id, "2026-10-23")}
+        page.screenshot(path=str(evidence / "assistant-carryover-02-applied.png"), full_page=True)
+
+        card.get_by_role("button", name="Undo", exact=True).click()
+        expect(card.get_by_role("status")).to_contain_text("Undone.")
+        assert list_placements(db) == []
+
+        page.set_viewport_size({"width": 375, "height": 850})
+        assert no_horizontal_overflow(page)
+        page.screenshot(path=str(evidence / "assistant-carryover-03-undone-narrow.png"), full_page=True)
+        assert errors == []
+    finally:
+        page.close()
+        app.stop()

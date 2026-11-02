@@ -90,4 +90,10 @@ apply/replay/undo/replay, stale and reused key, all-or-nothing Undo, open/empty
 week, malformed proposals, router this/last week, migration keeps receipts and
 immutability); `Assistant.test.tsx` card list and review token. Full pytest 871
 passed, 1 skipped; Vitest 150; typecheck and build pass; evaluation run 9 gate
-passed. Not yet: real Chrome assistant carryover journey; user hands-on review.
+passed. Not yet: user hands-on review.
+
+Real Chrome (`tests/test_assistant_actions_browser.py::test_week_carryover_card_apply_and_undo`):
+the card lists both tasks with project/parent, same-weekday dates and "due … (unchanged)";
+showing it writes nothing; Apply saves exactly the two carried plans on the running
+service; Undo removes both; no horizontal overflow at 1440 and 375 px; no page errors.
+Screenshots: `.evidence/assistant-carryover-20261101/`.
