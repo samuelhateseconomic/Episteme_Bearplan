@@ -113,7 +113,8 @@ class Route(BaseModel):
 SPECIALISTS: dict[str, tuple[tuple[str, ...], str]] = {
     "plan": (("get_day_plan", "get_week_plan"), "Your specialty: what is planned on a day or in a Monday–Sunday week."),
     "tasks": (("list_tasks", "search_tasks", "get_task"), "Your specialty: finding and listing tasks and subtasks and their completion."),
-    "time": (("get_time_summary",), "Your specialty: saved active time. Report hours and minutes (1 minute = 60000000 microseconds); copy exact totals."),
+    "time": (("get_time_summary", "search_tasks"), "Your specialty: saved active time. Report hours and minutes (1 minute = 60000000 microseconds); copy exact totals. "
+             "For when one task was completed or created, find it with search_tasks; its times are already in local time, so copy them as given."),
 }
 
 
@@ -311,6 +312,7 @@ def _lookup_hint(name: str) -> str:
     if name not in TOOL_MODELS:
         return f"Unknown tool. Available lookups: {', '.join(TOOL_MODELS)}. Nothing was changed."
     fields = ", ".join(TOOL_MODELS[name][0].model_fields) or "no arguments"
-    hint = (" To filter by completion status or subtask/top-level, use list_tasks instead."
-            if name in ("search_tasks", "get_task") else "")
+    hint = {"search_tasks": " To list subtasks or top-level tasks without a search word, use list_tasks instead.",
+            "get_task": " To find a task by its title, use search_tasks first to get its ID.",
+            "list_tasks": " To find tasks by words in the title or notes, use search_tasks (it also accepts status)."}.get(name, "")
     return f"Invalid arguments for {name}. It accepts only: {fields}.{hint} Nothing was changed. Correct the lookup."

@@ -45,6 +45,8 @@ reported separately.
 | 3 | same | 30/30 | 100% | 1 flagged (T2) | Fail (investigated) |
 | 4 | harness monitor checkpoint | 30/30 | 100% | none | **Pass** |
 | 5 | same | 30/30 | 100% | none | **Pass** |
+| 6 | task times shown in local time | 30/30 | 100% | none | **Pass** |
+| 7 | + search `status`, hints, time specialist `search_tasks` | 30/30 | 100% | none | **Pass** |
 
 Run 1 failures and changes:
 
@@ -82,6 +84,11 @@ Runs 4/5 (identical outcomes):
 | Direct answers (7) median / slowest | 0.46 / 2.62 s | 0.43 / 2.51 s |
 | Change pipeline (20 turns) median / slowest | 0.64 / 3.17 s | 0.66 / 3.15 s |
 | Specialists: time / tasks (2) / reader | 4.7 / 6.6–7.3 / 4.4 s | 4.7 / 6.6–7.4 / 4.6 s |
+
+Runs 6/7 (after the local-time and lookup fixes in the
+[actions review](2026-11-01-assistant-actions.md#local-task-times-and-completion-time-questions-follow-up)):
+exact statistics match; timer commands during generation ≤0.010 s; run 7 median
+0.75 s, slowest 7.82 s (tasks specialist). Evidence `run6.json`, `run7.json`.
 
 ## Gate items not exercised here
 

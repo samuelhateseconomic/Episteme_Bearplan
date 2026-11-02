@@ -6,7 +6,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from backend.domain.calendar import application_today
+from backend.domain.calendar import ApplicationCalendar, application_today
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import _date, get_planning, week_bounds
 from backend.domain.projects import list_projects
@@ -27,6 +27,7 @@ class SearchArguments(Arguments):
     query: str = Field(min_length=1, max_length=200)
     project_id: str | None = Field(default=None, max_length=100)
     project: str | None = Field(default=None, max_length=100)
+    status: Literal["incomplete", "complete", "any"] = "any"
     offset: int = Field(default=0, ge=0, le=10000)
     limit: int = Field(default=10, ge=1, le=20)
 
@@ -49,7 +50,7 @@ class TaskArguments(Arguments):
 TOOL_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "get_day_plan": (PlanArguments, "Read planned work on a date; omit date for service Today. Includes frozen history for a closed week."),
     "get_week_plan": (PlanArguments, "Read a Monday–Sunday plan containing date; omit date for this service week. Includes frozen history if closed."),
-    "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Optional project (exact name) or project_id limits the search. Returns stable IDs and pagination; duplicate names are distinct."),
+    "search_tasks": (SearchArguments, "Find current tasks by literal case-insensitive title or notes. Optional status (incomplete, complete, any; default any). Optional project (exact name) or project_id limits the search. Returns stable IDs and pagination; duplicate names are distinct."),
     "list_tasks": (ListArguments, "List current tasks by completion and level without a search word. level: subtasks (tasks with a parent), top_level, work_items (tasks without subtasks) or any. Give project (exact name) or project_id only when the user limits it to one project; omit both for all projects. has_deadline=true with order=deadline lists upcoming deadlines earliest first. Returns totals and pagination."),
     "get_task": (TaskArguments, "Read one current task by its exact stable ID, including notes, deadline and completion."),
     "get_time_summary": (Arguments, "Read exact all-time saved active microseconds, current leaf completion and the latest 31 dated totals. Running/uncertain time is excluded."),
@@ -74,6 +75,25 @@ def _project_scope(name: str | None, project_id: str | None, projects: dict[str,
     return found[0]
 
 
+_STAMPS = ("completed_at", "created_at", "updated_at")
+
+
+def _task_data(task, projects: dict[str, str], **extra) -> dict[str, Any]:
+    """A task for the model, with stored UTC instants shown in the service's local time.
+
+    Raw UTC values were read back as local clock times ("10:58 PM" for 2:58 PM
+    Pacific), so the model only sees local wall-clock times with their zone.
+    """
+    data = task.model_dump(mode="json")
+    calendar = ApplicationCalendar.from_environment()
+    for key in _STAMPS:
+        value = getattr(task, key, None)
+        if value is not None:
+            local = calendar.localize(value)
+            data[key] = f"{local:%Y-%m-%d %H:%M} {local.tzname()} (local)"
+    return {**data, "project_name": projects.get(task.project_id, ""), **extra}
+
+
 def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None) -> dict[str, Any]:
     """Validate before reading. Callers cannot select SQL, file paths or mutations."""
     if name not in TOOL_MODELS:
@@ -92,7 +112,7 @@ def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None
         args["project_id"] = _project_scope(args.pop("project"), args["project_id"], projects)
     if name == "get_task":
         task = get_task(db, args["task_id"])
-        return {"task": {**task.model_dump(mode="json"), "project_name": projects.get(task.project_id, "")}}
+        return {"task": _task_data(task, projects)}
     if name == "list_tasks":
         everything = list_tasks(db, args["project_id"])
         by_id = {t.id: t for t in everything}
@@ -108,20 +128,23 @@ def read_tool(db: Database, name: str, raw: dict, *, now: datetime | None = None
                 "has_deadline": args["has_deadline"], "order": args["order"],
                 "scope_project_id": args["project_id"], "scope_project_name": projects.get(args["project_id"]),
                 "next_offset": args["offset"] + len(page) if args["offset"] + len(page) < len(tasks) else None,
-                "tasks": [{**t.model_dump(mode="json"), "notes": t.notes[:200], "notes_truncated": len(t.notes) > 200,
-                           "project_name": projects.get(t.project_id, ""),
-                           "parent_title": by_id[t.parent_id].title if t.parent_id in by_id else None} for t in page]}
+                "tasks": [_task_data(t, projects, notes=t.notes[:200], notes_truncated=len(t.notes) > 200,
+                                     parent_title=by_id[t.parent_id].title if t.parent_id in by_id else None)
+                          for t in page]}
     if name == "search_tasks":
         query = args["query"].strip().casefold()
         if not query:
             raise ValueError("Enter a nonempty search query.")
-        tasks = [t for t in list_tasks(db, args["project_id"]) if query in t.title.casefold() or query in t.notes.casefold()]
+        wanted = {"incomplete": False, "complete": True}.get(args["status"])
+        tasks = [t for t in list_tasks(db, args["project_id"])
+                 if (query in t.title.casefold() or query in t.notes.casefold())
+                 and (wanted is None or t.completed == wanted)]
         page = tasks[args["offset"]:args["offset"] + args["limit"]]
         return {"total": len(tasks), "offset": args["offset"],
                 "scope_project_id": args["project_id"], "scope_project_name": projects.get(args["project_id"]),
                 "next_offset": args["offset"] + len(page) if args["offset"] + len(page) < len(tasks) else None,
-                "tasks": [{**t.model_dump(mode="json"), "notes": t.notes[:400], "notes_truncated": len(t.notes) > 400,
-                           "project_name": projects.get(t.project_id, "")} for t in page]}
+                "tasks": [_task_data(t, projects, notes=t.notes[:400], notes_truncated=len(t.notes) > 400)
+                          for t in page]}
     today, _ = application_today(instant)
     day = today if args["date"] is None else _date(args["date"], "date")
     start, end = (day, day) if name == "get_day_plan" else week_bounds(day)

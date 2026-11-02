@@ -241,3 +241,34 @@ time specialist for this week (6.1 s), change requests blocked/clarified as
 expected (0.6–0.7 s). All 11 as intended.
 
 Checks: pytest 855 passed, 1 skipped (176.87 s); Vitest 145 passed; typecheck/build pass.
+
+
+## Local task times and completion-time questions (follow-up)
+
+Follow-up closed: the model presented a UTC completion time as local. Read tools
+(`get_task`, `search_tasks`, `list_tasks`) now return `completed_at`,
+`created_at` and `updated_at` already converted to the service timezone, e.g.
+`2026-11-01 14:58 PST (local)`; no raw UTC instant reaches the model. Stored
+values and the API are unchanged.
+
+Live check (qwen3:8b, disposable data, task completed 22:58 UTC, Pacific) found
+a second defect: "When did I complete Lab report?" hit the lookup limit. The
+model alternated `search_tasks(status=complete)` and `list_tasks(query=…)`, and
+the search error hint sent it to `list_tasks`, which has no search word. Fixes:
+`search_tasks` accepts optional `status` (incomplete/complete/any, default any);
+the `list_tasks` error hint points title searches back to `search_tasks`; the
+time specialist also gets read-only `search_tasks`, because the router files
+"what time did I finish X" / "when was X created" under `time`.
+
+After the fixes, all three questions answered correctly: "completed … on
+2026-11-01 at 14:58 PST" (tasks specialist, 7.2 s), "completed on 2026-11-01 at
+14:58 PST (local)" (time specialist, 6.9 s), created time (time specialist,
+6.9 s). Tests: local times for all three task tools, search status filter,
+`list_tasks` hint, time-specialist tool set.
+
+Checks: pytest 860 passed, 1 skipped (Windows-only), 185.09 s; Vitest 145
+passed; typecheck/build pass. One earlier full run had a single
+`test_statistics_browser.py` failure that passed alone and in the next full run
+(unrelated browser test; recorded as a possible flake). M5 evaluation reruns 6
+(time format only) and 7 (all changes): both 30/30, Gate PASSED; see the
+[evaluation review](2026-11-01-m5-evaluation.md).

@@ -327,5 +327,35 @@ def test_invalid_lookup_errors_name_the_accepted_arguments(db):
     provider = FakeProvider([lookup("search_tasks", {"query": "x", "level": "subtasks"}), lookup("drop_tables"), {"content": "Done."}])
     asyncio.run(AssistantService(db, provider).ask("fixture:local", "List subtasks"))
     first, second = provider.messages[1][-1]["content"], provider.messages[2][-1]["content"]
-    assert "accepts only: query, project_id, project, offset, limit" in first and "use list_tasks" in first
+    assert "accepts only: query, project_id, project, status, offset, limit" in first and "use list_tasks" in first
     assert "Available lookups: get_day_plan" in second
+
+
+def test_list_tasks_with_a_search_word_points_back_to_search(db):
+    # qwen3:8b alternated search_tasks(status=…) and list_tasks(query=…) until the lookup limit.
+    provider = FakeProvider([lookup("list_tasks", {"query": "Lab", "status": "complete"}), {"content": "Done."}])
+    asyncio.run(AssistantService(db, provider).ask("fixture:local", "When did I finish Lab?"))
+    assert "use search_tasks (it also accepts status)" in provider.messages[1][-1]["content"]
+
+
+def test_search_tasks_filters_by_completion_status(db):
+    done = create_task(db, "Lab report")
+    create_task(db, "Lab prep")
+    set_task_completion(db, done.id, True)
+    titles = lambda status: [t["title"] for t in read_tool(db, "search_tasks", {"query": "lab", "status": status})["tasks"]]
+    assert titles("complete") == ["Lab report"] and titles("incomplete") == ["Lab prep"]
+    assert sorted(titles("any")) == ["Lab prep", "Lab report"]
+
+
+def test_read_tools_show_task_times_in_service_local_time(db, monkeypatch):
+    # 22:58 UTC is 14:58 Pacific; the model once reported the raw UTC clock as local.
+    monkeypatch.setenv("BEARPLANS_TIMEZONE", "America/Los_Angeles")
+    task = create_task(db, "Lab report")
+    with db.write() as conn:
+        conn.execute("UPDATE tasks SET completed_at = ? WHERE id = ?", ("2026-11-01T22:58:00.000000Z", task.id))
+    for name, arguments in (("get_task", {"task_id": task.id}), ("search_tasks", {"query": "Lab"}),
+                            ("list_tasks", {"status": "any"})):
+        data = read_tool(db, name, arguments)
+        found = data["task"] if name == "get_task" else data["tasks"][0]
+        assert found["completed_at"] == "2026-11-01 14:58 PST (local)"
+        assert found["created_at"].endswith("(local)") and found["created_at"][10] == " "

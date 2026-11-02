@@ -68,7 +68,7 @@ def test_all_time_total_is_direct_but_period_totals_go_to_the_time_specialist(db
     assert total["route"]["agents"] == ["router", "direct"] and provider.messages == []
     assert total["answer"].startswith("All-time saved active time: 0 s across 0 saved sessions.")
     week, provider = ask(db, {"topic": "time"}, "How much did I work this week?")
-    assert week["route"]["agents"] == ["router", "time_specialist"] and provider.tools == ["get_time_summary"]
+    assert week["route"]["agents"] == ["router", "time_specialist"] and provider.tools == ["search_tasks", "get_time_summary"]
 
 
 def test_unclear_questions_fall_back_to_specialists_or_the_general_reader(db, data):
