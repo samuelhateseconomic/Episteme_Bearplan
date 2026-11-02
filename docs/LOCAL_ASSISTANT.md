@@ -12,7 +12,9 @@ Ask for one change at a time. Day words such as “Tuesday”, “next Friday”
 “November 12” are converted by BearPlans, not the model; check the weekday on
 the card. Numeric dates like 11/12 are ambiguous and will be asked.
 Task and plan changes show **Undo** while the record is unchanged since; timer
-changes are controlled in Track afterward. Larger replans and the full 30-case
+changes are controlled in Track afterward. “Move last week's unfinished to next
+week” shows one card listing each task on the same weekday next week (due dates
+unchanged); the week must be closed first, and Undo removes every carried plan. Larger replans and the full 30-case
 write-acceptance gate remain later tickets. Each question is
 independent; selected project/week IDs provide context. Conversation text is not
 written to the database or browser storage.

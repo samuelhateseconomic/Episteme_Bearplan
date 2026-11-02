@@ -258,27 +258,33 @@ def apply_carryover(db: Database, week: str | date, selections: object, preview_
             raise ValueError
     except (ValueError, AttributeError):
         raise InvalidInput("operation_id", "Use a valid unique operation ID for this carryover; keep it when retrying.") from None
-    request_hash = _digest({"week_start": monday.isoformat(), "selections": normalized})
     with db.write() as conn:
-        prior = conn.execute("SELECT request_hash, result_json FROM carryover_operations WHERE operation_id = ?", (operation_id,)).fetchone()
-        if prior:
-            if prior["request_hash"] != request_hash:
-                raise WeekConflict("operation_id", "This carryover operation ID was used for different work or dates. Review again with a new operation ID. Nothing was changed.")
-            return CarryoverResult.model_validate_json(prior["result_json"])
-        preview = _carryover_preview(conn, monday, normalized)
-        if preview_token != preview.preview_token:
-            raise WeekConflict("preview_token", "Task details or the destination plan changed. Review carryover again before applying. Nothing was changed.")
-        now = utc_now()
-        placements = []
-        for item in preview.items:
-            placement = Placement(id=str(uuid4()), task_id=item.task_id, planned_date=item.planned_date,
-                                  created_at=now, updated_at=now, revision=1)
-            conn.execute(
-                "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision) VALUES (?, ?, ?, ?, ?, ?)",
-                (placement.id, placement.task_id, placement.planned_date.isoformat(), now, now, 1),
-            )
-            placements.append(placement)
-        result = CarryoverResult(operation_id=operation_id, week_start=monday, placements=placements)
-        conn.execute("INSERT INTO carryover_operations (operation_id, week_start, request_hash, result_json) VALUES (?, ?, ?, ?)",
-                     (operation_id, monday.isoformat(), request_hash, result.model_dump_json()))
-        return result
+        return _apply_carryover_tx(conn, monday, normalized, preview_token, operation_id)
+
+
+def _apply_carryover_tx(conn: sqlite3.Connection, monday: date, normalized: list[dict[str, str]], preview_token: str,
+                        operation_id: str) -> CarryoverResult:
+    """apply_carryover inside a caller's write transaction (shared with assistant Apply)."""
+    request_hash = _digest({"week_start": monday.isoformat(), "selections": normalized})
+    prior = conn.execute("SELECT request_hash, result_json FROM carryover_operations WHERE operation_id = ?", (operation_id,)).fetchone()
+    if prior:
+        if prior["request_hash"] != request_hash:
+            raise WeekConflict("operation_id", "This carryover operation ID was used for different work or dates. Review again with a new operation ID. Nothing was changed.")
+        return CarryoverResult.model_validate_json(prior["result_json"])
+    preview = _carryover_preview(conn, monday, normalized)
+    if preview_token != preview.preview_token:
+        raise WeekConflict("preview_token", "Task details or the destination plan changed. Review carryover again before applying. Nothing was changed.")
+    now = utc_now()
+    placements = []
+    for item in preview.items:
+        placement = Placement(id=str(uuid4()), task_id=item.task_id, planned_date=item.planned_date,
+                              created_at=now, updated_at=now, revision=1)
+        conn.execute(
+            "INSERT INTO planned_items (id, task_id, planned_date, created_at, updated_at, revision) VALUES (?, ?, ?, ?, ?, ?)",
+            (placement.id, placement.task_id, placement.planned_date.isoformat(), now, now, 1),
+        )
+        placements.append(placement)
+    result = CarryoverResult(operation_id=operation_id, week_start=monday, placements=placements)
+    conn.execute("INSERT INTO carryover_operations (operation_id, week_start, request_hash, result_json) VALUES (?, ?, ?, ?)",
+                 (operation_id, monday.isoformat(), request_hash, result.model_dump_json()))
+    return result

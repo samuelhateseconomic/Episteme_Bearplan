@@ -66,7 +66,7 @@ export interface AssistantSource { tool: string; arguments: Record<string, unkno
 /** A change the model prepared. Nothing is saved until the user applies it. */
 export interface AssistantProposal {
   kind: string; arguments: Record<string, unknown>; summary: string; undoable: boolean;
-  expected: { tasks: Record<string, number>; session_id: string | null; session_revision: number | null };
+  expected: { tasks: Record<string, number>; session_id: string | null; session_revision: number | null; preview_token?: string | null };
   preview: Record<string, unknown>;
 }
 /** The gate's questions when a change request lacks details; pending is returned on the next turn. */

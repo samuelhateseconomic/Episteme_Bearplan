@@ -82,6 +82,7 @@ function Proposal({ proposal, onChanged }: { proposal: AssistantProposal; onChan
   const { phase } = state;
   return <article className="assistant-proposal" aria-label={`Proposed change: ${proposal.summary}`}>
     <p><strong>{proposal.summary}</strong></p>
+    {proposal.kind === "carry_over_week" ? <CarryList items={proposal.preview.items} /> : null}
     {phase === "ready" || phase === "applying" ? <>
       <p className="muted">Not applied. Review it, then choose Apply.{proposal.undoable ? "" : " Timer changes cannot be undone here; use Track afterward."}</p>
       <div className="form-actions">
@@ -214,3 +215,18 @@ export function Assistant({ visible, projectId, date, onChanged }: { visible: bo
     </div> : null}
   </section>;
 }
+
+type CarryItem = { task_id: string; title: string; project_name: string; parent_title: string | null; planned_date: string; deadline: string | null };
+const carryDay = new Intl.DateTimeFormat(undefined, { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
+const showCarryDay = (value: string) => carryDay.format(new Date(`${value}T00:00:00Z`));
+
+/** Each carried task, its new same-weekday date and its unchanged deadline. */
+function CarryList({ items }: { items: unknown }) {
+  if (!Array.isArray(items)) return null;
+  return <ul className="assistant-carry" aria-label="Tasks to carry over">{(items as CarryItem[]).map((item) => <li key={item.task_id}>
+    <span>{item.title}</span>
+    <span className="muted">{[item.project_name, item.parent_title].filter(Boolean).join(" / ")}</span>
+    <span>→ {showCarryDay(item.planned_date)}{item.deadline ? ` · due ${showCarryDay(item.deadline)} (unchanged)` : ""}</span>
+  </li>)}</ul>;
+}
+

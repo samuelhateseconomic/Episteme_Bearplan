@@ -7,7 +7,9 @@ proposal cannot overwrite newer work and a retried request replays the original
 result. Undo restores the recorded before-state only while the target is still
 exactly as the action left it. Timer actions reuse TimerService replay and have
 no Undo: saved time and rewards follow the timer rules, so Track remains the
-place to change them.
+place to change them. Week carryover applies the reviewed End Week carryover
+(same weekday next week, user rule 2026-11-01); its Undo removes the carried
+plans only while every one is untouched.
 """
 from __future__ import annotations
 
@@ -21,7 +23,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, ValidationError
 
 from backend.domain.errors import InvalidInput
-from backend.domain.planning import _create_placement_tx, _remove_placement_tx
+from backend.domain.planning import WeekConflict, _create_placement_tx, _remove_placement_tx, week_bounds
 from backend.domain.tasks import (
     _create_task_tx, _delete_unused_task_tx, _read_task, _require_task, _set_completion_tx, _update_task_tx,
 )
@@ -30,6 +32,8 @@ from backend.storage.db import Database, utc_now
 
 TASK_KINDS = ("create_task", "update_task", "assign_task_date", "complete_task")
 TIMER_KINDS = ("start_timer", "pause_timer", "finish_timer")
+WEEK_KINDS = ("carry_over_week",)
+MAX_CARRY = 50
 EDITABLE = ("title", "notes", "deadline", "estimate_minutes")
 
 
@@ -73,6 +77,17 @@ class StartTimerArguments(Arguments):
     duration_minutes: int = Field(ge=1, le=180)
 
 
+class CarrySelection(Arguments):
+    task_id: str = Field(min_length=1, max_length=100)
+    planned_date: str = Field(min_length=10, max_length=10)
+
+
+class CarryOverArguments(Arguments):
+    week_start: str = Field(min_length=10, max_length=10)
+    # Filled by code when proposing: every eligible task on its same-weekday date.
+    selections: list[CarrySelection] | None = Field(default=None, min_length=1, max_length=MAX_CARRY)
+
+
 ACTION_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "create_task": (CreateTaskArguments, "Propose a new task, or a subtask with parent_id. Omit project_id for the default project. Not applied until the user presses Apply."),
     "update_task": (UpdateTaskArguments, "Propose editing title, notes, deadline (YYYY-MM-DD) or estimate of one task by exact ID. Include only fields to change; null clears notes/deadline/estimate. Not applied until the user presses Apply."),
@@ -81,6 +96,7 @@ ACTION_MODELS: dict[str, tuple[type[Arguments], str]] = {
     "start_timer": (StartTimerArguments, "Propose starting a countdown of 1–180 minutes on one incomplete leaf task by exact ID. Not applied until the user presses Apply."),
     "pause_timer": (Arguments, "Propose pausing the running countdown. Not applied until the user presses Apply."),
     "finish_timer": (Arguments, "Propose finishing and saving the current running or paused countdown. Not applied until the user presses Apply."),
+    "carry_over_week": (CarryOverArguments, "Propose carrying a closed week's unfinished work to the same weekday next week. Not applied until the user presses Apply."),
 }
 
 
@@ -89,13 +105,14 @@ class Expected(BaseModel):
     tasks: dict[str, StrictInt] = Field(default_factory=dict, max_length=3)
     session_id: str | None = Field(default=None, max_length=36)
     session_revision: StrictInt | None = None
+    preview_token: str | None = Field(default=None, max_length=64)
 
 
 class Proposal(BaseModel):
     """What the browser sends back to apply. Summary/preview are display-only and excluded."""
     model_config = ConfigDict(extra="ignore", strict=True)
     kind: Literal["create_task", "update_task", "assign_task_date", "complete_task",
-                  "start_timer", "pause_timer", "finish_timer"]
+                  "start_timer", "pause_timer", "finish_timer", "carry_over_week"]
     arguments: dict[str, Any]
     expected: Expected
 
@@ -122,7 +139,7 @@ def _arguments(kind: str, raw: object) -> dict[str, Any]:
         if "title" in values and values["title"] is None:
             raise InvalidInput("title", "A task title cannot be cleared.")
         return values
-    return parsed.model_dump(exclude_none=kind == "create_task")
+    return parsed.model_dump(exclude_none=kind in ("create_task", "carry_over_week"))
 
 
 def _key(value: object, field: str = "operation_id") -> str:
@@ -235,11 +252,74 @@ def _expected_for(conn: sqlite3.Connection, kind: str, args: dict[str, Any]) -> 
     return {args["task_id"]: _require_task(conn, args["task_id"])["revision"]}
 
 
+def _carry_selections(conn: sqlite3.Connection, monday: date) -> list[dict[str, str]]:
+    """Every eligible unfinished task on the same weekday next week; blocked with a reason otherwise."""
+    from backend.domain.weeks import _carryover_options, _closed_week
+
+    if _closed_week(conn, monday.isoformat()) is None:
+        raise InvalidInput("week", f"The week of {_day(monday.isoformat())} is still open. Close it first: in Plan, "
+                           "choose End Week, review and close it, and the carryover choices open next. Nothing was changed.")
+    options = _carryover_options(conn, monday)
+    chosen = [{"task_id": c.task_id, "planned_date": c.suggested_date.isoformat()}
+              for c in options.candidates if c.eligible and c.suggested_date is not None]
+    if not chosen:
+        skipped = len(options.candidates)
+        reason = (f" {skipped} unfinished task{'s' if skipped != 1 else ''} cannot carry over; see Carry unfinished work in Plan for why."
+                  if skipped else "")
+        raise InvalidInput("week", f"No unfinished work from the week of {_day(monday.isoformat())} can carry over.{reason} Nothing was changed.")
+    if len(chosen) > MAX_CARRY:
+        raise InvalidInput("week", f"More than {MAX_CARRY} tasks would carry over. Use Carry unfinished work in Plan. Nothing was changed.")
+    return sorted(chosen, key=lambda item: item["task_id"])
+
+
+def _week_summary(monday: str, items: list[dict[str, Any]], skipped: int = 0) -> str:
+    """Short card title; the card lists each task's move from preview.items."""
+    count = f"{len(items)} unfinished task{'s' if len(items) != 1 else ''}"
+    left = f" ({skipped} cannot carry over)" if skipped else ""
+    return f"Carry {count} from the week of {_day(monday)} to the same weekday next week{left}"
+
+
+def _apply_week_kind(conn: sqlite3.Connection, key: str, args: dict[str, Any],
+                     preview_token: str | None) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Reviewed carryover through the shared weeks helper, in the caller's transaction."""
+    from backend.domain.weeks import _apply_carryover_tx, _selections
+
+    if not args.get("selections") or preview_token is None:
+        raise InvalidInput("proposal", "This carryover proposal is incomplete. Ask again; nothing was changed.")
+    monday, _ = week_bounds(args["week_start"])
+    try:
+        result = _apply_carryover_tx(conn, monday, _selections(args["selections"]), preview_token, key)
+    except WeekConflict as exc:
+        raise ActionConflict(exc.field, exc.message) from None
+    placements = [p.model_dump(mode="json") for p in result.placements]
+    return {"placements": placements}, {"placements": [{"id": p["id"], "after_revision": p["revision"]} for p in placements]}
+
+
+def _propose_week(db: Database, kind: str, args: dict[str, Any]) -> dict[str, Any]:
+    from backend.domain.weeks import _carryover_preview, _carryover_options
+
+    monday, _ = week_bounds(args["week_start"])
+    with db.read() as conn:
+        conn.execute("BEGIN")
+        selections = _carry_selections(conn, monday)
+        preview = _carryover_preview(conn, monday, selections)
+        skipped = sum(not c.eligible for c in _carryover_options(conn, monday).candidates)
+    args = {"week_start": monday.isoformat(), "selections": selections}
+    items = [{"task_id": item.task_id, "title": item.task.title, "project_name": item.project_name,
+              "parent_title": item.parent_title, "planned_date": item.planned_date.isoformat(),
+              "deadline": item.task.deadline.isoformat() if item.task.deadline else None} for item in preview.items]
+    return {"kind": kind, "arguments": args,
+            "expected": {"tasks": {}, "session_id": None, "session_revision": None, "preview_token": preview.preview_token},
+            "summary": _week_summary(args["week_start"], items, skipped), "undoable": True, "preview": {"items": items}}
+
+
 def propose_action(db: Database, timer: TimerService | None, kind: str, raw: object) -> dict[str, Any]:
     """Validate a model-requested action against current records without saving it."""
     if kind not in ACTION_MODELS:
         raise InvalidInput("tool", "Unknown action. No changes were made.")
     args = _arguments(kind, raw)
+    if kind in WEEK_KINDS:
+        return _propose_week(db, kind, args)
     if kind in TASK_KINDS:
         # Validate with the exact apply path, then roll back. The write lock is held
         # only for this short dry run, never while waiting on the model.
@@ -320,8 +400,16 @@ def apply_action(db: Database, timer: TimerService | None, proposal: object, ope
         if prior is not None:
             return _replay(prior, fingerprint)
         _check_expected(conn, parsed.expected)
+        if parsed.kind in WEEK_KINDS:
+            result, undo = _apply_week_kind(conn, key, args, parsed.expected.preview_token)
+            items = _carried_items(conn, result["placements"])
+            return _receipt(conn, key, parsed, args, fingerprint, _week_summary(args["week_start"], items), result, undo)
         result, undo = _apply_task_kind(conn, parsed.kind, args)
         return _receipt(conn, key, parsed, args, fingerprint, _summary(parsed.kind, args, _before(result)), result, undo)
+
+
+def _carried_items(conn: sqlite3.Connection, placements: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [{**_task_view(conn, p["task_id"]), "planned_date": p["planned_date"]} for p in placements]
 
 
 def _apply_timer(db: Database, timer: TimerService | None, key: str, proposal: Proposal, args: dict[str, Any],
@@ -378,7 +466,13 @@ def undo_action(db: Database, operation_id: object, undo_operation_id: object) -
             raise ActionConflict("undo", "Timer changes cannot be undone here. Use Track to pause, resume or finish the countdown.")
         undo = json.loads(receipt["undo_json"])
         kind = receipt["kind"]
-        if kind == "assign_task_date":
+        if kind == "carry_over_week":
+            # All or nothing: any carried plan moved, removed or in a closed week leaves every plan as is.
+            for placement in undo["placements"]:
+                _require_after(conn, "planned_items", placement["id"], placement["after_revision"], "carried plan")
+            for placement in undo["placements"]:
+                _remove_placement_tx(conn, placement["id"])
+        elif kind == "assign_task_date":
             _require_after(conn, "planned_items", undo["placement_id"], undo["after_revision"], "planned date")
             _remove_placement_tx(conn, undo["placement_id"])
         else:

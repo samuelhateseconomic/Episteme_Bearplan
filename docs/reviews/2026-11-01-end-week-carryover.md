@@ -62,9 +62,32 @@ Wednesday and no placement saved until Apply (`tests/test_weeks_browser.py`).
 
 ## Open
 
-- **Assistant command** ("move this week's unfinished to next week" → one
-  preview card → Apply/Undo) not built. Apply/Undo receipts need a new action
-  kind, which requires a migration of `assistant_actions` (its `kind` CHECK lists
-  the seven current kinds). Waiting on the user's choice.
+- Assistant command: built (below); waits on the user's hands-on check.
 - Figma End Week/carryover (UX-21/23) and Stats (UX-29) drafts predate this
   rule; update them during the design review.
+
+## Assistant carryover command
+
+User choice (2026-11-01): **With Undo**, accepting a migration.
+
+- Router intent `carry_over_week` (prompt `router-v6`); the action library takes
+  the week from a date slot, "last/previous week" (today − 7), or today.
+- `propose_action` writes nothing. It blocks an open week ("Close it first: in
+  Plan, choose End Week") and a week with nothing eligible. The card title counts
+  tasks that cannot carry over; `preview.items` lists title, project/parent,
+  destination date and the unchanged deadline. `expected.preview_token` ties
+  Apply to the reviewed carryover; a changed task gives "Review carryover again".
+- Apply reuses `weeks._apply_carryover_tx` with the assistant key as operation
+  ID, so replay returns the same receipt. Undo is all-or-nothing: any moved or
+  removed carried plan refuses Undo with no change.
+- Migration `0015_assistant_carryover.sql` rebuilds `assistant_actions` (CHECK
+  plus `carry_over_week`) and `assistant_action_undos`, keeping rows and
+  recreating the four immutability triggers. Real data upgrades 14 → 15 on next
+  launch after the automatic backup.
+
+Checks: `tests/test_assistant_carryover.py` (8 tests: no-write proposal,
+apply/replay/undo/replay, stale and reused key, all-or-nothing Undo, open/empty
+week, malformed proposals, router this/last week, migration keeps receipts and
+immutability); `Assistant.test.tsx` card list and review token. Full pytest 871
+passed, 1 skipped; Vitest 150; typecheck and build pass; evaluation run 9 gate
+passed. Not yet: real Chrome assistant carryover journey; user hands-on review.

@@ -24,7 +24,7 @@ from backend.domain.timer import TimerService
 from backend.storage.db import Database
 
 ActionIntent = Literal["create_task", "update_task", "assign_task_date", "complete_task",
-                       "start_timer", "pause_timer", "finish_timer"]
+                       "start_timer", "pause_timer", "finish_timer", "carry_over_week"]
 MAX_CLARIFICATION_ROUNDS = 4
 MAX_CHOICES = 8
 _DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
@@ -49,6 +49,9 @@ LIBRARY: dict[str, ActionSpec] = {
     "start_timer": ActionSpec("start_timer", "Start a countdown on a task", ("task", "duration_minutes")),
     "pause_timer": ActionSpec("pause_timer", "Pause the running countdown", ()),
     "finish_timer": ActionSpec("finish_timer", "Finish and save the current countdown", ()),
+    # Week defaults to the current one; "last week" or a stated date picks another.
+    "carry_over_week": ActionSpec("carry_over_week", "Carry a closed week's unfinished work to the same weekday next week",
+                                  (), ("date",)),
 }
 
 QUESTIONS = {
@@ -125,6 +128,7 @@ ALLOWED = {
     "start_timer": ("task", "duration_minutes"),
     "pause_timer": (),
     "finish_timer": (),
+    "carry_over_week": ("date",),
     "question": ("task", "project", "date"),
 }
 _REOPEN = re.compile(r"\b(re-?open|undo|unmark|uncheck|incomplete|unfinished|uncomplete|not\s+(yet\s+)?(done|complete|completed|finished))\b")
@@ -364,6 +368,10 @@ def evaluate(db: Database, timer: TimerService | None, pending: Pending, today: 
         wanted = values["complete"] is not False
         if by_id[values["task_id"]].completed == wanted:
             return Gate(resolved, blocked=f"“{by_id[values['task_id']].title}” is already {'complete' if wanted else 'incomplete'}. Nothing needs to change.")
+    if pending.intent == "carry_over_week":
+        day = date.fromisoformat(values["date"]) if values["date"] else (
+            today - timedelta(days=7) if re.search(r"\b(last|previous) week\b", message, re.IGNORECASE) else today)
+        values = {**values, "week_start": (day - timedelta(days=day.weekday())).isoformat()}
     try:
         proposal = propose_action(db, timer, spec.tool, _arguments(pending.intent, values))
     except InvalidInput as exc:
@@ -385,4 +393,6 @@ def _arguments(intent: str, values: dict[str, Any]) -> dict[str, Any]:
         return {"task_id": values["task_id"], "complete": values["complete"] is not False}
     if intent == "start_timer":
         return {"task_id": values["task_id"], "duration_minutes": values["duration_minutes"]}
+    if intent == "carry_over_week":
+        return {"week_start": values["week_start"]}
     return {}

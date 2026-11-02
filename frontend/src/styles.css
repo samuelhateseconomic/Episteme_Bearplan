@@ -824,6 +824,18 @@ details > summary:focus-visible {
   overflow-wrap: anywhere;
 }
 
+.assistant-carry {
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
+}
+
+.assistant-carry li {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
 .assistant-choices {
   display: flex;
   flex-wrap: wrap;

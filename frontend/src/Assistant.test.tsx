@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 import { Assistant } from "./Assistant";
@@ -184,4 +184,27 @@ test("gate questions keep the request pending; a choice continues it without ret
   await user.click(screen.getByRole("button", { name: "Start over" }));
   expect(screen.queryByText(/A change is waiting for details/)).not.toBeInTheDocument();
   expect(JSON.parse((fetcher.mock.calls[3][1] as RequestInit).body as string).pending).toBeUndefined();
+});
+
+test("a week carryover card lists each task's same-weekday date and unchanged deadline, and sends the review token", async () => {
+  const carry = { kind: "carry_over_week", arguments: { week_start: "2026-10-12", selections: [{ task_id: "t1", planned_date: "2026-10-20" }] },
+    summary: "Carry 1 unfinished task from the week of Mon 2026-10-12 to the same weekday next week", undoable: true,
+    expected: { tasks: {}, session_id: null, session_revision: null, preview_token: "tok" },
+    preview: { items: [{ task_id: "t1", title: "Proof", project_name: "Seminar", parent_title: "Assignment", planned_date: "2026-10-20", deadline: "2026-10-30" }] } };
+  const applied = { operation_id: "op", kind: "carry_over_week", summary: carry.summary, applied_at: "x", undoable: true, replayed: false };
+  const fetcher = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(json(status))
+    .mockResolvedValueOnce(json({ ...reply, sources: [], proposals: [carry] })).mockResolvedValueOnce(json(applied));
+  const user = userEvent.setup();
+  render(<Assistant visible projectId={null} />);
+  await screen.findByRole("option", { name: "qwen3:4b" });
+  await user.type(screen.getByRole("textbox", { name: "Question" }), "Move last week's unfinished to next week");
+  await user.click(screen.getByRole("button", { name: "Ask" }));
+  const card = within(await screen.findByRole("article", { name: `Proposed change: ${carry.summary}` }));
+  const list = within(card.getByRole("list", { name: "Tasks to carry over" }));
+  expect(list.getByText("Proof")).toBeVisible();
+  expect(list.getByText("Seminar / Assignment")).toBeVisible();
+  expect(list.getByText(/Tue, Oct 20.*due Fri, Oct 30 \(unchanged\)/)).toBeVisible();
+  await user.click(card.getByRole("button", { name: "Apply" }));
+  expect(await card.findByText("Applied.")).toBeVisible();
+  expect(JSON.parse((fetcher.mock.calls[2][1] as RequestInit).body as string).proposal.expected.preview_token).toBe("tok");
 });
