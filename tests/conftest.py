@@ -21,6 +21,12 @@ from backend.storage.db import Database, open_database
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.fixture(autouse=True)
+def _no_real_secrets(tmp_path_factory, monkeypatch) -> None:
+    """Tests never read the owner's real token file (and so never reach bCourses)."""
+    monkeypatch.setenv("BEARPLANS_SECRETS_FILE", str(tmp_path_factory.mktemp("secrets") / "none.env"))
+
+
 @pytest.fixture
 def db(tmp_path: Path) -> Database:
     return open_database(tmp_path / "test.sqlite3")

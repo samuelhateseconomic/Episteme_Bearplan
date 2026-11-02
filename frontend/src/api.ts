@@ -451,3 +451,57 @@ export function controlTimer(id: string, action: "pause" | "resume" | "finish", 
 export function recoverTimer(id: string, resolution: "resume" | "finish", control: TimerControl): Promise<TimerState> {
   return request<TimerState>(`/api/timer/${encodeURIComponent(id)}/recover`, json("POST", { ...control, resolution, discard_uncertain: true }));
 }
+
+export interface BCoursesCourse {
+  course_id: string;
+  name: string;
+  course_code: string;
+  term: string;
+  followed: boolean;
+  in_source: boolean;
+  project_id: string | null;
+}
+
+export interface BCoursesAssignment {
+  assignment_id: string;
+  course_id: string;
+  course_name: string;
+  title: string;
+  /** UTC instant from bCourses, or null when no due date is published. */
+  due_at: string | null;
+  /** The due date's day in BearPlans' calendar (what a task deadline gets). */
+  due_date: string | null;
+  html_url: string;
+  points_possible: number | null;
+  in_source: boolean;
+  status: "new" | "added" | "dismissed";
+  task_id: string | null;
+  due_changed: boolean;
+  accepted_due_date: string | null;
+}
+
+export interface BCoursesState {
+  configured: boolean;
+  sync: { last_attempt_at: string | null; last_success_at: string | null; last_error: string | null };
+  courses: BCoursesCourse[];
+  assignments: BCoursesAssignment[];
+}
+
+export function getBCourses(signal?: AbortSignal): Promise<BCoursesState> {
+  return request("/api/bcourses", { signal });
+}
+export function refreshBCourses(): Promise<BCoursesState> {
+  return request("/api/bcourses/refresh", { method: "POST" });
+}
+export function followBCourses(courseIds: string[]): Promise<BCoursesState> {
+  return request("/api/bcourses/courses", json("PUT", { course_ids: courseIds }));
+}
+export function addBCoursesAssignment(id: string): Promise<{ assignment: BCoursesAssignment; task: Task; project_created: boolean }> {
+  return request(`/api/bcourses/assignments/${encodeURIComponent(id)}/add`, { method: "POST" });
+}
+export function dismissBCoursesAssignment(id: string, dismissed: boolean): Promise<BCoursesAssignment> {
+  return request(`/api/bcourses/assignments/${encodeURIComponent(id)}/dismissed`, json("PUT", { dismissed }));
+}
+export function resolveBCoursesDueDate(id: string, useNew: boolean): Promise<BCoursesAssignment> {
+  return request(`/api/bcourses/assignments/${encodeURIComponent(id)}/due-date`, json("POST", { use_new: useNew }));
+}

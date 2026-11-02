@@ -156,7 +156,7 @@ def test_router_intent_reaches_the_gate_for_this_or_last_week(db, monkeypatch):
 
 def test_migration_0015_keeps_receipts_and_immutability(tmp_path):
     shipped = load_migrations()
-    assert [m.name for m in shipped][-1] == "assistant_carryover"
+    assert shipped[14].name == "assistant_carryover"
     db = Database(tmp_path / "old.sqlite3")
     migrate(db, shipped[:14])
     assert current_version(db) == 14

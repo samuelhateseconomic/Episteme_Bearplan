@@ -16,6 +16,7 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 from backend import __version__
 from backend.domain.assistant import AssistantError, AssistantService, Provider
 from backend.domain.assistant_actions import ActionConflict
+from backend.platform.bcourses import BCoursesUnavailable
 from backend.platform.ollama import OllamaProvider
 from backend.domain.corrections import CorrectionConflict
 from backend.domain.errors import InvalidInput
@@ -23,7 +24,7 @@ from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
 from backend.domain.streaks import StreakDataError
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import assistant, corrections, forest, planning, projects, shop, statistics, streaks, tasks, timer, weeks
+from backend.routes import assistant, bcourses, corrections, forest, planning, projects, shop, statistics, streaks, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -79,6 +80,7 @@ def create_app(
     db: Database, static_dir: Path | None = None, *, timer_clock: Clock | None = None,
     reward_config: RewardConfig | None = None,
     assistant_provider: Provider | None = None,
+    bcourses_client: object | None = None,
 ) -> FastAPI:
     config = RewardConfig.from_environment() if reward_config is None else reward_config
     countdown = TimerService(db, timer_clock, reward_config=config)
@@ -103,6 +105,7 @@ def create_app(
     app.state.timer = countdown
     app.state.shop = ShopService(db, config)
     app.state.assistant = AssistantService(db, assistant_provider or OllamaProvider(), countdown)
+    app.state.bcourses_client = bcourses_client  # None: the real client, token from the secrets file
     app.add_middleware(LocalOnlyMiddleware)
 
     @app.exception_handler(AssistantError)
@@ -112,6 +115,10 @@ def create_app(
     @app.exception_handler(ActionConflict)
     async def action_conflict(_: Request, exc: ActionConflict) -> JSONResponse:
         return JSONResponse({"error": {"code": "assistant_action_conflict", "field": exc.field, "message": exc.message}}, status_code=409)
+
+    @app.exception_handler(BCoursesUnavailable)
+    async def bcourses_unavailable(_: Request, exc: BCoursesUnavailable) -> JSONResponse:
+        return JSONResponse({"error": {"code": exc.code, "message": exc.message}}, status_code=502)
 
     @app.exception_handler(CorrectionConflict)
     async def correction_conflict(_: Request, exc: CorrectionConflict) -> JSONResponse:
@@ -202,6 +209,7 @@ def create_app(
     app.include_router(statistics.router)
     app.include_router(corrections.router)
     app.include_router(assistant.router)
+    app.include_router(bcourses.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

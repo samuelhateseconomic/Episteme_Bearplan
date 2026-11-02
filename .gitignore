@@ -21,3 +21,7 @@ instance.json
 sleep-probe-*.jsonl
 .DS_Store
 .vscode/
+
+# Private API keys and tokens (never commit)
+.secrets/
+*.secrets.env

@@ -75,16 +75,21 @@ def require_project(conn: sqlite3.Connection, project_id: str) -> str:
 
 def create_project(db: Database, name: str) -> Project:
     """Validate and save a new project; returns the stored record."""
+    with db.write() as conn:
+        return _create_project_tx(conn, name)
+
+
+def _create_project_tx(conn: sqlite3.Connection, name: str) -> Project:
+    """create_project inside a caller's write transaction (shared with the bCourses source)."""
     cleaned = _clean_name(name)
     project_id = str(uuid4())
     now = utc_now()
-    with db.write() as conn:
-        conn.execute(
-            "INSERT INTO projects (id, name, is_default, created_at, updated_at, revision)"
-            " VALUES (?, ?, 0, ?, ?, 1)",
-            (project_id, cleaned, now, now),
-        )
-        row = conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
+    conn.execute(
+        "INSERT INTO projects (id, name, is_default, created_at, updated_at, revision)"
+        " VALUES (?, ?, 0, ?, ?, 1)",
+        (project_id, cleaned, now, now),
+    )
+    row = conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
     return _row_to_project(row)
 
 

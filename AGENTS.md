@@ -237,6 +237,11 @@ dates; use their contents and commit history to determine which evidence is curr
   interruption, restore and failure tests use disposable databases or safe copies,
   never the only saved user database. Use SQLite's backup API for a live WAL database;
   do not naively copy it. Failed updates must preserve recoverable data, never reset it.
+- API tokens live only in the git-ignored `.secrets/bearplans.secrets.env`
+  (user decision 2026-11-01, instead of Keychain), read via
+  `backend/platform/secrets.py`. Never print, log, return or commit them; tests set
+  `BEARPLANS_SECRETS_FILE` to an empty path. The bCourses connection is read-only
+  (GET to `https://bcourses.berkeley.edu` only); imports become tasks only on Add.
 - Preserve unrelated and uncommitted work. Do not discard, reset, overwrite or stash
   changes without understanding them and having authorization for that action.
 - Bind to `127.0.0.1`; preserve loopback Host and same-origin mutation checks in
