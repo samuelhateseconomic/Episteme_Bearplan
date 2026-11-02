@@ -244,6 +244,33 @@ def parse_day(text: str, today: date) -> date | None:
     return found
 
 
+_CALLED = re.compile(r"\b(?:called|named|titled)\s+[\"“']?(.+?)[\"”']?(?=\s+(?:under|in|into|due|for|with|to|and)\b|[.?!,;]|$)", re.IGNORECASE)
+_UNDER = re.compile(r"\bunder\s+(?:the\s+)?(?:task\s+)?[\"“']?(.+?)[\"”']?(?=\s+(?:in|due|for|with)\b|[.?!,;]|$)", re.IGNORECASE)
+
+
+def _fill_creation(values: dict[str, Any], message: str, project_names: list[str]) -> None:
+    """Fill creation details the router omitted, only from the user's exact words.
+
+    Measured: qwen3:8b sometimes drops "in Biology" or files the new title as an
+    existing task. A title after called/named/titled, a parent after "under",
+    and one exact project name outside the title are all stated text, so using
+    them is not a guess; router values that passed grounding take precedence.
+    """
+    if not values["title"]:
+        found = _CALLED.search(message)
+        values["title"] = found.group(1).strip() if found else None
+    if not values["parent"] and not values["parent_id"]:
+        found = _UNDER.search(message)
+        values["parent"] = found.group(1).strip() if found else None
+    if not values["project"] and not values["project_id"] and not values["parent"]:
+        rest = _normal(message)
+        for text in (values["title"], values["parent"]):
+            if text:
+                rest = rest.replace(_normal(text), " ")
+        named = [name for name in project_names if re.search(rf"\b{re.escape(_normal(name))}\b", rest)]
+        values["project"] = named[0] if len(named) == 1 else None
+
+
 def evaluate(db: Database, timer: TimerService | None, pending: Pending, today: date | None = None,
              message: str = "") -> Gate:
     """Resolve records and check every required detail; never guess a missing one."""
@@ -254,6 +281,8 @@ def evaluate(db: Database, timer: TimerService | None, pending: Pending, today: 
     tasks = list_tasks(db)
     by_id = {task.id: task for task in tasks}
     projects = {project.id: project.name for project in list_projects(db)}
+    if pending.intent == "create_task" and message:
+        _fill_creation(values, message, list(projects.values()))
 
     def resolve_task(slot: str, text_slot: str, pool: list[Task], prompt: str) -> None:
         if values[slot] is not None:

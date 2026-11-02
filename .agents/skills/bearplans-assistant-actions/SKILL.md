@@ -104,7 +104,10 @@ and an example, card summary fields, Undo rules, and tests for each stage.
   `npm --prefix frontend test`, `npm --prefix frontend run typecheck`,
   `npm --prefix frontend run build`. Report exact results and the OS.
 - Live-model behavior (Ollama) and the 30-case M5 evaluation are separate
-  evidence; fixture success does not certify them.
+  evidence; fixture success does not certify them. Rerun
+  `tools/m5_evaluation.py --model <model>` after any model, prompt or schema
+  change; never weaken its per-turn all-table check to make a run pass —
+  investigate the changed rows it reports.
 
 ## Hand off
 

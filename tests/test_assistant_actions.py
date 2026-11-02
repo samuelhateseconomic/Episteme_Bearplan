@@ -389,3 +389,23 @@ def test_invented_estimate_never_reaches_the_card_and_named_project_narrows(db):
                  "Reopen Reading in History")
     assert reopen["kind"] == "proposal"
     assert reopen["proposals"][0]["arguments"] == {"task_id": target.id, "complete": False}
+
+
+def test_creation_details_are_read_from_the_users_words_when_the_router_omits_them(db):
+    biology = create_project(db, "Biology")
+    writing = create_project(db, "Writing")
+    essay = create_task(db, "Essay", project_id=writing.id)
+    reply = ask(db, FakeProvider(routes=[{"intent": "create_task", "title": "Problem set 5", "deadline": "2026-11-11"}]),
+                "Create a task called Problem set 5 due 2026-11-11 in Biology.")
+    assert reply["proposals"][0]["arguments"] == {"title": "Problem set 5", "project_id": biology.id, "deadline": "2026-11-11"}
+    sub = ask(db, FakeProvider(routes=[{"intent": "create_task", "task": "Conclusion"}]), "Add a subtask called Conclusion under Essay.")
+    assert sub["proposals"][0]["arguments"] == {"title": "Conclusion", "parent_id": essay.id}
+    titled = ask(db, FakeProvider(routes=[{"intent": "create_task"}]), "Create a task called Writing practice")
+    assert titled["proposals"][0]["arguments"] == {"title": "Writing practice"}  # project name inside the title is not a scope
+
+
+def test_rename_summary_names_the_old_title(db):
+    task = create_task(db, "Groceries")
+    proposal = propose_action(db, None, "update_task", {"task_id": task.id, "title": "Weekly groceries"})
+    assert proposal["summary"] == 'Edit "Groceries": title → Weekly groceries'
+    assert apply_action(db, None, proposal, key())["summary"] == proposal["summary"]

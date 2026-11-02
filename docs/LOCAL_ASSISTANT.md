@@ -115,6 +115,16 @@ no model; anything else goes to a plan, tasks or time specialist (about 4–9
 seconds). The footer shows the path, for example `router → direct` or
 `router → time_specialist`.
 
+The fixed 30-case evaluation passed on November 1 (30/30 twice, no
+unauthorized changes; see the [evaluation review](reviews/2026-11-01-m5-evaluation.md)).
+Rerun it after changing the model, prompts or tools:
+
+```sh
+BEARPLANS_TIMEZONE=America/Los_Angeles .venv/bin/python tools/m5_evaluation.py --model qwen3:8b
+```
+
+It uses a temporary synthetic database, never your data.
+
 After the November 1 speed fixes (thinking off, project names in lookups,
 actionable lookup errors), qwen3:8b answered six synthetic questions twice each
 in **6.3–10.7 seconds**, 12/12 with correct lookups; change requests take about

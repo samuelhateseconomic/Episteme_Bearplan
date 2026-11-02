@@ -38,6 +38,19 @@ changed `assistant.py`, `assistant_tools.py`, `action_library.py`,
 `frontend/src/Assistant.tsx`, docs. pytest **855 passed, 1 skip**; Vitest 145.
 Next: step 3, the 30-case M5 evaluation (incl. routing accuracy).
 
+**Step 3 done (uncommitted): M5 evaluation gate Pass** on the bounded set —
+[evaluation review](reviews/2026-11-01-m5-evaluation.md). Harness
+`tools/m5_evaluation.py` (disposable synthetic DB, real qwen3:8b). Run 1 failed
+25/30 (router dropped "in Biology"/subtask title; T1–T3 cascaded); fixed with
+code-side creation details (`action_library._fill_creation`), rename summary,
+decoupled T1. Runs 2–3 flagged a timer self-checkpoint during T2 (verified: only
+progress checkpoint columns); harness now simulates the 1-second monitor. Runs
+4 and 5: **30/30, routing 100%, 0 unauthorized changes, exact statistics, timer
+commands ≤0.013 s during generation**, median turn 0.64–0.67 s, slowest 7.4 s.
+pytest **857 passed, 1 skip**; Vitest 145. Not covered: replan preview (not
+built); user's hands-on UI review pending. Next: user preview review, then
+step 4 (M6 Google Calendar) when authorized.
+
 ## Current work — November 1, 2026: reader can list subtasks by status
 
 Pipeline committed by the user as `cf3178b`. User found "Check the incomplete
@@ -1699,7 +1712,7 @@ apply pending migrations through schema 10; it has not been performed here.
 | M4 backup/inspection/restore | Implementation review Pass on Mac; uncommitted | [Backup review](reviews/2026-10-31-backup-restore.md); offline restore operator Pass |
 | M4 local-core trial | Candidate recorded; seven-day real-use trial **not started/reported** | [Candidate manifest](reviews/2026-11-01-core-trial-candidate.json) |
 | M5 read-only assistant preview | Adapter/UI Pass; model preview Pass with follow-ups; full M5 not passed; backend and UI uncommitted | [Assistant review](reviews/2026-11-01-local-assistant-readonly.md) |
-| M5 actions/Apply/Undo | Implementation Pass with follow-ups; uncommitted; 30-case evaluation not run | [Actions review](reviews/2026-11-01-assistant-actions.md) |
+| M5 actions/Apply/Undo + orchestrator | Implementation Pass; 30-case evaluation **Pass** (runs 4–5, qwen3:8b); user UI review pending | [Actions review](reviews/2026-11-01-assistant-actions.md), [Evaluation](reviews/2026-11-01-m5-evaluation.md) |
 | M5 larger replans, integrations, plan-only transfer | **Not started** | Separate authorized scope and acceptance required |
 
 ## Implemented countdown behavior

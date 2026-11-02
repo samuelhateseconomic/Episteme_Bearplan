@@ -179,6 +179,11 @@ def _summary(kind: str, args: dict[str, Any], task: dict[str, Any] | None) -> st
     return f"{'Pause' if kind == 'pause_timer' else 'Finish and save'} the current countdown for {title}"
 
 
+def _before(result: dict[str, Any]) -> dict[str, Any]:
+    """Name the task as the user knew it: a rename's summary shows the old title."""
+    return {**result["task"], **{k: v for k, v in result.get("before", {}).items() if k == "title"}}
+
+
 def _day(value: str) -> str:
     """Show the weekday beside a date so the reviewed day is unmistakable."""
     try:
@@ -241,7 +246,7 @@ def propose_action(db: Database, timer: TimerService | None, kind: str, raw: obj
             expected, result = dry.value
         task = result["task"]
         return {"kind": kind, "arguments": args, "expected": {"tasks": expected, "session_id": None, "session_revision": None},
-                "summary": _summary(kind, args, task), "undoable": True, "preview": result}
+                "summary": _summary(kind, args, _before(result)), "undoable": True, "preview": result}
     if timer is None:
         raise InvalidInput("tool", "Timer actions are unavailable in this service. Use Track.")
     view = timer.get()
@@ -310,7 +315,7 @@ def apply_action(db: Database, timer: TimerService | None, proposal: object, ope
             return _replay(prior, fingerprint)
         _check_expected(conn, parsed.expected)
         result, undo = _apply_task_kind(conn, parsed.kind, args)
-        return _receipt(conn, key, parsed, args, fingerprint, _summary(parsed.kind, args, result["task"]), result, undo)
+        return _receipt(conn, key, parsed, args, fingerprint, _summary(parsed.kind, args, _before(result)), result, undo)
 
 
 def _apply_timer(db: Database, timer: TimerService | None, key: str, proposal: Proposal, args: dict[str, Any],
