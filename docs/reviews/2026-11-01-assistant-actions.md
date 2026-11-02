@@ -272,3 +272,29 @@ passed; typecheck/build pass. One earlier full run had a single
 (unrelated browser test; recorded as a possible flake). M5 evaluation reruns 6
 (time format only) and 7 (all changes): both 30/30, Gate PASSED; see the
 [evaluation review](2026-11-01-m5-evaluation.md).
+
+
+## Browser test for the change flow; cards name the task's project
+
+Added `tests/test_assistant_actions_browser.py` (Chrome, Playwright): real
+pipeline replies (fake router only) for "Complete Reading" with two "Reading"
+tasks are served to the page; the test picks Biology from the choice buttons,
+checks the proposal card and that showing it changed no rows, then **Apply** and
+**Undo** go to the running service and are verified through `/api/planning`. A
+second card is dismissed at 375 px with no change; no horizontal overflow, no
+page errors. Closes follow-up 5.
+
+Defect found by the screenshots: after choosing Biology the card still read
+`Mark "Reading" complete`, so the user could not confirm which duplicate they
+were applying. Summaries for existing tasks now name the project (and parent),
+e.g. `Mark "Reading" (Biology) complete`, `Plan "Essay" (Inbox) on Tue
+2026-11-03`. Create summaries are unchanged.
+
+Follow-ups 1–2 closed by later work: change replies are written by code (the
+model never words a change), and thinking is off; evaluation runs 4–8 had no
+output-limit failures. Remaining: follow-up 4 (no applied-action history view).
+
+Checks: pytest 861 passed, 1 skipped (Windows-only), 187.89 s; Vitest 145
+passed. M5 evaluation run 8: 30/30, routing 100%, no unauthorized changes,
+Gate PASSED.
+

@@ -158,7 +158,7 @@ def _check_expected(conn: sqlite3.Connection, expected: Expected) -> None:
 
 
 def _summary(kind: str, args: dict[str, Any], task: dict[str, Any] | None) -> str:
-    title = f'"{task["title"]}"' if task else "the task"
+    title = f'"{task["title"]}"{_where(task)}' if task else "the task"
     if kind == "create_task":
         where = f' under "{task["parent_title"]}"' if task and task.get("parent_title") else ""
         project = f' in {task["project_name"]}' if task and task.get("project_name") else ""
@@ -177,6 +177,12 @@ def _summary(kind: str, args: dict[str, Any], task: dict[str, Any] | None) -> st
     if kind == "start_timer":
         return f"Start a {args['duration_minutes']}-minute countdown for {title}"
     return f"{'Pause' if kind == 'pause_timer' else 'Finish and save'} the current countdown for {title}"
+
+
+def _where(task: dict[str, Any]) -> str:
+    """Name an existing task's project (and parent) so duplicates are told apart on the card."""
+    place = " / ".join(part for part in (task.get("project_name"), task.get("parent_title")) if part)
+    return f" ({place})" if place else ""
 
 
 def _before(result: dict[str, Any]) -> dict[str, Any]:

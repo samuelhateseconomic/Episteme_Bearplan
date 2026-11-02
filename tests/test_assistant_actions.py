@@ -354,7 +354,7 @@ def test_router_day_words_reach_the_card_with_weekday(db, monkeypatch):
     pending = action_library.Pending(intent="assign_task_date", slots=action_library.Slots(task="Essay", date="Tuesday"))
     gate = action_library.evaluate(db, None, pending, today=date(2026, 11, 1))
     assert gate.proposal["arguments"] == {"task_id": task.id, "date": "2026-11-03"}
-    assert gate.proposal["summary"] == 'Plan "Essay" on Tue 2026-11-03'
+    assert gate.proposal["summary"] == 'Plan "Essay" (Inbox) on Tue 2026-11-03'
 
 
 def test_grounding_drops_invented_or_misplaced_details(db):
@@ -407,5 +407,5 @@ def test_creation_details_are_read_from_the_users_words_when_the_router_omits_th
 def test_rename_summary_names_the_old_title(db):
     task = create_task(db, "Groceries")
     proposal = propose_action(db, None, "update_task", {"task_id": task.id, "title": "Weekly groceries"})
-    assert proposal["summary"] == 'Edit "Groceries": title → Weekly groceries'
+    assert proposal["summary"] == 'Edit "Groceries" (Inbox): title → Weekly groceries'
     assert apply_action(db, None, proposal, key())["summary"] == proposal["summary"]

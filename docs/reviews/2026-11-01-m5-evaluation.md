@@ -47,6 +47,7 @@ reported separately.
 | 5 | same | 30/30 | 100% | none | **Pass** |
 | 6 | task times shown in local time | 30/30 | 100% | none | **Pass** |
 | 7 | + search `status`, hints, time specialist `search_tasks` | 30/30 | 100% | none | **Pass** |
+| 8 | + card summaries name project/parent | 30/30 | 100% | none | **Pass** |
 
 Run 1 failures and changes:
 
@@ -88,7 +89,8 @@ Runs 4/5 (identical outcomes):
 Runs 6/7 (after the local-time and lookup fixes in the
 [actions review](2026-11-01-assistant-actions.md#local-task-times-and-completion-time-questions-follow-up)):
 exact statistics match; timer commands during generation ≤0.010 s; run 7 median
-0.75 s, slowest 7.82 s (tasks specialist). Evidence `run6.json`, `run7.json`.
+0.75 s, slowest 7.82 s (tasks specialist). Run 8: median 0.75 s, slowest 8.05 s,
+timer commands ≤0.005 s. Evidence `run6.json`–`run8.json`.
 
 ## Gate items not exercised here
 
