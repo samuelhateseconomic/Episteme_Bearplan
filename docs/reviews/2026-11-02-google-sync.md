@@ -144,5 +144,21 @@ Checks (2026-11-03):
 - Live read-only check (throwaway database, counts only): 5 calendars offered (1 main);
   28 events this week, 204 in the window; event → planned task worked.
 
-Not yet done: real-Chrome tests of the Google tab and the day events; the open page
-doesn't refresh by itself after a background sync.
+## Follow-ups done 2026-11-03
+
+- **Open page refreshes after a background sync.** `GoogleSyncService.version` goes up
+  when a sync changes what the page shows (task revisions/completion, followed-calendar
+  events or calendars; compared by fingerprint before/after). `GET /api/google/changes`
+  returns it; `useGoogleChanges` in `Google.tsx` (used by `App.tsx`) checks every 30 s
+  while visible and on focus/visibility, never at mount, and refreshes projects, tasks
+  and the week plan when it changes. Tests: backend version test; fake-timer hook test.
+- **Real-Chrome test** `tests/test_google_browser.py` (fake Google clients, connected
+  auth): choose a calendar → event under today → Add as task (45-min estimate, place in
+  notes) → start time 23:15 → Sync now puts it in the BearPlans calendar with a 30-minute
+  popup → a tick made in Google shows as checked after a focus check → 375 px without
+  horizontal overflow. Skips after 23:00 Pacific (the event must still be upcoming).
+  Screenshots: `.evidence/google-20261103/`. Fixed "1 tasks in 1 lists" plurals.
+- Checks: full pytest 931 passed, 1 Windows-only skip; Vitest 165; typecheck and build pass.
+
+Still open: carrying a start time over to the next week (needs the user's decision);
+day columns may be crowded with many events (user to judge).

@@ -283,3 +283,17 @@ def test_migration_0017_is_shipped():
 def _default_name(db) -> str:
     with db.read() as conn:
         return conn.execute("SELECT name FROM projects WHERE id = ?", (default_project_id(conn),)).fetchone()["name"]
+
+
+def test_changes_version_goes_up_only_when_a_sync_changes_what_the_page_shows(db):
+    fake = FakeTasks()
+    task = create_task(db, "Version")
+    with TestClient(create_app(db, google_tasks_client=fake), base_url="http://127.0.0.1:8765") as client:
+        assert client.get("/api/google/changes").json() == {"version": 0}
+        client.post("/api/google/tasks/sync")
+        client.post("/api/google/tasks/sync")
+        assert client.get("/api/google/changes").json() == {"version": 0}  # only Google changed
+        fake.live(fake.list_named(_default_name(db)))["Version"]["status"] = "completed"
+        client.post("/api/google/tasks/sync")
+        assert client.get("/api/google/changes").json() == {"version": 1}  # a tick came back
+        assert get_task(db, task.id).completed

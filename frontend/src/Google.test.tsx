@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { Google } from "./Google";
+import { Google, useGoogleChanges } from "./Google";
 import type { GoogleState } from "./api";
 
 const base: GoogleState = {
@@ -78,5 +78,30 @@ describe("Google calendars to show", () => {
     expect(fetch).toHaveBeenCalledWith("/api/google/calendars", expect.objectContaining({ method: "PUT", body: JSON.stringify({ calendar_ids: ["work"] }) }));
     expect(await screen.findByText(/Saved your calendars/)).toBeTruthy();
     expect((screen.getByRole("checkbox", { name: /Lab job/ }) as HTMLInputElement).checked).toBe(true);
+  });
+});
+
+describe("useGoogleChanges", () => {
+  it("refreshes only after the sync version changes, never at mount", async () => {
+    vi.useFakeTimers();
+    try {
+      let version = 3;
+      const fetch = vi.spyOn(globalThis, "fetch").mockImplementation(() => reply({ version }));
+      const changed = vi.fn();
+      function Probe() { useGoogleChanges(changed); return null; }
+      render(<Probe />);
+      expect(fetch).not.toHaveBeenCalled();
+      await vi.advanceTimersByTimeAsync(30000);
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(changed).not.toHaveBeenCalled();
+      await vi.advanceTimersByTimeAsync(30000);
+      expect(changed).not.toHaveBeenCalled();
+      version = 4;
+      window.dispatchEvent(new Event("focus"));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(changed).toHaveBeenCalledTimes(1);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

@@ -576,3 +576,6 @@ export function getGoogleEvents(start: string, end: string, signal?: AbortSignal
 export function addGoogleEvent(calendarId: string, eventId: string): Promise<{ event: GoogleEvent; task: Task; planned: boolean }> {
   return request("/api/google/events/add", json("POST", { calendar_id: calendarId, event_id: eventId }));
 }
+export function getGoogleChanges(signal?: AbortSignal): Promise<{ version: number }> {
+  return request("/api/google/changes", { signal });
+}

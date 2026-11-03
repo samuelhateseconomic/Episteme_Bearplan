@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { ApiError, connectGoogle, disconnectGoogle, followGoogleCalendars, getGoogle, getGoogleCalendars, refreshGoogleCalendars, syncGoogleTasks, type GoogleCalendar, type GoogleState } from "./api";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ApiError, connectGoogle, disconnectGoogle, followGoogleCalendars, getGoogle, getGoogleCalendars, getGoogleChanges, refreshGoogleCalendars, syncGoogleTasks, type GoogleCalendar, type GoogleState } from "./api";
 
 const stampLabel = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
 const message = (caught: unknown, fallback: string) => caught instanceof ApiError ? caught.message : fallback;
@@ -92,7 +92,7 @@ export function Google({ visible, onChanged }: { visible: boolean; onChanged?: (
 
     {tasks && state?.connected ? <div className="google-tasks">
       <h3>Google Tasks</h3>
-      <p>{tasks.synced_tasks} tasks in {tasks.synced_lists} lists.
+      <p>{tasks.synced_tasks} {tasks.synced_tasks === 1 ? "task" : "tasks"} in {tasks.synced_lists} {tasks.synced_lists === 1 ? "list" : "lists"}.
         {tasks.last_success_at ? ` Last synced ${stampLabel.format(new Date(tasks.last_success_at))}.` : " Not synced yet."}</p>
       {tasks.last_error ? <p role="alert" className="error">Last sync failed: {tasks.last_error}</p> : null}
       <h3>Google Calendar</h3>
@@ -127,4 +127,37 @@ export function Google({ visible, onChanged }: { visible: boolean; onChanged?: (
       </div>
     </div> : null}
   </section>;
+}
+
+const CHANGE_CHECK_MS = 30000;
+
+/** Calls onChange when a background Google sync changed something the page shows
+ * (a task ticked in Google, followed-calendar events). Checks every 30 seconds while
+ * the page is visible and when the window regains focus; never at mount. */
+export function useGoogleChanges(onChange: () => void) {
+  const seen = useRef<number | null>(null);
+  const callback = useRef(onChange);
+  callback.current = onChange;
+  useEffect(() => {
+    let stopped = false;
+    const check = async () => {
+      if (document.visibilityState === "hidden") return;
+      try {
+        const { version } = await getGoogleChanges();
+        if (stopped) return;
+        if (seen.current !== null && version !== seen.current) callback.current();
+        seen.current = version;
+      } catch { /* not connected or offline: try again later */ }
+    };
+    const timer = window.setInterval(() => { void check(); }, CHANGE_CHECK_MS);
+    const onFocus = () => { void check(); };
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onFocus);
+    return () => {
+      stopped = true;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onFocus);
+    };
+  }, []);
 }

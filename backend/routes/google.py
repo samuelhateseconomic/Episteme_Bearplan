@@ -47,6 +47,16 @@ def google_state(request: Request) -> GoogleState:
     return _state(request)
 
 
+class Changes(BaseModel):
+    version: int
+
+
+@router.get("/changes")
+def google_changes(request: Request) -> Changes:
+    """Cheap check for the open page: refresh when this number changes."""
+    return Changes(version=request.app.state.google_sync.version)
+
+
 @router.post("/connect")
 def google_connect(request: Request) -> SignIn:
     return SignIn(url=request.app.state.google_auth.start_sign_in())

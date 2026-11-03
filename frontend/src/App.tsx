@@ -22,7 +22,7 @@ import { CompactTimer, StartTrackingButton, TrackScreen, useCountdown } from "./
 import { Statistics } from "./Statistics";
 import { Assistant } from "./Assistant";
 import { BCourses } from "./BCourses";
-import { Google } from "./Google";
+import { Google, useGoogleChanges } from "./Google";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -128,6 +128,9 @@ export default function App() {
     const current = selectedIdRef.current;
     if (current) await refreshTasks(current);
   }, [loadProjects, refreshTasks]);
+
+  // A background Google sync can tick tasks done or bring new calendar events.
+  useGoogleChanges(() => { void retry(); void planning.refresh(); });
 
   useEffect(() => {
     // Any open form belongs to the project that was selected when it opened, so

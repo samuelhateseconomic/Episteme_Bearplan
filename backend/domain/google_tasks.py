@@ -296,11 +296,31 @@ class GoogleSyncService:
         self._wake = threading.Event()
         self._stop = threading.Event()
         self._thread: threading.Thread | None = None
+        self._version = 0
+
+    @property
+    def version(self) -> int:
+        """Goes up whenever a sync changes something the open page shows (a tick from
+        Google, followed-calendar events), so the page knows to refresh."""
+        return self._version
+
+    def _fingerprint(self) -> int:
+        with self._db.read() as conn:
+            return hash((
+                tuple(tuple(row) for row in conn.execute("SELECT id, revision, completed_at FROM tasks ORDER BY id")),
+                tuple(tuple(row) for row in conn.execute("SELECT * FROM google_source_events ORDER BY calendar_id, event_id")),
+                tuple(tuple(row) for row in conn.execute("SELECT calendar_id, summary, followed, in_source FROM google_source_calendars ORDER BY calendar_id")),
+            ))
 
     def sync_now(self) -> SyncStatus:
         with self._lock:  # one sync at a time
             calendar = self._calendar_factory() if self._calendar_factory else None
-            return sync(self._db, self._client_factory(), self._unavailable, calendar)
+            before = self._fingerprint()
+            try:
+                return sync(self._db, self._client_factory(), self._unavailable, calendar)
+            finally:
+                if self._fingerprint() != before:
+                    self._version += 1
 
     def nudge(self) -> None:
         self._wake.set()
