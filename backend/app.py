@@ -90,10 +90,13 @@ def create_app(
     config = RewardConfig.from_environment() if reward_config is None else reward_config
     countdown = TimerService(db, timer_clock, reward_config=config)
     auth = google_auth or GoogleAuth()
+    def calendar_factory() -> object | None:
+        return google_calendar_client or (None if google_tasks_client is not None else GoogleCalendarClient(auth))
+
     google_sync = GoogleSyncService(
         db, lambda: google_tasks_client or GoogleTasksClient(auth), GoogleUnavailable,
         lambda: google_tasks_client is not None or auth.connected(),
-        lambda: google_calendar_client or (None if google_tasks_client is not None else GoogleCalendarClient(auth)))
+        calendar_factory)
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
@@ -120,6 +123,7 @@ def create_app(
     app.state.bcourses_client = bcourses_client  # None: the real client, token from the secrets file
     app.state.google_auth = auth
     app.state.google_sync = google_sync
+    app.state.google_calendar_factory = calendar_factory
     app.add_middleware(LocalOnlyMiddleware)
 
     @app.middleware("http")

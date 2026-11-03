@@ -226,6 +226,8 @@ export interface Planning {
   placements: Placement[];
   closed_week?: ClosedWeek | null;
   closed_weeks?: ClosedWeekSummary[];
+  /** Events from followed Google calendars in this week (read-only). */
+  calendar_events?: GoogleEvent[];
 }
 
 export interface HistoricalTask extends Task {
@@ -532,4 +534,45 @@ export function disconnectGoogle(): Promise<GoogleState> {
 }
 export function syncGoogleTasks(): Promise<GoogleState> {
   return request("/api/google/tasks/sync", { method: "POST" });
+}
+
+export interface GoogleCalendar {
+  calendar_id: string;
+  summary: string;
+  color: string;
+  is_primary: boolean;
+  followed: boolean;
+}
+
+export interface GoogleEvent {
+  calendar_id: string;
+  calendar_summary: string;
+  color: string;
+  event_id: string;
+  summary: string;
+  location: string;
+  html_link: string;
+  all_day: boolean;
+  start_at: string | null;
+  end_at: string | null;
+  first_day: string;
+  last_day: string;
+  /** The BearPlans task made from this event, if any. */
+  task_id: string | null;
+}
+
+export function getGoogleCalendars(): Promise<GoogleCalendar[]> {
+  return request("/api/google/calendars");
+}
+export function refreshGoogleCalendars(): Promise<GoogleCalendar[]> {
+  return request("/api/google/calendars/refresh", { method: "POST" });
+}
+export function followGoogleCalendars(calendarIds: string[]): Promise<GoogleCalendar[]> {
+  return request("/api/google/calendars", json("PUT", { calendar_ids: calendarIds }));
+}
+export function getGoogleEvents(start: string, end: string, signal?: AbortSignal): Promise<GoogleEvent[]> {
+  return request(`/api/google/events?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}`, { signal });
+}
+export function addGoogleEvent(calendarId: string, eventId: string): Promise<{ event: GoogleEvent; task: Task; planned: boolean }> {
+  return request("/api/google/events/add", json("POST", { calendar_id: calendarId, event_id: eventId }));
 }

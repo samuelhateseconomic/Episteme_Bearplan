@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState, type DragEvent } from "react";
-import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setPlacementTime, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
+import { ApiError, addGoogleEvent, assignTask, getPlanning, movePlacement, removePlacement, setPlacementTime, setTaskCompletion, type GoogleEvent, type Placement, type Planning, type Project, type Task } from "./api";
 import { WeekActions, WeekTaskDetails, historicalContext } from "./WeekActions";
 import { StartTrackingButton } from "./Countdown";
 
@@ -191,6 +191,36 @@ function TimeForm({ task, placement, onRun }: { task: Task; placement: Placement
   );
 }
 
+const eventClock = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" });
+
+export function CalendarEvents({ events, date, onRun, locked }: { events: GoogleEvent[]; date: string; onRun: Run; locked: boolean }) {
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  if (!events.length) return null;
+  return <div className="day-events">
+    <h4>From your calendar</h4>
+    <ul aria-label={`Calendar events, ${showDate(date)}`}>
+      {events.map((event) => {
+        const when = event.all_day ? "All day" : `${eventClock.format(new Date(event.start_at ?? ""))} – ${eventClock.format(new Date(event.end_at ?? event.start_at ?? ""))}`;
+        const key = `${event.calendar_id}/${event.event_id}`;
+        return <li key={key} className="day-event" style={event.color ? { borderLeftColor: event.color } : undefined}>
+          <p className="day-event-title">{event.summary}</p>
+          <p className="planned-meta muted">{when} · {event.calendar_summary}{event.location ? ` · ${event.location}` : ""}</p>
+          {event.task_id ? <p className="planned-meta">Added as a task</p>
+            : <button type="button" className="link" disabled={locked || busy !== null} onClick={async () => {
+              setBusy(key);
+              setError(null);
+              try { await onRun(() => addGoogleEvent(event.calendar_id, event.event_id), `Added “${event.summary}” as a task${event.first_day >= date ? ` planned ${showDate(event.first_day)}` : ""}.`); }
+              catch (caught) { setError(message(caught)); }
+              finally { setBusy(null); }
+            }}>{busy === key ? "Adding…" : "Add as task"}</button>}
+        </li>;
+      })}
+    </ul>
+    {error ? <p role="alert" className="error">{error}</p> : null}
+  </div>;
+}
+
 type DraggedPlacement = { placement: Placement; title: string };
 type DragControls = { start: (event: DragEvent<HTMLElement>, placement: Placement, task: Task) => void; end: () => void };
 
@@ -252,6 +282,8 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
   }, [endDrag]);
   useEffect(endDrag, [plan?.week_start, Boolean(plan?.closed_week), endDrag]);
   const days = plan ? Array.from({ length: 7 }, (_, index) => addDays(plan.week_start, index)) : [];
+  // Events from the user's followed Google calendars (read-only), sent with the week.
+  const events = plan?.calendar_events ?? [];
   const tasksById = new Map(plan?.tasks.map((task) => [task.id, task]) ?? []);
   const projectById = new Map(projects.map((project) => [project.id, project.name]));
   const closed = plan?.closed_week;
@@ -376,6 +408,7 @@ export function WeeklyPlanner({ state, projects, onRun, locked, onTrack }: { sta
                       })}
                     </ul>
                   ) : <p className="empty-day muted">Nothing planned</p>}
+                  <CalendarEvents events={events.filter((event) => event.first_day <= date && event.last_day >= date)} date={date} onRun={onRun} locked={locked || loading} />
                 </section>
               );
             })}

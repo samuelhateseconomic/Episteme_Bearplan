@@ -190,5 +190,5 @@ def test_time_route_sets_and_clears(db):
         assert client.put(f"/api/placements/{placement.id}/time", json={"start_time": "25:00"}).status_code == 422
 
 
-def test_migration_0018_is_last():
-    assert [m.name for m in load_migrations()][-1] == "planned_time_and_calendar"
+def test_migration_0018_is_shipped():
+    assert [m.name for m in load_migrations()][17] == "planned_time_and_calendar"

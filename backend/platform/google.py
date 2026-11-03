@@ -363,6 +363,14 @@ class GoogleCalendarClient(_GoogleApi):
             raise
         return True
 
+    def calendar_list(self) -> list[dict[str, Any]]:
+        return self._pages(f"{CALENDAR_API}/users/me/calendarList", {"maxResults": 250})
+
+    def list_events(self, calendar_id: str, time_min: str, time_max: str) -> list[dict[str, Any]]:
+        """Read-only: single (expanded) events in the window, cancelled ones left out."""
+        return self._pages(f"{CALENDAR_API}/calendars/{_q(calendar_id)}/events", {
+            "timeMin": time_min, "timeMax": time_max, "singleEvents": "true", "orderBy": "startTime", "maxResults": 2500})
+
     def insert_calendar(self, summary: str) -> dict[str, Any]:
         return self._call("POST", f"{CALENDAR_API}/calendars", body={"summary": summary})
 

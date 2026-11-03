@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sqlite3
+
 from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, StrictStr
 
@@ -7,7 +9,14 @@ from backend.domain.planning import (
     Placement, PlanningSnapshot, create_placement, get_planning, move_placement, remove_placement, set_placement_time,
 )
 
+from backend.domain.google_reading import SourceEvent, list_events
+
 router = APIRouter(prefix="/api")
+
+
+class PlanningView(PlanningSnapshot):
+    # Events from the user's followed Google calendars for the shown week (read-only).
+    calendar_events: list[SourceEvent] = []
 
 
 class PlacementCreateRequest(BaseModel):
@@ -28,8 +37,13 @@ class PlacementTimeRequest(BaseModel):
 
 
 @router.get("/planning")
-def planning(request: Request, week: str | None = None) -> PlanningSnapshot:
-    return get_planning(request.app.state.db, week)
+def planning(request: Request, week: str | None = None) -> PlanningView:
+    snapshot = get_planning(request.app.state.db, week)
+    try:
+        events = list_events(request.app.state.db, snapshot.week_start.isoformat(), snapshot.week_end.isoformat())
+    except sqlite3.Error:
+        events = []
+    return PlanningView(**snapshot.model_dump(), calendar_events=events)
 
 
 @router.post("/placements", status_code=201)

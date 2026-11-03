@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ApiError, connectGoogle, disconnectGoogle, getGoogle, syncGoogleTasks, type GoogleState } from "./api";
+import { ApiError, connectGoogle, disconnectGoogle, followGoogleCalendars, getGoogle, getGoogleCalendars, refreshGoogleCalendars, syncGoogleTasks, type GoogleCalendar, type GoogleState } from "./api";
 
 const stampLabel = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
 const message = (caught: unknown, fallback: string) => caught instanceof ApiError ? caught.message : fallback;
@@ -9,12 +9,30 @@ export function Google({ visible, onChanged }: { visible: boolean; onChanged?: (
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState("");
+  const [calendars, setCalendars] = useState<GoogleCalendar[]>([]);
+  const [chosen, setChosen] = useState<Set<string>>(new Set());
+  const acceptCalendars = useCallback((list: GoogleCalendar[]) => {
+    setCalendars(list);
+    setChosen(new Set(list.filter((calendar) => calendar.followed).map((calendar) => calendar.calendar_id)));
+  }, []);
 
   const load = useCallback(async () => {
     try { setState(await getGoogle()); } catch (caught) { setError(message(caught, "Could not read the Google connection.")); }
   }, []);
 
   useEffect(() => { if (visible) void load(); }, [visible, load]);
+
+  // Calendars to read: show the saved list, and fetch it from Google the first time.
+  const connected = state?.connected ?? false;
+  useEffect(() => {
+    if (!visible || !connected) return;
+    void (async () => {
+      try {
+        const saved = await getGoogleCalendars();
+        acceptCalendars(saved.length ? saved : await refreshGoogleCalendars());
+      } catch (caught) { setError(message(caught, "Could not read your Google calendars.")); }
+    })();
+  }, [visible, connected, acceptCalendars]);
 
   // While sign-in is open in another tab, check every two seconds until it finishes.
   const pending = state?.sign_in_pending ?? false;
@@ -81,6 +99,32 @@ export function Google({ visible, onChanged }: { visible: boolean; onChanged?: (
       <p>{tasks.synced_events} upcoming {tasks.synced_events === 1 ? "event" : "events"} in the “BearPlans” calendar.</p>
       <p className="muted">Give a planned task a start time (open it on the Plan screen, then “Move or remove”) and it appears in the BearPlans calendar with a reminder 30 minutes before. Finishing the task removes the event.</p>
       <p className="muted">BearPlans syncs every two minutes and shortly after each change.</p>
+    </div> : null}
+
+    {state?.connected ? <div className="google-calendars">
+      <h3>Calendars to show</h3>
+      <p className="muted">Events from the calendars you tick appear beside each day on the Plan screen, where any event can be added as a task. BearPlans only reads these calendars; it never changes them.</p>
+      {calendars.length ? <fieldset>
+        <legend>Choose the calendars whose events you want to see</legend>
+        {calendars.map((calendar) => <label key={calendar.calendar_id}>
+          <input type="checkbox" checked={chosen.has(calendar.calendar_id)} onChange={(event) => setChosen((current) => {
+            const next = new Set(current);
+            if (event.target.checked) next.add(calendar.calendar_id); else next.delete(calendar.calendar_id);
+            return next;
+          })} />
+          {calendar.color ? <span className="calendar-swatch" style={{ background: calendar.color }} aria-hidden="true" /> : null}
+          {calendar.summary}{calendar.is_primary ? <span className="muted"> · main calendar</span> : null}
+        </label>)}
+      </fieldset> : <p className="muted">No calendars found yet.</p>}
+      <div className="form-actions">
+        <button type="button" disabled={busy !== null || !calendars.length} onClick={() => void run("follow", async () => {
+          acceptCalendars(await followGoogleCalendars([...chosen]));
+          onChanged?.();
+        }, "Saved your calendars. Their events now appear on the Plan screen.")}>{busy === "follow" ? "Saving…" : "Save calendars"}</button>
+        <button type="button" className="link" disabled={busy !== null} onClick={() => void run("calendars", async () => {
+          acceptCalendars(await refreshGoogleCalendars());
+        }, "Updated your calendar list and events.")}>Refresh calendars</button>
+      </div>
     </div> : null}
   </section>;
 }

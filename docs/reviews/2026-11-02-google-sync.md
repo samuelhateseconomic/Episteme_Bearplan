@@ -1,6 +1,6 @@
 # Google Calendar and Google Tasks sync — decisions and progress
 
-Started 2026-11-02. Status: **steps 1–2 done (step 2 committed `d41534e`); step 3 built and checked live 2026-11-03, awaiting the user's check and commit; step 4 not started.**
+Started 2026-11-02. Status: **steps 1–3 done; step 4 built and checked live 2026-11-03, awaiting the user's check and commit.**
 
 ## User decisions (2026-11-02)
 
@@ -41,7 +41,7 @@ the user's Google account (a change from the earlier read-only plan for M6).
    test user; the consent screen app name was "ChatGPT" (renamed by the user).
 2. Google Tasks sync — **committed `d41534e` (2026-11-02).**
 3. Optional planned start time + "BearPlans" calendar events with 30-minute reminders — **built 2026-11-03.**
-4. Read chosen calendars, show events beside days, event → task.
+4. Read chosen calendars, show events beside days, event → task — **built 2026-11-03.**
 
 ## Step 2 — Google Tasks sync (built 2026-11-02)
 
@@ -113,3 +113,36 @@ Checks (2026-11-03):
   "BearPlans sync check": event at 14:00 Pacific, 45 minutes, popup reminder 30 minutes;
   retimed to 09:30 on the same event; repeat sync changed nothing; finishing the task
   removed it; the temporary calendar was then deleted.
+
+## Step 4 — reading followed calendars (built 2026-11-03)
+
+Files: `backend/storage/migrations/0019_google_calendar_reading.sql`
+(`google_source_calendars`, `google_source_events`, `google_event_tasks`),
+`backend/domain/google_reading.py`, `backend/platform/google.py` (`calendar_list`,
+`list_events`: GET only), `backend/domain/google_tasks.py` (each sync also re-reads
+followed calendars), `backend/routes/google.py` (`GET/PUT /api/google/calendars`,
+`POST /calendars/refresh`, `GET /events`, `POST /events/add`), `backend/routes/planning.py`
+(`GET /api/planning` now also returns `calendar_events` for the shown week, so the Plan
+screen needs no extra request), `backend/app.py`, `frontend/src/Google.tsx` ("Calendars to
+show" picker), `frontend/src/WeeklyPlanner.tsx` (`CalendarEvents` under each day:
+time or All day, calendar, location, "Add as task" / "Added as a task"), `api.ts`, `styles.css`.
+
+Implementation decisions (mine, within the user's decisions):
+- No calendar is followed until the user ticks one; the BearPlans calendar itself is
+  not offered. Events are cached from 14 days back to 56 days ahead, replaced on each sync.
+- "Add as task" creates a task in the default project titled like the event, with the
+  event's length as the estimate and notes giving the calendar, time, place and Google
+  link; it is planned on the event's first day (if that week is open) **without** a
+  start time, so it doesn't create a second event. Repeating Add returns the same task.
+- Only `https://www.google.com/calendar/` links are kept.
+
+Checks (2026-11-03):
+- `tests/test_google_reading.py`: 7 passed. Full pytest: 929 passed, 1 Windows-only skip.
+- `frontend/src/CalendarEvents.test.tsx` 2 and a new picker test in `Google.test.tsx`;
+  Vitest 164 passed; typecheck and build pass. A first version fetched events
+  separately and broke 12 existing request-order tests; events now come with the plan.
+- Live read-only check (throwaway database, counts only): 5 calendars offered (1 main);
+  28 events this week, 204 in the window; event → planned task worked.
+
+Not yet done: real-Chrome tests of the Google tab and the day events; the open page
+doesn't refresh by itself after a background sync.

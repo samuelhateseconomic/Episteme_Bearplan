@@ -30,6 +30,7 @@ from pydantic import BaseModel
 
 from backend.domain.calendar import application_today
 from backend.domain.google_calendar import CalendarClient, sync_calendar
+from backend.domain.google_reading import read_calendars
 from backend.domain.tasks import Task, _list_tasks, _set_completion_tx
 from backend.storage.db import Database, utc_now
 
@@ -185,11 +186,12 @@ def _apply_ticks(db: Database, ticks: dict[str, str]) -> int:
 
 def sync(db: Database, client: TasksClient, unavailable: type[Exception],
          calendar: CalendarClient | None = None) -> SyncStatus:
-    """One full sync (Tasks, then Calendar). Raises `unavailable` (after recording it) when Google fails."""
+    """One full sync (Tasks, BearPlans calendar, then reading followed calendars). Raises `unavailable` (after recording it) when Google fails."""
     try:
         _sync(db, client)
         if calendar is not None:
             sync_calendar(db, calendar)
+            read_calendars(db, calendar)  # type: ignore[arg-type]
     except unavailable as error:
         _set_sync(db, success=False, error=getattr(error, "message", str(error)))
         raise
