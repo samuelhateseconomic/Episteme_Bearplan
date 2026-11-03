@@ -22,6 +22,7 @@ import { CompactTimer, StartTrackingButton, TrackScreen, useCountdown } from "./
 import { Statistics } from "./Statistics";
 import { Assistant } from "./Assistant";
 import { BCourses } from "./BCourses";
+import { Google } from "./Google";
 
 const dueOn = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 
@@ -44,7 +45,7 @@ function formatEstimate(minutes: number): string {
 export default function App() {
   const planning = usePlanning();
   const timer = useCountdown();
-  const readScreen = () => window.location.hash === "#assistant" ? "assistant" : window.location.hash === "#track" ? "track" : window.location.hash === "#stats" ? "stats" : window.location.hash === "#bcourses" ? "bcourses" : "plan";
+  const readScreen = () => window.location.hash === "#assistant" ? "assistant" : window.location.hash === "#track" ? "track" : window.location.hash === "#stats" ? "stats" : window.location.hash === "#bcourses" ? "bcourses" : window.location.hash === "#google" ? "google" : "plan";
   const [screen, setScreen] = useState(readScreen);
   const [trackingTaskId, setTrackingTaskId] = useState<string | null>(null);
   const [trackingRequest, setTrackingRequest] = useState(0);
@@ -166,6 +167,7 @@ export default function App() {
           <a href="#track" aria-current={screen === "track" ? "page" : undefined} onClick={() => openTrack()}>Track</a>
           <a href="#stats" aria-current={screen === "stats" ? "page" : undefined} onClick={() => setScreen("stats")}>Stats</a>
           <a href="#bcourses" aria-current={screen === "bcourses" ? "page" : undefined} onClick={() => setScreen("bcourses")}>bCourses</a>
+          <a href="#google" aria-current={screen === "google" ? "page" : undefined} onClick={() => setScreen("google")}>Google</a>
           <a href="#assistant" aria-current={screen === "assistant" ? "page" : undefined} onClick={() => setScreen("assistant")}>Assistant</a>
         </nav>
       </header>
@@ -175,6 +177,7 @@ export default function App() {
       <TrackScreen timer={timer} plan={planning.plan} projects={projects ?? []} requestedTaskId={trackingTaskId} requestToken={trackingRequest} visible={screen === "track"} planError={planning.error} onRefreshTasks={() => void planning.refresh()} />
       <Statistics visible={screen === "stats"} />
       <BCourses visible={screen === "bcourses"} onChanged={() => { void retry(); void planning.refresh(); }} />
+      <Google visible={screen === "google"} onChanged={() => { void retry(); void planning.refresh(); }} />
       <Assistant visible={screen === "assistant"} projectId={selectedId} date={planning.plan?.week_start}
         onChanged={() => { if (selectedId) void refreshTasks(selectedId); void planning.refresh(); void timer.refresh(); }} />
 

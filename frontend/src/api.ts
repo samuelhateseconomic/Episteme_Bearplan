@@ -505,3 +505,25 @@ export function dismissBCoursesAssignment(id: string, dismissed: boolean): Promi
 export function resolveBCoursesDueDate(id: string, useNew: boolean): Promise<BCoursesAssignment> {
   return request(`/api/bcourses/assignments/${encodeURIComponent(id)}/due-date`, json("POST", { use_new: useNew }));
 }
+
+export interface GoogleState {
+  configured: boolean;
+  connected: boolean;
+  sign_in_pending: boolean;
+  sign_in_error: string | null;
+  missing_permissions: string[];
+  tasks: { last_attempt_at: string | null; last_success_at: string | null; last_error: string | null; synced_lists: number; synced_tasks: number };
+}
+
+export function getGoogle(signal?: AbortSignal): Promise<GoogleState> {
+  return request("/api/google", { signal });
+}
+export function connectGoogle(): Promise<{ url: string }> {
+  return request("/api/google/connect", { method: "POST" });
+}
+export function disconnectGoogle(): Promise<GoogleState> {
+  return request("/api/google/disconnect", { method: "POST" });
+}
+export function syncGoogleTasks(): Promise<GoogleState> {
+  return request("/api/google/tasks/sync", { method: "POST" });
+}

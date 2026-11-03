@@ -242,6 +242,10 @@ dates; use their contents and commit history to determine which evidence is curr
   `backend/platform/secrets.py`. Never print, log, return or commit them; tests set
   `BEARPLANS_SECRETS_FILE` to an empty path. The bCourses connection is read-only
   (GET to `https://bcourses.berkeley.edu` only); imports become tasks only on Add.
+  Google sign-in files (`google_oauth_client.json`, `google_token.json`) live beside
+  it in `.secrets/` and follow the same rules. Google writes are limited by user
+  decision (2026-11-02): Google Tasks lists/tasks BearPlans created, and later only a
+  calendar BearPlans created; the user's own calendars, lists and tasks are never changed.
 - Preserve unrelated and uncommitted work. Do not discard, reset, overwrite or stash
   changes without understanding them and having authorization for that action.
 - Bind to `127.0.0.1`; preserve loopback Host and same-origin mutation checks in

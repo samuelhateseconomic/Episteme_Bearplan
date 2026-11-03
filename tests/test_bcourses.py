@@ -261,7 +261,7 @@ def test_client_without_token_explains_where_to_put_it():
         BCoursesClient().courses()
 
 
-def test_migration_0016_is_last_and_isolated():
-    assert [m.name for m in load_migrations()][-1] == "bcourses"
+def test_migration_0016_is_shipped_and_isolated():
+    assert [m.name for m in load_migrations()][15] == "bcourses"
     assert platform.BASE == "https://bcourses.berkeley.edu"
     assert os.environ["BEARPLANS_SECRETS_FILE"].endswith("none.env")
