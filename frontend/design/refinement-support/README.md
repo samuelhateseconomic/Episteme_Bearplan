@@ -17,6 +17,9 @@ synthetic fixture, the execution record, and the dated review together.
   final navigation/Start pass; it is not proof that the paused tree is fully wired.
 - `handoff-draft.md`: preliminary handoff content; not an accepted handoff.
 
-The existing ten named starts are preserved and a separate review launcher was
-added. That launcher's reset still needs the later time variables and other final
-state integration. Full interaction and post-change rendering checks are pending.
+The original ten named starts and a separate review launcher are preserved.
+The resumed native wiring, Reset (202 variables at R21, 206 after the R23 spacing repair) and verification are recorded in
+[the R21 review](../../../docs/reviews/2026-11-02-ux-r21-wiring.md). Updated executed
+patches, installed-action models and partitioned audit evidence live in
+[resumed-20261102](resumed-20261102/). Do not replay archived writes. Actual preview
+clicks/scrolling, keyboard and user acceptance remain separate evidence.

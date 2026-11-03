@@ -26139,7 +26139,8 @@
       "Disclosure": "3:346",
       "Feedback": "3:351",
       "Streak": "3:381",
-      "Weekly column card": "12:33"
+      "Weekly column card": "12:33",
+      "Disclosure expanded": "164:8311"
     },
     "styles": {
       "Display": "S:a039602a48381ed5f9b225fceb7dea28a9d5575b,",
@@ -26599,7 +26600,23 @@
           "width": 636,
           "variable": "VariableID:151:8306"
         }
-      ]
+      ],
+      "disclosure": {
+        "beforeClick": "VariableID:164:8315"
+      },
+      "returnNavigation": {
+        "aboutBeforeClick": "VariableID:167:8467"
+      },
+      "forest": {
+        "newSavedVisible": "VariableID:166:5718",
+        "baselineDate": "VariableID:166:5719"
+      },
+      "readSpacing": {
+        "row59": "VariableID:175:8434",
+        "row60": "VariableID:175:8435",
+        "pair118": "VariableID:175:8436",
+        "pair120": "VariableID:175:8437"
+      }
     },
     "reviewLauncher": {
       "id": "141:7346",
@@ -26625,5 +26642,17 @@
     "originalScreenIdsPreserved": 75,
     "registeredProductStateFrames": 89,
     "staticReferencesPreviouslyReviewed": 46
+  },
+  "refinementResumeCheckpoint": {
+    "evidenceKey": "r21Resume20261102",
+    "productStateFrames": 89,
+    "separateLauncher": "141:7346",
+    "namedStarts": 11,
+    "resetVariableCount": 206,
+    "pinnedReopenError": "167:8476",
+    "newSavedTree": "166:5720",
+    "expandedDisclosure": "164:8311",
+    "sources": "design/refinement-support/resumed-20261102",
+    "spacingEvidenceKey": "r23Spacing20261102"
   }
 }

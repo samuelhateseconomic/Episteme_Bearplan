@@ -9,8 +9,60 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-02 — UX-R23 weekday and Outline spacing repair
 
+Recorded the user's successful weekly-flow report and visual spacing findings.
+Aligned weekday headers/selection/footer styling, compacted Wednesday/Saturday
+cards and fixed hidden Read slots beside Outline. Four layout variables are wired
+in seven bounded batches across 42 roots; Reset includes all 206 values.
 
+Reviewed 800×900 Light Wednesday, Saturday and completed-Read Today renders;
+Outline's preceding hidden shell is 1px. Reran 23 installed journey models:
+23 passed, 0 failed. Latest user review, remaining R23 journeys and R24 remain open.
+[Detailed evidence](reviews/2026-11-02-ux-r23-walkthrough.md#weekly-feedback-and-spacing-repair--stop-checkpoint).
+The user requested a scoped commit and pause. No application implementation or push.
+
+## 2026-11-02 — UX-R23 first two walkthrough examples recorded
+
+User replied “nothing stuck” for lower-row Today selection/start/pause/return and
+Read completion/reopening under Prepare seminar discussion, using Reset between
+examples. Recorded scoped user-reported success; no corrective design change was
+requested. This completes the first feedback checkpoint, not all of R23 or user
+acceptance. No directly observed timing, viewport, scroll or keyboard evidence.
+
+[Walkthrough evidence](reviews/2026-11-02-ux-r23-walkthrough.md).
+Updated current progress; documentation checks only. No Figma/app change, commit
+or push. Concurrent work preserved.
+
+## 2026-11-02 — UX-R22 independent static QA
+
+Independent review passed with follow-ups; no unresolved required static P1 in
+reviewed compositions. Expert score **87.98/100 (88 rounded)** uses the original
+13 weights, versus 76.84 originally. Fresh main Light, compact, dark, wide and
+200% text-fixture samples were inspected, including the final reverse repair.
+The score is heuristic; actual clicks/scrolling and user acceptance remain R23.
+
+Files: [R22 review](reviews/2026-11-02-ux-r22-static-review.md), Figma evidence/index
+and shared progress. No app implementation/test-suite run, commit or push.
+
+## 2026-11-02 — UX-R21 native prototype wiring
+
+Completed the resumed wiring ticket with scoped rendered evidence and explicit
+runtime follow-ups. Repaired reopen/Retry and visible errors; new-row navigation,
+Start and disclosures; parent/header layout; Reset/entry integration; source-week
+and timer-preserving Back routes; captured saved-session/Forest context and wallet
+labels. Preserved 75 original IDs and ten original starts, with a separate launcher.
+
+Checks: 23 journey, 44 time/correction/wallet and 601 navigation-return Map-model
+cases pass. All 89 product roots inspected; 29 repaired roots rechecked with no
+remaining structural/action errors in scope. All 90 roots have at most one timed
+entry; 22 Cancel controls have no mutation side effects. These are installed-action
+models and static renders, not actual preview interaction or user acceptance.
+
+macOS 26.6.2 / Darwin arm64. No app source/data/service/test-suite changes, commit
+or push during this resumption. Files: execution JSON, node ledger and
+`frontend/design/refinement-support/resumed-20261102/`.
+[Detailed R21 review](reviews/2026-11-02-ux-r21-wiring.md).
 
 ## 2026-11-02 — UI/UX Git checkpoint
 

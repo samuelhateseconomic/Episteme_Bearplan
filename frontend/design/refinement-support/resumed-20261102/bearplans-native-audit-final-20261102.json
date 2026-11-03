@@ -1,0 +1,845 @@
+{
+  "scope": "Initial full89root audit plus29affected-root rerun and latest90root entry uniqueness; structural only, no browser clicks",
+  "batches": [
+    {
+      "summary": [
+        {
+          "id": "5:4258",
+          "name": "Earlier unfinished",
+          "inspectedNodes": 134,
+          "reactions": 34
+        },
+        {
+          "id": "5:4694",
+          "name": "Reopen failed",
+          "inspectedNodes": 122,
+          "reactions": 32
+        },
+        {
+          "id": "5:4847",
+          "name": "Projects",
+          "inspectedNodes": 183,
+          "reactions": 46
+        },
+        {
+          "id": "5:4951",
+          "name": "Done",
+          "inspectedNodes": 163,
+          "reactions": 37
+        },
+        {
+          "id": "5:5054",
+          "name": "Reopened task",
+          "inspectedNodes": 183,
+          "reactions": 46
+        },
+        {
+          "id": "5:5166",
+          "name": "Rename project",
+          "inspectedNodes": 123,
+          "reactions": 30
+        },
+        {
+          "id": "5:5229",
+          "name": "Add project",
+          "inspectedNodes": 123,
+          "reactions": 30
+        },
+        {
+          "id": "5:5292",
+          "name": "Project completed child",
+          "inspectedNodes": 145,
+          "reactions": 34
+        },
+        {
+          "id": "5:5369",
+          "name": "Done previous week",
+          "inspectedNodes": 124,
+          "reactions": 28
+        },
+        {
+          "id": "5:5430",
+          "name": "Done unplanned",
+          "inspectedNodes": 124,
+          "reactions": 27
+        },
+        {
+          "id": "6:1934",
+          "name": "Wednesday",
+          "inspectedNodes": 46,
+          "reactions": 21
+        },
+        {
+          "id": "6:2004",
+          "name": "Reorder preview",
+          "inspectedNodes": 164,
+          "reactions": 44
+        }
+      ],
+      "stats": {
+        "roots": 12,
+        "nodes": 1634,
+        "reactions": 409,
+        "actions": 100358,
+        "conditionals": 9869,
+        "starts": 142,
+        "completed": 45,
+        "grips": 1,
+        "frozen": 0
+      },
+      "issues": [],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "6:2004",
+          "grip": "I6:2051;118:5374",
+          "row": "6:2051"
+        }
+      ],
+      "destinationCount": 51,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "5:4847",
+        "9:6097",
+        "5:4258",
+        "5:5166",
+        "5:5229",
+        "5:4951",
+        "5:5491",
+        "5:5369",
+        "5:5430",
+        "14:3767",
+        "14:3733",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649",
+        "6:1934"
+      ],
+      "setVariableCount": 52,
+      "aliasCount": 21,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "6:2266",
+          "name": "Week moved",
+          "inspectedNodes": 52,
+          "reactions": 24
+        },
+        {
+          "id": "7:2586",
+          "name": "Track ready",
+          "inspectedNodes": 30,
+          "reactions": 11
+        },
+        {
+          "id": "7:2827",
+          "name": "Track finished",
+          "inspectedNodes": 26,
+          "reactions": 10
+        },
+        {
+          "id": "7:2879",
+          "name": "Forest",
+          "inspectedNodes": 27,
+          "reactions": 8
+        },
+        {
+          "id": "7:2929",
+          "name": "Shop",
+          "inspectedNodes": 28,
+          "reactions": 8
+        },
+        {
+          "id": "7:2980",
+          "name": "Purchase failed",
+          "inspectedNodes": 30,
+          "reactions": 8
+        },
+        {
+          "id": "7:3482",
+          "name": "Assistant unavailable",
+          "inspectedNodes": 20,
+          "reactions": 9
+        },
+        {
+          "id": "9:5736",
+          "name": "Monday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        },
+        {
+          "id": "9:5791",
+          "name": "Tuesday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        },
+        {
+          "id": "9:5846",
+          "name": "Thursday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        },
+        {
+          "id": "9:5901",
+          "name": "Friday",
+          "inspectedNodes": 37,
+          "reactions": 21
+        },
+        {
+          "id": "9:5956",
+          "name": "Saturday",
+          "inspectedNodes": 49,
+          "reactions": 23
+        }
+      ],
+      "stats": {
+        "roots": 12,
+        "nodes": 410,
+        "reactions": 182,
+        "actions": 21551,
+        "conditionals": 2591,
+        "starts": 2,
+        "completed": 2,
+        "grips": 2,
+        "frozen": 0
+      },
+      "issues": [],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "6:2266",
+          "grip": "I6:2313;118:5374",
+          "row": "6:2313"
+        }
+      ],
+      "destinationCount": 50,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "14:3767",
+        "6:2600",
+        "14:3706",
+        "5:4847",
+        "9:6097",
+        "14:3733",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "9:5956",
+        "6:2541",
+        "14:3649",
+        "7:2879",
+        "105:5618",
+        "7:2929",
+        "7:2980",
+        "7:3355",
+        "6:2266",
+        "6:2004"
+      ],
+      "setVariableCount": 59,
+      "aliasCount": 27,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "9:6097",
+          "name": "Reopened child",
+          "inspectedNodes": 165,
+          "reactions": 38
+        },
+        {
+          "id": "14:3767",
+          "name": "History",
+          "inspectedNodes": 17,
+          "reactions": 5
+        },
+        {
+          "id": "17:4429",
+          "name": "Track completed selection",
+          "inspectedNodes": 28,
+          "reactions": 10
+        },
+        {
+          "id": "147:7536",
+          "name": "Reorder preview up",
+          "inspectedNodes": 164,
+          "reactions": 44
+        },
+        {
+          "id": "141:7346",
+          "name": "Review launcher",
+          "inspectedNodes": 14,
+          "reactions": 8
+        }
+      ],
+      "stats": {
+        "roots": 5,
+        "nodes": 388,
+        "reactions": 105,
+        "actions": 24989,
+        "conditionals": 2211,
+        "starts": 27,
+        "completed": 9,
+        "grips": 1,
+        "frozen": 0
+      },
+      "issues": [],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "147:7536",
+          "grip": "I147:7587;118:5374",
+          "row": "147:7587"
+        }
+      ],
+      "destinationCount": 49,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "5:4847",
+        "7:3036",
+        "7:3316",
+        "7:2879",
+        "105:5618",
+        "7:2929",
+        "14:3767",
+        "9:6097",
+        "14:3733",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649",
+        "91:5826",
+        "5:4694"
+      ],
+      "setVariableCount": 202,
+      "aliasCount": 25,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    }
+  ],
+  "entryUniqueness": {
+    "roots": 90,
+    "multipleEntry": []
+  },
+  "cancellationAudit": [
+    {
+      "root": "5:5229",
+      "id": "5:5288",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "5:4847"
+      ]
+    },
+    {
+      "root": "5:5166",
+      "id": "5:5225",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "5:4847"
+      ]
+    },
+    {
+      "root": "5:5491",
+      "id": "5:5563",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3112",
+        "14:3293",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972"
+      ]
+    },
+    {
+      "root": "5:5567",
+      "id": "5:5640",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3112",
+        "14:3293",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972"
+      ]
+    },
+    {
+      "root": "9:6023",
+      "id": "9:6093",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3112",
+        "14:3293",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972"
+      ]
+    },
+    {
+      "root": "124:7050",
+      "id": "124:7111",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3112",
+        "14:3293",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972"
+      ]
+    },
+    {
+      "root": "124:7050",
+      "id": "124:7112",
+      "name": "Action / Back to task details",
+      "sets": [],
+      "routes": [
+        "5:5491"
+      ]
+    },
+    {
+      "root": "6:2420",
+      "id": "6:2477",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "6:2481",
+      "id": "6:2537",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "70:4844",
+      "id": "70:4899",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "70:5009",
+      "id": "70:5064",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "6:2541",
+      "id": "6:2596",
+      "name": "Action / Keep planning",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "14:3649",
+      "id": "14:3704",
+      "name": "Action / Keep planning",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "6:2004",
+      "id": "6:2126",
+      "name": "Action / Cancel reorder",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "147:7536",
+      "id": "147:7578",
+      "name": "Action / Cancel reorder",
+      "sets": [],
+      "routes": [
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802"
+      ]
+    },
+    {
+      "root": "6:2634",
+      "id": "126:7176",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3706",
+        "6:2600"
+      ]
+    },
+    {
+      "root": "6:2683",
+      "id": "126:7505",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "14:3706",
+        "6:2600"
+      ]
+    },
+    {
+      "root": "91:5667",
+      "id": "126:7907",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "6:2634"
+      ]
+    },
+    {
+      "root": "7:3210",
+      "id": "7:3229",
+      "name": "Action / Back",
+      "sets": [],
+      "routes": [
+        "7:3036"
+      ]
+    },
+    {
+      "root": "7:3210",
+      "id": "7:3243",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "7:3036"
+      ]
+    },
+    {
+      "root": "7:3247",
+      "id": "7:3266",
+      "name": "Action / Back",
+      "sets": [],
+      "routes": [
+        "7:3036"
+      ]
+    },
+    {
+      "root": "7:3247",
+      "id": "7:3278",
+      "name": "Action / Cancel",
+      "sets": [],
+      "routes": [
+        "7:3210"
+      ]
+    }
+  ]
+}

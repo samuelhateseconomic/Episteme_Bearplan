@@ -7,10 +7,16 @@ This is an editable review draft; application implementation is separate.
 or [open the free editing canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=50-4633).
 Start with **Start here · Today** in Figma's flow list.
 
-The [77/100 expert evaluation](../docs/reviews/2026-11-01-ux-expert-evaluation.md)
-and [24-ticket repair plan](BEARPLANS_UX_REPAIR_PLAN.md) define the next corrective
-sequence. The current draft predates the latest End Week/carryover and Stats Missed
-decisions; the plan reconciles them before acceptance. Repair execution has not begun.
+The [original 77/100 evaluation](../docs/reviews/2026-11-01-ux-expert-evaluation.md)
+and [24-ticket repair plan](BEARPLANS_UX_REPAIR_PLAN.md) define the refinement.
+The repaired native wiring now reflects planned-week Done, reviewed next-week
+carryover defaults and frozen Stats Missed. Use the [review launcher](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB/BearPlans?node-id=141-7346&starting-point-node-id=141%3A7346&page-id=2%3A5&scaling=scale-down)
+to reset between bounded examples. [R21 evidence](../docs/reviews/2026-11-02-ux-r21-wiring.md)
+separates installed-action models/static renders from actual interaction.
+[Independent static review](../docs/reviews/2026-11-02-ux-r22-static-review.md) scored
+87.98/100 with no unresolved required static P1 in its reviewed scope. Current
+status is in [PROGRESS](../docs/PROGRESS.md); actual walkthrough/user acceptance and
+final implementation handoff remain separate gates.
 
 ## What to review
 
@@ -37,13 +43,13 @@ decisions; the plan reconciles them before acceptance. Repair execution has not 
 | Assistant answer | [Open](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3390) |
 
 The six pages are Canvas · Flows, Brief, Foundations, Components, Screens, and
-Review and Handoff. Canvas · Flows opens first and holds **75 screens/states at
-800 × 900** in nine native sections on a free two-dimensional canvas. The six
+Review and Handoff. Canvas · Flows opens first and holds **89 product/state frames at
+800 × 900 plus a separate review launcher** in native flow sections on a free two-dimensional canvas. The six
 main workspaces run left to right; supporting flows occupy labeled areas below.
 There is no enclosing page-sized frame. Existing prototype frame IDs and links
 are preserved. Screens holds
-**17 static responsive/theme references**: five 640 × 800 light references,
-seven 800 × 900 dark references, and five 1440 × 900 light references. These
+**46 static responsive/theme/stress references**, last reviewed in R20, including
+640px compact, 800px split, 1440px wide and enlarged-text fixtures. These
 references are not separate fully wired responsive prototypes.
 
 ## November 1 review corrections
@@ -61,14 +67,14 @@ follows the user's AI Usage Hub reference as an open editing workspace.
 2. Projects → + Add task → prefilled task details → one Save → Today.
 3. Complete **Read the primary source** → inspect the compact row → Week → reopen.
 4. Projects → Done → planned week → representative leaf reopen.
-5. Week → Outline reorder example or Move date → conflict/cancel/result.
+5. Week → selected Read reorder example or Move date → conflict/cancel/result.
 6. End Week → review/cancel/close → frozen history → explicit carryover selection,
    review and Apply. Next week starts empty until the demonstration applies it.
 7. Named interruption/sleep flows → explicit Continue/Resume or confirmed finish.
 8. Forest/shop, Stats/correction, and Assistant answer/sources/error examples.
 
-Restart the prototype between independent examples. Read has shared completion
-and timer-state demonstrations; other tasks and combinations have partial or
+Use the reset launcher between independent examples. Read/Theme/Chapter have
+shared completion demonstrations; other tasks and combinations have partial or
 static coverage. Fields use prefilled states, and arbitrary typing, free dragging,
 real timers, persistence, purchases and model generation are not implemented here.
 The read-only Assistant layout is a deliberate design subset; the current app's

@@ -1,0 +1,183 @@
+{
+  "scope": "Read-only installed-reaction Map model; no actual clicks or Figma variable mutations.",
+  "pass": 44,
+  "fail": 0,
+  "tests": [
+    {
+      "name": "Finish/retry 7:2674 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2674 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2674 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2674 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2721 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2721 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2721 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2721 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2768 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2768 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2768 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2768 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2815 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2815 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2815 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 7:2815 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5811 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5811 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5811 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5811 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5821 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5821 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5821 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5821 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5824 wallet 33→45",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5824 wallet 3→15",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5824 wallet 31→43",
+      "status": "Pass"
+    },
+    {
+      "name": "Finish/retry 105:5824 wallet 1→13",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 45 / 60 min saved today wallet 33→31 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 57 / 60 min saved today wallet 33→31 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 45 / 60 min saved today wallet 3→1 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 57 / 60 min saved today wallet 3→1 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 45 / 60 min saved today wallet 45→43 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 57 / 60 min saved today wallet 45→43 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 45 / 60 min saved today wallet 15→13 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correction 57 / 60 min saved today wallet 15→13 once",
+      "status": "Pass"
+    },
+    {
+      "name": "Correct baseline then Finish keeps reduction and wallet once",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution History seminar / Prepare seminar discussion / Read the primary source",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution History seminar / Prepare seminar discussion / Outline the discussion",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution CS61A / Problem set 6 / Trace recursion",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution Economics / Practice elasticity",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution Personal / Book study room",
+      "status": "Pass"
+    },
+    {
+      "name": "Saved attribution History seminar / Book study room",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-finalize retry preserves later purchase-style wallet debit",
+      "status": "Pass"
+    }
+  ]
+}

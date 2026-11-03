@@ -1,0 +1,2078 @@
+{
+  "batches": [
+    {
+      "summary": [
+        {
+          "id": "5:3972",
+          "name": "Today",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "5:4109",
+          "name": "Today completed",
+          "inspectedNodes": 119,
+          "reactions": 30
+        },
+        {
+          "id": "5:4258",
+          "name": "Earlier unfinished",
+          "inspectedNodes": 134,
+          "reactions": 34
+        },
+        {
+          "id": "5:4403",
+          "name": "Task saved",
+          "inspectedNodes": 123,
+          "reactions": 31
+        },
+        {
+          "id": "5:4551",
+          "name": "Today with timer",
+          "inspectedNodes": 125,
+          "reactions": 32
+        },
+        {
+          "id": "5:4694",
+          "name": "Reopen failed",
+          "inspectedNodes": 121,
+          "reactions": 33
+        },
+        {
+          "id": "5:4847",
+          "name": "Projects",
+          "inspectedNodes": 183,
+          "reactions": 46
+        },
+        {
+          "id": "5:4951",
+          "name": "Done",
+          "inspectedNodes": 163,
+          "reactions": 37
+        },
+        {
+          "id": "5:5054",
+          "name": "Reopened task",
+          "inspectedNodes": 183,
+          "reactions": 46
+        },
+        {
+          "id": "5:5166",
+          "name": "Rename project",
+          "inspectedNodes": 123,
+          "reactions": 30
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 1396,
+        "reactions": 350,
+        "actions": 85271,
+        "conditionals": 8770,
+        "starts": 134,
+        "completed": 39,
+        "grips": 0,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:4391",
+          "name": "Disclosure / Earlier unfinished · 1",
+          "root": "5:4258",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:4391",
+          "name": "Disclosure / Earlier unfinished · 1",
+          "root": "5:4258"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:4843",
+          "name": "Feedback",
+          "root": "5:4694",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:4843",
+          "name": "Feedback",
+          "root": "5:4694"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:4893",
+          "name": "Action / Close",
+          "root": "5:4847",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:4893",
+          "name": "Action / Close",
+          "root": "5:4847"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:4997",
+          "name": "Action / Close",
+          "root": "5:4951",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:4997",
+          "name": "Action / Close",
+          "root": "5:4951"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "84:5205",
+          "name": "Action / About these totals",
+          "root": "5:4951",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "84:5205",
+          "name": "Action / About these totals",
+          "root": "5:4951"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5100",
+          "name": "Action / Close",
+          "root": "5:5054",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5100",
+          "name": "Action / Close",
+          "root": "5:5054"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5212",
+          "name": "Action / Close",
+          "root": "5:5166",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5212",
+          "name": "Action / Close",
+          "root": "5:5166"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 37,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "5:4847",
+        "9:6097",
+        "5:4258",
+        "5:3972",
+        "5:5166",
+        "5:5229",
+        "5:4951",
+        "5:5491",
+        "5:5369",
+        "5:5430"
+      ],
+      "setVariableCount": 50,
+      "aliasCount": 18,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "5:5229",
+          "name": "Add project",
+          "inspectedNodes": 123,
+          "reactions": 30
+        },
+        {
+          "id": "5:5292",
+          "name": "Project completed child",
+          "inspectedNodes": 145,
+          "reactions": 34
+        },
+        {
+          "id": "5:5369",
+          "name": "Done previous week",
+          "inspectedNodes": 124,
+          "reactions": 28
+        },
+        {
+          "id": "5:5430",
+          "name": "Done unplanned",
+          "inspectedNodes": 124,
+          "reactions": 27
+        },
+        {
+          "id": "5:5491",
+          "name": "Task details",
+          "inspectedNodes": 129,
+          "reactions": 28
+        },
+        {
+          "id": "5:5567",
+          "name": "Task validation",
+          "inspectedNodes": 129,
+          "reactions": 27
+        },
+        {
+          "id": "6:1802",
+          "name": "Week",
+          "inspectedNodes": 183,
+          "reactions": 48
+        },
+        {
+          "id": "6:1934",
+          "name": "Wednesday",
+          "inspectedNodes": 46,
+          "reactions": 21
+        },
+        {
+          "id": "6:2004",
+          "name": "Reorder preview",
+          "inspectedNodes": 164,
+          "reactions": 44
+        },
+        {
+          "id": "6:2136",
+          "name": "Week reordered",
+          "inspectedNodes": 183,
+          "reactions": 49
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 1350,
+        "reactions": 336,
+        "actions": 74623,
+        "conditionals": 7005,
+        "starts": 107,
+        "completed": 30,
+        "grips": 5,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5275",
+          "name": "Action / Close",
+          "root": "5:5229",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5275",
+          "name": "Action / Close",
+          "root": "5:5229"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5367",
+          "name": "Action / Close",
+          "root": "5:5292",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5367",
+          "name": "Action / Close",
+          "root": "5:5292"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5428",
+          "name": "Action / Close",
+          "root": "5:5369",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5428",
+          "name": "Action / Close",
+          "root": "5:5369"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "5:5489",
+          "name": "Action / Close",
+          "root": "5:5430",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "5:5489",
+          "name": "Action / Close",
+          "root": "5:5430"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "6:1976",
+          "name": "Action / Sun 1",
+          "root": "6:1934",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "6:1976",
+          "name": "Action / Sun 1",
+          "root": "6:1934"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "6:2046",
+          "name": "Action / Sun 1",
+          "root": "6:2004",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "6:2046",
+          "name": "Action / Sun 1",
+          "root": "6:2004"
+        }
+      ],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "6:2004",
+          "grip": "I6:2051;118:5374",
+          "row": "6:2051"
+        }
+      ],
+      "destinationCount": 50,
+      "destinationIds": [
+        "5:4847",
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "9:6097",
+        "5:5166",
+        "5:4403",
+        "124:7050",
+        "7:3036",
+        "7:3316",
+        "14:3767",
+        "14:3733",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2420",
+        "6:2004",
+        "147:7536",
+        "6:2541",
+        "14:3649"
+      ],
+      "setVariableCount": 51,
+      "aliasCount": 19,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "6:2266",
+          "name": "Week moved",
+          "inspectedNodes": 52,
+          "reactions": 24
+        },
+        {
+          "id": "6:2336",
+          "name": "Week completed",
+          "inspectedNodes": 183,
+          "reactions": 48
+        },
+        {
+          "id": "6:2420",
+          "name": "Move date",
+          "inspectedNodes": 121,
+          "reactions": 29
+        },
+        {
+          "id": "6:2481",
+          "name": "Move conflict",
+          "inspectedNodes": 120,
+          "reactions": 27
+        },
+        {
+          "id": "6:2541",
+          "name": "End Week preview",
+          "inspectedNodes": 119,
+          "reactions": 28
+        },
+        {
+          "id": "6:2600",
+          "name": "Closed week",
+          "inspectedNodes": 139,
+          "reactions": 8
+        },
+        {
+          "id": "6:2634",
+          "name": "Carryover",
+          "inspectedNodes": 125,
+          "reactions": 45
+        },
+        {
+          "id": "6:2683",
+          "name": "Carryover preview",
+          "inspectedNodes": 41,
+          "reactions": 9
+        },
+        {
+          "id": "6:2732",
+          "name": "Carryover exclusions",
+          "inspectedNodes": 29,
+          "reactions": 7
+        },
+        {
+          "id": "6:2761",
+          "name": "Next week",
+          "inspectedNodes": 52,
+          "reactions": 13
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 981,
+        "reactions": 238,
+        "actions": 44573,
+        "conditionals": 5124,
+        "starts": 47,
+        "completed": 13,
+        "grips": 3,
+        "frozen": 13
+      },
+      "issues": [
+        {
+          "kind": "self-navigation",
+          "node": "6:2304",
+          "name": "Action / Fri 30",
+          "root": "6:2266"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "6:2308",
+          "name": "Action / Sun 1",
+          "root": "6:2266",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "6:2308",
+          "name": "Action / Sun 1",
+          "root": "6:2266"
+        }
+      ],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "6:2266",
+          "grip": "I6:2313;118:5374",
+          "row": "6:2313"
+        }
+      ],
+      "destinationCount": 55,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "14:3767",
+        "6:2600",
+        "14:3706",
+        "5:4847",
+        "9:6097",
+        "14:3733",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649",
+        "6:2420",
+        "6:2004",
+        "147:7536",
+        "6:2481",
+        "70:4678",
+        "6:2634",
+        "91:5667",
+        "6:2732",
+        "17:4308",
+        "6:2683",
+        "91:5720"
+      ],
+      "setVariableCount": 144,
+      "aliasCount": 77,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "7:2586",
+          "name": "Track ready",
+          "inspectedNodes": 30,
+          "reactions": 11
+        },
+        {
+          "id": "7:2639",
+          "name": "Track running",
+          "inspectedNodes": 24,
+          "reactions": 10
+        },
+        {
+          "id": "7:2686",
+          "name": "Track paused",
+          "inspectedNodes": 27,
+          "reactions": 11
+        },
+        {
+          "id": "7:2733",
+          "name": "Track recovery",
+          "inspectedNodes": 24,
+          "reactions": 10
+        },
+        {
+          "id": "7:2780",
+          "name": "Track sleep",
+          "inspectedNodes": 24,
+          "reactions": 10
+        },
+        {
+          "id": "7:2827",
+          "name": "Track finished",
+          "inspectedNodes": 26,
+          "reactions": 10
+        },
+        {
+          "id": "7:2879",
+          "name": "Forest",
+          "inspectedNodes": 27,
+          "reactions": 8
+        },
+        {
+          "id": "7:2929",
+          "name": "Shop",
+          "inspectedNodes": 28,
+          "reactions": 8
+        },
+        {
+          "id": "7:2980",
+          "name": "Purchase failed",
+          "inspectedNodes": 30,
+          "reactions": 8
+        },
+        {
+          "id": "7:3036",
+          "name": "Stats",
+          "inspectedNodes": 47,
+          "reactions": 9
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 287,
+        "reactions": 95,
+        "actions": 13435,
+        "conditionals": 1631,
+        "starts": 0,
+        "completed": 0,
+        "grips": 0,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "self-navigation",
+          "node": "105:5769",
+          "name": "Action / Change task",
+          "root": "7:2586"
+        },
+        {
+          "kind": "self-navigation",
+          "node": "105:5772",
+          "name": "Action / Tree species",
+          "root": "7:2586"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "7:2865",
+          "name": "Action / Back to Today",
+          "root": "7:2827",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "7:2865",
+          "name": "Action / Back to Today",
+          "root": "7:2827"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "7:2898",
+          "name": "Action / Back",
+          "root": "7:2879",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "7:2898",
+          "name": "Action / Back",
+          "root": "7:2879"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "7:2978",
+          "name": "Action / Back to Track",
+          "root": "7:2929",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "7:2978",
+          "name": "Action / Back to Track",
+          "root": "7:2929"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "7:3034",
+          "name": "Action / Back to Track",
+          "root": "7:2980",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "7:3034",
+          "name": "Action / Back to Track",
+          "root": "7:2980"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 30,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:3036",
+        "7:3316",
+        "7:2879",
+        "105:5618",
+        "7:2586",
+        "7:2929",
+        "7:2827",
+        "7:2980",
+        "7:3210",
+        "7:3121"
+      ],
+      "setVariableCount": 76,
+      "aliasCount": 31,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "7:3121",
+          "name": "Stats details",
+          "inspectedNodes": 57,
+          "reactions": 11
+        },
+        {
+          "id": "7:3210",
+          "name": "Correction",
+          "inspectedNodes": 21,
+          "reactions": 8
+        },
+        {
+          "id": "7:3247",
+          "name": "Correction preview",
+          "inspectedNodes": 18,
+          "reactions": 8
+        },
+        {
+          "id": "7:3282",
+          "name": "Correction saved",
+          "inspectedNodes": 17,
+          "reactions": 7
+        },
+        {
+          "id": "7:3316",
+          "name": "Assistant",
+          "inspectedNodes": 21,
+          "reactions": 7
+        },
+        {
+          "id": "7:3355",
+          "name": "Assistant generating",
+          "inspectedNodes": 19,
+          "reactions": 9
+        },
+        {
+          "id": "7:3390",
+          "name": "Assistant answer",
+          "inspectedNodes": 26,
+          "reactions": 10
+        },
+        {
+          "id": "7:3434",
+          "name": "Assistant sources",
+          "inspectedNodes": 27,
+          "reactions": 10
+        },
+        {
+          "id": "7:3482",
+          "name": "Assistant unavailable",
+          "inspectedNodes": 20,
+          "reactions": 8
+        },
+        {
+          "id": "9:5736",
+          "name": "Monday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 263,
+        "reactions": 98,
+        "actions": 13228,
+        "conditionals": 1547,
+        "starts": 0,
+        "completed": 0,
+        "grips": 0,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5776",
+          "name": "Action / Sun 1",
+          "root": "9:5736",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5776",
+          "name": "Action / Sun 1",
+          "root": "9:5736"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5782",
+          "name": "Action / Open Projects",
+          "root": "9:5736",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5782",
+          "name": "Action / Open Projects",
+          "root": "9:5736"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5787",
+          "name": "Action / Back to Sunday",
+          "root": "9:5736",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5787",
+          "name": "Action / Back to Sunday",
+          "root": "9:5736"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 49,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "7:3210",
+        "7:3247",
+        "7:3282",
+        "7:3355",
+        "110:5638",
+        "7:3390",
+        "5:4847",
+        "7:3434",
+        "6:2600",
+        "14:3706",
+        "9:6097",
+        "14:3733",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649"
+      ],
+      "setVariableCount": 69,
+      "aliasCount": 31,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "9:5791",
+          "name": "Tuesday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        },
+        {
+          "id": "9:5846",
+          "name": "Thursday",
+          "inspectedNodes": 37,
+          "reactions": 20
+        },
+        {
+          "id": "9:5901",
+          "name": "Friday",
+          "inspectedNodes": 37,
+          "reactions": 21
+        },
+        {
+          "id": "9:5956",
+          "name": "Saturday",
+          "inspectedNodes": 49,
+          "reactions": 23
+        },
+        {
+          "id": "9:6023",
+          "name": "Task save failed",
+          "inspectedNodes": 131,
+          "reactions": 29
+        },
+        {
+          "id": "9:6097",
+          "name": "Reopened child",
+          "inspectedNodes": 165,
+          "reactions": 38
+        },
+        {
+          "id": "14:3112",
+          "name": "Today paused",
+          "inspectedNodes": 125,
+          "reactions": 32
+        },
+        {
+          "id": "14:3157",
+          "name": "Today review",
+          "inspectedNodes": 125,
+          "reactions": 32
+        },
+        {
+          "id": "14:3202",
+          "name": "Today sleep",
+          "inspectedNodes": 125,
+          "reactions": 32
+        },
+        {
+          "id": "14:3247",
+          "name": "Today completed timer",
+          "inspectedNodes": 122,
+          "reactions": 31
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 953,
+        "reactions": 278,
+        "actions": 61611,
+        "conditionals": 5878,
+        "starts": 79,
+        "completed": 22,
+        "grips": 1,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5831",
+          "name": "Action / Sun 1",
+          "root": "9:5791",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5831",
+          "name": "Action / Sun 1",
+          "root": "9:5791"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5837",
+          "name": "Action / Open Projects",
+          "root": "9:5791",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5837",
+          "name": "Action / Open Projects",
+          "root": "9:5791"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5842",
+          "name": "Action / Back to Sunday",
+          "root": "9:5791",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5842",
+          "name": "Action / Back to Sunday",
+          "root": "9:5791"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5886",
+          "name": "Action / Sun 1",
+          "root": "9:5846",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5886",
+          "name": "Action / Sun 1",
+          "root": "9:5846"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5892",
+          "name": "Action / Open Projects",
+          "root": "9:5846",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5892",
+          "name": "Action / Open Projects",
+          "root": "9:5846"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5897",
+          "name": "Action / Back to Sunday",
+          "root": "9:5846",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5897",
+          "name": "Action / Back to Sunday",
+          "root": "9:5846"
+        },
+        {
+          "kind": "self-navigation",
+          "node": "9:5937",
+          "name": "Action / Fri 30",
+          "root": "9:5901"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5941",
+          "name": "Action / Sun 1",
+          "root": "9:5901",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5941",
+          "name": "Action / Sun 1",
+          "root": "9:5901"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5947",
+          "name": "Action / Open Projects",
+          "root": "9:5901",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5947",
+          "name": "Action / Open Projects",
+          "root": "9:5901"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5952",
+          "name": "Action / Back to Sunday",
+          "root": "9:5901",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5952",
+          "name": "Action / Back to Sunday",
+          "root": "9:5901"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:5996",
+          "name": "Action / Sun 1",
+          "root": "9:5956",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:5996",
+          "name": "Action / Sun 1",
+          "root": "9:5956"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:6019",
+          "name": "Action / Back to Sunday",
+          "root": "9:5956",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:6019",
+          "name": "Action / Back to Sunday",
+          "root": "9:5956"
+        },
+        {
+          "kind": "multi-block-conditional",
+          "node": "9:6144",
+          "name": "Action / Back",
+          "root": "9:6097",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "9:6144",
+          "name": "Action / Back",
+          "root": "9:6097"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 47,
+      "destinationIds": [
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "6:2600",
+        "14:3706",
+        "5:4847",
+        "9:6097",
+        "14:3733",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649",
+        "9:5791",
+        "6:2004",
+        "5:4403",
+        "124:7050",
+        "5:4258"
+      ],
+      "setVariableCount": 50,
+      "aliasCount": 20,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "14:3293",
+          "name": "Today completed paused",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "14:3339",
+          "name": "Today completed review",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "14:3385",
+          "name": "Today completed sleep",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "14:3431",
+          "name": "Today after focus",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "14:3471",
+          "name": "Today completed after focus",
+          "inspectedNodes": 119,
+          "reactions": 30
+        },
+        {
+          "id": "14:3512",
+          "name": "Week task completed",
+          "inspectedNodes": 174,
+          "reactions": 47
+        },
+        {
+          "id": "14:3649",
+          "name": "End Week completed preview",
+          "inspectedNodes": 119,
+          "reactions": 28
+        },
+        {
+          "id": "14:3706",
+          "name": "Closed week completed",
+          "inspectedNodes": 139,
+          "reactions": 8
+        },
+        {
+          "id": "14:3733",
+          "name": "Previous closed week",
+          "inspectedNodes": 27,
+          "reactions": 8
+        },
+        {
+          "id": "14:3767",
+          "name": "History",
+          "inspectedNodes": 17,
+          "reactions": 5
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 1083,
+        "reactions": 250,
+        "actions": 62561,
+        "conditionals": 6071,
+        "starts": 84,
+        "completed": 21,
+        "grips": 2,
+        "frozen": 14
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "19:4604",
+          "name": "Action / Oct 26 – Nov 1, 2026",
+          "root": "14:3767",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "19:4604",
+          "name": "Action / Oct 26 – Nov 1, 2026",
+          "root": "14:3767"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 50,
+      "destinationIds": [
+        "14:3112",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "6:2600",
+        "14:3706",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "5:4847",
+        "9:6097",
+        "5:4258",
+        "14:3293",
+        "14:3767",
+        "14:3733",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2420",
+        "6:2004",
+        "147:7536",
+        "6:2541",
+        "14:3649",
+        "6:2634",
+        "5:5369"
+      ],
+      "setVariableCount": 112,
+      "aliasCount": 49,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "17:4256",
+          "name": "Carryover one",
+          "inspectedNodes": 125,
+          "reactions": 45
+        },
+        {
+          "id": "17:4308",
+          "name": "Carryover one preview",
+          "inspectedNodes": 41,
+          "reactions": 9
+        },
+        {
+          "id": "17:4359",
+          "name": "Next week one",
+          "inspectedNodes": 52,
+          "reactions": 13
+        },
+        {
+          "id": "17:4429",
+          "name": "Track completed selection",
+          "inspectedNodes": 28,
+          "reactions": 10
+        },
+        {
+          "id": "23:4666",
+          "name": "Next week empty",
+          "inspectedNodes": 52,
+          "reactions": 13
+        },
+        {
+          "id": "70:4678",
+          "name": "Move saving",
+          "inspectedNodes": 123,
+          "reactions": 25
+        },
+        {
+          "id": "70:4844",
+          "name": "Move failed",
+          "inspectedNodes": 123,
+          "reactions": 28
+        },
+        {
+          "id": "70:5009",
+          "name": "Move response uncertain",
+          "inspectedNodes": 123,
+          "reactions": 28
+        },
+        {
+          "id": "79:5105",
+          "name": "Today reordered",
+          "inspectedNodes": 122,
+          "reactions": 31
+        },
+        {
+          "id": "91:5667",
+          "name": "Change carryover day",
+          "inspectedNodes": 17,
+          "reactions": 14
+        }
+      ],
+      "stats": {
+        "roots": 10,
+        "nodes": 806,
+        "reactions": 216,
+        "actions": 42074,
+        "conditionals": 4886,
+        "starts": 46,
+        "completed": 12,
+        "grips": 0,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "self-navigation",
+          "node": "17:4483",
+          "name": "Action / Change task",
+          "root": "17:4429"
+        }
+      ],
+      "unwiredRepresentativeGrips": [],
+      "destinationCount": 46,
+      "destinationIds": [
+        "14:3706",
+        "6:2600",
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "91:5667",
+        "6:2732",
+        "17:4308",
+        "6:2683",
+        "17:4256",
+        "91:5720",
+        "6:2634",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "5:4847",
+        "9:6097",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "7:2879",
+        "105:5618",
+        "7:2929",
+        "6:2266",
+        "70:4678",
+        "5:4258"
+      ],
+      "setVariableCount": 142,
+      "aliasCount": 80,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    },
+    {
+      "summary": [
+        {
+          "id": "91:5720",
+          "name": "Carryover review changed",
+          "inspectedNodes": 12,
+          "reactions": 8
+        },
+        {
+          "id": "91:5773",
+          "name": "Carryover save failed",
+          "inspectedNodes": 12,
+          "reactions": 8
+        },
+        {
+          "id": "91:5826",
+          "name": "Carryover response missing",
+          "inspectedNodes": 13,
+          "reactions": 9
+        },
+        {
+          "id": "105:5618",
+          "name": "Track task picker",
+          "inspectedNodes": 23,
+          "reactions": 10
+        },
+        {
+          "id": "105:5656",
+          "name": "Track finish failed",
+          "inspectedNodes": 24,
+          "reactions": 10
+        },
+        {
+          "id": "105:5693",
+          "name": "Track finish unconfirmed",
+          "inspectedNodes": 24,
+          "reactions": 10
+        },
+        {
+          "id": "110:5638",
+          "name": "Assistant draft retained",
+          "inspectedNodes": 18,
+          "reactions": 6
+        },
+        {
+          "id": "124:7050",
+          "name": "Task save blocked / closed planned day",
+          "inspectedNodes": 131,
+          "reactions": 29
+        },
+        {
+          "id": "147:7536",
+          "name": "Reorder preview up",
+          "inspectedNodes": 164,
+          "reactions": 44
+        }
+      ],
+      "stats": {
+        "roots": 9,
+        "nodes": 421,
+        "reactions": 134,
+        "actions": 24182,
+        "conditionals": 2641,
+        "starts": 22,
+        "completed": 6,
+        "grips": 1,
+        "frozen": 0
+      },
+      "issues": [
+        {
+          "kind": "multi-block-conditional",
+          "node": "147:7572",
+          "name": "Action / Sun 1",
+          "root": "147:7536",
+          "blocks": 2
+        },
+        {
+          "kind": "implicit-else",
+          "node": "147:7572",
+          "name": "Action / Sun 1",
+          "root": "147:7536"
+        }
+      ],
+      "unwiredRepresentativeGrips": [
+        {
+          "root": "147:7536",
+          "grip": "I147:7587;118:5374",
+          "row": "147:7587"
+        }
+      ],
+      "destinationCount": 52,
+      "destinationIds": [
+        "14:3706",
+        "6:2600",
+        "14:3112",
+        "14:3293",
+        "5:4551",
+        "14:3247",
+        "14:3157",
+        "14:3339",
+        "14:3202",
+        "14:3385",
+        "14:3431",
+        "14:3471",
+        "5:4109",
+        "79:5105",
+        "5:3972",
+        "105:5693",
+        "105:5656",
+        "7:2639",
+        "7:2686",
+        "7:2733",
+        "7:2780",
+        "17:4429",
+        "7:2586",
+        "7:3036",
+        "7:3316",
+        "6:2634",
+        "6:2683",
+        "23:4666",
+        "17:4359",
+        "6:2761",
+        "7:2879",
+        "7:2827",
+        "7:2929",
+        "7:3355",
+        "14:3512",
+        "6:2136",
+        "6:1802",
+        "5:4847",
+        "9:6097",
+        "5:4403",
+        "5:5491",
+        "14:3767",
+        "14:3733",
+        "9:5736",
+        "9:5791",
+        "6:1934",
+        "9:5846",
+        "9:5901",
+        "6:2266",
+        "9:5956",
+        "6:2541",
+        "14:3649"
+      ],
+      "setVariableCount": 124,
+      "aliasCount": 61,
+      "flowStarts": [
+        {
+          "nodeId": "5:3972",
+          "name": "Start here · Today"
+        },
+        {
+          "nodeId": "6:1802",
+          "name": "Plan your week"
+        },
+        {
+          "nodeId": "7:2733",
+          "name": "Review an interruption"
+        },
+        {
+          "nodeId": "7:2780",
+          "name": "Paused after sleep"
+        },
+        {
+          "nodeId": "5:4694",
+          "name": "Reopen failure"
+        },
+        {
+          "nodeId": "5:5567",
+          "name": "Task validation"
+        },
+        {
+          "nodeId": "9:6023",
+          "name": "Recover a failed save"
+        },
+        {
+          "nodeId": "7:2980",
+          "name": "Purchase conflict"
+        },
+        {
+          "nodeId": "7:3210",
+          "name": "Correct saved time"
+        },
+        {
+          "nodeId": "7:3482",
+          "name": "Local model unavailable"
+        },
+        {
+          "nodeId": "141:7346",
+          "name": "Review launcher · Reset examples"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "scope": "Read-only Map interpreter over installed reactions; no Figma values or browser clicks changed",
+  "checks": 601,
+  "pass": 601,
+  "fail": 0,
+  "counts": {
+    "daily-return": 264,
+    "daily-error-return": 44,
+    "source-week-return": 240,
+    "track-return": 36,
+    "track-error-return": 6,
+    "project-return": 8,
+    "about-toggle": 1,
+    "same-day-no-op": 2
+  },
+  "failures": []
+}

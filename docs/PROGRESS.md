@@ -13,64 +13,76 @@ paste long check logs here.
 
 ## Current state — November 2, 2026
 
-**UX refinement is paused at the user's request.** Twenty of the 24 repair tickets
-are Done. **UX-R21 is unfinished and Paused**; formal UX-R22–24 are not started.
-Codex stopped Figma mutations and saved this documentation checkpoint. Resume
-design work only when the user asks. No application implementation is authorized
-by the design request. The user subsequently authorized committing and pushing
-this saved UI/UX checkpoint on November 2.
+**UX refinement resumed at the user's request on November 2. UX-R21 native
+wiring and UX-R22 independent static QA are complete (Pass with follow-ups).**
+Twenty-two of the 24 repair tickets are Done. **UX-R23 is Paused at the user's request,
+with partial walkthrough evidence**; R24 final handoff is not started. Codex remains the sole Figma writer. No application
+implementation is authorized by this design request. Baseline Git checkpoint: `c4a5d14`. The user-authorized design checkpoint commit
+contains this resumption; resolve its hash from Git history.
 
-**UX-32.1 remains In review.** The original 75 screen IDs are preserved. The current
-ledger indexes 89 product/state frames plus a separate review launcher; the last
-responsive review covered 46 static references. The open two-dimensional editing
-canvas remains. [Canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5),
+**UX-32.1 remains In review.** All 75 original screen IDs and ten original named
+starts remain; the ledger contains 89 product/state frames plus a separate review
+launcher, with 11 starts total. The free two-dimensional canvas remains.
+[Canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5),
 [review launcher](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=141-7346),
 [node ledger](../frontend/design/figma-node-ledger.json),
 [execution evidence](../frontend/design/refinement-execution.json).
 
-R21 work applied: shared current/frozen counts; Create/retry/closed-day blocking;
-Read/Theme/Chapter completion pairs; Move and frozen planned dates; up to 12
-reviewed carryover candidates; manual order across timer views; reversible reorder;
-32px drag targets; guarded navigation/Start; Week preview/count cleanup; and a
-separate reset launcher. The final time-context/correction patch was applied but
-has not received installed-action or visual verification.
+**R21 completed on resumption:** repaired failed reopen/Retry and pinned its error;
+finished new-row Start/navigation/grip wiring; added working paired disclosure
+states; corrected the wrapped parent header, repeated History and order cue;
+reset all 206 prototype variables (202 at the R21 checkpoint) through eight review examples; fixed legacy
+Back routes that lost source-week or timer context; removed five self-navigation
+branches and duplicate entry handlers; preserved Assistant questions; bound saved
+session labels to captured context; separated the new Forest record; reconciled
+wallet/error labels and disabled unsupported sample controls visibly.
 
-**Checks:** ten new Map-model checks against installed reactions passed for Save,
-completion/reopen across five timer states, immutable closure/exclusions,
-12-candidate Apply/replay, and Move → Saturday carryover. These are not browser
-clicks. Earlier scoped checks are historical evidence and were not all rerun after
-the latest mutations. Full-page wiring/audit calls hit the MCP request limit;
-completion wiring was subsequently applied in bounded batches. No final complete
-structural audit or post-pairing visual pass has passed.
+**Evidence:** 23 installed-reaction journey checks, 44 time/correction/wallet checks
+and 601 navigation-return checks pass in read-only Map models. Initial structural
+inspection covered all 89 product frames; 29 changed roots were rechecked after
+repair. Final scope has no missing/cross-page destinations, malformed guards,
+supported Start/completion/frozen-action gaps or self-navigation. All 90 roots have
+at most one timed entry handler; 22 Cancel controls have no mutation side effects.
+These are structural/model checks, not actual presentation clicks.
 
-**Design assessment:** original expert evaluation 77/100; a provisional independent
-visual review scored **87.09/100** using the same 13 weights. It found no static P1
-in the captured scope, but predates the last R21 changes and is not final R22
-acceptance. [Provisional review](reviews/2026-11-02-ux-refinement-provisional-review.md),
-[detailed checkpoint and remaining fixes](reviews/2026-11-01-ux-refinement.md).
+**Static assessment: 87.98/100 (88 rounded), up from 76.84/100.** Same 13
+weights; heuristic design judgment, not measured task success. No unresolved
+required static P1 in the reviewed scope. Fresh rendered checks cover the main
+800×900 Light compositions plus 640×800 compact/enlarged text, 800×900 dark Today,
+and 1440×900 wide Week. Earlier R20 46-reference evidence remains historical.
+[R21 wiring review](reviews/2026-11-02-ux-r21-wiring.md),
+[independent R22 review](reviews/2026-11-02-ux-r22-static-review.md).
 
-**Resume R21 first (owner: Codex; reviewers: product_constraints,
-skill_forward_test, ux_inventory):**
+**R23 paused — last owner Codex; walkthrough participant user.** Acceptance scenarios:
+[repair plan §8](../frontend/BEARPLANS_UX_REPAIR_PLAN.md#8-required-validation-matrix-and-walkthrough).
+The user reported “nothing stuck” for the first two examples: lower-row Today
+selection/start/pause/return and Read completion/reopening under Prepare seminar
+discussion, with Reset between them. No fix was requested. This is user-reported
+success, without direct observation, timing or viewport evidence.
+[Walkthrough evidence](reviews/2026-11-02-ux-r23-walkthrough.md).
 
-1. Repair the Reopen failed example: its Retry button has no action, and its direct
-   start does not seed a completed Read task. Preserve timer state on retry.
-2. Finish reset/entry integration and final navigation/Start/drag wiring after the
-   new row pairs. Check reverse-reorder registry handling, new Read handles,
-   completion disclosure defaults and the newly introduced context labels.
-3. Verify the applied finite time/correction/wallet patch; bind finished-session
-   text to captured task/context and saved totals. Reconcile the purchase-failure
-   sample's fixed balance. Successful purchase is not currently demonstrated.
-4. Partition the structural audit, rerun affected installed-action checks, then
-   render Today/expanded/completed/timer, Week/reverse reorder, Projects, closure,
-   Stats and the launcher after the latest changes. Only then start formal R22.
-5. R23 requires actual core click/scroll journeys and the user's acceptance; R24
-   follows with the reviewed handoff. The draft is saved, not accepted.
+**Stopped after the requested spacing fix; resume only when the user asks.**
+The weekly-flow report found no interaction issue but flagged inconsistent day
+styling and an Outline gap. Repaired nine day/result views and collapsed hidden
+Read layout slots across 42 roots; Reset now covers 206 variables. Wednesday,
+Saturday and completed-Read Today renders passed the scoped spacing check; the
+23 journey models were rerun and passed. [Evidence](reviews/2026-11-02-ux-r23-walkthrough.md#weekly-feedback-and-spacing-repair--stop-checkpoint).
 
-Browser clicks, scrolling, keyboard/focus and assistive technology remain
-unverified (computer-control Node startup fails). The full 36-ticket acceptance,
-application/core-trial and hardware gates remain open. Design work and
-documentation are included in the UI/UX checkpoint commit. No tests, builds or
-Figma verification were rerun for this Git operation, as requested.
+**Next on resumption:** user review of the latest spacing repair, affected compact/
+dark states, then task Save/error, compact eighth-row access, crowded Projects
+scrolling, closure/carryover/re-entry, frozen Missed, interruption recovery and
+Stats/Assistant. Overall R23 acceptance and R24 handoff remain open. The separate
+examples do not establish completion during an active timer.
+
+Browser/computer control is unavailable in this session. Other presentation
+journeys, explicit scroll behavior, keyboard/focus, arbitrary dragging and
+assistive technology remain unverified.
+Finite examples simulate one 12-minute save and three task toggles;
+successful purchase/ownership and a general session ledger are not demonstrated.
+R24 reviewed handoff follows R23 acceptance. The full original 36-ticket acceptance,
+application/core-trial and hardware gates remain open. No service/database operations or app tests were performed for the design work.
+The user authorized a scoped checkpoint commit after this repair; no push is authorized. Concurrent
+CLAUDE.md edits and untracked `(1)` file copies appeared during work and are preserved.
 
 - **M5 assistant:** actions through router → grounding → library → gate → Apply,
   replay and Undo; orchestrator with direct answers and plan/tasks/time
@@ -85,18 +97,18 @@ Figma verification were rerun for this Git operation, as requested.
 
 ## Next up
 
-1. **UX design paused by user:** on resumption finish the R21 fixes/checks above, then R22 independent QA, R23 user walkthrough and R24 handoff.
+1. **UX design paused:** resume R23 only when requested; review the spacing repair, finish remaining journeys, then R24 handoff.
 2. **User hands-on review of the Assistant in the app preview** (pending).
 3. Then, each only when the user authorizes it, in this order
    ([build plan §8–9](../BearPlans_Build_Plan.md#assistant-architecture-orchestrator-and-specialists-user-approved-direction-2026-11-01)):
    (4) M6 Google Calendar → (5) bCourses access spike → (6) Canvas (bCourses) →
    (7) Gmail. CalCentral only after an access investigation; MCP only behind a
    vetted adapter boundary. Roadmap steps 1–3 are done (see COMPLETED.md).
-   **bCourses connection built, comitted (2026-11-01; user moved it before
+   **bCourses connection committed (`422081e`, 2026-11-01; user moved it before
    Google Calendar):** direct read-only API (MCP vetted and not used), token in
    git-ignored `.secrets/bearplans.secrets.env`, course picker, review list, Add
    to a course project, due-date change review. Migration 15 → 16. Waiting on
-   the user's hands-on check in the preview (port 8878) and commit.
+   the user's hands-on check.
    [Review](reviews/2026-11-01-bcourses-connection.md).
 
 ## Open follow-ups
@@ -104,9 +116,9 @@ Figma verification were rerun for this Git operation, as requested.
 - End Week carryover defaults + Stats "Missed" committed (`1656600`). Assistant
   carryover command with Undo committed (`81f5922`)
   ([review](reviews/2026-11-01-end-week-carryover.md#assistant-carryover-command)).
-  **Migrations 14 → 16** (carryover, bCourses) run on the real data at the next
-  launch (automatic backup first). Needs the user's hands-on check in the preview (port 8878).
-  R13–R15 repairs now reflect these rules; final R21 integration remains unfinished.
+  **Migrations 14 → 16** ran on the real data at the user's launch on 2026-11-01 23:26
+  (backup `backups/pre-upgrade-v13-20261101T232614-….sqlite3`). Needs the user's hands-on check.
+  R13–R15 and R21 reflect these rules; R23 actual walkthrough remains pending.
 - M5: no applied-action history view (receipts persist; in-page only).
 - M5: daily assistant writes not certified until the user's UI review.
 - Organization: agree a compact frontend/backend/shared-tests ownership and
@@ -181,20 +193,19 @@ the user-requested prototype-first draft, with formal checkpoint acceptance pend
 | UX-32.1 | First connected review prototype (user reprioritization) | In review | UX-04; prototype-first request | [Draft delivered; runtime/user gates open](reviews/2026-11-01-figma-prototype.md) |
 | UX-33 | Complete responsive/theme coverage | In review | UX-32 | [Draft subset; acceptance open](reviews/2026-11-01-figma-prototype.md) |
 | UX-34 | Run independent design QA | In review | UX-33 | [Draft subset; acceptance open](reviews/2026-11-01-figma-prototype.md) |
-| UX-35 | Run user walkthrough and fixes | Not started | UX-34 | User walkthrough / full handoff pending |
+| UX-35 | Run user walkthrough and fixes | In review | UX-34 | R23 first two examples reported successful; remaining walkthrough pending |
 | UX-36 | Deliver handoff | Not started | UX-35 | User walkthrough / full handoff pending |
 
-**Next concrete step:** no design ticket is Active while paused. On the user's
-resumption, finish UX-R21 before formal R22–24. UX-06–34 retain draft evidence,
-not full acceptance; UX-35/36 remain unstarted.
+**Next concrete step:** wait for the user to resume, then review the latest spacing fix. UX-06–34 retain
+design evidence, not full acceptance; UX-35 is In review and UX-36 remains unstarted.
 
 ### UX repair register
 
 Stable definitions/acceptance: [repair plan](../frontend/BEARPLANS_UX_REPAIR_PLAN.md).
 Owner for the repair sequence: Codex; independent visual/product/verification
 reviewers inspect the active ticket. Evidence is saved in the dated refinement
-review and execution record. R21 is paused and unfinished; reviewers and the next
-action are recorded above.
+review and execution record. R21 native wiring and R22 static QA are complete with execution follow-ups;
+R23 ownership and the next action are recorded above.
 Only one ticket may be Active. Execute R19 after R04 before later optional proposals;
 other dependencies follow the plan. These subtickets do not complete original UX
 acceptance by themselves.
@@ -221,9 +232,9 @@ acceptance by themselves.
 | UX-R18 | Assistant affordances | Done | R03–R04 |
 | UX-R19 | Contrast/control states (early) | Done | R03–R04 |
 | UX-R20 | Responsive/theme propagation | Done | R05–R19 |
-| UX-R21 | Prototype wiring | Paused | R13–R20 |
-| UX-R22 | Independent QA/rescore | Not started | R20–R21 |
-| UX-R23 | User walkthrough/corrections | Not started | R22 static readiness |
+| UX-R21 | Prototype wiring | Done | R13–R20 |
+| UX-R22 | Independent QA/rescore | Done | R20–R21 |
+| UX-R23 | User walkthrough/corrections | Paused | R22 static readiness |
 | UX-R24 | Revised handoff | Not started | R22–R23 |
 
 ## Build status
