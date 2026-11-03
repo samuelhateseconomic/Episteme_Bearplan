@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 
 from backend.domain.errors import InvalidInput
 from backend.domain.planning import (
-    create_placement, get_planning, list_placements, move_placement, remove_placement,
+    create_placement, get_planning, list_placements, move_placement, remove_placement, set_placement_time,
 )
 from backend.domain.projects import create_project, rename_project
 from backend.domain.tasks import (
@@ -693,3 +693,23 @@ def test_carryover_suggests_the_same_weekday_next_week_from_the_last_planned_day
     assert candidates[already.id].eligible is False and candidates[already.id].suggested_date is None
     carried(db, selections((tuesday.id, "2026-10-20"), (twice.id, "2026-10-25")))
     assert get_task(db, tuesday.id).deadline == date(2026, 10, 15)  # The due date never moves.
+
+
+def test_carryover_keeps_the_last_days_start_time(db: Database) -> None:
+    # User decision (2026-11-03): carried work keeps its start time, so it stays a calendar event.
+    timed = create_task(db, "Timed")
+    untimed = create_task(db, "Untimed")
+    early = create_placement(db, timed.id, "2026-10-13")
+    late = create_placement(db, timed.id, "2026-10-15")
+    set_placement_time(db, early.id, "08:00")
+    set_placement_time(db, late.id, "14:30")
+    create_placement(db, untimed.id, "2026-10-14")
+    closed(db)
+    candidates = {c.task_id: c for c in get_carryover(db, SOURCE).candidates}
+    assert candidates[timed.id].start_time == "14:30" and candidates[untimed.id].start_time is None
+    selected = selections((timed.id, "2026-10-23"), (untimed.id, "2026-10-21"))
+    assert [i.start_time for i in preview_carryover(db, SOURCE, selected).items] == (
+        ["14:30", None] if timed.id < untimed.id else [None, "14:30"])
+    result = carried(db, selected)
+    assert {p.task_id: p.start_time for p in result.placements} == {timed.id: "14:30", untimed.id: None}
+    assert {p.task_id: p.start_time for p in list_placements(db)} == {timed.id: "14:30", untimed.id: None}

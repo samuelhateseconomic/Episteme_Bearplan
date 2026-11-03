@@ -160,5 +160,19 @@ Checks (2026-11-03):
   Screenshots: `.evidence/google-20261103/`. Fixed "1 tasks in 1 lists" plurals.
 - Checks: full pytest 931 passed, 1 Windows-only skip; Vitest 165; typecheck and build pass.
 
-Still open: carrying a start time over to the next week (needs the user's decision);
-day columns may be crowded with many events (user to judge).
+## Follow-ups decided and done 2026-11-03 ("1. yes 2. Yes")
+
+- **Start times carry over.** When unfinished work carries to the next week (End Week
+  carryover and the assistant's carryover, which share `weeks._apply_carryover_tx`),
+  the new placement keeps the start time of the task's last planned day in the closed
+  week. The time is read from the closed week's snapshot (placements in it include
+  `start_time` since migration 0018; weeks closed earlier carry no time). Carryover
+  candidates and preview items now show `start_time`; the carried placement then becomes
+  a BearPlans calendar event on the next sync. Test:
+  `test_carryover_keeps_the_last_days_start_time`.
+- **"From your calendar" is collapsible.** Each day's section is a `<details>` closed
+  by default, titled "From your calendar (N)". Vitest and the real-Chrome test open it
+  before adding an event as a task.
+- Checks: full pytest 932 passed, 1 Windows-only skip; Vitest 165; typecheck and build pass.
+- Not done: the carryover screen doesn't show the carried time yet; it's only in the API
+  preview.

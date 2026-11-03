@@ -101,6 +101,8 @@ def test_calendars_events_start_time_and_ticks_from_google(browser, evidence, se
         page.get_by_role("link", name="Plan", exact=True).click()
         events = page.locator(".day-events")
         expect(events).to_have_count(1)
+        expect(events.get_by_text("Office hours")).not_to_be_visible()  # closed until opened
+        events.get_by_text("From your calendar (1)").click()
         expect(events).to_contain_text("Office hours")
         expect(events).to_contain_text("Me · Soda 283")
         assert no_horizontal_overflow(page)

@@ -197,8 +197,9 @@ export function CalendarEvents({ events, date, onRun, locked }: { events: Google
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   if (!events.length) return null;
-  return <div className="day-events">
-    <h4>From your calendar</h4>
+  // Closed by default: a busy week has about 28 events (user decision, 2026-11-03).
+  return <details className="day-events">
+    <summary>From your calendar ({events.length})</summary>
     <ul aria-label={`Calendar events, ${showDate(date)}`}>
       {events.map((event) => {
         const when = event.all_day ? "All day" : `${eventClock.format(new Date(event.start_at ?? ""))} – ${eventClock.format(new Date(event.end_at ?? event.start_at ?? ""))}`;
@@ -218,7 +219,7 @@ export function CalendarEvents({ events, date, onRun, locked }: { events: Google
       })}
     </ul>
     {error ? <p role="alert" className="error">{error}</p> : null}
-  </div>;
+  </details>;
 }
 
 type DraggedPlacement = { placement: Placement; title: string };

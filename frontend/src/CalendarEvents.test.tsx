@@ -16,7 +16,10 @@ it("shows events and adds one as a task", async () => {
   const fetch = vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({ event: event({}), task: {}, planned: true }), { status: 200, headers: { "Content-Type": "application/json" } }));
   const onRun = vi.fn(async (work: () => Promise<unknown>, _done: string) => { await work(); });
   render(<CalendarEvents date="2026-11-05" locked={false} onRun={onRun} events={[event({}), event({ event_id: "b", summary: "Trip", all_day: true, location: "", task_id: "t9" })]} />);
-  expect(screen.getByText("From your calendar")).toBeTruthy();
+  const details = screen.getByText("From your calendar (2)").closest("details")!;
+  expect(details.open).toBe(false);
+  await userEvent.click(screen.getByText("From your calendar (2)"));
+  expect(details.open).toBe(true);
   expect(screen.getByText(/Me · Soda 283/)).toBeTruthy();
   expect(screen.getByText(/All day · Me/)).toBeTruthy();
   expect(screen.getByText("Added as a task")).toBeTruthy();

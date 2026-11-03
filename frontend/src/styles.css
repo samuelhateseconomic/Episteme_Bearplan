@@ -1150,7 +1150,8 @@ details > summary:focus-visible {
 .google-calendars label { display: flex; align-items: center; gap: 0.5rem; overflow-wrap: anywhere; }
 .calendar-swatch { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 50%; flex: none; }
 .day-events { margin-top: 0.5rem; }
-.day-events h4 { margin: 0 0 0.35rem; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+.day-events summary { cursor: pointer; font-size: 0.8rem; font-weight: 600; color: var(--muted); padding: 0.2rem 0; }
+.day-events[open] summary { margin-bottom: 0.35rem; }
 .day-events ul { list-style: none; margin: 0; padding: 0; }
 .day-event { border: 1px dashed var(--border); border-left: 3px solid var(--muted); border-radius: 0.4rem; padding: 0.4rem 0.5rem; margin-bottom: 0.4rem; overflow-wrap: anywhere; }
 .day-event-title { margin: 0; font-weight: 500; }
