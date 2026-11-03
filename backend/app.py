@@ -17,7 +17,7 @@ from backend import __version__
 from backend.domain.assistant import AssistantError, AssistantService, Provider
 from backend.domain.assistant_actions import ActionConflict
 from backend.platform.bcourses import BCoursesUnavailable
-from backend.platform.google import GoogleAuth, GoogleTasksClient, GoogleUnavailable
+from backend.platform.google import GoogleAuth, GoogleCalendarClient, GoogleTasksClient, GoogleUnavailable
 from backend.domain.google_tasks import GoogleSyncService
 from backend.platform.ollama import OllamaProvider
 from backend.domain.corrections import CorrectionConflict
@@ -85,13 +85,15 @@ def create_app(
     bcourses_client: object | None = None,
     google_auth: GoogleAuth | None = None,
     google_tasks_client: object | None = None,
+    google_calendar_client: object | None = None,
 ) -> FastAPI:
     config = RewardConfig.from_environment() if reward_config is None else reward_config
     countdown = TimerService(db, timer_clock, reward_config=config)
     auth = google_auth or GoogleAuth()
     google_sync = GoogleSyncService(
         db, lambda: google_tasks_client or GoogleTasksClient(auth), GoogleUnavailable,
-        lambda: google_tasks_client is not None or auth.connected())
+        lambda: google_tasks_client is not None or auth.connected(),
+        lambda: google_calendar_client or (None if google_tasks_client is not None else GoogleCalendarClient(auth)))
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):

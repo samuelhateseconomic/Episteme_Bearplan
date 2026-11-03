@@ -33,6 +33,7 @@ SCOPES = (
     "https://www.googleapis.com/auth/tasks",
 )
 TASKS_API = "https://tasks.googleapis.com/tasks/v1"
+CALENDAR_API = "https://www.googleapis.com/calendar/v3"
 ALLOWED_HOSTS = ("https://tasks.googleapis.com/", "https://www.googleapis.com/", "https://oauth2.googleapis.com/")
 TIMEOUT_SECONDS = 20
 MAX_PAGES = 50
@@ -264,8 +265,8 @@ class GoogleAuth:
             self._access = None
 
 
-class GoogleTasksClient:
-    """The Google Tasks calls BearPlans uses. Every method may raise GoogleUnavailable."""
+class _GoogleApi:
+    """Authorized JSON calls to Google's API hosts. Every method may raise GoogleUnavailable."""
 
     def __init__(self, auth: GoogleAuth) -> None:
         self._auth = auth
@@ -289,12 +290,14 @@ class GoogleTasksClient:
             if error.code == 401 and retry:
                 self._auth.forget_access()
                 return self._call(method, url, params, body, retry=False)
+            if error.code == 410:
+                raise GoogleUnavailable("google_gone", "That item was already removed from Google.") from None
             if error.code == 404:
                 raise GoogleUnavailable("google_not_found", "That item no longer exists in Google.") from None
             if error.code == 403:
                 raise GoogleUnavailable(
                     "google_forbidden",
-                    "Google refused the request. Check that the Google Tasks API is enabled and that "
+                    "Google refused the request. Check that the Google Calendar and Google Tasks APIs are enabled and that "
                     "BearPlans was given permission, then Connect Google again.") from None
             if error.code == 429:
                 raise GoogleUnavailable("google_busy", "Google asked BearPlans to slow down. It will try again shortly.") from None
@@ -312,6 +315,11 @@ class GoogleTasksClient:
             if not token:
                 break
         return items
+
+
+
+class GoogleTasksClient(_GoogleApi):
+    """The Google Tasks calls BearPlans uses."""
 
     def lists(self) -> list[dict[str, Any]]:
         return self._pages(f"{TASKS_API}/users/@me/lists", {"maxResults": 100})
@@ -340,6 +348,38 @@ class GoogleTasksClient:
             self._call("DELETE", f"{TASKS_API}/lists/{_q(list_id)}/tasks/{_q(task_id)}")
         except GoogleUnavailable as error:
             if error.code != "google_not_found":
+                raise
+
+
+class GoogleCalendarClient(_GoogleApi):
+    """The Google Calendar calls BearPlans uses. Writes go only to the calendar it created."""
+
+    def calendar_exists(self, calendar_id: str) -> bool:
+        try:
+            self._call("GET", f"{CALENDAR_API}/calendars/{_q(calendar_id)}")
+        except GoogleUnavailable as error:
+            if error.code == "google_not_found":
+                return False
+            raise
+        return True
+
+    def insert_calendar(self, summary: str) -> dict[str, Any]:
+        return self._call("POST", f"{CALENDAR_API}/calendars", body={"summary": summary})
+
+    def events(self, calendar_id: str) -> list[dict[str, Any]]:
+        return self._pages(f"{CALENDAR_API}/calendars/{_q(calendar_id)}/events", {"maxResults": 2500, "showDeleted": "true"})
+
+    def insert_event(self, calendar_id: str, body: dict[str, Any]) -> dict[str, Any]:
+        return self._call("POST", f"{CALENDAR_API}/calendars/{_q(calendar_id)}/events", body=body)
+
+    def patch_event(self, calendar_id: str, event_id: str, body: dict[str, Any]) -> dict[str, Any]:
+        return self._call("PATCH", f"{CALENDAR_API}/calendars/{_q(calendar_id)}/events/{_q(event_id)}", body=body)
+
+    def delete_event(self, calendar_id: str, event_id: str) -> None:
+        try:
+            self._call("DELETE", f"{CALENDAR_API}/calendars/{_q(calendar_id)}/events/{_q(event_id)}")
+        except GoogleUnavailable as error:
+            if error.code not in ("google_not_found", "google_gone"):
                 raise
 
 

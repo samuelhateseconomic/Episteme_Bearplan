@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState, type DragEvent } from "react";
-import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
+import { ApiError, assignTask, getPlanning, movePlacement, removePlacement, setPlacementTime, setTaskCompletion, type Placement, type Planning, type Project, type Task } from "./api";
 import { WeekActions, WeekTaskDetails, historicalContext } from "./WeekActions";
 import { StartTrackingButton } from "./Countdown";
 
@@ -8,6 +8,9 @@ const dayName = new Intl.DateTimeFormat(undefined, { weekday: "long", timeZone: 
 const shortDate = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", timeZone: "UTC" });
 const plainDate = (date: string) => new Date(`${date}T00:00:00Z`);
 export const showDate = (date: string) => fullDate.format(plainDate(date));
+const clock = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit", timeZone: "UTC" });
+export const showTime = (time: string) => clock.format(new Date(`1970-01-01T${time}:00Z`));
+const showPlanned = (placement: Placement) => showDate(placement.planned_date) + (placement.start_time ? ` at ${showTime(placement.start_time)}` : "");
 
 /** Date-only arithmetic is deliberately independent of the browser timezone/DST. */
 export function addDays(date: string, amount: number): string {
@@ -76,7 +79,7 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
   return (
     <div className="task-planning">
       <p className="planning-summary muted">
-        {placements.length ? `Planned: ${placements.map((placement) => showDate(placement.planned_date)).join(" · ")}` : "Unscheduled"}
+        {placements.length ? `Planned: ${placements.map(showPlanned).join(" · ")}` : "Unscheduled"}
       </p>
       <details>
         <summary>{placements.length ? "Move or remove plan" : "Plan task"}</summary>
@@ -86,8 +89,8 @@ export function TaskPlanning({ task, plan, selectedDay, onRun }: { task: Task; p
           <ul className="placement-list">
             {placements.map((placement) => (
               <li key={placement.id}>
-                <p>Planned {showDate(placement.planned_date)}</p>
-                <PlacementActions key={`${placement.id}-${placement.planned_date}`} task={task} placement={placement} onRun={onRun} />
+                <p>Planned {showPlanned(placement)}</p>
+                <PlacementActions key={`${placement.id}-${placement.planned_date}-${placement.start_time ?? ""}`} task={task} placement={placement} onRun={onRun} />
               </li>
             ))}
           </ul>
@@ -137,7 +140,8 @@ function PlacementActions({ task, placement, onRun }: { task: Task; placement: P
     catch (caught) { setError(message(caught)); }
     finally { setBusy(false); }
   }
-  return (
+  return (<>
+    <TimeForm task={task} placement={placement} onRun={onRun} />
     <form className="planning-form" onSubmit={(event) => {
       event.preventDefault();
       if (date && date !== placement.planned_date) void save(() => movePlacement(placement.id, date), `Moved “${task.title}” to ${showDate(date)}.`);
@@ -149,6 +153,38 @@ function PlacementActions({ task, placement, onRun }: { task: Task; placement: P
       <div className="form-actions">
         <button type="submit" disabled={busy || !date || date === placement.planned_date}>{busy ? "Saving…" : "Move placement"}</button>
         <button type="button" className="link" disabled={busy} onClick={() => void save(() => removePlacement(placement.id), `Removed “${task.title}” from ${showDate(placement.planned_date)}. Task kept.`)}>Remove from plan</button>
+      </div>
+      {error ? <p role="alert" className="error">{error}</p> : null}
+    </form>
+  </>);
+}
+
+function TimeForm({ task, placement, onRun }: { task: Task; placement: Placement; onRun: Run }) {
+  const saved = placement.start_time ?? "";
+  const [time, setTime] = useState(saved);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const id = useId();
+  async function save(value: string | null) {
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await onRun(() => setPlacementTime(placement.id, value), value
+        ? `“${task.title}” starts at ${showTime(value)} on ${showDate(placement.planned_date)}. Google Calendar will remind you 30 minutes before.`
+        : `Removed the start time from “${task.title}”.`);
+    } catch (caught) { setError(message(caught)); }
+    finally { setBusy(false); }
+  }
+  return (
+    <form className="planning-form time-form" onSubmit={(event) => { event.preventDefault(); if (time && time !== saved) void save(time); }}>
+      <div className="field">
+        <label htmlFor={id}>Start time on {showDate(placement.planned_date)} (optional)</label>
+        <input id={id} type="time" value={time} disabled={busy} onChange={(event) => setTime(event.target.value)} />
+      </div>
+      <div className="form-actions">
+        <button type="submit" disabled={busy || !time || time === saved}>{busy ? "Saving…" : "Save time"}</button>
+        {saved ? <button type="button" className="link" disabled={busy} onClick={() => { setTime(""); void save(null); }}>Clear time</button> : null}
       </div>
       {error ? <p role="alert" className="error">{error}</p> : null}
     </form>
@@ -183,13 +219,14 @@ function PlannedCard({ task, placement, context, onRun, locked, onTrack, drag }:
         }} />
         <label htmlFor={id}>{task.title}</label>
       </div>
+      {placement.start_time ? <p className="planned-meta">At {showTime(placement.start_time)}</p> : null}
       {task.deadline ? <p className="planned-meta muted">Due {showDate(task.deadline)}</p> : null}
       {task.estimate_minutes ? <p className="planned-meta muted">{task.estimate_minutes} min estimated</p> : null}
       {onTrack ? <StartTrackingButton task={task} onTrack={() => onTrack(task.id)} disabled={busy || locked} /> : null}
       {error ? <p role="alert" className="error">{error}</p> : null}
       <details>
         <summary>Move or remove</summary>
-        <PlacementActions key={`${placement.id}-${placement.planned_date}`} task={task} placement={placement} onRun={onRun} />
+        <PlacementActions key={`${placement.id}-${placement.planned_date}-${placement.start_time ?? ""}`} task={task} placement={placement} onRun={onRun} />
       </details>
     </li>
   );

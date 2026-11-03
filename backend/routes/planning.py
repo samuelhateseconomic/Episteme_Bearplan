@@ -4,7 +4,7 @@ from fastapi import APIRouter, Request
 from pydantic import BaseModel, ConfigDict, StrictStr
 
 from backend.domain.planning import (
-    Placement, PlanningSnapshot, create_placement, get_planning, move_placement, remove_placement,
+    Placement, PlanningSnapshot, create_placement, get_planning, move_placement, remove_placement, set_placement_time,
 )
 
 router = APIRouter(prefix="/api")
@@ -20,6 +20,11 @@ class PlacementCreateRequest(BaseModel):
 class PlacementMoveRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     planned_date: StrictStr
+
+
+class PlacementTimeRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    start_time: StrictStr | None
 
 
 @router.get("/planning")
@@ -42,3 +47,8 @@ def patch_placement(placement_id: str, body: PlacementMoveRequest, request: Requ
 @router.delete("/placements/{placement_id}")
 def delete_placement(placement_id: str, request: Request) -> dict[str, str]:
     return {"removed": remove_placement(request.app.state.db, placement_id)}
+
+
+@router.put("/placements/{placement_id}/time")
+def put_placement_time(placement_id: str, body: PlacementTimeRequest, request: Request) -> Placement:
+    return set_placement_time(request.app.state.db, placement_id, body.start_time)

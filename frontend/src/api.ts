@@ -209,6 +209,8 @@ export interface Placement {
   id: string;
   task_id: string;
   planned_date: string;
+  /** Optional local start time "HH:MM"; a timed task gets a Google Calendar event. */
+  start_time?: string | null;
   created_at: string;
   updated_at: string;
   revision: number;
@@ -303,6 +305,10 @@ export function assignTask(taskId: string, plannedDate: string): Promise<Placeme
 
 export function movePlacement(id: string, plannedDate: string): Promise<Placement> {
   return request<Placement>(`/api/placements/${encodeURIComponent(id)}`, json("PATCH", { planned_date: plannedDate }));
+}
+
+export function setPlacementTime(id: string, startTime: string | null): Promise<Placement> {
+  return request<Placement>(`/api/placements/${encodeURIComponent(id)}/time`, json("PUT", { start_time: startTime }));
 }
 
 export function removePlacement(id: string): Promise<{ removed: string }> {
@@ -512,7 +518,7 @@ export interface GoogleState {
   sign_in_pending: boolean;
   sign_in_error: string | null;
   missing_permissions: string[];
-  tasks: { last_attempt_at: string | null; last_success_at: string | null; last_error: string | null; synced_lists: number; synced_tasks: number };
+  tasks: { last_attempt_at: string | null; last_success_at: string | null; last_error: string | null; synced_lists: number; synced_tasks: number; synced_events: number };
 }
 
 export function getGoogle(signal?: AbortSignal): Promise<GoogleState> {

@@ -29,6 +29,8 @@ class Placement(BaseModel):
     id: str
     task_id: str
     planned_date: date
+    # Optional local start time "HH:MM"; a timed placement becomes a Google Calendar event.
+    start_time: str | None = None
     created_at: datetime
     updated_at: datetime
     revision: int
@@ -106,6 +108,14 @@ def week_bounds(value: str | date) -> tuple[date, date]:
         raise InvalidInput("week", "That week is outside the supported calendar range.") from None
 
 
+def _select(conn: sqlite3.Connection) -> str:
+    """Placements with their optional start time. Before migration 18 (legacy-upgrade
+    paths run current code on older schemas) there are no start times."""
+    if conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'placement_times'").fetchone():
+        return "SELECT p.*, t.start_time FROM planned_items p LEFT JOIN placement_times t ON t.placement_id = p.id"
+    return "SELECT p.*, NULL AS start_time FROM planned_items p"
+
+
 def _placement(row: sqlite3.Row) -> Placement:
     return Placement(**dict(row))
 
@@ -113,7 +123,7 @@ def _placement(row: sqlite3.Row) -> Placement:
 def _require_placement(conn: sqlite3.Connection, placement_id: object) -> sqlite3.Row:
     if not isinstance(placement_id, str):
         raise InvalidInput("placement_id", "Placement id must be text.")
-    row = conn.execute("SELECT * FROM planned_items WHERE id = ?", (placement_id,)).fetchone()
+    row = conn.execute(_select(conn) + " WHERE p.id = ?", (placement_id,)).fetchone()
     if row is None:
         archived = conn.execute("SELECT week_start FROM closed_placements WHERE id = ?", (placement_id,)).fetchone()
         if archived:
@@ -127,7 +137,7 @@ def _require_placement(conn: sqlite3.Connection, placement_id: object) -> sqlite
 
 def _list_placements(conn: sqlite3.Connection) -> list[Placement]:
     return [_placement(row) for row in conn.execute(
-        "SELECT * FROM planned_items ORDER BY planned_date, created_at, rowid"
+        _select(conn) + " ORDER BY p.planned_date, p.created_at, p.rowid"
     ).fetchall()]
 
 
@@ -207,7 +217,9 @@ def _create_placement_tx(conn: sqlite3.Connection, task_id: str, planned_date: s
         "VALUES (?, ?, ?, ?, ?, 1)",
         (placement_id, task_id, day, now, now),
     )
-    return _placement(_require_placement(conn, placement_id))
+    # Built from what was written (a new placement has no start time), so this also
+    # works on older schemas that legacy-upgrade tests build with current code.
+    return Placement(id=placement_id, task_id=task_id, planned_date=day, created_at=now, updated_at=now, revision=1)
 
 
 def move_placement(db: Database, placement_id: str, planned_date: str | date) -> Placement:
@@ -222,6 +234,32 @@ def move_placement(db: Database, placement_id: str, planned_date: str | date) ->
             conn.execute(
                 "UPDATE planned_items SET planned_date = ?, updated_at = ?, revision = revision + 1 WHERE id = ?",
                 (day, utc_now(), placement_id),
+            )
+        return _placement(_require_placement(conn, placement_id))
+
+
+_TIME = re.compile(r"([01][0-9]|2[0-3]):[0-5][0-9]")
+
+
+def set_placement_time(db: Database, placement_id: str, start_time: str | None) -> Placement:
+    """Set or clear a placement's optional start time ("HH:MM", 24-hour, local)."""
+    if start_time is not None and (not isinstance(start_time, str) or not _TIME.fullmatch(start_time)):
+        raise InvalidInput("start_time", "Start time must look like 14:30 (24-hour), or be empty.")
+    with db.write() as conn:
+        row = _require_placement(conn, placement_id)
+        _require_open_week(conn, row["planned_date"])
+        if row["start_time"] != start_time:
+            if start_time is None:
+                conn.execute("DELETE FROM placement_times WHERE placement_id = ?", (placement_id,))
+            else:
+                conn.execute(
+                    "INSERT INTO placement_times (placement_id, start_time) VALUES (?, ?) "
+                    "ON CONFLICT(placement_id) DO UPDATE SET start_time = excluded.start_time",
+                    (placement_id, start_time),
+                )
+            conn.execute(
+                "UPDATE planned_items SET updated_at = ?, revision = revision + 1 WHERE id = ?",
+                (utc_now(), placement_id),
             )
         return _placement(_require_placement(conn, placement_id))
 

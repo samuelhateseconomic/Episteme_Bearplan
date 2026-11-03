@@ -1,5 +1,7 @@
 """Google Tasks sync: BearPlans -> Google, plus completion ticked in Google.
 
+Each sync also updates Google Calendar events (see google_calendar.py).
+
 User decisions (2026-11-02):
 - Every project, task and subtask syncs. Project -> task list named like the project,
   task -> task, subtask -> subtask (both sides allow one level only).
@@ -27,6 +29,7 @@ from typing import Any, Protocol
 from pydantic import BaseModel
 
 from backend.domain.calendar import application_today
+from backend.domain.google_calendar import CalendarClient, sync_calendar
 from backend.domain.tasks import Task, _list_tasks, _set_completion_tx
 from backend.storage.db import Database, utc_now
 
@@ -53,6 +56,7 @@ class SyncStatus(BaseModel):
     last_error: str | None
     synced_lists: int
     synced_tasks: int
+    synced_events: int
 
 
 @dataclass(frozen=True)
@@ -71,11 +75,12 @@ def get_status(db: Database) -> SyncStatus:
         row = conn.execute("SELECT * FROM google_sync WHERE id = 1").fetchone()
         lists = conn.execute("SELECT count(*) FROM google_task_lists").fetchone()[0]
         tasks = conn.execute("SELECT count(*) FROM google_tasks").fetchone()[0]
+        events = conn.execute("SELECT count(*) FROM google_events").fetchone()[0]
     return SyncStatus(
         last_attempt_at=row["last_attempt_at"] if row else None,
         last_success_at=row["last_success_at"] if row else None,
         last_error=row["last_error"] if row else None,
-        synced_lists=lists, synced_tasks=tasks)
+        synced_lists=lists, synced_tasks=tasks, synced_events=events)
 
 
 def _snapshot(conn: sqlite3.Connection) -> tuple[dict[str, str], list[Task], dict[str, list[str]], dict[str, str], dict[str, _Mapping]]:
@@ -178,10 +183,13 @@ def _apply_ticks(db: Database, ticks: dict[str, str]) -> int:
 # --------------------------------------------------------------------------- sync
 
 
-def sync(db: Database, client: TasksClient, unavailable: type[Exception]) -> SyncStatus:
-    """One full sync. Raises `unavailable` (after recording it) when Google fails."""
+def sync(db: Database, client: TasksClient, unavailable: type[Exception],
+         calendar: CalendarClient | None = None) -> SyncStatus:
+    """One full sync (Tasks, then Calendar). Raises `unavailable` (after recording it) when Google fails."""
     try:
         _sync(db, client)
+        if calendar is not None:
+            sync_calendar(db, calendar)
     except unavailable as error:
         _set_sync(db, success=False, error=getattr(error, "message", str(error)))
         raise
@@ -275,9 +283,11 @@ def _sync(db: Database, client: TasksClient) -> None:
 class GoogleSyncService:
     """Runs sync in the background: every PERIOD_SECONDS, and shortly after a change."""
 
-    def __init__(self, db: Database, client_factory: Any, unavailable: type[Exception], connected: Any) -> None:
+    def __init__(self, db: Database, client_factory: Any, unavailable: type[Exception], connected: Any,
+                 calendar_factory: Any = None) -> None:
         self._db = db
         self._client_factory = client_factory
+        self._calendar_factory = calendar_factory
         self._unavailable = unavailable
         self._connected = connected
         self._lock = threading.Lock()
@@ -287,7 +297,8 @@ class GoogleSyncService:
 
     def sync_now(self) -> SyncStatus:
         with self._lock:  # one sync at a time
-            return sync(self._db, self._client_factory(), self._unavailable)
+            calendar = self._calendar_factory() if self._calendar_factory else None
+            return sync(self._db, self._client_factory(), self._unavailable, calendar)
 
     def nudge(self) -> None:
         self._wake.set()

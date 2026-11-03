@@ -1,6 +1,6 @@
 # Google Calendar and Google Tasks sync — decisions and progress
 
-Started 2026-11-02. Status: **step 1 passed; step 2 (Google Tasks sync) built and checked live; steps 3–4 not started.**
+Started 2026-11-02. Status: **steps 1–2 done (step 2 committed `d41534e`); step 3 built and checked live 2026-11-03, awaiting the user's check and commit; step 4 not started.**
 
 ## User decisions (2026-11-02)
 
@@ -39,8 +39,8 @@ the user's Google account (a change from the earlier read-only plan for M6).
    granted; 5 calendars, 25 primary events in 7 days, 4 task lists (counts only).
    First attempt was blocked (403 access_denied) until the user added themselves as a
    test user; the consent screen app name was "ChatGPT" (renamed by the user).
-2. Google Tasks sync — **built 2026-11-02, awaiting the user's hands-on check and commit.**
-3. Optional planned start time + "BearPlans" calendar events with 30-minute reminders.
+2. Google Tasks sync — **committed `d41534e` (2026-11-02).**
+3. Optional planned start time + "BearPlans" calendar events with 30-minute reminders — **built 2026-11-03.**
 4. Read chosen calendars, show events beside days, event → task.
 
 ## Step 2 — Google Tasks sync (built 2026-11-02)
@@ -80,3 +80,36 @@ Checks (2026-11-02):
 
 Not yet done: the user's first real sync (migration 16 → 17 runs at the next launch,
 with the automatic backup first); a real-Chrome test of the Google tab.
+
+## Step 3 — start times and BearPlans calendar events (built 2026-11-03)
+
+Files: `backend/storage/migrations/0018_planned_time_and_calendar.sql`
+(`placement_times`, `google_calendar`, `google_events`), `backend/domain/planning.py`
+(`Placement.start_time`, `set_placement_time`; reads fall back when the table is absent
+for legacy-upgrade paths), `backend/routes/planning.py` (`PUT /api/placements/{id}/time`),
+`backend/domain/google_calendar.py`, `backend/platform/google.py`
+(`GoogleCalendarClient`; shared `_GoogleApi`), `backend/domain/google_tasks.py` (each sync
+runs Tasks then Calendar; `synced_events`), `backend/app.py`, `frontend/src/WeeklyPlanner.tsx`
+(start-time form inside "Move or remove"; time shown on cards and in the summary),
+`frontend/src/Google.tsx`, `api.ts`.
+
+Implementation decisions (mine, within the user's decisions):
+- Start time is stored in its own table, not a new `planned_items` column, so placements
+  and archived closed-week copies keep exactly their existing fields (13 existing
+  upgrade/close tests compare full rows).
+- Event length = the task's estimate, else 30 minutes. Title = task title; description
+  = project (› parent) and notes. Times are sent with the local UTC offset.
+- Only open tasks get events. Finishing the task, clearing the time or removing the
+  placement deletes the event only if it hasn't started; past events are never deleted,
+  so closing a week keeps them. A placement whose time already ended gets no new event.
+- The calendar is created only when the first timed task needs it; if the user deletes
+  it in Google, a new one is made at the next sync. Edits to its events are overwritten.
+- Carryover to a new week does not copy the start time (follow-up if wanted).
+
+Checks (2026-11-03):
+- `tests/test_google_calendar.py`: 16 passed. Full pytest: 922 passed, 1 Windows-only skip.
+- `frontend/src/PlacementTime.test.tsx`: 2 passed; Vitest 161 passed; typecheck and build pass.
+- Live check from a throwaway database in a temporary calendar named
+  "BearPlans sync check": event at 14:00 Pacific, 45 minutes, popup reminder 30 minutes;
+  retimed to 09:30 on the same event; repeat sync changed nothing; finishing the task
+  removed it; the temporary calendar was then deleted.

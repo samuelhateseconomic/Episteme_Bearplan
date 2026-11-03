@@ -276,8 +276,8 @@ def test_not_connected_without_sign_in_files(db):
     assert caught.value.code == "google_not_connected"
 
 
-def test_migration_0017_is_last():
-    assert [m.name for m in load_migrations()][-1] == "google_tasks"
+def test_migration_0017_is_shipped():
+    assert [m.name for m in load_migrations()][16] == "google_tasks"
 
 
 def _default_name(db) -> str:

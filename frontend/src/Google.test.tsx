@@ -6,7 +6,7 @@ import type { GoogleState } from "./api";
 
 const base: GoogleState = {
   configured: true, connected: true, sign_in_pending: false, sign_in_error: null, missing_permissions: [],
-  tasks: { last_attempt_at: null, last_success_at: null, last_error: null, synced_lists: 0, synced_tasks: 0 },
+  tasks: { last_attempt_at: null, last_success_at: null, last_error: null, synced_lists: 0, synced_tasks: 0, synced_events: 0 },
 };
 
 function reply(body: unknown, status = 200) {
