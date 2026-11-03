@@ -173,6 +173,6 @@ Checks (2026-11-03):
 - **"From your calendar" is collapsible.** Each day's section is a `<details>` closed
   by default, titled "From your calendar (N)". Vitest and the real-Chrome test open it
   before adding an event as a task.
-- Checks: full pytest 932 passed, 1 Windows-only skip; Vitest 165; typecheck and build pass.
-- Not done: the carryover screen doesn't show the carried time yet; it's only in the API
-  preview.
+- **Carryover screen shows the time.** Each eligible task says "Keeps its start time,
+  2:30 PM", and the review reads "Planned Oct 22, 2026 at 2:30 PM". Vitest test added.
+- Checks: full pytest 932 passed, 1 Windows-only skip; Vitest 166; typecheck and build pass.

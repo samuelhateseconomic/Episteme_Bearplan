@@ -264,6 +264,7 @@ export interface CarryoverCandidate {
   reason: string | null;
   existing_planned_date: string | null;
   suggested_date?: string | null;
+  start_time?: string | null;
 }
 export interface CarryoverOptions {
   week_start: string;
@@ -277,7 +278,7 @@ export interface CarryoverPreview {
   week_start: string;
   destination_start: string;
   destination_end: string;
-  items: (CarryoverSelection & { task: Task; project_name: string; parent_title: string | null })[];
+  items: (CarryoverSelection & { task: Task; project_name: string; parent_title: string | null; start_time?: string | null })[];
 }
 
 const weekPath = (week: string) => `/api/weeks/${encodeURIComponent(week)}`;

@@ -152,6 +152,21 @@ test("carryover explains completed/conflicting tasks and requires reviewing sele
   expect(screen.queryByRole("region", { name: "Carryover preview" })).not.toBeInTheDocument();
 });
 
+test("carryover shows the start time it keeps", async () => {
+  vi.spyOn(globalThis, "fetch").mockImplementation(async (url, init) => {
+    const body = init?.body ? JSON.parse(String(init.body)) : null;
+    if (String(url).endsWith("carryover-preview")) return json({ preview_token: "carry", week_start: "2026-10-12", destination_start: "2026-10-19", destination_end: "2026-10-25", items: [{ ...body.selections[0], task: task(), project_name: "Original project", parent_title: null, start_time: "14:30" }] });
+    return json(options({ candidates: [{ ...options().candidates[0], suggested_date: "2026-10-22", start_time: "14:30" }] }));
+  });
+  const user = userEvent.setup();
+  render(<WeekActions plan={planning({ closed_week: snapshot() })} onRun={run} locked={false} />);
+  await user.click(screen.getByRole("button", { name: "Carry unfinished work" }));
+  expect(await screen.findByText(/Keeps its start time, 2:30/)).toBeInTheDocument();
+  await user.click(screen.getByRole("button", { name: "Review carryover" }));
+  const preview = within(await screen.findByRole("region", { name: "Carryover preview" }));
+  expect(preview.getByText(/Planned Oct 22, 2026 at 2:30/)).toBeInTheDocument();
+});
+
 test("failed carryover retains selections and retry reuses the reviewed operation identity", async () => {
   const applied: Record<string, unknown>[] = [];
   vi.spyOn(globalThis, "fetch").mockImplementation(async (url, init) => {

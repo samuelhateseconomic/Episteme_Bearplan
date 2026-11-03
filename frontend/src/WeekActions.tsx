@@ -8,6 +8,8 @@ import {
 type Run = (work: () => Promise<unknown>, done: string) => Promise<void>;
 const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeZone: "UTC" });
 const showDate = (date: string) => dateFormat.format(new Date(`${date}T00:00:00Z`));
+const clock = new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit", timeZone: "UTC" });
+const showTime = (time: string) => clock.format(new Date(`1970-01-01T${time}:00Z`));
 const message = (error: unknown) => error instanceof ApiError ? error.message : "Something went wrong. Please try again.";
 
 export function WeekTaskDetails({ task, context }: { task: Task; context: string }) {
@@ -156,6 +158,7 @@ function Carryover({ week, onRun, locked, openOnMount = false }: { week: string;
           </label>
           <p className="planned-context muted">{historicalContext(candidate.snapshot_task)}</p>
           {task.deadline ? <p className="planned-meta muted">Due {showDate(task.deadline)}</p> : null}
+          {candidate.eligible && candidate.start_time ? <p className="planned-meta muted">Keeps its start time, {showTime(candidate.start_time)}</p> : null}
           {!candidate.eligible ? <p className="planned-meta muted">{candidate.reason ?? "This task is not available for carryover."}{candidate.existing_planned_date ? ` Existing plan: ${showDate(candidate.existing_planned_date)}.` : ""}</p> : null}
           {checked ? <div className="field"><label htmlFor={`carry-date-${candidate.task_id}`}>Carry “{task.title}” to</label><input id={`carry-date-${candidate.task_id}`} type="date" value={selected[candidate.task_id]} min={options.destination_start} max={options.destination_end} required disabled={busy || locked} onChange={(event) => select(candidate.task_id, event.target.value)} /></div> : null}
         </li>;
@@ -170,7 +173,7 @@ function Carryover({ week, onRun, locked, openOnMount = false }: { week: string;
       <p>The following tasks will be planned in the week immediately after this closed week.</p>
       <ul className="week-review-items">{review.preview.items.map((item) => <li key={item.task_id}>
         <WeekTaskDetails task={item.task} context={[item.project_name, item.parent_title].filter(Boolean).join(" / ")} />
-        <p>Planned {showDate(item.planned_date)}</p>
+        <p>Planned {showDate(item.planned_date)}{item.start_time ? ` at ${showTime(item.start_time)}` : ""}</p>
       </li>)}</ul>
       <button type="button" disabled={busy || locked} onClick={() => void apply()}>Apply carryover</button>
     </section> : null}
