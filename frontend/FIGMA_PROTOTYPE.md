@@ -131,8 +131,9 @@ The earlier 89-product/46-reference handoff remains its original baseline;
 the extension does not rewrite its acceptance evidence.
 
 Working-state Manage/Hide and overlay close routes are installed. UX-C03 wires
-bCourses setup and management below. Google setup, Pause effects and responsive/
-user verification follow in UX-C04–06; other overview error/busy commands remain references.
+bCourses setup and management below; UX-C04 adds the Google flow. Pause effects
+and responsive/user verification follow in UX-C05–06; other overview error/busy
+commands remain references.
 [Exact extension IDs](design/settings-connections/overview-inventory.json) and
 [installed-structure/model checks](design/settings-connections/overview-audit.json)
 distinguish checked metadata from unverified actual preview behavior.
@@ -159,3 +160,24 @@ review tabs and unsampled groups remain references for UX-C06. Actual preview,
 keyboard/focus and broader widths/themes remain pending. New review views retain
 Settings; current Navigation coverage is 99/99 headers. The earlier 95-header audit
 is historical evidence before these four views were added.
+
+
+### Google setup extension — UX-C04
+
+[Flow review](../docs/reviews/2026-11-04-google-settings-flow.md) ·
+[exact current inventory](design/settings-connections/google/inventory.json) ·
+[installed-action audit](design/settings-connections/google/audit.json) ·
+[59 aggregate models](design/settings-connections/google/models.json).
+
+[Open the sample guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=255-6835&starting-point-node-id=255%3A6835&scaling=min-zoom)
+or inspect the [file](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=251-6374),
+[browser](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=251-6375) and
+[calendar/account](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=251-6376)
+flow groups. Working Google management → Sign-in & calendars is wired; setup
+Connect uses the fixed sample-file flow. There are 47 540px references plus the
+800×778 guide. No real file picker, credentials, browser authorization or provider
+work. Guide starts reset only the five Google variables; the eight full review
+resets include those too. Browser-return outcomes use explicit guide simulations;
+waiting does not become connected by a timer. Actual preview/accessibility,
+responsive/Dark and user acceptance remain pending. Pause/Disconnect effects are
+UX-C05. Current Settings-gear coverage remains 99/99 headers.

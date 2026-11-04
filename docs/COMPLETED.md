@@ -9,6 +9,36 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-04 — UX-C04 design checkpoint
+
+User requested a local commit of the Google prototype unit. Scoped checkpoint
+contains the frontend Google inventory, renders, installed-reaction/model evidence
+and archived execution records, Figma index/ledger, dated review and shared handoff
+logs. Git identifies the commit. Existing unfinished backend/account work, CLAUDE
+edits and duplicate files remain excluded. No push requested for this checkpoint.
+Design evidence and pending preview/accessibility/responsive/runtime gates remain
+as recorded in the [review](reviews/2026-11-04-google-settings-flow.md).
+
+## 2026-11-04 — UX-C04 Google setup, browser sign-in and calendar/account review
+
+Delivered 47 editable 540px Light states and an 800×778 sample guide across three
+flow groups on the existing Figma canvas. File validation stays separate from
+Google authorization and successful combined sync. Added replacement/cancel/save
+recovery, scope disclosure including bCourses task export, pending browser return,
+permission/timeout/reconnect states, all four calendar selections and reviewed
+account mismatch/adoption. [Review](reviews/2026-11-04-google-settings-flow.md),
+[inventory](../frontend/design/settings-connections/google/inventory.json),
+[guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=255-6835&starting-point-node-id=255%3A6835&scaling=min-zoom).
+
+Pass with follow-ups for construction/read-back models: 59/59 aggregate checks;
+19 affected/new routing checks reran after a conditional-branch repair. Final audit
+606 editable nodes, zero raster/font/overflow/overlap findings; 99 Settings gears,
+five isolated Google variables in eight resets with bCourses resets retained.
+Four final Light renders inspected. Actual preview, keyboard/accessibility,
+responsive/Dark, user and provider/runtime verification remain pending. macOS
+26.6.2 arm64. No application/data/provider change or new commit/push. UX-C05 is next
+eligible, not started. Exact documentation checks are recorded in the review.
+
 ## 2026-11-04 — Session checkpoint and earlier history pushed
 
 After explicit user approval for all 12 commits on `main`, `git fetch origin`

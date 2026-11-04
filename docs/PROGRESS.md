@@ -16,8 +16,9 @@ paste long check logs here.
 **UX repair/handoff delivered: 24/24 repair subtickets Done.** R23 passed with
 follow-ups for the bounded user-reported walkthrough; R24 passed with follow-ups
 for the reconciled implementation handoff. Settings overview UX-C02 and bCourses flow UX-C03 are delivered with follow-ups
-under the user’s November 3 requests. No ticket is active; application delivery
-remains a later unit. Original UX-01–36 checkpoint
+under the user’s November 3 requests. UX-C04 Google setup/browser flow is delivered
+with follow-ups under the November 4 “continue” request. No ticket is active;
+application delivery remains a later unit. Original UX-01–36 checkpoint
 acceptance remains distinct from this repair subset.
 
 **Start here:** [refined UX handoff](../frontend/BEARPLANS_UX_HANDOFF.md),
@@ -82,7 +83,7 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
 
 ## Next up
 
-1. **UX-C02 overview and UX-C03 bCourses flow delivered:** [review](reviews/2026-11-03-settings-overview.md), [editable overview](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=219-5719). Six 800×900 Light states, two reusable components and 89 workspace gear entries. 56 structural/reaction/model assertions passed; actual preview, broader widths/themes and user acceptance remain pending. UX-C03 is delivered with follow-ups; next eligible design unit is UX-C04, not started. Existing repair/handoff and runtime/hardware gates stay distinct.
+1. **UX-C02 overview and UX-C03 bCourses flow delivered:** [review](reviews/2026-11-03-settings-overview.md), [editable overview](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=219-5719). Six 800×900 Light states, two reusable components and 89 workspace gear entries. 56 structural/reaction/model assertions passed; actual preview, broader widths/themes and user acceptance remain pending. UX-C03 and UX-C04 are delivered with follow-ups; next eligible design unit is UX-C05, not started. Existing repair/handoff and runtime/hardware gates stay distinct.
 2. **User hands-on review of the Assistant in the app preview** (pending).
    **Connection setup baseline:** credential relocation is committed in f375f24
    and write-only setup routes in 674db93. Current source continues to advance;
@@ -98,7 +99,7 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
    proposed. bCourses review placement remains unanswered; the dedicated-view
    recommendation did not block the overview. The original documentation request started
    no execution; the later “go for the first work” request delivered UX-C02. Next
-   eligible design unit is UX-C04; application slices remain separately scoped.
+   eligible design unit is UX-C05; application slices remain separately scoped.
 3. Then, each only when the user authorizes it, in this order
    ([build plan §8–9](../BearPlans_Build_Plan.md#assistant-architecture-orchestrator-and-specialists-user-approved-direction-2026-11-01)):
    (4) M6 Google Calendar → (5) bCourses access spike → (6) Canvas (bCourses) →
@@ -153,6 +154,20 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
 Stable definitions/tests: [frontend package](../frontend/plans/settings-connections/README.md).
 Only the active small unit/subslice belongs here; completed documentation is not
 visual construction or application delivery. No unit is currently Active.
+UX-C04 delivered: [review](reviews/2026-11-04-google-settings-flow.md),
+[47-state inventory](../frontend/design/settings-connections/google/inventory.json),
+[review guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=255-6835&starting-point-node-id=255%3A6835&scaling=min-zoom).
+Codex was the single Figma writer/self-reviewer. 47 540px Light states plus an
+800×778 guide, 126 installed sources and 59/59 aggregate action models. Repaired
+calendar re-entry routing; nineteen affected/new models reran successfully. No
+font/raster/overflow/overlap findings in the final 606-node audit. Five isolated
+Google variables are added to all eight resets; all six bCourses resets remain.
+99/99 Settings gears retained. Actual preview/keyboard/focus, responsive/Dark,
+user acceptance and provider/runtime checks remain pending. Account-isolation
+source was inspected, not certified. No app/data/provider changes. The user requested
+a local UX-C04 commit; Git records the checkpoint. No push was requested for this
+unit. Next concrete step: UX-C05 Pause/offline/recovery, not started.
+
 UX-C03 delivered under “continue”: [review](reviews/2026-11-03-bcourses-settings-flow.md),
 [25-state inventory](../frontend/design/settings-connections/bcourses-inventory.json)
 and [31/31 installed-action models](../frontend/design/settings-connections/bcourses-models.json).
@@ -162,7 +177,7 @@ All 99 Navigation headers retain one Settings gear. Six isolated demo variables
 are included in all eight reset starts; original task/timer/history variables are
 not touched by connection actions. Actual preview, keyboard/focus, responsive/Dark
 and user acceptance remain pending; secondary work controls are references.
-Next concrete step: UX-C04 Google setup/browser authorization, not started.
+UX-C03 actual preview and wider acceptance remain open alongside UX-C04.
 
 Earlier UX-C02 navigation correction covered 95 headers after the user found
 missing gears on Track/Stats/Assistant (89 workspace entries and six close controls).
@@ -178,7 +193,7 @@ Pause/status/disconnect work; concurrent account-isolation work remains unverifi
 | UX-C01 | Done — Pass with follow-ups | [Coherence review](reviews/2026-11-03-settings-connection-coherence.md); detailed package/guidance validation delivered. |
 | UX-C02 | Done — Pass with follow-ups | [Overview review](reviews/2026-11-03-settings-overview.md): six editable 800×900 Light states, two components; navigation correction covers all 95 headers (89 workspace entries), with zero missing/duplicate/clipped gears. Initial 56/56 assertions and latest 89 return models are metadata/model evidence. Static commands, actual preview and broader acceptance remain explicit. |
 | UX-C03 | Done — Pass with follow-ups | [Review](reviews/2026-11-03-bcourses-settings-flow.md): 25 editable states, 31 models, explicit cancel/save/refresh recovery; actual preview and wider acceptance pending. Dedicated review placement remains proposed. |
-| UX-C04 | Not started | Google file and browser-authorization design. |
+| UX-C04 | Done — Pass with follow-ups | [Review](reviews/2026-11-04-google-settings-flow.md): 47 states, 59 aggregate installed-action models, file/auth/sync separation; actual preview and broader acceptance pending. |
 | UX-C05 | Not started | Pause/offline/recovery design; detailed proposed semantics remain labelled. |
 | UX-C06 | Not started | Responsive prototype/user review/handoff after construction. |
 | APP-C01–09 | Not started as this execution sequence | Reuse committed migration/credential routes and any newer concurrent source. Existing capability is not absent because these new ticket definitions are unstarted. Select a small authorized slice before app work. |

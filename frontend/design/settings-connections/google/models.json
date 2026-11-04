@@ -1,0 +1,350 @@
+{
+  "ticket": "UX-C04",
+  "evidenceLayer": "Installed-reaction in-memory models; not actual Figma preview or runtime",
+  "history": [
+    {
+      "run": "Before routing repair",
+      "total": 49,
+      "passed": 46,
+      "failed": [
+        {
+          "name": "calClasses saves and reopens the same selected calendars",
+          "result": "Fail",
+          "message": "Expected calClasses, got 251:7115"
+        },
+        {
+          "name": "calNone saves and reopens the same selected calendars",
+          "result": "Fail",
+          "message": "Expected calNone, got 251:7115"
+        },
+        {
+          "name": "Explicit account adoption clears only synthetic calendar selection and does not claim sync",
+          "result": "Fail",
+          "message": "Expected calNone, got 251:7115"
+        }
+      ]
+    },
+    {
+      "run": "After repair",
+      "rerun": [
+        {
+          "name": "calTwo saves and reopens the same selected calendars",
+          "result": "Pass"
+        },
+        {
+          "name": "calTwo Cancel discards the selection draft",
+          "result": "Pass"
+        },
+        {
+          "name": "calOne saves and reopens the same selected calendars",
+          "result": "Pass"
+        },
+        {
+          "name": "calOne Cancel discards the selection draft",
+          "result": "Pass"
+        },
+        {
+          "name": "calClasses saves and reopens the same selected calendars",
+          "result": "Pass"
+        },
+        {
+          "name": "calClasses Cancel discards the selection draft",
+          "result": "Pass"
+        },
+        {
+          "name": "calNone saves and reopens the same selected calendars",
+          "result": "Pass"
+        },
+        {
+          "name": "calNone Cancel discards the selection draft",
+          "result": "Pass"
+        },
+        {
+          "name": "Explicit account adoption clears only synthetic calendar selection and does not claim sync",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the pending Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the ready Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the setup Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the expired Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the permissions Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the other Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the unknown Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the denied Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the timeout Google state",
+          "result": "Pass"
+        },
+        {
+          "name": "Settings reopens the connected Google state",
+          "result": "Pass"
+        }
+      ]
+    }
+  ],
+  "total": 59,
+  "passed": 59,
+  "failed": [],
+  "models": [
+    {
+      "name": "Fresh file save ends at sign-in needed, never Connected",
+      "result": "Pass"
+    },
+    {
+      "name": "Same-client save retains existing usable sign-in and last sync",
+      "result": "Pass"
+    },
+    {
+      "name": "Same-client save preserves an existing reconnect requirement",
+      "result": "Pass"
+    },
+    {
+      "name": "Different-client replacement requires confirmation then sign-in",
+      "result": "Pass"
+    },
+    {
+      "name": "selectedFresh Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "selectedSame Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "selectedDifferent Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "wrongType Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "malformed Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "oversized Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "saveFailed Cancel leaves Google demo data unchanged",
+      "result": "Pass"
+    },
+    {
+      "name": "wrongType recovery keeps file selection separate from authorization",
+      "result": "Pass"
+    },
+    {
+      "name": "malformed recovery keeps file selection separate from authorization",
+      "result": "Pass"
+    },
+    {
+      "name": "oversized recovery keeps file selection separate from authorization",
+      "result": "Pass"
+    },
+    {
+      "name": "Pre-write save failure can retry without claiming access",
+      "result": "Pass"
+    },
+    {
+      "name": "Uncertain save status check does not identify the saved client or verify access",
+      "result": "Pass"
+    },
+    {
+      "name": "Uncertain save explicitly resaves the replacement",
+      "result": "Pass"
+    },
+    {
+      "name": "Declining consent does not alter connection state",
+      "result": "Pass"
+    },
+    {
+      "name": "Continue starts pending, not connected",
+      "result": "Pass"
+    },
+    {
+      "name": "Waiting dismissal and reopening preserve pending sign-in",
+      "result": "Pass"
+    },
+    {
+      "name": "Open-sign-in fallback reaches a clearly simulated browser boundary",
+      "result": "Pass"
+    },
+    {
+      "name": "Cancel restarting keeps the pending attempt",
+      "result": "Pass"
+    },
+    {
+      "name": "Explicit restart returns to pending without successful sync",
+      "result": "Pass"
+    },
+    {
+      "name": "denied is actionable and retries through consent",
+      "result": "Pass"
+    },
+    {
+      "name": "timeout is actionable and retries through consent",
+      "result": "Pass"
+    },
+    {
+      "name": "permissions is actionable and retries through consent",
+      "result": "Pass"
+    },
+    {
+      "name": "expired is actionable and retries through consent",
+      "result": "Pass"
+    },
+    {
+      "name": "Authorization success is separate from successful sync",
+      "result": "Pass"
+    },
+    {
+      "name": "calTwo has working toggles for each calendar",
+      "result": "Pass"
+    },
+    {
+      "name": "calTwo saves and reopens the same selected calendars",
+      "result": "Pass"
+    },
+    {
+      "name": "calTwo Cancel discards the selection draft",
+      "result": "Pass"
+    },
+    {
+      "name": "calOne has working toggles for each calendar",
+      "result": "Pass"
+    },
+    {
+      "name": "calOne saves and reopens the same selected calendars",
+      "result": "Pass"
+    },
+    {
+      "name": "calOne Cancel discards the selection draft",
+      "result": "Pass"
+    },
+    {
+      "name": "calClasses has working toggles for each calendar",
+      "result": "Pass"
+    },
+    {
+      "name": "calClasses saves and reopens the same selected calendars",
+      "result": "Pass"
+    },
+    {
+      "name": "calClasses Cancel discards the selection draft",
+      "result": "Pass"
+    },
+    {
+      "name": "calNone has working toggles for each calendar",
+      "result": "Pass"
+    },
+    {
+      "name": "calNone saves and reopens the same selected calendars",
+      "result": "Pass"
+    },
+    {
+      "name": "calNone Cancel discards the selection draft",
+      "result": "Pass"
+    },
+    {
+      "name": "Saved choices plus failed event read retries only the read",
+      "result": "Pass"
+    },
+    {
+      "name": "First sync success needs a separate acknowledged outcome",
+      "result": "Pass"
+    },
+    {
+      "name": "Partial sync failure retries same finite combined-sync flow",
+      "result": "Pass"
+    },
+    {
+      "name": "Different account remains blocked until explicit review",
+      "result": "Pass"
+    },
+    {
+      "name": "Explicit account adoption clears only synthetic calendar selection and does not claim sync",
+      "result": "Pass"
+    },
+    {
+      "name": "Only five isolated Google variables are written by new journey actions",
+      "result": "Pass"
+    },
+    {
+      "name": "Eight full-demo resets restore Google and preserve bCourses reset coverage",
+      "result": "Pass"
+    },
+    {
+      "name": "All 99 navigation headers retain a single Settings gear",
+      "result": "Pass"
+    },
+    {
+      "name": "Before-consent copy discloses three functions, all-task and bCourses export, remote copies and calendar-read scope",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the pending Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the ready Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the setup Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the expired Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the permissions Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the other Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the unknown Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the denied Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the timeout Google state",
+      "result": "Pass"
+    },
+    {
+      "name": "Settings reopens the connected Google state",
+      "result": "Pass"
+    }
+  ]
+}

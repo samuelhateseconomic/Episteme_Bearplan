@@ -1,0 +1,5871 @@
+{
+  "counts": {
+    "FRAME": 132,
+    "TEXT": 338,
+    "INSTANCE": 132,
+    "VECTOR": 4
+  },
+  "total": 606,
+  "components": [
+    "3:228",
+    "3:213",
+    "3:198",
+    "3:210",
+    "233:6184",
+    "3:252",
+    "3:244"
+  ],
+  "frames": [
+    {
+      "key": "setup",
+      "id": "251:6377",
+      "parent": "251:6374",
+      "x": 60,
+      "y": 80,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "selectedFresh",
+      "id": "251:6401",
+      "parent": "251:6374",
+      "x": 680,
+      "y": 80,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "selectedSame",
+      "id": "251:6425",
+      "parent": "251:6374",
+      "x": 1300,
+      "y": 80,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "selectedDifferent",
+      "id": "251:6447",
+      "parent": "251:6374",
+      "x": 1920,
+      "y": 80,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "savingFresh",
+      "id": "251:6469",
+      "parent": "251:6374",
+      "x": 60,
+      "y": 454,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 5,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "savingSame",
+      "id": "251:6489",
+      "parent": "251:6374",
+      "x": 680,
+      "y": 454,
+      "width": 540,
+      "height": 201,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 4,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "savingDifferent",
+      "id": "251:6508",
+      "parent": "251:6374",
+      "x": 1300,
+      "y": 454,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 5,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "ready",
+      "id": "251:6528",
+      "parent": "251:6374",
+      "x": 1920,
+      "y": 454,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "sameSaved",
+      "id": "251:6550",
+      "parent": "251:6374",
+      "x": 60,
+      "y": 810,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "wrongType",
+      "id": "251:6572",
+      "parent": "251:6374",
+      "x": 680,
+      "y": 810,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "malformed",
+      "id": "251:6594",
+      "parent": "251:6374",
+      "x": 1300,
+      "y": 810,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "oversized",
+      "id": "251:6616",
+      "parent": "251:6374",
+      "x": 1920,
+      "y": 810,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "saveFailed",
+      "id": "251:6638",
+      "parent": "251:6374",
+      "x": 60,
+      "y": 1166,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "saveUnknown",
+      "id": "251:6660",
+      "parent": "251:6374",
+      "x": 680,
+      "y": 1166,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "help",
+      "id": "251:6684",
+      "parent": "251:6374",
+      "x": 1300,
+      "y": 1166,
+      "width": 540,
+      "height": 424,
+      "counts": {
+        "FRAME": 4,
+        "TEXT": 9,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "selectedSameExpired",
+      "id": "251:6710",
+      "parent": "251:6374",
+      "x": 1920,
+      "y": 1166,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "sameExpiredSaved",
+      "id": "251:6732",
+      "parent": "251:6374",
+      "x": 60,
+      "y": 1690,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "consent",
+      "id": "251:6754",
+      "parent": "251:6375",
+      "x": 60,
+      "y": 80,
+      "width": 540,
+      "height": 526,
+      "counts": {
+        "FRAME": 5,
+        "TEXT": 12,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "waiting",
+      "id": "251:6785",
+      "parent": "251:6375",
+      "x": 680,
+      "y": 80,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "fallback",
+      "id": "251:6807",
+      "parent": "251:6375",
+      "x": 1300,
+      "y": 80,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "browserBoundary",
+      "id": "251:6829",
+      "parent": "251:6375",
+      "x": 1920,
+      "y": 80,
+      "width": 540,
+      "height": 322,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "pendingControls",
+      "id": "251:6849",
+      "parent": "251:6375",
+      "x": 60,
+      "y": 706,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "restartReview",
+      "id": "251:6873",
+      "parent": "251:6375",
+      "x": 680,
+      "y": 706,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "denied",
+      "id": "251:6895",
+      "parent": "251:6375",
+      "x": 1300,
+      "y": 706,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "timeout",
+      "id": "251:6917",
+      "parent": "251:6375",
+      "x": 1920,
+      "y": 706,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "permissions",
+      "id": "251:6939",
+      "parent": "251:6375",
+      "x": 60,
+      "y": 1062,
+      "width": 540,
+      "height": 337,
+      "counts": {
+        "FRAME": 3,
+        "TEXT": 8,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "expired",
+      "id": "251:6964",
+      "parent": "251:6375",
+      "x": 680,
+      "y": 1062,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "authorized",
+      "id": "251:6986",
+      "parent": "251:6375",
+      "x": 1300,
+      "y": 1062,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "unavailable",
+      "id": "251:7008",
+      "parent": "251:6375",
+      "x": 1920,
+      "y": 1062,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "controls",
+      "id": "251:7032",
+      "parent": "251:6376",
+      "x": 60,
+      "y": 80,
+      "width": 540,
+      "height": 271,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calLoading",
+      "id": "251:7056",
+      "parent": "251:6376",
+      "x": 680,
+      "y": 80,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 5,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calTwo",
+      "id": "251:7076",
+      "parent": "251:6376",
+      "x": 1300,
+      "y": 80,
+      "width": 540,
+      "height": 452,
+      "counts": {
+        "FRAME": 8,
+        "TEXT": 11,
+        "INSTANCE": 6,
+        "VECTOR": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calOne",
+      "id": "251:7115",
+      "parent": "251:6376",
+      "x": 1920,
+      "y": 80,
+      "width": 540,
+      "height": 452,
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 11,
+        "INSTANCE": 6,
+        "VECTOR": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calSaving",
+      "id": "251:7154",
+      "parent": "251:6376",
+      "x": 60,
+      "y": 632,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 5,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calSaved",
+      "id": "251:7174",
+      "parent": "251:6376",
+      "x": 680,
+      "y": 632,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calEmpty",
+      "id": "251:7196",
+      "parent": "251:6376",
+      "x": 1300,
+      "y": 632,
+      "width": 540,
+      "height": 235,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calError",
+      "id": "251:7218",
+      "parent": "251:6376",
+      "x": 1920,
+      "y": 632,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calRefreshFailed",
+      "id": "251:7240",
+      "parent": "251:6376",
+      "x": 60,
+      "y": 988,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "firstSync",
+      "id": "251:7262",
+      "parent": "251:6376",
+      "x": 680,
+      "y": 988,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 5,
+        "INSTANCE": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "synced",
+      "id": "251:7282",
+      "parent": "251:6376",
+      "x": 1300,
+      "y": 988,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "partial",
+      "id": "251:7304",
+      "parent": "251:6376",
+      "x": 1920,
+      "y": 988,
+      "width": 540,
+      "height": 256,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "otherAccount",
+      "id": "251:7326",
+      "parent": "251:6376",
+      "x": 60,
+      "y": 1344,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 7,
+        "INSTANCE": 3
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "adoptReview",
+      "id": "251:7350",
+      "parent": "251:6376",
+      "x": 680,
+      "y": 1344,
+      "width": 540,
+      "height": 292,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "adopted",
+      "id": "251:7372",
+      "parent": "251:6376",
+      "x": 1300,
+      "y": 1344,
+      "width": 540,
+      "height": 253,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calClasses",
+      "id": "253:6485",
+      "parent": "251:6376",
+      "x": 1920,
+      "y": 1344,
+      "width": 540,
+      "height": 452,
+      "counts": {
+        "FRAME": 7,
+        "TEXT": 11,
+        "INSTANCE": 6,
+        "VECTOR": 1
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "calNone",
+      "id": "253:6513",
+      "parent": "251:6376",
+      "x": 60,
+      "y": 1896,
+      "width": 540,
+      "height": 452,
+      "counts": {
+        "FRAME": 6,
+        "TEXT": 11,
+        "INSTANCE": 6
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "setupObserved",
+      "id": "253:6542",
+      "parent": "251:6374",
+      "x": 680,
+      "y": 1690,
+      "width": 540,
+      "height": 274,
+      "counts": {
+        "FRAME": 2,
+        "TEXT": 6,
+        "INSTANCE": 2
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    },
+    {
+      "key": "guide",
+      "id": "255:6835",
+      "parent": "2:5",
+      "x": 24000,
+      "y": 6500,
+      "width": 800,
+      "height": 778,
+      "counts": {
+        "FRAME": 12,
+        "TEXT": 25,
+        "INSTANCE": 22
+      },
+      "overlay": "CENTER",
+      "overlayInteraction": "NONE"
+    }
+  ],
+  "issues": [],
+  "resets": [
+    {
+      "id": "141:7352",
+      "totalActions": 219,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "141:7355",
+      "totalActions": 219,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "141:7358",
+      "totalActions": 220,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "141:7361",
+      "totalActions": 220,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "141:7364",
+      "totalActions": 274,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "166:8451",
+      "totalActions": 222,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "166:8454",
+      "totalActions": 221,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    },
+    {
+      "id": "166:8457",
+      "totalActions": 221,
+      "newVariables": [
+        {
+          "id": "VariableID:255:6719",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6720",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6721",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6722",
+          "count": 1
+        },
+        {
+          "id": "VariableID:255:6723",
+          "count": 1
+        }
+      ],
+      "bcoursesVariables": 6
+    }
+  ],
+  "navigation": {
+    "count": 99,
+    "findings": []
+  },
+  "sections": [
+    {
+      "id": "251:6374",
+      "name": "13 · Google — sign-in file",
+      "x": 21100,
+      "y": 3300,
+      "width": 2580,
+      "height": 2104,
+      "children": [
+        "251:6377",
+        "251:6401",
+        "251:6425",
+        "251:6447",
+        "251:6469",
+        "251:6489",
+        "251:6508",
+        "251:6528",
+        "251:6550",
+        "251:6572",
+        "251:6594",
+        "251:6616",
+        "251:6638",
+        "251:6660",
+        "251:6684",
+        "251:6710",
+        "251:6732",
+        "253:6542"
+      ]
+    },
+    {
+      "id": "251:6375",
+      "name": "14 · Google — browser sign-in & recovery",
+      "x": 24000,
+      "y": 3300,
+      "width": 2580,
+      "height": 1539,
+      "children": [
+        "251:6754",
+        "251:6785",
+        "251:6807",
+        "251:6829",
+        "251:6849",
+        "251:6873",
+        "251:6895",
+        "251:6917",
+        "251:6939",
+        "251:6964",
+        "251:6986",
+        "251:7008"
+      ]
+    },
+    {
+      "id": "251:6376",
+      "name": "15 · Google — calendars, sync & account review",
+      "x": 26900,
+      "y": 3300,
+      "width": 2580,
+      "height": 2488,
+      "children": [
+        "251:7032",
+        "251:7056",
+        "251:7076",
+        "251:7115",
+        "251:7154",
+        "251:7174",
+        "251:7196",
+        "251:7218",
+        "251:7240",
+        "251:7262",
+        "251:7282",
+        "251:7304",
+        "251:7326",
+        "251:7350",
+        "251:7372",
+        "253:6485",
+        "253:6513"
+      ]
+    }
+  ],
+  "installedSources": [
+    {
+      "id": "251:6395",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6397",
+      "name": "Action / Setup help",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6684",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6399",
+      "name": "Action / Choose file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6401",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6419",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6421",
+      "name": "Action / Choose another",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6377",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6423",
+      "name": "Action / Save file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6469",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6443",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6445",
+      "name": "Action / Save file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6489",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6465",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6467",
+      "name": "Action / Replace file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6508",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6546",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6548",
+      "name": "Action / Review connection",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6568",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6570",
+      "name": "Action / Google controls",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6590",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6592",
+      "name": "Action / Choose another",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6401",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6612",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6614",
+      "name": "Action / Choose another",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6401",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6634",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6636",
+      "name": "Action / Choose another",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6401",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6656",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6658",
+      "name": "Action / Retry",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6508",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6678",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6680",
+      "name": "Action / Check status",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "unknown",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Saved setup · review needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "253:6542",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6682",
+      "name": "Action / Save again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6508",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6708",
+      "name": "Action / Back",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6377",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6728",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6730",
+      "name": "Action / Save file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "expired",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Reconnect needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6732",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6750",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6752",
+      "name": "Action / Reconnect",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6781",
+      "name": "Action / Not now",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6783",
+      "name": "Action / Continue with Google",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6803",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6849",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6805",
+      "name": "Action / Open sign-in",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6807",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6825",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6849",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6827",
+      "name": "Action / Open sign-in",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6829",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6847",
+      "name": "Action / Return to waiting",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6867",
+      "name": "Action / Close Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CLOSE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6869",
+      "name": "Action / View sign-in",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6871",
+      "name": "Action / Start again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6873",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6891",
+      "name": "Action / Keep waiting",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6893",
+      "name": "Action / Start again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6913",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6915",
+      "name": "Action / Try again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6935",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6937",
+      "name": "Action / Try again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6960",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6962",
+      "name": "Action / Reconnect",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6982",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6984",
+      "name": "Action / Reconnect",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7004",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7006",
+      "name": "Action / Choose calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7056",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7026",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7028",
+      "name": "Action / Check status",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7030",
+      "name": "Action / Try again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7050",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7052",
+      "name": "Action / Replace file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6425",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7054",
+      "name": "Action / Choose calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7056",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7111",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7113",
+      "name": "Action / Save calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7154",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7150",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7152",
+      "name": "Action / Save calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 1,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "1 calendar selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7154",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7192",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7194",
+      "name": "Action / Check first sync",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7262",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7214",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7216",
+      "name": "Action / Refresh list",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7056",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7236",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7238",
+      "name": "Action / Retry",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7056",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7258",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7260",
+      "name": "Action / Retry refresh",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7174",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7300",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7302",
+      "name": "Action / Google controls",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7322",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7324",
+      "name": "Action / Retry sync",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7262",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7344",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7346",
+      "name": "Action / Sign in to previous",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7348",
+      "name": "Action / Review account",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7350",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7368",
+      "name": "Action / Keep previous links",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "other",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Different account · review needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7326",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7370",
+      "name": "Action / Use this account",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Signed in · new links pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "New account · no sync confirmed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 0,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "0 calendars selected. Choose calendars again for this account.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7372",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7390",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7392",
+      "name": "Action / Choose calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7056",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6494",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6495",
+      "name": "Action / Save calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 2,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "1 calendar selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7154",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6522",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7032",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6523",
+      "name": "Action / Save calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 0,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "0 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7154",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6548",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5791",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6549",
+      "name": "Action / Review connection",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6754",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7093",
+      "name": "Calendar option / Personal",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "253:6485",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7101",
+      "name": "Calendar option / Classes",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7115",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7132",
+      "name": "Calendar option / Personal",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "253:6513",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7140",
+      "name": "Calendar option / Classes",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7076",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6490",
+      "name": "Calendar option / Personal",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7076",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6491",
+      "name": "Calendar option / Classes",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "253:6513",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6518",
+      "name": "Calendar option / Personal",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7115",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "253:6519",
+      "name": "Calendar option / Classes",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "253:6485",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6469",
+      "name": "Google / savingFresh",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "ready",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Sign-in needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Setup saved · Google access not verified",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6528",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6489",
+      "name": "Google / savingSame",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:6550",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:6508",
+      "name": "Google / savingDifferent",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "ready",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Sign-in needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Setup saved · Google access not verified",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6528",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7154",
+      "name": "Google / calSaving",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "251:7174",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7262",
+      "name": "Google / firstSync",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced just now · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7282",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "251:7056",
+      "name": "Google / calLoading",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 1.5
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:7076",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6722"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "FLOAT"
+                        },
+                        {
+                          "value": 3,
+                          "type": "FLOAT",
+                          "resolvedType": "FLOAT"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:7115",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6722"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "FLOAT"
+                        },
+                        {
+                          "value": 1,
+                          "type": "FLOAT",
+                          "resolvedType": "FLOAT"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "253:6485",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6722"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "FLOAT"
+                        },
+                        {
+                          "value": 2,
+                          "type": "FLOAT",
+                          "resolvedType": "FLOAT"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "253:6513",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6722"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "FLOAT"
+                        },
+                        {
+                          "value": 0,
+                          "type": "FLOAT",
+                          "resolvedType": "FLOAT"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I219:5839;218:5741",
+      "name": "Action / Sign-in & calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6849",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "pending",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6754",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "ready",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6377",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "setup",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6964",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "expired",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6939",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "permissions",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:7326",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "other",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "253:6542",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "unknown",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6895",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "denied",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:6917",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "timeout",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            },
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "251:7032",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "expressionArguments": [
+                        {
+                          "value": {
+                            "type": "VARIABLE_ALIAS",
+                            "id": "VariableID:255:6719"
+                          },
+                          "type": "VARIABLE_ALIAS",
+                          "resolvedType": "STRING"
+                        },
+                        {
+                          "value": "connected",
+                          "type": "STRING",
+                          "resolvedType": "STRING"
+                        }
+                      ],
+                      "expressionFunction": "EQUALS"
+                    },
+                    "type": "EXPRESSION",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I219:5975;218:5729",
+      "name": "Action / Manage Google",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "setup",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Setup needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "No sign-in file or Google sign-in saved",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6377",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6847",
+      "name": "Review / Start setup",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "setup",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Setup needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "No setup or sign-in saved",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6377",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6850",
+      "name": "Review / Same-client replacement",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6425",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6854",
+      "name": "Review / Different-client replacement",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6447",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6857",
+      "name": "Review / Same client · access expired",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "type": "STRING",
+                "resolvedType": "STRING",
+                "value": "expired"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "type": "STRING",
+                "resolvedType": "STRING",
+                "value": "Reconnect needed"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6710",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6861",
+      "name": "Review / Wrong client type",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6572",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6864",
+      "name": "Review / Malformed file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6594",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6868",
+      "name": "Review / Oversized file",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6616",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6871",
+      "name": "Review / Save failed before write",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6638",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6875",
+      "name": "Review / Save response lost",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6660",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6878",
+      "name": "Review / Waiting · browser fallback",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "pending",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Waiting for sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6785",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6882",
+      "name": "Review / Simulate successful return",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Signed in · not synced yet",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "No successful sync confirmed for this sign-in",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6986",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6885",
+      "name": "Review / Simulate denied return",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "denied",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Sign-in not completed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6895",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6889",
+      "name": "Review / Simulate timeout",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "timeout",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Sign-in timed out",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6917",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6892",
+      "name": "Review / Simulate missing permissions",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "permissions",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "More permissions needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6939",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6896",
+      "name": "Review / Reconnect expired access",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "expired",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Reconnect needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:6964",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6899",
+      "name": "Review / Simulate sign-in failure",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7008",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6903",
+      "name": "Review / Calendars · choose/save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7076",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6906",
+      "name": "Review / No calendars",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7196",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6910",
+      "name": "Review / Calendar load failed",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7218",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6913",
+      "name": "Review / Choices saved · fetch failed",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7240",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6917",
+      "name": "Review / First sync · partial failure",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Sync needs attention",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7304",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6920",
+      "name": "Review / Different account blocked",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "connected",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Last sync succeeded",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6721",
+              "variableValue": {
+                "value": "Last synced Nov 3 at 9:41 AM · Automatic sync on",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6722",
+              "variableValue": {
+                "value": 3,
+                "type": "FLOAT",
+                "resolvedType": "FLOAT"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6723",
+              "variableValue": {
+                "value": "2 calendars selected. Events are read only; nothing becomes a task until Add.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6719",
+              "variableValue": {
+                "value": "other",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:255:6720",
+              "variableValue": {
+                "value": "Different account · review needed",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "251:7326",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "255:6924",
+      "name": "Review / Choose simulated outcome",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "255:6835",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
