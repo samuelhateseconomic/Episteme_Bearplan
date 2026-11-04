@@ -26,7 +26,7 @@ from backend.domain.planning import PlacementConflict, WeekConflict
 from backend.domain.rewards import RewardConfig, ShopConflict, ShopService
 from backend.domain.streaks import StreakDataError
 from backend.domain.timer import Clock, TimerConflict, TimerService
-from backend.routes import assistant, bcourses, corrections, forest, google, planning, projects, shop, statistics, streaks, tasks, timer, weeks
+from backend.routes import assistant, bcourses, connections, corrections, forest, google, planning, projects, shop, statistics, streaks, tasks, timer, weeks
 from backend.storage.db import Database, StorageError
 
 LOCAL_HOSTNAMES = frozenset({"127.0.0.1", "localhost", "[::1]"})
@@ -121,6 +121,7 @@ def create_app(
     app.state.shop = ShopService(db, config)
     app.state.assistant = AssistantService(db, assistant_provider or OllamaProvider(), countdown)
     app.state.bcourses_client = bcourses_client  # None: the real client, token from the secrets file
+    app.state.bcourses_token_checker = None  # None: check a pasted token with one read-only bCourses request
     app.state.google_auth = auth
     app.state.google_sync = google_sync
     app.state.google_calendar_factory = calendar_factory
@@ -242,6 +243,7 @@ def create_app(
     app.include_router(assistant.router)
     app.include_router(bcourses.router)
     app.include_router(google.router)
+    app.include_router(connections.router)
 
     if static_dir is not None and (static_dir / "index.html").is_file():
         app.mount("/", StaticFiles(directory=static_dir, html=True), name="interface")

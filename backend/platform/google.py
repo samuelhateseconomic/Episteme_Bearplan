@@ -92,6 +92,45 @@ def _oauth_client() -> dict[str, Any] | None:
     return info
 
 
+CLIENT_FILE_MAX_BYTES = 16 * 1024
+
+
+def parse_client_file(text: str) -> dict[str, Any]:
+    """Check a downloaded Google OAuth client file and return the part BearPlans keeps.
+
+    Raises ValueError with a message safe to show (never containing the file's values).
+    """
+    if len(text.encode("utf-8")) > CLIENT_FILE_MAX_BYTES:
+        raise ValueError("This file is too large to be a Google sign-in file.")
+    try:
+        data = json.loads(text)
+    except ValueError:
+        raise ValueError("This is not a Google sign-in file (it is not JSON).") from None
+    if not isinstance(data, dict):
+        raise ValueError("This is not a Google sign-in file.")
+    if "web" in data and "installed" not in data:
+        raise ValueError("This sign-in file is for a Web application. In Google Cloud, create an OAuth client "
+                         "of type Desktop app and download that file instead.")
+    info = data.get("installed")
+    if not isinstance(info, dict):
+        raise ValueError("This is not a Google Desktop app sign-in file.")
+    client_id, secret = info.get("client_id"), info.get("client_secret")
+    auth_uri, token_uri = info.get("auth_uri"), info.get("token_uri")
+    if not (isinstance(client_id, str) and client_id.endswith(".apps.googleusercontent.com")
+            and isinstance(secret, str) and secret.strip()
+            and isinstance(auth_uri, str) and auth_uri.startswith("https://accounts.google.com/")
+            and isinstance(token_uri, str) and token_uri.startswith("https://oauth2.googleapis.com/")):
+        raise ValueError("This Google sign-in file is missing its client ID, secret or Google addresses. "
+                         "Download it again from Google Cloud.")
+    return {"installed": {"client_id": client_id, "client_secret": secret.strip(),
+                          "auth_uri": auth_uri, "token_uri": token_uri}}
+
+
+def current_client_id() -> str | None:
+    info = _oauth_client()
+    return info["client_id"] if info else None
+
+
 def _write_token(stored: dict[str, Any]) -> None:
     path = token_file()
     path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)

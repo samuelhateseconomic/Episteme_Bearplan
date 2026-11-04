@@ -228,14 +228,15 @@ Gmail** (Gmail reuses the same Google setup). Estimate: one day, four steps.
    `.secrets/` are copied there once and then used; `.secrets/` is left untouched.
    `BEARPLANS_SECRETS_FILE` still overrides for tests. Credentials stay out of
    backups and out of the database.
-2. **Write-only backend routes.** Save/replace/remove the bCourses token; upload/
+2. **Write-only backend routes** — *built 2026-11-03 (`/api/connections`)*. Save/replace/remove the bCourses token; upload/
    replace/remove the Google Desktop-app client file. Each save is checked before it
    is kept: the token by one read-only bCourses call, the client file by shape
    (`installed` type, client ID/secret, Google addresses). Saves are atomic and
    owner-only. Routes report only *set / not set, saved date, last check result* —
    never the value, any part of it, or the file contents. Size limits, existing
    Host/Origin/CSRF protection, no logging of bodies. Removing the Google client
-   also signs out; Disconnect still revokes the Google token when possible.
+   also signs out, and so does a file for a different Google client. Disconnect
+   deletes the local Google token but does not yet revoke it at Google (follow-up).
 3. **Connections screen.** One place for bCourses and Google: status, "Paste token"
    (password field, cleared after save), "Choose sign-in file" (file picker),
    Replace, Remove, Test, and short step-by-step help with links to the bCourses

@@ -189,3 +189,18 @@ credential removed later is not restored). Setup messages point to the new folde
 Checks: `tests/test_secrets_location.py` (5); pytest 937 passed, 1 Windows-only skip;
 Vitest 166; typecheck and build pass. The real copy runs at the user's next launch;
 the dev spike scripts in `tools/` still read `.secrets/`.
+
+## Connection setup step 2: write-only routes (2026-11-03)
+
+`backend/routes/connections.py` (`/api/connections`): GET status; PUT/DELETE
+`/bcourses` and POST `/bcourses/check`; PUT/DELETE `/google`. A pasted token must be one
+piece (≤512 characters) and is accepted only after one read-only bCourses request
+(`BCoursesClient.check()`, one course, one page); rejection keeps the old token, and an
+unreachable bCourses saves nothing. A Google file must be a Desktop app (`installed`)
+client with a `*.apps.googleusercontent.com` ID, a secret and Google's addresses; only
+those four fields are kept. A different client ID signs out the old Google sign-in;
+removing the file signs out too. Saves are atomic, owner-only (600, folder 700); dates
+and check results go to `secrets/status.json` (no values). Responses and logs never
+contain a value; other websites get 403. Disconnect still only deletes the local token
+(no revoke at Google) — follow-up. Checks: `tests/test_connections.py` (20); pytest
+957 passed, 1 Windows-only skip. No UI yet (step 3).

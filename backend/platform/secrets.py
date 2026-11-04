@@ -13,9 +13,11 @@ so database backups never contain them. BEARPLANS_SECRETS_FILE points elsewhere
 
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import stat
+import threading
 from pathlib import Path
 
 from backend.platform.paths import SOURCE_ROOT, DataDirError, resolve_data_dir
@@ -92,3 +94,89 @@ def read_secret(key: str) -> str | None:
         if separator and name.strip() == key and not name.lstrip().startswith("#"):
             return value.strip() or None
     return None
+
+
+# ---- writing (connection setup step 2, 2026-11-03)
+#
+# Values are written atomically and owner-only. Callers check a value before saving
+# it; nothing here ever returns a stored value except read_secret().
+
+STATUS_FILENAME = "status.json"  # Dates and check results only, never a credential.
+_write_lock = threading.Lock()
+
+
+def _ensure_dir() -> Path:
+    folder = secrets_dir()
+    folder.mkdir(mode=0o700, parents=True, exist_ok=True)
+    os.chmod(folder, 0o700)
+    return folder
+
+
+def write_private_file(path: Path, data: bytes) -> None:
+    """Replace path with data, owner-only, so a crash leaves the old or the new file."""
+    _ensure_dir()
+    temporary = path.with_name(path.name + ".tmp")
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(descriptor, "wb") as handle:
+        handle.write(data)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.chmod(temporary, 0o600)
+    os.replace(temporary, path)
+
+
+def remove_private_file(path: Path) -> bool:
+    try:
+        path.unlink()
+        return True
+    except FileNotFoundError:
+        return False
+
+
+def _set_line(key: str, value: str | None) -> None:
+    path = secrets_file()
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        lines = []
+    kept = [line for line in lines
+            if line.lstrip().startswith("#") or line.partition("=")[0].strip() != key or "=" not in line]
+    if value is not None:
+        kept.append(f"{key}={value}")
+    write_private_file(path, ("\n".join(kept) + "\n").encode("utf-8") if kept else b"")
+
+
+def write_secret(key: str, value: str) -> None:
+    """Save key=value in the secrets file, replacing any earlier value and keeping other lines."""
+    if not value or any(ch.isspace() or not ch.isprintable() for ch in value):
+        raise ValueError("A secret value must be one line without spaces.")
+    with _write_lock:
+        _set_line(key, value)
+
+
+def remove_secret(key: str) -> bool:
+    """Remove key from the secrets file; True when a value was there."""
+    with _write_lock:
+        had = read_secret(key) is not None
+        if had:
+            _set_line(key, None)
+        return had
+
+
+def read_status() -> dict[str, dict[str, object]]:
+    try:
+        data = json.loads((secrets_dir() / STATUS_FILENAME).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return {k: v for k, v in data.items() if isinstance(v, dict)} if isinstance(data, dict) else {}
+
+
+def update_status(name: str, entry: dict[str, object] | None) -> None:
+    """Record (or with None, forget) when a credential was saved and last checked."""
+    with _write_lock:
+        status = read_status()
+        if entry is None:
+            status.pop(name, None)
+        else:
+            status[name] = {**status.get(name, {}), **entry}
+        write_private_file(secrets_dir() / STATUS_FILENAME, json.dumps(status, indent=2).encode("utf-8"))

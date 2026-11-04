@@ -61,11 +61,11 @@ class BCoursesClient:
                 "~/Library/Application Support/BearPlans/secrets/), save it, then choose Refresh.")
         return token
 
-    def _get(self, path: str, **params: Any) -> list[dict[str, Any]]:
+    def _get(self, path: str, pages: int = MAX_PAGES, **params: Any) -> list[dict[str, Any]]:
         token = self._secret()
         url: str | None = f"{BASE}/api/v1/{path}?" + urllib.parse.urlencode({"per_page": 100, **params}, doseq=True)
         results: list[dict[str, Any]] = []
-        for _ in range(MAX_PAGES):
+        for _ in range(pages):
             if url is None:
                 break
             if not url.startswith(BASE + "/"):
@@ -93,6 +93,10 @@ class BCoursesClient:
             results += [item for item in body if isinstance(item, dict)]
             url = next((part.split(";")[0].strip(" <>") for part in links.split(",") if 'rel="next"' in part), None)
         return results
+
+    def check(self) -> None:
+        """One small read (a single course) to confirm bCourses accepts the token."""
+        self._get("courses", pages=1, per_page=1)
 
     def courses(self) -> list[dict[str, Any]]:
         return self._get("courses", enrollment_state="active", **{"include[]": ["term"]})
