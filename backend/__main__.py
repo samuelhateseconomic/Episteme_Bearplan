@@ -22,6 +22,7 @@ from backend.app import create_app
 from backend.domain.backups import automatic_backups
 from backend.domain.rewards import RewardConfig
 from backend.platform.instance_lock import acquire_instance_lock, describe_running_instance, report_running_instance
+from backend.platform.secrets import move_legacy_secrets
 from backend.platform.paths import (
     DATABASE_FILENAME,
     FRONTEND_DIST,
@@ -117,6 +118,14 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     if lock is None:
         return report_running_instance(describe_running_instance(data_dir), open_browser=not args.no_browser)
+    try:
+        copied = move_legacy_secrets()
+    except OSError as exc:
+        copied = []
+        print(f"BearPlans: could not copy credentials from .secrets/ into the data folder ({exc.strerror or exc}); "
+              "connections may show as not set up.", file=sys.stderr)
+    if copied:  # Counts only; names of credential files are not secret, their contents are.
+        print(f"BearPlans: copied {len(copied)} credential file(s) from .secrets/ into {data_dir / 'secrets'}")
 
     sock = None
     try:

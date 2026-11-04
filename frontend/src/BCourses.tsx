@@ -109,7 +109,7 @@ export function BCourses({ visible, onChanged }: { visible: boolean; onChanged?:
     {state?.sync.last_success_at ? <p className="muted">Last updated {stampLabel.format(new Date(state.sync.last_success_at))}.</p> : null}
     {error ? <p role="alert" className="error">{error}</p> : null}
     {status ? <p role="status">{status}</p> : null}
-    {state && !state.configured ? <p className="bcourses-setup">No bCourses token is set. In bCourses, open Account → Settings → New Access Token. Paste the token after <code>BCOURSES_TOKEN=</code> in <code>.secrets/bearplans.secrets.env</code>, save the file, then reload this page.</p> : null}
+    {state && !state.configured ? <p className="bcourses-setup">No bCourses token is set. In bCourses, open Account → Settings → New Access Token. Paste the token after <code>BCOURSES_TOKEN=</code> in <code>bearplans.secrets.env</code> in the BearPlans secrets folder (<code>~/Library/Application Support/BearPlans/secrets/</code>), save the file, then reload this page.</p> : null}
 
     {state?.courses.length ? <details className="bcourses-courses" open={followed.length === 0}>
       <summary>Courses to follow ({followed.length} of {state.courses.filter((course) => course.in_source).length})</summary>

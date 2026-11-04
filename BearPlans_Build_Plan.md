@@ -221,7 +221,7 @@ User request: set and update the bCourses token and the Google sign-in file from
 inside BearPlans, never by editing files in VS Code. Built **after M6 and before
 Gmail** (Gmail reuses the same Google setup). Estimate: one day, four steps.
 
-1. **Secrets move out of the code folder** *(proposed default)*. Credentials go to
+1. **Secrets move out of the code folder** — *built 2026-11-03 (user said go)*. Credentials go to
    `~/Library/Application Support/BearPlans/secrets/` (owner-only folder, files
    mode 600), next to the data rather than inside the repository, so the trial copy
    and future code updates share one setup. On first launch, existing files in

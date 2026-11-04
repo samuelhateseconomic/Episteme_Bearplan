@@ -1,8 +1,9 @@
 """Google sign-in and API client (Google Tasks now; Calendar in a later step).
 
-User decisions (2026-11-02): Desktop-app OAuth client in git-ignored
-`.secrets/google_oauth_client.json`; the long-lived sign-in token is saved beside it
-in `.secrets/google_token.json` (owner-only). Neither is ever logged, printed or
+User decisions (2026-11-02): Desktop-app OAuth client in `google_oauth_client.json`;
+the long-lived sign-in token is saved beside it in `google_token.json` (owner-only).
+Both live in the secrets folder (`backend.platform.secrets.secrets_dir()`, inside the
+data folder since 2026-11-03). Neither is ever logged, printed or
 returned by the API. Requests go only to Google's API hosts over verified TLS,
 without following redirects. Called outside any database transaction.
 """
@@ -160,7 +161,7 @@ class GoogleAuth:
         if info is None:
             raise GoogleUnavailable(
                 "google_not_configured",
-                "No Google sign-in file was found. Save the Desktop app credential as .secrets/google_oauth_client.json.")
+                "No Google sign-in file was found. Save the Desktop app credential as google_oauth_client.json in the secrets folder inside the BearPlans data folder (on a Mac, ~/Library/Application Support/BearPlans/secrets/).")
         with self._lock:
             if self._pending is not None and self._pending["thread"].is_alive():
                 self._pending["server"].shutdown()

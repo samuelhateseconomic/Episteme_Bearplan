@@ -176,3 +176,16 @@ Checks (2026-11-03):
 - **Carryover screen shows the time.** Each eligible task says "Keeps its start time,
   2:30 PM", and the review reads "Planned Oct 22, 2026 at 2:30 PM". Vitest test added.
 - Checks: full pytest 932 passed, 1 Windows-only skip; Vitest 166; typecheck and build pass.
+
+## Credentials moved to the data folder (2026-11-03, connection setup step 1)
+
+User asked to manage credentials from the app instead of VS Code
+([plan](../../BearPlans_Build_Plan.md#connection-setup-inside-the-app-requested-2026-11-03-plan-only--not-started)).
+Step 1: the bCourses token and both Google files now live in
+`~/Library/Application Support/BearPlans/secrets/` (folder 700, files 600). At startup
+`move_legacy_secrets()` copies the three known files from the code folder's `.secrets/`
+once (never overwriting, old folder left in place, a marker stops a second copy so a
+credential removed later is not restored). Setup messages point to the new folder.
+Checks: `tests/test_secrets_location.py` (5); pytest 937 passed, 1 Windows-only skip;
+Vitest 166; typecheck and build pass. The real copy runs at the user's next launch;
+the dev spike scripts in `tools/` still read `.secrets/`.

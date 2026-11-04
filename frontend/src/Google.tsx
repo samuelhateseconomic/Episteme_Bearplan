@@ -80,7 +80,7 @@ export function Google({ visible, onChanged }: { visible: boolean; onChanged?: (
     {error ? <p role="alert" className="error">{error}</p> : null}
     {status ? <p role="status">{status}</p> : null}
 
-    {state && !state.configured ? <p className="google-setup">No Google sign-in file was found. Save your Desktop app credential as <code>.secrets/google_oauth_client.json</code>, then reload this page.</p> : null}
+    {state && !state.configured ? <p className="google-setup">No Google sign-in file was found. Save your Desktop app credential as <code>google_oauth_client.json</code> in the BearPlans secrets folder (<code>~/Library/Application Support/BearPlans/secrets/</code>), then reload this page.</p> : null}
     {state?.configured ? <div className="google-connection">
       <p>{state.connected ? "Connected to Google." : state.sign_in_pending ? "Waiting for you to finish signing in…" : "Not connected."}</p>
       {state.sign_in_error ? <p role="alert" className="error">{state.sign_in_error}</p> : null}
