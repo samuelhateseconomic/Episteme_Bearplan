@@ -5,17 +5,22 @@ Sync calls Google outside any transaction (sync route, worker thread).
 """
 from __future__ import annotations
 
-from fastapi import APIRouter, Request
+from typing import Literal
+
+from fastapi import APIRouter, FastAPI, Request
 from pydantic import BaseModel, ConfigDict, StrictStr
 
 from backend.domain.google_reading import (
     AddedEvent, SourceCalendar, SourceEvent, add_event_task, list_calendars, list_events, read_calendars,
     refresh_events, set_followed,
 )
-from backend.domain.google_tasks import SyncStatus, get_status
+from backend.domain.google_tasks import SyncStatus, set_paused
 from backend.platform.google import NOT_CONNECTED, SCOPES
 
 router = APIRouter(prefix="/api/google")
+
+
+ConnectionStatus = Literal["not_set_up", "signed_out", "signing_in", "needs_attention", "paused", "syncing", "working"]
 
 
 class GoogleState(BaseModel):
@@ -25,21 +30,48 @@ class GoogleState(BaseModel):
     sign_in_error: str | None
     missing_permissions: list[str]
     tasks: SyncStatus
+    # One summary for the Settings screen, most urgent first: not_set_up (no sign-in
+    # file), signed_out, signing_in, needs_attention (last sync failed or permissions
+    # missing), paused, syncing, working (last sync succeeded, or none yet).
+    status: ConnectionStatus
+    # Only on a Disconnect reply: True Google confirmed, False Google could not be
+    # asked (remove access in the Google Account), None there was no sign-in.
+    revoked: bool | None = None
 
 
 class SignIn(BaseModel):
     url: str
 
 
-def _state(request: Request) -> GoogleState:
+def _state(request: Request, revoked: bool | None = None) -> GoogleState:
     auth = request.app.state.google_auth
-    connected = auth.connected()
+    configured, connected, pending = auth.configured(), auth.connected(), auth.sign_in_pending()
     granted = auth.granted_scopes() if connected else set()
+    missing = [scope.rsplit("/", 1)[-1] for scope in SCOPES if connected and scope not in granted]
+    tasks = request.app.state.google_sync.status()
+    status: ConnectionStatus
+    if not configured:
+        status = "not_set_up"
+    elif pending:
+        status = "signing_in"
+    elif not connected:
+        status = "signed_out"
+    elif tasks.last_error or missing:
+        status = "needs_attention"
+    elif tasks.paused_at:
+        status = "paused"
+    elif tasks.syncing:
+        status = "syncing"
+    else:
+        status = "working"
     return GoogleState(
-        configured=auth.configured(), connected=connected,
-        sign_in_pending=auth.sign_in_pending(), sign_in_error=auth.last_sign_in_error(),
-        missing_permissions=[scope.rsplit("/", 1)[-1] for scope in SCOPES if connected and scope not in granted],
-        tasks=get_status(request.app.state.db))
+        configured=configured, connected=connected, sign_in_pending=pending, sign_in_error=auth.last_sign_in_error(),
+        missing_permissions=missing, tasks=tasks, status=status, revoked=revoked)
+
+
+def disconnect_google(app: FastAPI) -> bool | None:
+    """Sign out of Google once no sync is running; see GoogleAuth.disconnect."""
+    return app.state.google_sync.while_idle(app.state.google_auth.disconnect)
 
 
 @router.get("")
@@ -64,7 +96,22 @@ def google_connect(request: Request) -> SignIn:
 
 @router.post("/disconnect")
 def google_disconnect(request: Request) -> GoogleState:
-    request.app.state.google_auth.disconnect()
+    return _state(request, revoked=disconnect_google(request.app))
+
+
+@router.post("/pause")
+def google_pause(request: Request) -> GoogleState:
+    """Stop automatic sync (kept across restarts). Waits for a sync already running, so
+    once this returns no automatic sync runs until Resume; Sync now still works."""
+    set_paused(request.app.state.db, True)
+    request.app.state.google_sync.while_idle(lambda: None)
+    return _state(request)
+
+
+@router.post("/resume")
+def google_resume(request: Request) -> GoogleState:
+    set_paused(request.app.state.db, False)
+    request.app.state.google_sync.nudge()
     return _state(request)
 
 

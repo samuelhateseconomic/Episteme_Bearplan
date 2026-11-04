@@ -204,3 +204,29 @@ and check results go to `secrets/status.json` (no values). Responses and logs ne
 contain a value; other websites get 403. Disconnect still only deletes the local token
 (no revoke at Google) — follow-up. Checks: `tests/test_connections.py` (20); pytest
 957 passed, 1 Windows-only skip. No UI yet (step 3).
+
+## Connection setup step 3: backend for the Settings screen (2026-11-03)
+
+Re-scoped with the user: Claude builds the backend, Codex designs the Settings →
+Connections screen ([Codex review](2026-11-03-settings-connection-coherence.md)). Its
+source findings on Claude's code are addressed here, except account identity.
+
+- **Pause / Resume** (user-confirmed): `POST /api/google/pause` and `/resume`; migration
+  20 adds `google_sync.paused_at`. Paused survives restarts. The worker re-checks the
+  pause under the sync lock, and Pause waits for a running sync, so after it returns no
+  automatic sync starts until Resume. `POST /api/google/tasks/sync` still runs once and
+  stays paused. Opening the Google tab with no saved calendars still reads the list once
+  (frontend; for Codex's screen).
+- **Disconnect** (`disconnect_google`, also used when the sign-in file is replaced by
+  another client's or removed): waits for a running sync (up to 30 s), cancels a pending
+  sign-in, deletes the local token, then revokes at Google (`oauth2.googleapis.com/revoke`).
+  The reply's `revoked` is true/false/null. A sign-in that finishes after Disconnect is
+  not saved and is revoked. Replacing the file now saves it before signing out.
+- **Status summary** on `GET /api/google`: `status` (not_set_up, signed_out, signing_in,
+  needs_attention, paused, syncing, working) and `tasks.paused_at` / `tasks.syncing`.
+- **Not done:** Google account identity (a different account must not reuse the previous
+  account's list mappings); no frontend change (`api.ts` types not updated).
+- Checks: `tests/test_google_controls.py` (8, run 3×), connection tests 21; pytest 966
+  passed, 1 Windows-only skip. Tests never call Google: `conftest.py` replaces
+  `revoke_token`. Migration 19 → 20 runs at the user's next launch, after the automatic
+  backup.

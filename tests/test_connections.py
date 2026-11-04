@@ -181,3 +181,18 @@ def test_real_token_check_is_one_small_read_only_request(monkeypatch):
     checker.check()
     assert len(seen) == 1 and seen[0].get_method() == "GET" and "per_page=1" in seen[0].full_url
     assert seen[0].full_url.startswith("https://bcourses.berkeley.edu/api/v1/courses?") and TOKEN not in seen[0].full_url
+
+
+def test_failed_google_save_keeps_the_old_file_and_sign_in(client, monkeypatch):
+    from backend.routes import connections
+
+    client.put("/api/connections/google", json={"client_file": _client_json()})
+    token_file().write_text(json.dumps({"refresh_token": "r", "scope": ""}))
+
+    def full_disk(path, data):
+        raise OSError(28, "No space left on device")
+    monkeypatch.setattr(connections, "write_private_file", full_disk)
+    other = _client_json(client_id="999-new.apps.googleusercontent.com")
+    with pytest.raises(OSError):
+        client.put("/api/connections/google", json={"client_file": other})
+    assert token_file().exists() and "123-abc" in client_file().read_text()

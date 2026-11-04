@@ -55,6 +55,8 @@ class SyncStatus(BaseModel):
     last_attempt_at: str | None
     last_success_at: str | None
     last_error: str | None
+    paused_at: str | None = None  # Automatic sync is paused since then (manual Sync now still works).
+    syncing: bool = False  # A sync is running right now.
     synced_lists: int
     synced_tasks: int
     synced_events: int
@@ -81,7 +83,22 @@ def get_status(db: Database) -> SyncStatus:
         last_attempt_at=row["last_attempt_at"] if row else None,
         last_success_at=row["last_success_at"] if row else None,
         last_error=row["last_error"] if row else None,
+        paused_at=row["paused_at"] if row else None,
         synced_lists=lists, synced_tasks=tasks, synced_events=events)
+
+
+def set_paused(db: Database, paused: bool) -> None:
+    """Pause or resume automatic sync; pausing again keeps the original time."""
+    with db.write() as conn:
+        conn.execute("INSERT INTO google_sync (id) VALUES (1) ON CONFLICT(id) DO NOTHING")
+        if paused:
+            conn.execute("UPDATE google_sync SET paused_at = coalesce(paused_at, ?) WHERE id = 1", (utc_now(),))
+        else:
+            conn.execute("UPDATE google_sync SET paused_at = NULL WHERE id = 1")
+
+
+def is_paused(db: Database) -> bool:
+    return get_status(db).paused_at is not None
 
 
 def _snapshot(conn: sqlite3.Connection) -> tuple[dict[str, str], list[Task], dict[str, list[str]], dict[str, str], dict[str, _Mapping]]:
@@ -312,8 +329,12 @@ class GoogleSyncService:
                 tuple(tuple(row) for row in conn.execute("SELECT calendar_id, summary, followed, in_source FROM google_source_calendars ORDER BY calendar_id")),
             ))
 
-    def sync_now(self) -> SyncStatus:
+    def sync_now(self, automatic: bool = False) -> SyncStatus | None:
+        """One sync. An automatic one is skipped (None) while sync is paused; the
+        check happens under the lock, so a Pause that returned stops later automatic work."""
         with self._lock:  # one sync at a time
+            if automatic and is_paused(self._db):
+                return None
             calendar = self._calendar_factory() if self._calendar_factory else None
             before = self._fingerprint()
             try:
@@ -321,6 +342,22 @@ class GoogleSyncService:
             finally:
                 if self._fingerprint() != before:
                     self._version += 1
+
+    @property
+    def syncing(self) -> bool:
+        return self._lock.locked()
+
+    def status(self) -> SyncStatus:
+        return get_status(self._db).model_copy(update={"syncing": self.syncing})
+
+    def while_idle(self, action: Any, wait_seconds: float = 30.0) -> Any:
+        """Run action once no sync is running (or after wait_seconds), and keep syncs out meanwhile."""
+        acquired = self._lock.acquire(timeout=wait_seconds)
+        try:
+            return action()
+        finally:
+            if acquired:
+                self._lock.release()
 
     def nudge(self) -> None:
         self._wake.set()
@@ -341,7 +378,7 @@ class GoogleSyncService:
                 if not self._connected():
                     continue
                 try:
-                    self.sync_now()
+                    self.sync_now(automatic=True)
                 except self._unavailable:
                     pass  # recorded in google_sync and shown in the app
                 except (sqlite3.Error, OSError):

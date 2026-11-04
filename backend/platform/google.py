@@ -163,6 +163,23 @@ def _post_form(url: str, fields: dict[str, str]) -> dict[str, Any]:
         raise GoogleUnavailable("google_unreachable", "Cannot reach Google. Check your internet connection, then try again.") from None
 
 
+REVOKE_URL = "https://oauth2.googleapis.com/revoke"
+
+
+def revoke_token(token: str) -> bool:
+    """Ask Google to cancel a sign-in. True when Google confirmed or already did not
+    know the token; False when Google could not be reached or answered otherwise."""
+    request = urllib.request.Request(REVOKE_URL, data=urllib.parse.urlencode({"token": token}).encode(), method="POST",
+                                     headers={"Content-Type": "application/x-www-form-urlencoded"})
+    try:
+        with _OPENER.open(request, timeout=TIMEOUT_SECONDS):
+            return True
+    except urllib.error.HTTPError as error:
+        return error.code == 400  # invalid_token: already revoked or expired.
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        return False
+
+
 class GoogleAuth:
     """Holds the refresh token on disk and a short-lived access token in memory."""
 
@@ -171,6 +188,9 @@ class GoogleAuth:
         self._access: str | None = None
         self._expires = 0.0
         self._pending: dict[str, Any] | None = None
+        # Goes up on every new sign-in and Disconnect; a sign-in finishing under an
+        # older number was cancelled and must not save its token.
+        self._generation = 0
 
     # ---- status
 
@@ -202,8 +222,9 @@ class GoogleAuth:
                 "google_not_configured",
                 "No Google sign-in file was found. Save the Desktop app credential as google_oauth_client.json in the secrets folder inside the BearPlans data folder (on a Mac, ~/Library/Application Support/BearPlans/secrets/).")
         with self._lock:
-            if self._pending is not None and self._pending["thread"].is_alive():
-                self._pending["server"].shutdown()
+            self._cancel_pending_locked()
+            self._generation += 1
+            generation = self._generation
         verifier = secrets.token_urlsafe(64)
         challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).rstrip(b"=").decode()
         state = secrets.token_urlsafe(24)
@@ -255,10 +276,16 @@ class GoogleAuth:
                         "grant_type": "authorization_code", "code_verifier": verifier})
                     if not isinstance(tokens.get("refresh_token"), str):
                         raise GoogleUnavailable("google_unexpected", "Google did not return a sign-in token.")
-                    _write_token({"refresh_token": tokens["refresh_token"], "scope": tokens.get("scope", "")})
                     with self._lock:
-                        self._access = tokens.get("access_token")
-                        self._expires = time.monotonic() + float(tokens.get("expires_in", 0)) - 60
+                        cancelled = generation != self._generation
+                        if not cancelled:
+                            _write_token({"refresh_token": tokens["refresh_token"], "scope": tokens.get("scope", "")})
+                            self._access = tokens.get("access_token")
+                            self._expires = time.monotonic() + float(tokens.get("expires_in", 0)) - 60
+                    if cancelled:
+                        # Disconnected (or signed in again) meanwhile: drop this late sign-in at Google too.
+                        revoke_token(tokens["refresh_token"])
+                        pending["error"] = "This Google sign-in was cancelled. Choose Connect Google to sign in again."
                 except GoogleUnavailable as error:
                     pending["error"] = error.message
 
@@ -269,14 +296,29 @@ class GoogleAuth:
         thread.start()
         return url
 
-    def disconnect(self) -> None:
+    def _cancel_pending_locked(self) -> None:
+        if self._pending is not None and self._pending["thread"].is_alive():
+            self._pending["server"].shutdown()
+
+    def disconnect(self) -> bool | None:
+        """Forget the sign-in here, cancel one in progress, then revoke it at Google.
+
+        The local token is deleted first, so it is gone even when Google cannot be
+        reached. Returns True when Google confirmed, False when it could not be asked
+        (the user can remove access in their Google Account), None when not signed in.
+        """
         with self._lock:
+            self._generation += 1
+            self._cancel_pending_locked()
             self._access = None
             self._expires = 0.0
-        try:
-            token_file().unlink()
-        except FileNotFoundError:
-            pass
+            data = _read_json(token_file())
+            try:
+                token_file().unlink()
+            except FileNotFoundError:
+                pass
+        refresh = data.get("refresh_token") if data else None
+        return revoke_token(refresh) if isinstance(refresh, str) else None
 
     # ---- access tokens
 

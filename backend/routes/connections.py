@@ -19,6 +19,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from backend.domain.errors import InvalidInput
 from backend.platform.bcourses import TOKEN_KEY, BCoursesClient, BCoursesUnavailable
 from backend.platform.google import client_file, current_client_id, parse_client_file
+from backend.routes.google import disconnect_google
 from backend.platform.secrets import (
     read_secret, read_status, remove_private_file, remove_secret, secrets_dir, update_status, write_private_file,
     write_secret,
@@ -144,10 +145,12 @@ def save_google_client(body: ClientFileRequest, request: Request) -> Connections
         stored = parse_client_file(body.client_file)
     except ValueError as error:
         raise InvalidInput("client_file", f"{error} The previous sign-in file was kept.") from None
-    if current_client_id() not in (None, stored["installed"]["client_id"]):
-        # The old sign-in belongs to the old client and cannot be used with the new one.
-        request.app.state.google_auth.disconnect()
+    other_client = current_client_id() not in (None, stored["installed"]["client_id"])
+    # Write first: if saving fails, the old file and its sign-in are both still there.
     write_private_file(client_file(), json.dumps(stored, indent=2).encode("utf-8"))
+    if other_client:
+        # The old sign-in belongs to the old client and cannot be used with the new one.
+        disconnect_google(request.app)
     now = _now()
     update_status(GOOGLE, {"saved_at": now, "checked_at": now, "check_ok": True,
                            "check_message": "The file is a Google Desktop app sign-in file. Choose Connect Google next."})
@@ -156,7 +159,7 @@ def save_google_client(body: ClientFileRequest, request: Request) -> Connections
 
 @router.delete("/google")
 def remove_google_client(request: Request) -> ConnectionsState:
-    request.app.state.google_auth.disconnect()
+    disconnect_google(request.app)
     remove_private_file(client_file())
     update_status(GOOGLE, None)
     return _state(request)

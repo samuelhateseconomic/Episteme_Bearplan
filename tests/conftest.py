@@ -27,6 +27,16 @@ def _no_real_secrets(tmp_path_factory, monkeypatch) -> None:
     monkeypatch.setenv("BEARPLANS_SECRETS_FILE", str(tmp_path_factory.mktemp("secrets") / "none.env"))
 
 
+@pytest.fixture(autouse=True)
+def revoked_tokens(monkeypatch) -> list[str]:
+    """Tests never ask Google to revoke anything; they see which tokens would have been."""
+    from backend.platform import google
+
+    seen: list[str] = []
+    monkeypatch.setattr(google, "revoke_token", lambda token: (seen.append(token), True)[1])
+    return seen
+
+
 @pytest.fixture
 def db(tmp_path: Path) -> Database:
     return open_database(tmp_path / "test.sqlite3")

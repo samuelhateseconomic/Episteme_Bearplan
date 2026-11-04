@@ -131,4 +131,4 @@ def test_reading_routes_need_google(db):
 
 
 def test_migration_0019_is_last():
-    assert [m.name for m in load_migrations()][-1] == "google_calendar_reading"
+    assert [m.name for m in load_migrations()][18] == "google_calendar_reading"

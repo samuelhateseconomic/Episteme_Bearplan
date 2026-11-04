@@ -235,15 +235,25 @@ Gmail** (Gmail reuses the same Google setup). Estimate: one day, four steps.
    owner-only. Routes report only *set / not set, saved date, last check result* —
    never the value, any part of it, or the file contents. Size limits, existing
    Host/Origin/CSRF protection, no logging of bodies. Removing the Google client
-   also signs out, and so does a file for a different Google client. Disconnect
-   deletes the local Google token but does not yet revoke it at Google (follow-up).
-3. **Connections screen.** One place for bCourses and Google: status, "Paste token"
+   also signs out, and so does a file for a different Google client (the new file is
+   saved first, so a failed save keeps the old sign-in).
+3. **Backend for the Settings screen** — *built 2026-11-03; replaces the screen in
+   this step because Codex owns the frontend design (Settings → Connections, UX-C01–C06
+   in `frontend/BEARPLANS_UX_PLAN.md`; user agreed Claude does backend, Codex frontend).*
+   Pause / Resume automatic Google sync (user-confirmed; migration 20, kept across
+   restarts, waits for a running sync, Sync now still runs once while paused);
+   Disconnect cancels a sign-in in progress (a late one is dropped and revoked), waits
+   for a running sync, deletes the local token, then revokes at Google and reports
+   whether Google confirmed; a `status` summary (not_set_up, signed_out, signing_in,
+   needs_attention, paused, syncing, working). Open: Google account identity, so a
+   different account cannot reuse the previous account's list mappings.
+4. **Connections screen (frontend, after Codex's design).** One place for bCourses and Google: status, "Paste token"
    (password field, cleared after save), "Choose sign-in file" (file picker),
    Replace, Remove, Test, and short step-by-step help with links to the bCourses
    token page and the Google Cloud credentials page (APIs to enable, test user).
    Error messages that today say "edit `.secrets/…`" point to this screen instead.
    The assistant cannot read or change these settings.
-4. **Checks and docs.** pytest (value never returned or logged, invalid input keeps
+5. **Checks and docs.** pytest (value never returned or logged, invalid input keeps
    the old value, permissions, migration of existing files), Vitest, and a
    real-Chrome test using fake credentials. Then update the secrets rule in
    `AGENTS.md`, the bCourses and Google reviews, and record the result.
