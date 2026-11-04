@@ -1,0 +1,4 @@
+interface:
+  display_name: "BearPlans Connections Build"
+  short_description: "Build authorized bCourses and Google settings changes"
+  default_prompt: "Use $bearplans-connections-build to work on the next separately authorized BearPlans Settings application ticket."

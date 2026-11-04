@@ -1,0 +1,1471 @@
+{
+  "canvasWrite": {
+    "mutatedNodeIds": [
+      "22:86",
+      "22:87",
+      "22:88",
+      "22:91",
+      "22:92",
+      "22:95",
+      "22:98",
+      "22:100",
+      "22:101",
+      "22:104",
+      "22:107"
+    ],
+    "createdNodeIds": [],
+    "root": {
+      "id": "22:85",
+      "width": 1040,
+      "height": 942
+    },
+    "text": [
+      {
+        "id": "22:86",
+        "width": 190,
+        "height": 15,
+        "font": {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:87",
+        "width": 960,
+        "height": 48,
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:88",
+        "width": 960,
+        "height": 21,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:91",
+        "width": 194,
+        "height": 26,
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:92",
+        "width": 960,
+        "height": 63,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:95",
+        "width": 960,
+        "height": 42,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:98",
+        "width": 960,
+        "height": 63,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:100",
+        "width": 306,
+        "height": 26,
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:101",
+        "width": 960,
+        "height": 63,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:104",
+        "width": 960,
+        "height": 63,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      },
+      {
+        "id": "22:107",
+        "width": 960,
+        "height": 63,
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      }
+    ]
+  },
+  "canvasVerified": {
+    "root": {
+      "id": "22:85",
+      "width": 1040,
+      "height": 942
+    },
+    "heading": "Implementation handoff.",
+    "note": "The bounded core walkthrough passed with follow-ups from user reports. Latest installed-reaction model: 111 cases pass; earlier time/navigation evidence remains separate. Keyboard/focus, assistive technology, arbitrary dragging, real storage/timing and Mac hardware gates remain unverified. Original 36-ticket acceptance is not implied.",
+    "counts": {
+      "TEXT": 15,
+      "RECTANGLE": 1,
+      "FRAME": 6
+    },
+    "imageFilledNodes": []
+  },
+  "counts": {
+    "liveProductsResolved": 89,
+    "liveReferencesResolved": 46,
+    "liveComponentNodes": 38,
+    "liveTextStyles": 10,
+    "selectedTokenDefinitions": 26,
+    "latestJourneyModel": {
+      "passed": 111,
+      "failed": 0
+    },
+    "olderIndependentModels": {
+      "time": 44,
+      "navigation": 601,
+      "rerunForHandoff": false
+    },
+    "manualWalkthrough": "User-reported bounded examples; see linked R23 evidence. No agent-controlled presentation execution."
+  },
+  "productReconciliation": {
+    "count": 89,
+    "rows": [
+      {
+        "id": "5:3972",
+        "name": "Today",
+        "actualName": "Today",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4109",
+        "name": "Today completed",
+        "actualName": "Today completed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4258",
+        "name": "Earlier unfinished",
+        "actualName": "Earlier unfinished",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4403",
+        "name": "Task saved",
+        "actualName": "Task saved",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4551",
+        "name": "Today with timer",
+        "actualName": "Today with timer",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4694",
+        "name": "Reopen failed",
+        "actualName": "Reopen failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4847",
+        "name": "Projects",
+        "actualName": "Projects",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:4951",
+        "name": "Done",
+        "actualName": "Done",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5054",
+        "name": "Reopened task",
+        "actualName": "Reopened task",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5166",
+        "name": "Rename project",
+        "actualName": "Rename project",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5229",
+        "name": "Add project",
+        "actualName": "Add project",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5292",
+        "name": "Project completed child",
+        "actualName": "Project completed child",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5369",
+        "name": "Done previous week",
+        "actualName": "Done previous week",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5430",
+        "name": "Done unplanned",
+        "actualName": "Done unplanned",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5491",
+        "name": "Task details",
+        "actualName": "Task details",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "5:5567",
+        "name": "Task validation",
+        "actualName": "Task validation",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:1802",
+        "name": "Week",
+        "actualName": "Week",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:1934",
+        "name": "Wednesday",
+        "actualName": "Wednesday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2004",
+        "name": "Reorder preview",
+        "actualName": "Reorder preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2136",
+        "name": "Week reordered",
+        "actualName": "Week reordered",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2266",
+        "name": "Week moved",
+        "actualName": "Week moved",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2336",
+        "name": "Week completed",
+        "actualName": "Week completed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2420",
+        "name": "Move date",
+        "actualName": "Move date",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2481",
+        "name": "Move conflict",
+        "actualName": "Move conflict",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2541",
+        "name": "End Week preview",
+        "actualName": "End Week preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2600",
+        "name": "Closed week",
+        "actualName": "Closed week",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2634",
+        "name": "Carryover",
+        "actualName": "Carryover",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2683",
+        "name": "Carryover preview",
+        "actualName": "Carryover preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2732",
+        "name": "Carryover exclusions",
+        "actualName": "Carryover exclusions",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "6:2761",
+        "name": "Next week",
+        "actualName": "Next week",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2586",
+        "name": "Track ready",
+        "actualName": "Track ready",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2639",
+        "name": "Track running",
+        "actualName": "Track running",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2686",
+        "name": "Track paused",
+        "actualName": "Track paused",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2733",
+        "name": "Track recovery",
+        "actualName": "Track recovery",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2780",
+        "name": "Track sleep",
+        "actualName": "Track sleep",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2827",
+        "name": "Track finished",
+        "actualName": "Track finished",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2879",
+        "name": "Forest",
+        "actualName": "Forest",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2929",
+        "name": "Shop",
+        "actualName": "Shop",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:2980",
+        "name": "Purchase failed",
+        "actualName": "Purchase failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3036",
+        "name": "Stats",
+        "actualName": "Stats",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3121",
+        "name": "Stats details",
+        "actualName": "Stats details",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3210",
+        "name": "Correction",
+        "actualName": "Correction",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3247",
+        "name": "Correction preview",
+        "actualName": "Correction preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3282",
+        "name": "Correction saved",
+        "actualName": "Correction saved",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3316",
+        "name": "Assistant",
+        "actualName": "Assistant",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3355",
+        "name": "Assistant generating",
+        "actualName": "Assistant generating",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3390",
+        "name": "Assistant answer",
+        "actualName": "Assistant answer",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3434",
+        "name": "Assistant sources",
+        "actualName": "Assistant sources",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "7:3482",
+        "name": "Assistant unavailable",
+        "actualName": "Assistant unavailable",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:5736",
+        "name": "Monday",
+        "actualName": "Monday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:5791",
+        "name": "Tuesday",
+        "actualName": "Tuesday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:5846",
+        "name": "Thursday",
+        "actualName": "Thursday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:5901",
+        "name": "Friday",
+        "actualName": "Friday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:5956",
+        "name": "Saturday",
+        "actualName": "Saturday",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:6023",
+        "name": "Task save failed",
+        "actualName": "Task save failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "9:6097",
+        "name": "Reopened child",
+        "actualName": "Reopened child",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3112",
+        "name": "Today paused",
+        "actualName": "Today paused",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3157",
+        "name": "Today review",
+        "actualName": "Today review",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3202",
+        "name": "Today sleep",
+        "actualName": "Today sleep",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3247",
+        "name": "Today completed timer",
+        "actualName": "Today completed timer",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3293",
+        "name": "Today completed paused",
+        "actualName": "Today completed paused",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3339",
+        "name": "Today completed review",
+        "actualName": "Today completed review",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3385",
+        "name": "Today completed sleep",
+        "actualName": "Today completed sleep",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3431",
+        "name": "Today after focus",
+        "actualName": "Today after focus",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3471",
+        "name": "Today completed after focus",
+        "actualName": "Today completed after focus",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3512",
+        "name": "Week task completed",
+        "actualName": "Week task completed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3649",
+        "name": "End Week completed preview",
+        "actualName": "End Week completed preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3706",
+        "name": "Closed week completed",
+        "actualName": "Closed week completed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3733",
+        "name": "Previous closed week",
+        "actualName": "Previous closed week",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "14:3767",
+        "name": "History",
+        "actualName": "History",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "17:4256",
+        "name": "Carryover one",
+        "actualName": "Carryover one",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "17:4308",
+        "name": "Carryover one preview",
+        "actualName": "Carryover one preview",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "17:4359",
+        "name": "Next week one",
+        "actualName": "Next week one",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "17:4429",
+        "name": "Track completed selection",
+        "actualName": "Track completed selection",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "23:4666",
+        "name": "Next week empty",
+        "actualName": "Next week empty",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "70:4678",
+        "name": "Move saving",
+        "actualName": "Move saving",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "70:4844",
+        "name": "Move failed",
+        "actualName": "Move failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "70:5009",
+        "name": "Move response uncertain",
+        "actualName": "Move response uncertain",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "79:5105",
+        "name": "Today reordered",
+        "actualName": "Today reordered",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "91:5667",
+        "name": "Change carryover day",
+        "actualName": "Refined carryover / Change carryover day",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "91:5720",
+        "name": "Carryover review changed",
+        "actualName": "Refined carryover / Carryover review changed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "91:5773",
+        "name": "Carryover save failed",
+        "actualName": "Refined carryover / Carryover save failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "91:5826",
+        "name": "Carryover response missing",
+        "actualName": "Refined carryover / Carryover response missing",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "105:5618",
+        "name": "Track task picker",
+        "actualName": "Track task picker",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "105:5656",
+        "name": "Track finish failed",
+        "actualName": "Track finish failed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "105:5693",
+        "name": "Track finish unconfirmed",
+        "actualName": "Track finish unconfirmed",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "110:5638",
+        "name": "Assistant draft retained",
+        "actualName": "Assistant draft retained",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "124:7050",
+        "name": "Task save blocked / closed planned day",
+        "actualName": "Task save blocked / closed planned day",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      },
+      {
+        "id": "147:7536",
+        "name": "Reorder preview up",
+        "actualName": "Reorder preview up",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:5"
+      }
+    ],
+    "starts": [
+      {
+        "nodeId": "5:3972",
+        "name": "Start here \u00b7 Today"
+      },
+      {
+        "nodeId": "6:1802",
+        "name": "Plan your week"
+      },
+      {
+        "nodeId": "7:2733",
+        "name": "Review an interruption"
+      },
+      {
+        "nodeId": "7:2780",
+        "name": "Paused after sleep"
+      },
+      {
+        "nodeId": "5:4694",
+        "name": "Reopen failure"
+      },
+      {
+        "nodeId": "5:5567",
+        "name": "Task validation"
+      },
+      {
+        "nodeId": "9:6023",
+        "name": "Recover a failed save"
+      },
+      {
+        "nodeId": "7:2980",
+        "name": "Purchase conflict"
+      },
+      {
+        "nodeId": "7:3210",
+        "name": "Correct saved time"
+      },
+      {
+        "nodeId": "7:3482",
+        "name": "Local model unavailable"
+      },
+      {
+        "nodeId": "141:7346",
+        "name": "Review launcher \u00b7 Reset examples"
+      }
+    ]
+  },
+  "referenceReconciliation": {
+    "count": 46,
+    "rows": [
+      {
+        "id": "11:2",
+        "name": "Today / Compact \u00b7 Light",
+        "actualName": "Today / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "11:143",
+        "name": "Week / Compact \u00b7 Light",
+        "actualName": "Week / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "11:275",
+        "name": "Track ready / Compact \u00b7 Light",
+        "actualName": "Track ready / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "11:328",
+        "name": "Stats / Compact \u00b7 Light",
+        "actualName": "Stats / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "11:413",
+        "name": "Assistant answer / Compact \u00b7 Light",
+        "actualName": "Assistant answer / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "11:457",
+        "name": "Today / Split \u00b7 Dark",
+        "actualName": "Today / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:594",
+        "name": "Week / Split \u00b7 Dark",
+        "actualName": "Week / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:724",
+        "name": "Track ready / Split \u00b7 Dark",
+        "actualName": "Track ready / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:777",
+        "name": "Stats / Split \u00b7 Dark",
+        "actualName": "Stats / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:862",
+        "name": "Assistant answer / Split \u00b7 Dark",
+        "actualName": "Assistant answer / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:906",
+        "name": "Track recovery / Split \u00b7 Dark",
+        "actualName": "Track recovery / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:953",
+        "name": "Reopen failed / Split \u00b7 Dark",
+        "actualName": "Reopen failed / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:1110",
+        "name": "Today / Wide \u00b7 Light",
+        "actualName": "Today / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:1247",
+        "name": "Track ready / Wide \u00b7 Light",
+        "actualName": "Track ready / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:1300",
+        "name": "Stats / Wide \u00b7 Light",
+        "actualName": "Stats / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "11:1385",
+        "name": "Assistant answer / Wide \u00b7 Light",
+        "actualName": "Assistant answer / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "13:710",
+        "name": "Week / Wide \u00b7 Light",
+        "actualName": "Week / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "65:5554",
+        "name": "Today / Compact \u00b7 20 tasks + expanded",
+        "actualName": "Today / Compact \u00b7 20 tasks + expanded",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "67:5753",
+        "name": "Week / Compact \u00b7 Year boundary",
+        "actualName": "Week / Compact \u00b7 Year boundary",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "72:6095",
+        "name": "Reorder / Last item boundary",
+        "actualName": "Reorder / Last item boundary",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "77:6480",
+        "name": "Week / 1279 \u00b7 Selected-day fallback",
+        "actualName": "Week / 1279 \u00b7 Selected-day fallback",
+        "type": "FRAME",
+        "width": 1279,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "77:6685",
+        "name": "Week / 1280 \u00b7 Selected-day fallback",
+        "actualName": "Week / 1280 \u00b7 Selected-day fallback",
+        "type": "FRAME",
+        "width": 1280,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "82:6877",
+        "name": "Projects / Compact \u00b7 15 mixed tasks",
+        "actualName": "Projects / Compact \u00b7 15 mixed tasks",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "82:7190",
+        "name": "Task editor / Compact \u00b7 One Save",
+        "actualName": "Task editor / Compact \u00b7 One Save",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "82:7364",
+        "name": "Task editor / Compact \u00b7 Save failed",
+        "actualName": "Task editor / Compact \u00b7 Save failed",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "86:7791",
+        "name": "End Week / Empty week",
+        "actualName": "End Week / Empty week",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "86:7948",
+        "name": "End Week / All complete",
+        "actualName": "End Week / All complete",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "100:7733",
+        "name": "Stats / Repeated Missed \u00b7 Nov 9 scenario",
+        "actualName": "Stats / Repeated Missed \u00b7 Nov 9 scenario",
+        "type": "FRAME",
+        "width": 800,
+        "height": 700,
+        "page": "2:4"
+      },
+      {
+        "id": "105:8259",
+        "name": "Recovery boundary / 2 trusted \u00b7 5 excluded \u00b7 28 remaining \u00b7 Dark",
+        "actualName": "Recovery boundary / 2 trusted \u00b7 5 excluded \u00b7 28 remaining \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "113:7783",
+        "name": "Projects / Compact \u00b7 Light",
+        "actualName": "Projects / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:7986",
+        "name": "Projects / Split \u00b7 Dark",
+        "actualName": "Projects / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "113:8189",
+        "name": "Projects / Wide \u00b7 Light",
+        "actualName": "Projects / Wide \u00b7 Light",
+        "type": "FRAME",
+        "width": 1440,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "113:8392",
+        "name": "Task details / Compact \u00b7 Dark",
+        "actualName": "Task details / Compact \u00b7 Dark",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:8566",
+        "name": "Carryover / Compact \u00b7 Light",
+        "actualName": "Carryover / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:8733",
+        "name": "Carryover review / Split \u00b7 Dark",
+        "actualName": "Carryover review / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      },
+      {
+        "id": "113:8818",
+        "name": "Closed week / Compact \u00b7 Light",
+        "actualName": "Closed week / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9059",
+        "name": "Assistant draft / Compact \u00b7 Light",
+        "actualName": "Assistant draft / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9092",
+        "name": "Track finish failed / Compact \u00b7 Dark",
+        "actualName": "Track finish failed / Compact \u00b7 Dark",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9140",
+        "name": "Track recovery / Compact \u00b7 Light",
+        "actualName": "Track recovery / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9187",
+        "name": "Stats / Compact \u00b7 Dark",
+        "actualName": "Stats / Compact \u00b7 Dark",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9281",
+        "name": "Today / Compact \u00b7 Dark",
+        "actualName": "Today / Compact \u00b7 Dark",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "113:9419",
+        "name": "Week / Compact \u00b7 Dark",
+        "actualName": "Week / Compact \u00b7 Dark",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "115:8843",
+        "name": "Today with timer / Compact \u00b7 Light",
+        "actualName": "Today with timer / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "115:8987",
+        "name": "Today / Compact \u00b7 200% text",
+        "actualName": "Today / Compact \u00b7 200% text",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "116:9038",
+        "name": "Done / Compact \u00b7 Light",
+        "actualName": "Done / Compact \u00b7 Light",
+        "type": "FRAME",
+        "width": 640,
+        "height": 800,
+        "page": "2:4"
+      },
+      {
+        "id": "116:9264",
+        "name": "Done / Split \u00b7 Dark",
+        "actualName": "Done / Split \u00b7 Dark",
+        "type": "FRAME",
+        "width": 800,
+        "height": 900,
+        "page": "2:4"
+      }
+    ]
+  }
+}

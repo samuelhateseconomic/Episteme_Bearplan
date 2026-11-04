@@ -23,7 +23,9 @@ requirements. Application implementation will have its own later plan.
 
 This roadmap covers design, documentation, agent guidance and a reusable design
 skill. It does not include app code, APIs, migrations, data changes, a native
-wrapper, persistent chat history, assistant write tools or integrations. Do not
+wrapper, persistent chat history, assistant write tools or integration implementation.
+The November 3 Settings/Connections design extension in section 6 covers the
+requested connection UX only; the original prototype does not include it. Do not
 replace or modify the separate core-trial candidate through this work.
 
 Track every ticket in one shared register in `docs/PROGRESS.md`, keeping one
@@ -424,3 +426,19 @@ references. The current M5 app has action/Apply/Undo capability; this prototype 
 the selected read-only Assistant layout as a deliberate subset. Actual presentation
 execution, full ticket acceptance and the user walkthrough remain open. See shared
 progress for evidence/status; application implementation remains separately scoped.
+
+## 6. Local Settings and Connections extension
+
+The connection plans are organized in the frontend
+[Settings/Connections package](plans/settings-connections/README.md).
+Read its [canonical specification](plans/settings-connections/SPEC.md),
+[detailed design/application steps](plans/settings-connections/EXECUTION_PLAN.md)
+and [verification plan](plans/settings-connections/TEST_PLAN.md).
+UX-C01–C06 definitions now live there; the original UX-01–36 and repair IDs remain
+unchanged. This anchor is preserved for existing links without keeping a second
+copy of connection requirements. Actual status remains in
+[PROGRESS](../docs/PROGRESS.md).
+
+Use [frontend AGENTS.md](AGENTS.md) and the applicable frontend-local design/build
+skill linked from the package. Documentation creation does not start Figma work,
+application implementation or provider requests.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "BearPlans Connections Design"
+  short_description: "Design local bCourses and Google connection settings"
+  default_prompt: "Use $bearplans-connections-design to work on the next authorized BearPlans Settings connection design ticket."

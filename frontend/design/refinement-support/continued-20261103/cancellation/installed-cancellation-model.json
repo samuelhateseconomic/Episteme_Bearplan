@@ -1,0 +1,459 @@
+{
+  "modelChecks": [
+    {
+      "name": "One Save and replay add one current leaf; failed retry preserves identity",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Save creates nothing and retains a reviewable form",
+      "status": "Pass"
+    },
+    {
+      "name": "Read completion/reopen preserves idle session",
+      "status": "Pass"
+    },
+    {
+      "name": "Read completion/reopen preserves running session",
+      "status": "Pass"
+    },
+    {
+      "name": "Read completion/reopen preserves paused session",
+      "status": "Pass"
+    },
+    {
+      "name": "Read completion/reopen preserves review session",
+      "status": "Pass"
+    },
+    {
+      "name": "Read completion/reopen preserves sleep session",
+      "status": "Pass"
+    },
+    {
+      "name": "Theme and Chapter reopen after closure stay excluded; snapshots remain frozen",
+      "status": "Pass"
+    },
+    {
+      "name": "Created + reopened Theme/Chapter produce12 reviewed candidates and exactly12 applied plans",
+      "status": "Pass"
+    },
+    {
+      "name": "Successful Move persists Friday/current flags and captured Saturday carryover suggestion",
+      "status": "Pass"
+    },
+    {
+      "name": "Failed reopen Retry preserves idle and then reopens Read",
+      "status": "Pass",
+      "detail": "5:3972"
+    },
+    {
+      "name": "Failed reopen Retry preserves running and then reopens Read",
+      "status": "Pass",
+      "detail": "5:4551"
+    },
+    {
+      "name": "Failed reopen Retry preserves paused and then reopens Read",
+      "status": "Pass",
+      "detail": "14:3112"
+    },
+    {
+      "name": "Failed reopen Retry preserves review and then reopens Read",
+      "status": "Pass",
+      "detail": "14:3157"
+    },
+    {
+      "name": "Failed reopen Retry preserves sleep and then reopens Read",
+      "status": "Pass",
+      "detail": "14:3202"
+    },
+    {
+      "name": "Completed disclosure opens and closes in place without changing completion",
+      "status": "Pass"
+    },
+    {
+      "name": "Reset returns every prototype variable to baseline, including final additions",
+      "status": "Pass",
+      "detail": {
+        "variables": 206
+      }
+    },
+    {
+      "name": "Direct unavailable Assistant retains typed question or seeds sample question",
+      "status": "Pass"
+    },
+    {
+      "name": "Failure feedback ancestor cannot override Retry",
+      "status": "Pass"
+    },
+    {
+      "name": "Forest separates prior and new session at 45 / 60 min saved today",
+      "status": "Pass"
+    },
+    {
+      "name": "Forest separates prior and new session at 43 / 60 min saved today",
+      "status": "Pass"
+    },
+    {
+      "name": "Forest separates prior and new session at 57 / 60 min saved today",
+      "status": "Pass"
+    },
+    {
+      "name": "Forest separates prior and new session at 55 / 60 min saved today",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry uses guarded Save with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry rejects closed day with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Review day preserves draft/timer with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5532 matches Cancel with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5608 matches Cancel with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 9:6064 matches Cancel with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 124:7095 matches Cancel with idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry uses guarded Save with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry rejects closed day with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Review day preserves draft/timer with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5532 matches Cancel with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5608 matches Cancel with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 9:6064 matches Cancel with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 124:7095 matches Cancel with running",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry uses guarded Save with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry rejects closed day with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Review day preserves draft/timer with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5532 matches Cancel with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5608 matches Cancel with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 9:6064 matches Cancel with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 124:7095 matches Cancel with paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry uses guarded Save with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry rejects closed day with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Review day preserves draft/timer with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5532 matches Cancel with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5608 matches Cancel with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 9:6064 matches Cancel with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 124:7095 matches Cancel with review",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry uses guarded Save with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Inline save Retry rejects closed day with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Closed-day Review day preserves draft/timer with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5532 matches Cancel with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 5:5608 matches Cancel with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 9:6064 matches Cancel with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Backdrop 124:7095 matches Cancel with sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Feedback ancestor 9:6086 cannot bypass recovery",
+      "status": "Pass"
+    },
+    {
+      "name": "Feedback ancestor 124:7107 cannot bypass recovery",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=false session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=false session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=false session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=false session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=false session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=true session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=true session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=true session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=true session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview cancellation keeps week open Read=true session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 6:2634 keeps history closed and applies nothing Read=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 6:2634 keeps history closed and applies nothing Read=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 17:4256 keeps history closed and applies nothing Read=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 17:4256 keeps history closed and applies nothing Read=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 6:2683 keeps history closed and applies nothing Read=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 6:2683 keeps history closed and applies nothing Read=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 17:4308 keeps history closed and applies nothing Read=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Post-close carryover Cancel 17:4308 keeps history closed and applies nothing Read=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=false session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=false session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=false session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=false session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=false session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=true session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=true session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=true session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=true session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview outside dismissal keeps week open Read=true session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Actual Reset Plan week -> End Week preview -> Keep week open",
+      "status": "Pass"
+    },
+    {
+      "name": "Week-to-preview cancellation Read=false reordered=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Week-to-preview cancellation Read=false reordered=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Week-to-preview cancellation Read=true reordered=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Week-to-preview cancellation Read=true reordered=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=false session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=false session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=false session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=false session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=false session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=true session=idle",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=true session=running",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=true session=paused",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=true session=review",
+      "status": "Pass"
+    },
+    {
+      "name": "Preview Escape keeps week open Read=true session=sleep",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 6:2541 routes to frozen history currentRead=false snapshot=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 6:2541 routes to frozen history currentRead=false snapshot=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 6:2541 routes to frozen history currentRead=true snapshot=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 6:2541 routes to frozen history currentRead=true snapshot=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 14:3649 routes to frozen history currentRead=false snapshot=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 14:3649 routes to frozen history currentRead=false snapshot=true",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 14:3649 routes to frozen history currentRead=true snapshot=false",
+      "status": "Pass"
+    },
+    {
+      "name": "Stale preview 14:3649 routes to frozen history currentRead=true snapshot=true",
+      "status": "Pass"
+    }
+  ],
+  "pass": 111,
+  "fail": 0,
+  "limit": "Read-only installed-reaction Map model; actual clicks/scroll remain unverified."
+}

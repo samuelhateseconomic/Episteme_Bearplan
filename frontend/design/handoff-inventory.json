@@ -1,0 +1,2916 @@
+{
+  "recordedDate": "2026-11-03",
+  "timezone": "America/Los_Angeles",
+  "fileKey": "jobFe4sXDot7BKsej0arNB",
+  "sessionId": "8ac12b29-2135-4b7a-8c4c-fd2b515b445b",
+  "baselineDesignCommit": "23faa2d",
+  "snapshotBoundary": "R24 handoff snapshot. Design changes after the baseline are uncommitted. App implementation is separate.",
+  "pages": [
+    {
+      "id": "2:5",
+      "name": "Canvas \u00b7 Flows",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5"
+    },
+    {
+      "id": "0:1",
+      "name": "Brief",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=0-1"
+    },
+    {
+      "id": "2:2",
+      "name": "Foundations",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-2"
+    },
+    {
+      "id": "2:3",
+      "name": "Components",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-3"
+    },
+    {
+      "id": "2:4",
+      "name": "Screens",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-4"
+    },
+    {
+      "id": "2:6",
+      "name": "Review and Handoff",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-6"
+    }
+  ],
+  "productFrames": [
+    {
+      "id": "5:3972",
+      "name": "Today",
+      "actualName": "Today",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-3972"
+    },
+    {
+      "id": "5:4109",
+      "name": "Today completed",
+      "actualName": "Today completed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4109"
+    },
+    {
+      "id": "5:4258",
+      "name": "Earlier unfinished",
+      "actualName": "Earlier unfinished",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4258"
+    },
+    {
+      "id": "5:4403",
+      "name": "Task saved",
+      "actualName": "Task saved",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4403"
+    },
+    {
+      "id": "5:4551",
+      "name": "Today with timer",
+      "actualName": "Today with timer",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4551"
+    },
+    {
+      "id": "5:4694",
+      "name": "Reopen failed",
+      "actualName": "Reopen failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4694"
+    },
+    {
+      "id": "5:4847",
+      "name": "Projects",
+      "actualName": "Projects",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4847"
+    },
+    {
+      "id": "5:4951",
+      "name": "Done",
+      "actualName": "Done",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-4951"
+    },
+    {
+      "id": "5:5054",
+      "name": "Reopened task",
+      "actualName": "Reopened task",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5054"
+    },
+    {
+      "id": "5:5166",
+      "name": "Rename project",
+      "actualName": "Rename project",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5166"
+    },
+    {
+      "id": "5:5229",
+      "name": "Add project",
+      "actualName": "Add project",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5229"
+    },
+    {
+      "id": "5:5292",
+      "name": "Project completed child",
+      "actualName": "Project completed child",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5292"
+    },
+    {
+      "id": "5:5369",
+      "name": "Done previous week",
+      "actualName": "Done previous week",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5369"
+    },
+    {
+      "id": "5:5430",
+      "name": "Done unplanned",
+      "actualName": "Done unplanned",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5430"
+    },
+    {
+      "id": "5:5491",
+      "name": "Task details",
+      "actualName": "Task details",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5491"
+    },
+    {
+      "id": "5:5567",
+      "name": "Task validation",
+      "actualName": "Task validation",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=5-5567"
+    },
+    {
+      "id": "6:1802",
+      "name": "Week",
+      "actualName": "Week",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-1802"
+    },
+    {
+      "id": "6:1934",
+      "name": "Wednesday",
+      "actualName": "Wednesday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-1934"
+    },
+    {
+      "id": "6:2004",
+      "name": "Reorder preview",
+      "actualName": "Reorder preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2004"
+    },
+    {
+      "id": "6:2136",
+      "name": "Week reordered",
+      "actualName": "Week reordered",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2136"
+    },
+    {
+      "id": "6:2266",
+      "name": "Week moved",
+      "actualName": "Week moved",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2266"
+    },
+    {
+      "id": "6:2336",
+      "name": "Week completed",
+      "actualName": "Week completed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2336"
+    },
+    {
+      "id": "6:2420",
+      "name": "Move date",
+      "actualName": "Move date",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2420"
+    },
+    {
+      "id": "6:2481",
+      "name": "Move conflict",
+      "actualName": "Move conflict",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2481"
+    },
+    {
+      "id": "6:2541",
+      "name": "End Week preview",
+      "actualName": "End Week preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2541"
+    },
+    {
+      "id": "6:2600",
+      "name": "Closed week",
+      "actualName": "Closed week",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2600"
+    },
+    {
+      "id": "6:2634",
+      "name": "Carryover",
+      "actualName": "Carryover",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2634"
+    },
+    {
+      "id": "6:2683",
+      "name": "Carryover preview",
+      "actualName": "Carryover preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2683"
+    },
+    {
+      "id": "6:2732",
+      "name": "Carryover exclusions",
+      "actualName": "Carryover exclusions",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2732"
+    },
+    {
+      "id": "6:2761",
+      "name": "Next week",
+      "actualName": "Next week",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=6-2761"
+    },
+    {
+      "id": "7:2586",
+      "name": "Track ready",
+      "actualName": "Track ready",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2586"
+    },
+    {
+      "id": "7:2639",
+      "name": "Track running",
+      "actualName": "Track running",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2639"
+    },
+    {
+      "id": "7:2686",
+      "name": "Track paused",
+      "actualName": "Track paused",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2686"
+    },
+    {
+      "id": "7:2733",
+      "name": "Track recovery",
+      "actualName": "Track recovery",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2733"
+    },
+    {
+      "id": "7:2780",
+      "name": "Track sleep",
+      "actualName": "Track sleep",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2780"
+    },
+    {
+      "id": "7:2827",
+      "name": "Track finished",
+      "actualName": "Track finished",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2827"
+    },
+    {
+      "id": "7:2879",
+      "name": "Forest",
+      "actualName": "Forest",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2879"
+    },
+    {
+      "id": "7:2929",
+      "name": "Shop",
+      "actualName": "Shop",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2929"
+    },
+    {
+      "id": "7:2980",
+      "name": "Purchase failed",
+      "actualName": "Purchase failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-2980"
+    },
+    {
+      "id": "7:3036",
+      "name": "Stats",
+      "actualName": "Stats",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3036"
+    },
+    {
+      "id": "7:3121",
+      "name": "Stats details",
+      "actualName": "Stats details",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3121"
+    },
+    {
+      "id": "7:3210",
+      "name": "Correction",
+      "actualName": "Correction",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3210"
+    },
+    {
+      "id": "7:3247",
+      "name": "Correction preview",
+      "actualName": "Correction preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3247"
+    },
+    {
+      "id": "7:3282",
+      "name": "Correction saved",
+      "actualName": "Correction saved",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3282"
+    },
+    {
+      "id": "7:3316",
+      "name": "Assistant",
+      "actualName": "Assistant",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3316"
+    },
+    {
+      "id": "7:3355",
+      "name": "Assistant generating",
+      "actualName": "Assistant generating",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3355"
+    },
+    {
+      "id": "7:3390",
+      "name": "Assistant answer",
+      "actualName": "Assistant answer",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3390"
+    },
+    {
+      "id": "7:3434",
+      "name": "Assistant sources",
+      "actualName": "Assistant sources",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3434"
+    },
+    {
+      "id": "7:3482",
+      "name": "Assistant unavailable",
+      "actualName": "Assistant unavailable",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=7-3482"
+    },
+    {
+      "id": "9:5736",
+      "name": "Monday",
+      "actualName": "Monday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-5736"
+    },
+    {
+      "id": "9:5791",
+      "name": "Tuesday",
+      "actualName": "Tuesday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-5791"
+    },
+    {
+      "id": "9:5846",
+      "name": "Thursday",
+      "actualName": "Thursday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-5846"
+    },
+    {
+      "id": "9:5901",
+      "name": "Friday",
+      "actualName": "Friday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-5901"
+    },
+    {
+      "id": "9:5956",
+      "name": "Saturday",
+      "actualName": "Saturday",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-5956"
+    },
+    {
+      "id": "9:6023",
+      "name": "Task save failed",
+      "actualName": "Task save failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-6023"
+    },
+    {
+      "id": "9:6097",
+      "name": "Reopened child",
+      "actualName": "Reopened child",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=9-6097"
+    },
+    {
+      "id": "14:3112",
+      "name": "Today paused",
+      "actualName": "Today paused",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3112"
+    },
+    {
+      "id": "14:3157",
+      "name": "Today review",
+      "actualName": "Today review",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3157"
+    },
+    {
+      "id": "14:3202",
+      "name": "Today sleep",
+      "actualName": "Today sleep",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3202"
+    },
+    {
+      "id": "14:3247",
+      "name": "Today completed timer",
+      "actualName": "Today completed timer",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3247"
+    },
+    {
+      "id": "14:3293",
+      "name": "Today completed paused",
+      "actualName": "Today completed paused",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3293"
+    },
+    {
+      "id": "14:3339",
+      "name": "Today completed review",
+      "actualName": "Today completed review",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3339"
+    },
+    {
+      "id": "14:3385",
+      "name": "Today completed sleep",
+      "actualName": "Today completed sleep",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3385"
+    },
+    {
+      "id": "14:3431",
+      "name": "Today after focus",
+      "actualName": "Today after focus",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3431"
+    },
+    {
+      "id": "14:3471",
+      "name": "Today completed after focus",
+      "actualName": "Today completed after focus",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3471"
+    },
+    {
+      "id": "14:3512",
+      "name": "Week task completed",
+      "actualName": "Week task completed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3512"
+    },
+    {
+      "id": "14:3649",
+      "name": "End Week completed preview",
+      "actualName": "End Week completed preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3649"
+    },
+    {
+      "id": "14:3706",
+      "name": "Closed week completed",
+      "actualName": "Closed week completed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3706"
+    },
+    {
+      "id": "14:3733",
+      "name": "Previous closed week",
+      "actualName": "Previous closed week",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3733"
+    },
+    {
+      "id": "14:3767",
+      "name": "History",
+      "actualName": "History",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=14-3767"
+    },
+    {
+      "id": "17:4256",
+      "name": "Carryover one",
+      "actualName": "Carryover one",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=17-4256"
+    },
+    {
+      "id": "17:4308",
+      "name": "Carryover one preview",
+      "actualName": "Carryover one preview",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=17-4308"
+    },
+    {
+      "id": "17:4359",
+      "name": "Next week one",
+      "actualName": "Next week one",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=17-4359"
+    },
+    {
+      "id": "17:4429",
+      "name": "Track completed selection",
+      "actualName": "Track completed selection",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=17-4429"
+    },
+    {
+      "id": "23:4666",
+      "name": "Next week empty",
+      "actualName": "Next week empty",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=23-4666"
+    },
+    {
+      "id": "70:4678",
+      "name": "Move saving",
+      "actualName": "Move saving",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=70-4678"
+    },
+    {
+      "id": "70:4844",
+      "name": "Move failed",
+      "actualName": "Move failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=70-4844"
+    },
+    {
+      "id": "70:5009",
+      "name": "Move response uncertain",
+      "actualName": "Move response uncertain",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=70-5009"
+    },
+    {
+      "id": "79:5105",
+      "name": "Today reordered",
+      "actualName": "Today reordered",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=79-5105"
+    },
+    {
+      "id": "91:5667",
+      "name": "Change carryover day",
+      "actualName": "Refined carryover / Change carryover day",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=91-5667"
+    },
+    {
+      "id": "91:5720",
+      "name": "Carryover review changed",
+      "actualName": "Refined carryover / Carryover review changed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=91-5720"
+    },
+    {
+      "id": "91:5773",
+      "name": "Carryover save failed",
+      "actualName": "Refined carryover / Carryover save failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=91-5773"
+    },
+    {
+      "id": "91:5826",
+      "name": "Carryover response missing",
+      "actualName": "Refined carryover / Carryover response missing",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=91-5826"
+    },
+    {
+      "id": "105:5618",
+      "name": "Track task picker",
+      "actualName": "Track task picker",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=105-5618"
+    },
+    {
+      "id": "105:5656",
+      "name": "Track finish failed",
+      "actualName": "Track finish failed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=105-5656"
+    },
+    {
+      "id": "105:5693",
+      "name": "Track finish unconfirmed",
+      "actualName": "Track finish unconfirmed",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=105-5693"
+    },
+    {
+      "id": "110:5638",
+      "name": "Assistant draft retained",
+      "actualName": "Assistant draft retained",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=110-5638"
+    },
+    {
+      "id": "124:7050",
+      "name": "Task save blocked / closed planned day",
+      "actualName": "Task save blocked / closed planned day",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=124-7050"
+    },
+    {
+      "id": "147:7536",
+      "name": "Reorder preview up",
+      "actualName": "Reorder preview up",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:5",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=147-7536"
+    }
+  ],
+  "responsiveReferences": [
+    {
+      "id": "11:2",
+      "name": "Today / Compact \u00b7 Light",
+      "actualName": "Today / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-2"
+    },
+    {
+      "id": "11:143",
+      "name": "Week / Compact \u00b7 Light",
+      "actualName": "Week / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-143"
+    },
+    {
+      "id": "11:275",
+      "name": "Track ready / Compact \u00b7 Light",
+      "actualName": "Track ready / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-275"
+    },
+    {
+      "id": "11:328",
+      "name": "Stats / Compact \u00b7 Light",
+      "actualName": "Stats / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-328"
+    },
+    {
+      "id": "11:413",
+      "name": "Assistant answer / Compact \u00b7 Light",
+      "actualName": "Assistant answer / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-413"
+    },
+    {
+      "id": "11:457",
+      "name": "Today / Split \u00b7 Dark",
+      "actualName": "Today / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-457"
+    },
+    {
+      "id": "11:594",
+      "name": "Week / Split \u00b7 Dark",
+      "actualName": "Week / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-594"
+    },
+    {
+      "id": "11:724",
+      "name": "Track ready / Split \u00b7 Dark",
+      "actualName": "Track ready / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-724"
+    },
+    {
+      "id": "11:777",
+      "name": "Stats / Split \u00b7 Dark",
+      "actualName": "Stats / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-777"
+    },
+    {
+      "id": "11:862",
+      "name": "Assistant answer / Split \u00b7 Dark",
+      "actualName": "Assistant answer / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-862"
+    },
+    {
+      "id": "11:906",
+      "name": "Track recovery / Split \u00b7 Dark",
+      "actualName": "Track recovery / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-906"
+    },
+    {
+      "id": "11:953",
+      "name": "Reopen failed / Split \u00b7 Dark",
+      "actualName": "Reopen failed / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-953"
+    },
+    {
+      "id": "11:1110",
+      "name": "Today / Wide \u00b7 Light",
+      "actualName": "Today / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-1110"
+    },
+    {
+      "id": "11:1247",
+      "name": "Track ready / Wide \u00b7 Light",
+      "actualName": "Track ready / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-1247"
+    },
+    {
+      "id": "11:1300",
+      "name": "Stats / Wide \u00b7 Light",
+      "actualName": "Stats / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-1300"
+    },
+    {
+      "id": "11:1385",
+      "name": "Assistant answer / Wide \u00b7 Light",
+      "actualName": "Assistant answer / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=11-1385"
+    },
+    {
+      "id": "13:710",
+      "name": "Week / Wide \u00b7 Light",
+      "actualName": "Week / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=13-710"
+    },
+    {
+      "id": "65:5554",
+      "name": "Today / Compact \u00b7 20 tasks + expanded",
+      "actualName": "Today / Compact \u00b7 20 tasks + expanded",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=65-5554"
+    },
+    {
+      "id": "67:5753",
+      "name": "Week / Compact \u00b7 Year boundary",
+      "actualName": "Week / Compact \u00b7 Year boundary",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=67-5753"
+    },
+    {
+      "id": "72:6095",
+      "name": "Reorder / Last item boundary",
+      "actualName": "Reorder / Last item boundary",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=72-6095"
+    },
+    {
+      "id": "77:6480",
+      "name": "Week / 1279 \u00b7 Selected-day fallback",
+      "actualName": "Week / 1279 \u00b7 Selected-day fallback",
+      "type": "FRAME",
+      "width": 1279,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=77-6480"
+    },
+    {
+      "id": "77:6685",
+      "name": "Week / 1280 \u00b7 Selected-day fallback",
+      "actualName": "Week / 1280 \u00b7 Selected-day fallback",
+      "type": "FRAME",
+      "width": 1280,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=77-6685"
+    },
+    {
+      "id": "82:6877",
+      "name": "Projects / Compact \u00b7 15 mixed tasks",
+      "actualName": "Projects / Compact \u00b7 15 mixed tasks",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=82-6877"
+    },
+    {
+      "id": "82:7190",
+      "name": "Task editor / Compact \u00b7 One Save",
+      "actualName": "Task editor / Compact \u00b7 One Save",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=82-7190"
+    },
+    {
+      "id": "82:7364",
+      "name": "Task editor / Compact \u00b7 Save failed",
+      "actualName": "Task editor / Compact \u00b7 Save failed",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=82-7364"
+    },
+    {
+      "id": "86:7791",
+      "name": "End Week / Empty week",
+      "actualName": "End Week / Empty week",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=86-7791"
+    },
+    {
+      "id": "86:7948",
+      "name": "End Week / All complete",
+      "actualName": "End Week / All complete",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=86-7948"
+    },
+    {
+      "id": "100:7733",
+      "name": "Stats / Repeated Missed \u00b7 Nov 9 scenario",
+      "actualName": "Stats / Repeated Missed \u00b7 Nov 9 scenario",
+      "type": "FRAME",
+      "width": 800,
+      "height": 700,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=100-7733"
+    },
+    {
+      "id": "105:8259",
+      "name": "Recovery boundary / 2 trusted \u00b7 5 excluded \u00b7 28 remaining \u00b7 Dark",
+      "actualName": "Recovery boundary / 2 trusted \u00b7 5 excluded \u00b7 28 remaining \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=105-8259"
+    },
+    {
+      "id": "113:7783",
+      "name": "Projects / Compact \u00b7 Light",
+      "actualName": "Projects / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-7783"
+    },
+    {
+      "id": "113:7986",
+      "name": "Projects / Split \u00b7 Dark",
+      "actualName": "Projects / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-7986"
+    },
+    {
+      "id": "113:8189",
+      "name": "Projects / Wide \u00b7 Light",
+      "actualName": "Projects / Wide \u00b7 Light",
+      "type": "FRAME",
+      "width": 1440,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-8189"
+    },
+    {
+      "id": "113:8392",
+      "name": "Task details / Compact \u00b7 Dark",
+      "actualName": "Task details / Compact \u00b7 Dark",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-8392"
+    },
+    {
+      "id": "113:8566",
+      "name": "Carryover / Compact \u00b7 Light",
+      "actualName": "Carryover / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-8566"
+    },
+    {
+      "id": "113:8733",
+      "name": "Carryover review / Split \u00b7 Dark",
+      "actualName": "Carryover review / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-8733"
+    },
+    {
+      "id": "113:8818",
+      "name": "Closed week / Compact \u00b7 Light",
+      "actualName": "Closed week / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-8818"
+    },
+    {
+      "id": "113:9059",
+      "name": "Assistant draft / Compact \u00b7 Light",
+      "actualName": "Assistant draft / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9059"
+    },
+    {
+      "id": "113:9092",
+      "name": "Track finish failed / Compact \u00b7 Dark",
+      "actualName": "Track finish failed / Compact \u00b7 Dark",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9092"
+    },
+    {
+      "id": "113:9140",
+      "name": "Track recovery / Compact \u00b7 Light",
+      "actualName": "Track recovery / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9140"
+    },
+    {
+      "id": "113:9187",
+      "name": "Stats / Compact \u00b7 Dark",
+      "actualName": "Stats / Compact \u00b7 Dark",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9187"
+    },
+    {
+      "id": "113:9281",
+      "name": "Today / Compact \u00b7 Dark",
+      "actualName": "Today / Compact \u00b7 Dark",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9281"
+    },
+    {
+      "id": "113:9419",
+      "name": "Week / Compact \u00b7 Dark",
+      "actualName": "Week / Compact \u00b7 Dark",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=113-9419"
+    },
+    {
+      "id": "115:8843",
+      "name": "Today with timer / Compact \u00b7 Light",
+      "actualName": "Today with timer / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=115-8843"
+    },
+    {
+      "id": "115:8987",
+      "name": "Today / Compact \u00b7 200% text",
+      "actualName": "Today / Compact \u00b7 200% text",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=115-8987"
+    },
+    {
+      "id": "116:9038",
+      "name": "Done / Compact \u00b7 Light",
+      "actualName": "Done / Compact \u00b7 Light",
+      "type": "FRAME",
+      "width": 640,
+      "height": 800,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=116-9038"
+    },
+    {
+      "id": "116:9264",
+      "name": "Done / Split \u00b7 Dark",
+      "actualName": "Done / Split \u00b7 Dark",
+      "type": "FRAME",
+      "width": 800,
+      "height": 900,
+      "page": "2:4",
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=116-9264"
+    }
+  ],
+  "reviewLauncher": {
+    "id": "141:7346",
+    "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=141-7346"
+  },
+  "startingPoints": [
+    {
+      "nodeId": "5:3972",
+      "name": "Start here \u00b7 Today",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=5%3A3972"
+    },
+    {
+      "nodeId": "6:1802",
+      "name": "Plan your week",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=6%3A1802"
+    },
+    {
+      "nodeId": "7:2733",
+      "name": "Review an interruption",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=7%3A2733"
+    },
+    {
+      "nodeId": "7:2780",
+      "name": "Paused after sleep",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=7%3A2780"
+    },
+    {
+      "nodeId": "5:4694",
+      "name": "Reopen failure",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=5%3A4694"
+    },
+    {
+      "nodeId": "5:5567",
+      "name": "Task validation",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=5%3A5567"
+    },
+    {
+      "nodeId": "9:6023",
+      "name": "Recover a failed save",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=9%3A6023"
+    },
+    {
+      "nodeId": "7:2980",
+      "name": "Purchase conflict",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=7%3A2980"
+    },
+    {
+      "nodeId": "7:3210",
+      "name": "Correct saved time",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=7%3A3210"
+    },
+    {
+      "nodeId": "7:3482",
+      "name": "Local model unavailable",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=7%3A3482"
+    },
+    {
+      "nodeId": "141:7346",
+      "name": "Review launcher \u00b7 Reset examples",
+      "url": "https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=141%3A7346"
+    }
+  ],
+  "componentNodes": [
+    {
+      "id": "3:241",
+      "name": "Button",
+      "type": "COMPONENT_SET",
+      "parent": "2:3",
+      "width": 704,
+      "height": 236,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-241"
+    },
+    {
+      "id": "3:198",
+      "name": "Tone=Primary, State=Default",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-198"
+    },
+    {
+      "id": "3:201",
+      "name": "Tone=Primary, State=Hover",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-201"
+    },
+    {
+      "id": "3:204",
+      "name": "Tone=Primary, State=Focus",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-204"
+    },
+    {
+      "id": "3:207",
+      "name": "Tone=Primary, State=Disabled",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-207"
+    },
+    {
+      "id": "3:210",
+      "name": "Tone=Primary, State=Loading",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-210"
+    },
+    {
+      "id": "3:213",
+      "name": "Tone=Secondary, State=Default",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-213"
+    },
+    {
+      "id": "3:216",
+      "name": "Tone=Secondary, State=Hover",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-216"
+    },
+    {
+      "id": "3:219",
+      "name": "Tone=Secondary, State=Focus",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-219"
+    },
+    {
+      "id": "3:222",
+      "name": "Tone=Secondary, State=Disabled",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-222"
+    },
+    {
+      "id": "3:225",
+      "name": "Tone=Secondary, State=Loading",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-225"
+    },
+    {
+      "id": "3:228",
+      "name": "Tone=Quiet, State=Default",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-228"
+    },
+    {
+      "id": "3:231",
+      "name": "Tone=Quiet, State=Hover",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-231"
+    },
+    {
+      "id": "3:234",
+      "name": "Tone=Quiet, State=Focus",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-234"
+    },
+    {
+      "id": "3:237",
+      "name": "Tone=Quiet, State=Disabled",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-237"
+    },
+    {
+      "id": "3:240",
+      "name": "Tone=Quiet, State=Loading",
+      "type": "COMPONENT",
+      "parent": "3:241",
+      "width": 112,
+      "height": 36,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-240"
+    },
+    {
+      "id": "3:258",
+      "name": "Checkbox",
+      "type": "COMPONENT_SET",
+      "parent": "2:3",
+      "width": 280,
+      "height": 64,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-258"
+    },
+    {
+      "id": "3:244",
+      "name": "Checked=false, Focus=false",
+      "type": "COMPONENT",
+      "parent": "3:258",
+      "width": 32,
+      "height": 32,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-244"
+    },
+    {
+      "id": "3:247",
+      "name": "Checked=false, Focus=true",
+      "type": "COMPONENT",
+      "parent": "3:258",
+      "width": 32,
+      "height": 32,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-247"
+    },
+    {
+      "id": "3:252",
+      "name": "Checked=true, Focus=false",
+      "type": "COMPONENT",
+      "parent": "3:258",
+      "width": 32,
+      "height": 32,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-252"
+    },
+    {
+      "id": "3:257",
+      "name": "Checked=true, Focus=true",
+      "type": "COMPONENT",
+      "parent": "3:258",
+      "width": 32,
+      "height": 32,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-257"
+    },
+    {
+      "id": "3:280",
+      "name": "Input",
+      "type": "COMPONENT_SET",
+      "parent": "2:3",
+      "width": 744,
+      "height": 312,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-280"
+    },
+    {
+      "id": "3:263",
+      "name": "State=Default",
+      "type": "COMPONENT",
+      "parent": "3:280",
+      "width": 328,
+      "height": 70,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-263"
+    },
+    {
+      "id": "3:268",
+      "name": "State=Focus",
+      "type": "COMPONENT",
+      "parent": "3:280",
+      "width": 328,
+      "height": 70,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-268"
+    },
+    {
+      "id": "3:274",
+      "name": "State=Error",
+      "type": "COMPONENT",
+      "parent": "3:280",
+      "width": 328,
+      "height": 96,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-274"
+    },
+    {
+      "id": "3:279",
+      "name": "State=Disabled",
+      "type": "COMPONENT",
+      "parent": "3:280",
+      "width": 328,
+      "height": 70,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-279"
+    },
+    {
+      "id": "3:341",
+      "name": "Task row",
+      "type": "COMPONENT_SET",
+      "parent": "2:3",
+      "width": 688,
+      "height": 800,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-341"
+    },
+    {
+      "id": "3:289",
+      "name": "State=Active",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 59,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-289"
+    },
+    {
+      "id": "3:298",
+      "name": "State=Selected",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 59,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-298"
+    },
+    {
+      "id": "3:306",
+      "name": "State=Completed",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 40,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-306"
+    },
+    {
+      "id": "3:313",
+      "name": "State=Parent",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 59,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-313"
+    },
+    {
+      "id": "3:322",
+      "name": "State=Long title",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 80,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-322"
+    },
+    {
+      "id": "3:340",
+      "name": "State=Weekly",
+      "type": "COMPONENT",
+      "parent": "3:341",
+      "width": 640,
+      "height": 59,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-340"
+    },
+    {
+      "id": "3:346",
+      "name": "Disclosure",
+      "type": "COMPONENT",
+      "parent": "2:3",
+      "width": 640,
+      "height": 44,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-346"
+    },
+    {
+      "id": "3:351",
+      "name": "Feedback",
+      "type": "COMPONENT",
+      "parent": "2:3",
+      "width": 640,
+      "height": 68,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-351"
+    },
+    {
+      "id": "3:381",
+      "name": "Streak",
+      "type": "COMPONENT",
+      "parent": "2:3",
+      "width": 640,
+      "height": 60,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=3-381"
+    },
+    {
+      "id": "12:33",
+      "name": "Weekly column card",
+      "type": "COMPONENT",
+      "parent": "2:3",
+      "width": 152,
+      "height": 153,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=12-33"
+    },
+    {
+      "id": "164:8311",
+      "name": "Disclosure / Expanded",
+      "type": "COMPONENT",
+      "parent": "2:3",
+      "width": 640,
+      "height": 44,
+      "url": "https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=164-8311"
+    }
+  ],
+  "componentPropertyContracts": [
+    {
+      "id": "3:241",
+      "name": "Button",
+      "properties": {
+        "Label#3:54": {
+          "type": "TEXT",
+          "defaultValue": "Continue"
+        },
+        "Tone": {
+          "type": "VARIANT",
+          "defaultValue": "Primary",
+          "variantOptions": [
+            "Primary",
+            "Secondary",
+            "Quiet"
+          ]
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Default",
+          "variantOptions": [
+            "Default",
+            "Hover",
+            "Focus",
+            "Disabled",
+            "Loading"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3:258",
+      "name": "Checkbox",
+      "properties": {
+        "Checked": {
+          "type": "VARIANT",
+          "defaultValue": "false",
+          "variantOptions": [
+            "false",
+            "true"
+          ]
+        },
+        "Focus": {
+          "type": "VARIANT",
+          "defaultValue": "false",
+          "variantOptions": [
+            "false",
+            "true"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3:280",
+      "name": "Input",
+      "properties": {
+        "Label#3:78": {
+          "type": "TEXT",
+          "defaultValue": "Task name"
+        },
+        "Value#3:79": {
+          "type": "TEXT",
+          "defaultValue": "Read the primary source"
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Default",
+          "variantOptions": [
+            "Default",
+            "Focus",
+            "Error",
+            "Disabled"
+          ]
+        }
+      }
+    },
+    {
+      "id": "3:341",
+      "name": "Task row",
+      "properties": {
+        "Title#3:91": {
+          "type": "TEXT",
+          "defaultValue": "Read the primary source"
+        },
+        "Context#3:92": {
+          "type": "TEXT",
+          "defaultValue": "History seminar / Prepare discussion"
+        },
+        "Project#8:0": {
+          "type": "TEXT",
+          "defaultValue": "History seminar / Prepare discussion"
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Active",
+          "variantOptions": [
+            "Active",
+            "Selected",
+            "Completed",
+            "Parent",
+            "Long title",
+            "Weekly"
+          ]
+        }
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "S:a039602a48381ed5f9b225fceb7dea28a9d5575b,",
+      "name": "BearPlans / Display",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 64,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 72
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:5d8fa7dc08e97b88502e4ea4ff99fd22970f4116,",
+      "name": "BearPlans / Hero",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 40,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 48
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:488adb5a79e23daf86d2060e49e95ddabe565b3b,",
+      "name": "BearPlans / Title",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 28,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 34
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:b9c622663803bf8603ddaae75ab67f142e0c7d09,",
+      "name": "BearPlans / Heading",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 26
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:f7d1b7f61b6beb4d3056d77edcf53612c766e7ac,",
+      "name": "BearPlans / Body",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 15,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 21
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:ea1be44a9f980f409fd00f8da763006fc8615eb1,",
+      "name": "BearPlans / Body strong",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 15,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 21
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:8988e5953e9c5f4afe3782a53d04898bd90cbc83,",
+      "name": "BearPlans / Context",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 13,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 18
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:429b576b05a0a2bc247fe7f7c8fc60501fb4e17a,",
+      "name": "BearPlans / Label",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 13,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 18
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:cad78cc01fafb7f52781d30b71405e4af1662c1b,",
+      "name": "BearPlans / Caption",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 11,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 15
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    },
+    {
+      "id": "S:ba13d6097d19a230a56b781a3e85fc045748c270,",
+      "name": "BearPlans / Completed task",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 15,
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 21
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      }
+    }
+  ],
+  "semanticAndDimensionTokens": [
+    {
+      "id": "VariableID:2:32",
+      "name": "color/bg",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:10"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:11"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:33",
+      "name": "color/surface",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:12"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:13"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:34",
+      "name": "color/text",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:14"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:15"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:35",
+      "name": "color/muted",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:16"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:17"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:36",
+      "name": "color/border",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:18"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:19"
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:37",
+      "name": "color/accent",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:20"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:21"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:38",
+      "name": "color/onAccent",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:22"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:23"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:39",
+      "name": "color/soft",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:24"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:25"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:40",
+      "name": "color/error",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:26"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:27"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:41",
+      "name": "color/errorBg",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:28"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:29"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:42",
+      "name": "color/focus",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:2:8",
+      "values": {
+        "2:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:30"
+        },
+        "2:2": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:2:31"
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ]
+    },
+    {
+      "id": "VariableID:2:43",
+      "name": "space/0",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 0
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:44",
+      "name": "space/4",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 4
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:45",
+      "name": "space/8",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 8
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:46",
+      "name": "space/12",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 12
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:47",
+      "name": "space/16",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 16
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:48",
+      "name": "space/24",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 24
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:49",
+      "name": "space/32",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 32
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:50",
+      "name": "space/40",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 40
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:51",
+      "name": "space/48",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 48
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:52",
+      "name": "space/64",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 64
+      },
+      "scopes": [
+        "GAP"
+      ]
+    },
+    {
+      "id": "VariableID:2:53",
+      "name": "radius/4",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 4
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ]
+    },
+    {
+      "id": "VariableID:2:54",
+      "name": "radius/8",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 8
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ]
+    },
+    {
+      "id": "VariableID:2:55",
+      "name": "radius/12",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 12
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ]
+    },
+    {
+      "id": "VariableID:2:56",
+      "name": "radius/16",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 16
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ]
+    },
+    {
+      "id": "VariableID:2:57",
+      "name": "radius/999",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:2:9",
+      "values": {
+        "2:3": 999
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ]
+    }
+  ],
+  "primitivePalette": [
+    {
+      "id": "VariableID:2:10",
+      "name": "bg/Light",
+      "values": {
+        "2:0": {
+          "r": 0.9647058844566345,
+          "g": 0.95686274766922,
+          "b": 0.9372549057006836,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:11",
+      "name": "bg/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.08627451211214066,
+          "g": 0.09803921729326248,
+          "b": 0.09019608050584793,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:12",
+      "name": "surface/Light",
+      "values": {
+        "2:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:13",
+      "name": "surface/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.12156862765550613,
+          "g": 0.1411764770746231,
+          "b": 0.12941177189350128,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:14",
+      "name": "text/Light",
+      "values": {
+        "2:0": {
+          "r": 0.12156862765550613,
+          "g": 0.1411764770746231,
+          "b": 0.12941177189350128,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:15",
+      "name": "text/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.9098039269447327,
+          "g": 0.9215686321258545,
+          "b": 0.9098039269447327,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:16",
+      "name": "muted/Light",
+      "values": {
+        "2:0": {
+          "r": 0.364705890417099,
+          "g": 0.3960784375667572,
+          "b": 0.37254902720451355,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:17",
+      "name": "muted/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.6392157077789307,
+          "g": 0.6705882549285889,
+          "b": 0.6470588445663452,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:18",
+      "name": "border/Light",
+      "values": {
+        "2:0": {
+          "r": 0.8627451062202454,
+          "g": 0.8470588326454163,
+          "b": 0.8117647171020508,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:19",
+      "name": "border/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.2078431397676468,
+          "g": 0.23137255012989044,
+          "b": 0.21568627655506134,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:20",
+      "name": "accent/Light",
+      "values": {
+        "2:0": {
+          "r": 0.18431372940540314,
+          "g": 0.41960784792900085,
+          "b": 0.30980393290519714,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:21",
+      "name": "accent/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.42352941632270813,
+          "g": 0.7333333492279053,
+          "b": 0.5764706134796143,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:22",
+      "name": "onAccent/Light",
+      "values": {
+        "2:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:23",
+      "name": "onAccent/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.054901961237192154,
+          "g": 0.10196078568696976,
+          "b": 0.07450980693101883,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:24",
+      "name": "soft/Light",
+      "values": {
+        "2:0": {
+          "r": 0.9098039269447327,
+          "g": 0.9333333373069763,
+          "b": 0.9058823585510254,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:25",
+      "name": "soft/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.14901961386203766,
+          "g": 0.23529411852359772,
+          "b": 0.18039216101169586,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:26",
+      "name": "error/Light",
+      "values": {
+        "2:0": {
+          "r": 0.6431372761726379,
+          "g": 0.14901961386203766,
+          "b": 0.1725490242242813,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:27",
+      "name": "error/Dark",
+      "values": {
+        "2:0": {
+          "r": 1,
+          "g": 0.5411764979362488,
+          "b": 0.5607843399047852,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:28",
+      "name": "errorBg/Light",
+      "values": {
+        "2:0": {
+          "r": 0.9843137264251709,
+          "g": 0.929411768913269,
+          "b": 0.9215686321258545,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:29",
+      "name": "errorBg/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.250980406999588,
+          "g": 0.14509804546833038,
+          "b": 0.16470588743686676,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:30",
+      "name": "focus/Light",
+      "values": {
+        "2:0": {
+          "r": 0.10196078568696976,
+          "g": 0.37254902720451355,
+          "b": 0.7058823704719543,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:2:31",
+      "name": "focus/Dark",
+      "values": {
+        "2:0": {
+          "r": 0.5411764979362488,
+          "g": 0.7058823704719543,
+          "b": 0.9725490212440491,
+          "a": 1
+        }
+      }
+    }
+  ],
+  "resolvedSemanticColors": [
+    {
+      "id": "VariableID:2:32",
+      "name": "color/bg",
+      "Light": "#F6F4EF",
+      "Dark": "#161917"
+    },
+    {
+      "id": "VariableID:2:33",
+      "name": "color/surface",
+      "Light": "#FFFFFF",
+      "Dark": "#1F2421"
+    },
+    {
+      "id": "VariableID:2:34",
+      "name": "color/text",
+      "Light": "#1F2421",
+      "Dark": "#E8EBE8"
+    },
+    {
+      "id": "VariableID:2:35",
+      "name": "color/muted",
+      "Light": "#5D655F",
+      "Dark": "#A3ABA5"
+    },
+    {
+      "id": "VariableID:2:36",
+      "name": "color/border",
+      "Light": "#DCD8CF",
+      "Dark": "#353B37"
+    },
+    {
+      "id": "VariableID:2:37",
+      "name": "color/accent",
+      "Light": "#2F6B4F",
+      "Dark": "#6CBB93"
+    },
+    {
+      "id": "VariableID:2:38",
+      "name": "color/onAccent",
+      "Light": "#FFFFFF",
+      "Dark": "#0E1A13"
+    },
+    {
+      "id": "VariableID:2:39",
+      "name": "color/soft",
+      "Light": "#E8EEE7",
+      "Dark": "#263C2E"
+    },
+    {
+      "id": "VariableID:2:40",
+      "name": "color/error",
+      "Light": "#A4262C",
+      "Dark": "#FF8A8F"
+    },
+    {
+      "id": "VariableID:2:41",
+      "name": "color/errorBg",
+      "Light": "#FBEDEB",
+      "Dark": "#40252A"
+    },
+    {
+      "id": "VariableID:2:42",
+      "name": "color/focus",
+      "Light": "#1A5FB4",
+      "Dark": "#8AB4F8"
+    }
+  ],
+  "colorModes": {
+    "Light": "2:1",
+    "Dark": "2:2"
+  },
+  "prototypeState": {
+    "variablesReset": 206,
+    "source": "refinement-support/continued-20261103/cancellation/installed-cancellation-model.json",
+    "role": "Finite presentation state only; never use these variables as production domain records."
+  },
+  "handoffAnnotations": {
+    "root": {
+      "id": "22:85",
+      "width": 1040,
+      "height": 942
+    },
+    "heading": "Implementation handoff.",
+    "note": "The bounded core walkthrough passed with follow-ups from user reports. Latest installed-reaction model: 111 cases pass; earlier time/navigation evidence remains separate. Keyboard/focus, assistive technology, arbitrary dragging, real storage/timing and Mac hardware gates remain unverified. Original 36-ticket acceptance is not implied.",
+    "counts": {
+      "TEXT": 15,
+      "RECTANGLE": 1,
+      "FRAME": 6
+    },
+    "imageFilledNodes": []
+  },
+  "verification": {
+    "liveProductsResolved": 89,
+    "liveReferencesResolved": 46,
+    "liveComponentNodes": 38,
+    "liveTextStyles": 10,
+    "selectedTokenDefinitions": 26,
+    "latestJourneyModel": {
+      "passed": 111,
+      "failed": 0
+    },
+    "olderIndependentModels": {
+      "time": 44,
+      "navigation": 601,
+      "rerunForHandoff": false
+    },
+    "manualWalkthrough": "User-reported bounded examples; see linked R23 evidence. No agent-controlled presentation execution."
+  },
+  "evidenceKeys": [
+    "r21Resume20261102",
+    "r23Spacing20261102",
+    "r23Resume20261103",
+    "r23Cancel20261103"
+  ]
+}

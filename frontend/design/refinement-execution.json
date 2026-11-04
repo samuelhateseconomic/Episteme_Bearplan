@@ -36024,5 +36024,740 @@
       "fail": 0,
       "limit": "Read-only installed-reaction Map model; actual clicks/scroll remain unverified."
     }
+  },
+  "r23Resume20261103": {
+    "patch": {
+      "mutatedNodeIds": [
+        "9:6086",
+        "I9:6086;3:349",
+        "124:7107",
+        "I124:7107;3:349",
+        "I124:7107;3:349;3:212",
+        "5:5532",
+        "5:5608",
+        "9:6064",
+        "124:7095"
+      ],
+      "createdNodeIds": [],
+      "verification": [
+        {
+          "id": "9:6086",
+          "name": "Feedback",
+          "reactionCount": 0
+        },
+        {
+          "id": "I9:6086;3:349",
+          "name": "Button",
+          "reactionCount": 1
+        },
+        {
+          "id": "124:7107",
+          "name": "Feedback",
+          "reactionCount": 0
+        },
+        {
+          "id": "I124:7107;3:349",
+          "name": "Button",
+          "reactionCount": 1
+        },
+        {
+          "id": "5:5532",
+          "name": "Modal background",
+          "reactionCount": 1
+        },
+        {
+          "id": "5:5608",
+          "name": "Modal background",
+          "reactionCount": 1
+        },
+        {
+          "id": "9:6064",
+          "name": "Modal background",
+          "reactionCount": 1
+        },
+        {
+          "id": "124:7095",
+          "name": "Modal background",
+          "reactionCount": 1
+        }
+      ]
+    },
+    "label": {
+      "mutatedNodeIds": [
+        "I124:7112;3:197"
+      ],
+      "text": "Task details",
+      "width": 75,
+      "buttonWidth": 112
+    },
+    "compact": {
+      "evidence": {
+        "width": 640,
+        "height": 800,
+        "outlineY": 1,
+        "outlineHeight": 59,
+        "fonts": [
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        ]
+      },
+      "restored": {
+        "width": 800,
+        "height": 900,
+        "values": true
+      },
+      "mutatedNodeIds": [
+        "5:4109"
+      ],
+      "temporaryOnly": true
+    },
+    "dark": {
+      "evidence": {
+        "width": 800,
+        "height": 900,
+        "outlineY": 1,
+        "outlineHeight": 59,
+        "fonts": [
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        ]
+      },
+      "restored": {
+        "width": 800,
+        "height": 900,
+        "values": true
+      },
+      "mutatedNodeIds": [
+        "5:4109"
+      ],
+      "temporaryOnly": true
+    },
+    "date": "2026-11-03",
+    "fileKey": "jobFe4sXDot7BKsej0arNB",
+    "sessionId": "8ac12b29-2135-4b7a-8c4c-fd2b515b445b",
+    "userSpacingFeedback": "Looks right now",
+    "model": {
+      "pass": 60,
+      "fail": 0,
+      "source": "design/refinement-support/continued-20261103/installed-journey-model.js"
+    },
+    "boundary": "Temporary completed-Read renders check layout only; full total derivation was not seeded. No presentation clicking, scroll, keyboard or application test execution."
+  },
+  "r23Cancel20261103": {
+    "date": "2026-11-03",
+    "fileKey": "jobFe4sXDot7BKsej0arNB",
+    "sessionId": "8ac12b29-2135-4b7a-8c4c-fd2b515b445b",
+    "changes": [
+      {
+        "source": "copy-flows-executed.js",
+        "result": {
+          "pageId": "2:5",
+          "mutatedNodeIds": [
+            "6:2589",
+            "6:2592",
+            "I6:2596;3:212",
+            "126:6951",
+            "I126:7176;3:212",
+            "126:7176",
+            "126:7425",
+            "I126:7505;3:212",
+            "126:7505",
+            "126:7188",
+            "I126:7413;3:212",
+            "126:7413",
+            "126:7517",
+            "I126:7597;3:212",
+            "126:7597",
+            "14:3697",
+            "14:3700",
+            "I14:3704;3:212",
+            "6:2582",
+            "14:3690"
+          ],
+          "createdNodeIds": [],
+          "backdrops": [
+            "6:2582",
+            "14:3690"
+          ],
+          "labels": [
+            {
+              "id": "I6:2596;3:212",
+              "text": "Keep week open",
+              "width": 103,
+              "available": 108,
+              "root": "6:2541"
+            },
+            {
+              "id": "I126:7176;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "6:2634"
+            },
+            {
+              "id": "I126:7505;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "6:2683"
+            },
+            {
+              "id": "I126:7413;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "17:4256"
+            },
+            {
+              "id": "I126:7597;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "17:4308"
+            },
+            {
+              "id": "I14:3704;3:212",
+              "text": "Keep week open",
+              "width": 103,
+              "available": 108,
+              "root": "14:3649"
+            }
+          ],
+          "copy": [
+            {
+              "id": "6:2589",
+              "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+              "width": 488,
+              "height": 42,
+              "root": "6:2541"
+            },
+            {
+              "id": "6:2592",
+              "text": "Unfinished planned tasks count as Missed. Carryover adds dates only after Review and Apply.",
+              "width": 456,
+              "height": 36,
+              "root": "6:2541"
+            },
+            {
+              "id": "126:6951",
+              "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+              "width": 752,
+              "height": 18,
+              "root": "6:2634"
+            },
+            {
+              "id": "126:7425",
+              "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+              "width": 752,
+              "height": 18,
+              "root": "6:2683"
+            },
+            {
+              "id": "126:7188",
+              "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+              "width": 752,
+              "height": 18,
+              "root": "17:4256"
+            },
+            {
+              "id": "126:7517",
+              "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+              "width": 752,
+              "height": 18,
+              "root": "17:4308"
+            },
+            {
+              "id": "14:3697",
+              "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+              "width": 488,
+              "height": 42,
+              "root": "14:3649"
+            },
+            {
+              "id": "14:3700",
+              "text": "Unfinished planned tasks count as Missed. Carryover adds dates only after Review and Apply.",
+              "width": 456,
+              "height": 36,
+              "root": "14:3649"
+            }
+          ]
+        }
+      },
+      {
+        "source": "copy-references-executed.js",
+        "result": {
+          "pageId": "2:4",
+          "mutatedNodeIds": [
+            "86:7840",
+            "I86:7847;3:212",
+            "86:7997",
+            "I86:8004;3:212",
+            "113:8582",
+            "I113:8679;3:212",
+            "113:8679",
+            "113:8749",
+            "I113:8809;3:212",
+            "113:8809"
+          ],
+          "createdNodeIds": [],
+          "backdrops": [],
+          "labels": [
+            {
+              "id": "I86:7847;3:212",
+              "text": "Keep week open",
+              "width": 103,
+              "available": 108,
+              "root": "86:7791"
+            },
+            {
+              "id": "I86:8004;3:212",
+              "text": "Keep week open",
+              "width": 103,
+              "available": 108,
+              "root": "86:7948"
+            },
+            {
+              "id": "I113:8679;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "113:8566"
+            },
+            {
+              "id": "I113:8809;3:212",
+              "text": "Skip carryover",
+              "width": 90,
+              "available": 112,
+              "root": "113:8733"
+            }
+          ],
+          "copy": [
+            {
+              "id": "86:7840",
+              "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+              "width": 488,
+              "height": 42,
+              "root": "86:7791"
+            },
+            {
+              "id": "86:7997",
+              "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+              "width": 488,
+              "height": 42,
+              "root": "86:7948"
+            },
+            {
+              "id": "113:8582",
+              "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+              "width": 592,
+              "height": 18,
+              "root": "113:8566"
+            },
+            {
+              "id": "113:8749",
+              "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+              "width": 752,
+              "height": 18,
+              "root": "113:8733"
+            }
+          ]
+        }
+      },
+      {
+        "source": "preview-copy-flows-executed.js",
+        "result": {
+          "mutatedNodeIds": [
+            "6:2589",
+            "14:3697"
+          ],
+          "copy": [
+            {
+              "id": "6:2589",
+              "width": 488,
+              "height": 42,
+              "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+            },
+            {
+              "id": "14:3697",
+              "width": 488,
+              "height": 42,
+              "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+            }
+          ]
+        }
+      },
+      {
+        "source": "preview-copy-references-executed.js",
+        "result": {
+          "mutatedNodeIds": [
+            "86:7840",
+            "86:7997"
+          ],
+          "copy": [
+            {
+              "id": "86:7840",
+              "width": 488,
+              "height": 42,
+              "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+            },
+            {
+              "id": "86:7997",
+              "width": 488,
+              "height": 42,
+              "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+            }
+          ]
+        }
+      },
+      {
+        "source": "stale-preview-guard-executed.js",
+        "result": {
+          "mutatedNodeIds": [
+            "6:2541",
+            "14:3649"
+          ],
+          "createdNodeIds": [],
+          "guard": "Already closed source routes to its existing frozen view; never reopens or changes closure."
+        }
+      }
+    ],
+    "mutatedNodeIds": [
+      "6:2589",
+      "6:2592",
+      "I6:2596;3:212",
+      "126:6951",
+      "I126:7176;3:212",
+      "126:7176",
+      "126:7425",
+      "I126:7505;3:212",
+      "126:7505",
+      "126:7188",
+      "I126:7413;3:212",
+      "126:7413",
+      "126:7517",
+      "I126:7597;3:212",
+      "126:7597",
+      "14:3697",
+      "14:3700",
+      "I14:3704;3:212",
+      "6:2582",
+      "14:3690",
+      "86:7840",
+      "I86:7847;3:212",
+      "86:7997",
+      "I86:8004;3:212",
+      "113:8582",
+      "I113:8679;3:212",
+      "113:8679",
+      "113:8749",
+      "I113:8809;3:212",
+      "113:8809",
+      "6:2541",
+      "14:3649"
+    ],
+    "createdNodeIds": [],
+    "renders": [
+      {
+        "nodeId": "6:2541",
+        "isError": false
+      },
+      {
+        "nodeId": "113:8566",
+        "isError": false
+      },
+      {
+        "nodeId": "113:8733",
+        "isError": false
+      }
+    ],
+    "renderDimensions": {
+      "6:2541": {
+        "width": 800,
+        "height": 900,
+        "theme": "Light"
+      },
+      "113:8566": {
+        "width": 640,
+        "height": 800,
+        "theme": "Light"
+      },
+      "113:8733": {
+        "width": 800,
+        "height": 900,
+        "theme": "Dark"
+      }
+    },
+    "fontCheck": {
+      "family": "Inter",
+      "passed": true,
+      "keepWeekOpenTextWidth": 103,
+      "keepWeekOpenAvailable": 108,
+      "skipCarryoverTextWidth": 90,
+      "skipCarryoverAvailable": 112
+    },
+    "model": {
+      "pass": 111,
+      "fail": 0,
+      "source": "cancellation/installed-cancellation-model.js"
+    },
+    "userReport": {
+      "original": "when I hit cancel, it does not cancel but already end the week",
+      "location": "Preview, before confirming End Week",
+      "recheck": "Returned to the open week",
+      "scope": "Fresh Reset Plan week -> End Week preview -> Keep week open; remaining carryover sequence pending."
+    },
+    "limitation": "Premature closure was not reproduced in installed-reaction models. User-reported targeted recheck passes after clarification, backdrop routing and stale-preview guard. Actual agent-controlled presentation/keyboard execution remains unavailable."
+  },
+  "r24Handoff20261103": {
+    "canvasWrite": {
+      "mutatedNodeIds": [
+        "22:86",
+        "22:87",
+        "22:88",
+        "22:91",
+        "22:92",
+        "22:95",
+        "22:98",
+        "22:100",
+        "22:101",
+        "22:104",
+        "22:107"
+      ],
+      "createdNodeIds": [],
+      "root": {
+        "id": "22:85",
+        "width": 1040,
+        "height": 942
+      },
+      "text": [
+        {
+          "id": "22:86",
+          "width": 190,
+          "height": 15,
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:87",
+          "width": 960,
+          "height": 48,
+          "font": {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:88",
+          "width": 960,
+          "height": 21,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:91",
+          "width": 194,
+          "height": 26,
+          "font": {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:92",
+          "width": 960,
+          "height": 63,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:95",
+          "width": 960,
+          "height": 42,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:98",
+          "width": 960,
+          "height": 63,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:100",
+          "width": 306,
+          "height": 26,
+          "font": {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:101",
+          "width": 960,
+          "height": 63,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:104",
+          "width": 960,
+          "height": 63,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        },
+        {
+          "id": "22:107",
+          "width": 960,
+          "height": 63,
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          }
+        }
+      ]
+    },
+    "canvasReadback": {
+      "root": {
+        "id": "22:85",
+        "width": 1040,
+        "height": 942
+      },
+      "heading": "Implementation handoff.",
+      "note": "The bounded core walkthrough passed with follow-ups from user reports. Latest installed-reaction model: 111 cases pass; earlier time/navigation evidence remains separate. Keyboard/focus, assistive technology, arbitrary dragging, real storage/timing and Mac hardware gates remain unverified. Original 36-ticket acceptance is not implied.",
+      "counts": {
+        "TEXT": 15,
+        "RECTANGLE": 1,
+        "FRAME": 6
+      },
+      "imageFilledNodes": []
+    },
+    "inventory": "design/handoff-inventory.json",
+    "handoff": "BEARPLANS_UX_HANDOFF.md",
+    "verification": {
+      "liveProductsResolved": 89,
+      "liveReferencesResolved": 46,
+      "liveComponentNodes": 38,
+      "liveTextStyles": 10,
+      "selectedTokenDefinitions": 26,
+      "latestJourneyModel": {
+        "passed": 111,
+        "failed": 0
+      },
+      "olderIndependentModels": {
+        "time": 44,
+        "navigation": 601,
+        "rerunForHandoff": false
+      },
+      "manualWalkthrough": "User-reported bounded examples; see linked R23 evidence. No agent-controlled presentation execution."
+    },
+    "reconciliationNotes": [
+      "Top-level screen inventory lacked reverse reorder; native meta supplied its existing ID.",
+      "Historical native meta had only 29 responsive references; canonical top-level list resolves all 46.",
+      "Completed task text style was live but missing from the old 9-style ledger; now indexed.",
+      "External screenshot initially returned pre-edit notes; inline screenshot/readback confirmed updated 1040x942 editable annotations."
+    ]
   }
 }

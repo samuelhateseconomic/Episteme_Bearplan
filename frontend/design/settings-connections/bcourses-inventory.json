@@ -1,0 +1,3068 @@
+{
+  "ticket": "UX-C03",
+  "date": "2026-11-03",
+  "fileKey": "jobFe4sXDot7BKsej0arNB",
+  "sessionId": "5d94b33e-2248-4cee-a5ff-d6427a1d518b",
+  "assets": {
+    "component": "233:6184",
+    "styles": {
+      "Title": "S:79851d0363784e2629aa8c1a07a66ce2367b5b15,",
+      "Heading": "S:3f921ebfce0e917b8598299e7c8457ef51e5013e,",
+      "Body": "S:a4fb236894d8e3b302e56ff5558b2a07b654eb24,",
+      "Context": "S:b3cf6bba360bfae78018718af859ef7006f5ebcf,",
+      "Label": "S:8d4da908df3484d5bd346377a06ae3b99b781980,"
+    }
+  },
+  "construction": {
+    "createdNodeIds": [
+      "234:6386",
+      "234:6389",
+      "234:6390",
+      "234:6391",
+      "234:6392",
+      "234:6393",
+      "234:6394",
+      "I234:6394;3:260",
+      "I234:6394;3:261",
+      "I234:6394;3:262",
+      "234:6398",
+      "234:6399",
+      "234:6400",
+      "I234:6400;3:227",
+      "234:6402",
+      "I234:6402;3:206",
+      "234:6404",
+      "234:6405",
+      "234:6406",
+      "234:6407",
+      "234:6408",
+      "234:6409",
+      "I234:6409;3:260",
+      "I234:6409;3:261",
+      "I234:6409;3:262",
+      "234:6413",
+      "234:6414",
+      "234:6415",
+      "I234:6415;3:227",
+      "234:6417",
+      "I234:6417;3:197",
+      "234:6419",
+      "234:6420",
+      "234:6421",
+      "234:6422",
+      "234:6423",
+      "234:6424",
+      "I234:6424;3:260",
+      "I234:6424;3:261",
+      "I234:6424;3:262",
+      "234:6428",
+      "234:6429",
+      "234:6430",
+      "I234:6430;3:227",
+      "234:6432",
+      "I234:6432;3:206",
+      "234:6434",
+      "234:6435",
+      "234:6436",
+      "234:6437",
+      "234:6438",
+      "234:6439",
+      "I234:6439;3:260",
+      "I234:6439;3:261",
+      "I234:6439;3:262",
+      "234:6443",
+      "234:6444",
+      "234:6445",
+      "I234:6445;3:227",
+      "234:6447",
+      "I234:6447;3:197",
+      "234:6449",
+      "234:6450",
+      "234:6451",
+      "234:6452",
+      "234:6453",
+      "I234:6453;3:260",
+      "I234:6453;3:261",
+      "I234:6453;3:262",
+      "234:6457",
+      "234:6458",
+      "234:6459",
+      "I234:6459;3:209",
+      "234:6461",
+      "234:6462",
+      "234:6463",
+      "234:6464",
+      "234:6465",
+      "I234:6465;3:260",
+      "I234:6465;3:261",
+      "I234:6465;3:262",
+      "234:6469",
+      "234:6470",
+      "234:6471",
+      "I234:6471;3:209",
+      "234:6473",
+      "234:6474",
+      "234:6475",
+      "234:6476",
+      "234:6477",
+      "234:6478",
+      "234:6479",
+      "I234:6479;3:227",
+      "234:6481",
+      "I234:6481;3:197",
+      "234:6483",
+      "234:6484",
+      "234:6485",
+      "234:6486",
+      "234:6487",
+      "234:6488",
+      "I234:6488;3:227",
+      "234:6490",
+      "I234:6490;3:197",
+      "234:6387",
+      "234:6492",
+      "234:6493",
+      "234:6494",
+      "234:6495",
+      "234:6496",
+      "I234:6496;3:270",
+      "I234:6496;3:271",
+      "I234:6496;3:272",
+      "I234:6496;3:273",
+      "234:6501",
+      "I234:6501;3:348",
+      "I234:6501;3:349",
+      "I234:6501;3:349;3:212",
+      "234:6505",
+      "234:6506",
+      "I234:6506;3:227",
+      "234:6508",
+      "I234:6508;3:197",
+      "234:6510",
+      "234:6511",
+      "234:6512",
+      "234:6513",
+      "234:6514",
+      "I234:6514;3:260",
+      "I234:6514;3:261",
+      "I234:6514;3:262",
+      "234:6518",
+      "I234:6518;3:348",
+      "I234:6518;3:349",
+      "I234:6518;3:349;3:212",
+      "234:6522",
+      "234:6523",
+      "I234:6523;3:227",
+      "234:6525",
+      "I234:6525;3:197",
+      "234:6527",
+      "234:6528",
+      "234:6529",
+      "234:6530",
+      "234:6531",
+      "I234:6531;3:260",
+      "I234:6531;3:261",
+      "I234:6531;3:262",
+      "234:6535",
+      "234:6536",
+      "234:6537",
+      "I234:6537;3:227",
+      "234:6539",
+      "I234:6539;3:197",
+      "234:6541",
+      "234:6542",
+      "234:6543",
+      "234:6544",
+      "234:6545",
+      "234:6546",
+      "234:6547",
+      "I234:6547;3:227",
+      "234:6549",
+      "I234:6549;3:197",
+      "234:6551",
+      "234:6552",
+      "234:6553",
+      "234:6554",
+      "234:6555",
+      "I234:6555;3:260",
+      "I234:6555;3:261",
+      "I234:6555;3:262",
+      "234:6559",
+      "I234:6559;3:348",
+      "I234:6559;3:349",
+      "I234:6559;3:349;3:212",
+      "234:6563",
+      "234:6564",
+      "I234:6564;3:227",
+      "234:6566",
+      "I234:6566;3:197",
+      "234:6568",
+      "234:6569",
+      "234:6570",
+      "234:6571",
+      "234:6572",
+      "234:6573",
+      "234:6574",
+      "I234:6574;3:227",
+      "234:6388",
+      "234:6576",
+      "234:6577",
+      "234:6578",
+      "234:6579",
+      "234:6580",
+      "234:6581",
+      "234:6582",
+      "I234:6582;233:6185",
+      "I234:6582;233:6185;3:249",
+      "I234:6582;233:6185;3:250",
+      "I234:6582;233:6185;3:251",
+      "I234:6582;233:6189",
+      "I234:6582;233:6190",
+      "I234:6582;233:6191",
+      "234:6590",
+      "I234:6590;233:6185",
+      "I234:6590;233:6185;3:249",
+      "I234:6590;233:6185;3:250",
+      "I234:6590;233:6185;3:251",
+      "I234:6590;233:6189",
+      "I234:6590;233:6190",
+      "I234:6590;233:6191",
+      "234:6598",
+      "I234:6598;233:6185",
+      "I234:6598;233:6185;3:249",
+      "I234:6598;233:6185;3:250",
+      "I234:6598;233:6185;3:251",
+      "I234:6598;233:6189",
+      "I234:6598;233:6190",
+      "I234:6598;233:6191",
+      "234:6606",
+      "234:6607",
+      "234:6608",
+      "I234:6608;3:227",
+      "234:6610",
+      "I234:6610;3:197",
+      "234:6612",
+      "234:6613",
+      "234:6614",
+      "234:6615",
+      "234:6616",
+      "234:6617",
+      "234:6618",
+      "I234:6618;233:6185",
+      "I234:6618;233:6185;3:249",
+      "I234:6618;233:6185;3:250",
+      "I234:6618;233:6185;3:251",
+      "I234:6618;233:6189",
+      "I234:6618;233:6190",
+      "I234:6618;233:6191",
+      "234:6626",
+      "I234:6626;233:6185",
+      "I234:6626;233:6185;3:249",
+      "I234:6626;233:6185;3:250",
+      "I234:6626;233:6185;3:251",
+      "I234:6626;233:6189",
+      "I234:6626;233:6190",
+      "I234:6626;233:6191",
+      "234:6634",
+      "I234:6634;233:6185",
+      "I234:6634;233:6189",
+      "I234:6634;233:6190",
+      "I234:6634;233:6191",
+      "234:6642",
+      "234:6643",
+      "234:6644",
+      "I234:6644;3:227",
+      "234:6646",
+      "I234:6646;3:197",
+      "234:6648",
+      "234:6649",
+      "234:6650",
+      "234:6651",
+      "234:6652",
+      "234:6653",
+      "I234:6653;3:227",
+      "234:6655",
+      "234:6656",
+      "234:6657",
+      "234:6658",
+      "234:6659",
+      "234:6660",
+      "I234:6660;3:227",
+      "234:6662",
+      "I234:6662;3:197",
+      "234:6664",
+      "234:6665",
+      "234:6666",
+      "234:6667",
+      "234:6668",
+      "I234:6668;3:348",
+      "I234:6668;3:349",
+      "I234:6668;3:349;3:212",
+      "234:6672",
+      "234:6673",
+      "I234:6673;3:227",
+      "234:6675",
+      "234:6676",
+      "234:6677",
+      "234:6678",
+      "234:6679",
+      "I234:6679;3:348",
+      "I234:6679;3:349",
+      "I234:6679;3:349;3:212",
+      "234:6683",
+      "234:6684",
+      "I234:6684;3:227",
+      "234:6686",
+      "I234:6686;3:197",
+      "234:6688",
+      "234:6689",
+      "234:6690",
+      "234:6691",
+      "234:6692",
+      "234:6693",
+      "I234:6693;3:227",
+      "234:6695",
+      "I234:6695;3:197"
+    ],
+    "mutatedNodeIds": [],
+    "sections": {
+      "setup": "234:6386",
+      "recovery": "234:6387",
+      "courses": "234:6388"
+    },
+    "frames": {
+      "connect": "234:6389",
+      "connectFilled": "234:6404",
+      "replace": "234:6419",
+      "replaceFilled": "234:6434",
+      "checkingConnect": "234:6449",
+      "checkingReplace": "234:6461",
+      "accepted": "234:6473",
+      "replaced": "234:6483",
+      "rejected": "234:6492",
+      "offline": "234:6510",
+      "saveUnknown": "234:6527",
+      "checkedSaved": "234:6541",
+      "saveFailure": "234:6551",
+      "help": "234:6568",
+      "coursesThree": "234:6576",
+      "coursesTwo": "234:6612",
+      "coursesLoading": "234:6648",
+      "coursesEmpty": "234:6655",
+      "coursesUnavailable": "234:6664",
+      "coursesRefreshFailed": "234:6675",
+      "coursesSaved": "234:6688"
+    },
+    "controls": {
+      "connectInput": "234:6394",
+      "connectCancel": "234:6400",
+      "connectPrimary": "234:6402",
+      "connectFilledInput": "234:6409",
+      "connectFilledCancel": "234:6415",
+      "connectFilledPrimary": "234:6417",
+      "replaceInput": "234:6424",
+      "replaceCancel": "234:6430",
+      "replacePrimary": "234:6432",
+      "replaceFilledInput": "234:6439",
+      "replaceFilledCancel": "234:6445",
+      "replaceFilledPrimary": "234:6447",
+      "checkingConnectInput": "234:6453",
+      "checkingConnectPrimary": "234:6459",
+      "checkingReplaceInput": "234:6465",
+      "checkingReplacePrimary": "234:6471",
+      "acceptedCancel": "234:6479",
+      "acceptedPrimary": "234:6481",
+      "replacedCancel": "234:6488",
+      "replacedPrimary": "234:6490",
+      "rejectedInput": "234:6496",
+      "rejectedRetry": "I234:6501;3:349",
+      "rejectedCancel": "234:6506",
+      "rejectedPrimary": "234:6508",
+      "offlineInput": "234:6514",
+      "offlineRetry": "I234:6518;3:349",
+      "offlineCancel": "234:6523",
+      "offlinePrimary": "234:6525",
+      "saveUnknownInput": "234:6531",
+      "saveUnknownCancel": "234:6537",
+      "saveUnknownPrimary": "234:6539",
+      "checkedSavedCancel": "234:6547",
+      "checkedSavedPrimary": "234:6549",
+      "saveFailureInput": "234:6555",
+      "saveFailureRetry": "I234:6559;3:349",
+      "saveFailureCancel": "234:6564",
+      "saveFailurePrimary": "234:6566",
+      "helpCancel": "234:6574",
+      "coursesThreeToggle": "234:6598",
+      "coursesThreeCancel": "234:6608",
+      "coursesThreePrimary": "234:6610",
+      "coursesTwoToggle": "234:6634",
+      "coursesTwoCancel": "234:6644",
+      "coursesTwoPrimary": "234:6646",
+      "coursesLoadingCancel": "234:6653",
+      "coursesEmptyCancel": "234:6660",
+      "coursesEmptyPrimary": "234:6662",
+      "coursesUnavailableRetry": "I234:6668;3:349",
+      "coursesUnavailableCancel": "234:6673",
+      "coursesRefreshFailedRetry": "I234:6679;3:349",
+      "coursesRefreshFailedCancel": "234:6684",
+      "coursesRefreshFailedPrimary": "234:6686",
+      "coursesSavedCancel": "234:6693",
+      "coursesSavedPrimary": "234:6695"
+    },
+    "bounds": [
+      {
+        "key": "connect",
+        "id": "234:6389",
+        "w": 540,
+        "h": 352
+      },
+      {
+        "key": "connectFilled",
+        "id": "234:6404",
+        "w": 540,
+        "h": 352
+      },
+      {
+        "key": "replace",
+        "id": "234:6419",
+        "w": 540,
+        "h": 352
+      },
+      {
+        "key": "replaceFilled",
+        "id": "234:6434",
+        "w": 540,
+        "h": 352
+      },
+      {
+        "key": "checkingConnect",
+        "id": "234:6449",
+        "w": 540,
+        "h": 316
+      },
+      {
+        "key": "checkingReplace",
+        "id": "234:6461",
+        "w": 540,
+        "h": 316
+      },
+      {
+        "key": "accepted",
+        "id": "234:6473",
+        "w": 540,
+        "h": 230
+      },
+      {
+        "key": "replaced",
+        "id": "234:6483",
+        "w": 540,
+        "h": 194
+      },
+      {
+        "key": "rejected",
+        "id": "234:6492",
+        "w": 540,
+        "h": 408
+      },
+      {
+        "key": "offline",
+        "id": "234:6510",
+        "w": 540,
+        "h": 382
+      },
+      {
+        "key": "saveUnknown",
+        "id": "234:6527",
+        "w": 540,
+        "h": 316
+      },
+      {
+        "key": "checkedSaved",
+        "id": "234:6541",
+        "w": 540,
+        "h": 230
+      },
+      {
+        "key": "saveFailure",
+        "id": "234:6551",
+        "w": 540,
+        "h": 382
+      },
+      {
+        "key": "help",
+        "id": "234:6568",
+        "w": 540,
+        "h": 230
+      },
+      {
+        "key": "coursesThree",
+        "id": "234:6576",
+        "w": 540,
+        "h": 496
+      },
+      {
+        "key": "coursesTwo",
+        "id": "234:6612",
+        "w": 540,
+        "h": 496
+      },
+      {
+        "key": "coursesLoading",
+        "id": "234:6648",
+        "w": 540,
+        "h": 194
+      },
+      {
+        "key": "coursesEmpty",
+        "id": "234:6655",
+        "w": 540,
+        "h": 194
+      },
+      {
+        "key": "coursesUnavailable",
+        "id": "234:6664",
+        "w": 540,
+        "h": 296
+      },
+      {
+        "key": "coursesRefreshFailed",
+        "id": "234:6675",
+        "w": 540,
+        "h": 296
+      },
+      {
+        "key": "coursesSaved",
+        "id": "234:6688",
+        "w": 540,
+        "h": 194
+      }
+    ],
+    "font": "Inter (recorded fallback; SF Pro resolves missing)",
+    "fixedSample": true
+  },
+  "review": {
+    "createdNodeIds": [
+      "238:6299",
+      "238:6300",
+      "238:6301",
+      "238:6302",
+      "238:6303",
+      "238:6304",
+      "238:6305",
+      "I238:6305;3:227",
+      "238:6306",
+      "I238:6306;3:227",
+      "238:6307",
+      "I238:6307;3:227",
+      "238:6308",
+      "I238:6308;3:227",
+      "238:6309",
+      "I238:6309;218:5744",
+      "I238:6309;218:5745",
+      "I238:6309;218:5746",
+      "238:6317",
+      "238:6318",
+      "238:6319",
+      "I238:6319;3:227",
+      "238:6321",
+      "238:6322",
+      "238:6323",
+      "238:6324",
+      "I238:6324;3:236",
+      "238:6326",
+      "I238:6326;3:212",
+      "238:6328",
+      "238:6329",
+      "238:6330",
+      "238:6331",
+      "238:6332",
+      "238:6333",
+      "238:6334",
+      "238:6335",
+      "I238:6335;3:212",
+      "238:6337",
+      "I238:6337;3:227",
+      "238:6339",
+      "238:6340",
+      "238:6341",
+      "238:6342",
+      "238:6343",
+      "238:6344",
+      "I238:6344;3:197",
+      "238:6346",
+      "I238:6346;3:236",
+      "238:6348",
+      "I238:6348;3:236",
+      "238:6350",
+      "238:6351",
+      "238:6352",
+      "I238:6352;3:236",
+      "238:6354",
+      "238:6355",
+      "238:6356",
+      "238:6357",
+      "238:6358",
+      "238:6359",
+      "238:6360",
+      "238:6361",
+      "238:6362",
+      "I238:6362;3:227",
+      "238:6363",
+      "I238:6363;3:227",
+      "238:6364",
+      "I238:6364;3:227",
+      "238:6365",
+      "I238:6365;3:227",
+      "238:6366",
+      "I238:6366;218:5744",
+      "I238:6366;218:5745",
+      "I238:6366;218:5746",
+      "238:6374",
+      "238:6375",
+      "238:6376",
+      "I238:6376;3:227",
+      "238:6378",
+      "238:6379",
+      "238:6380",
+      "238:6381",
+      "I238:6381;3:236",
+      "238:6383",
+      "I238:6383;3:212",
+      "238:6385",
+      "238:6386",
+      "238:6387",
+      "238:6388",
+      "238:6389",
+      "238:6390",
+      "238:6391",
+      "238:6392",
+      "I238:6392;3:212",
+      "238:6394",
+      "I238:6394;3:227",
+      "238:6396",
+      "238:6397",
+      "238:6398",
+      "238:6399",
+      "238:6400",
+      "I238:6400;3:236",
+      "238:6402",
+      "238:6403",
+      "238:6404",
+      "238:6405",
+      "238:6406",
+      "238:6407",
+      "238:6408",
+      "238:6409",
+      "238:6410",
+      "I238:6410;3:227",
+      "238:6411",
+      "I238:6411;3:227",
+      "238:6412",
+      "I238:6412;3:227",
+      "238:6413",
+      "I238:6413;3:227",
+      "238:6414",
+      "I238:6414;218:5744",
+      "I238:6414;218:5745",
+      "I238:6414;218:5746",
+      "238:6422",
+      "238:6423",
+      "238:6424",
+      "I238:6424;3:227",
+      "238:6426",
+      "238:6427",
+      "238:6428",
+      "238:6429",
+      "I238:6429;3:236",
+      "238:6431",
+      "I238:6431;3:212",
+      "238:6433",
+      "238:6434",
+      "238:6435",
+      "238:6436",
+      "238:6437",
+      "238:6438",
+      "238:6439",
+      "238:6440",
+      "238:6441",
+      "238:6442",
+      "238:6443",
+      "238:6444",
+      "I238:6444;3:197",
+      "238:6446",
+      "I238:6446;3:236",
+      "238:6448",
+      "I238:6448;3:236",
+      "238:6450",
+      "238:6451",
+      "238:6452",
+      "I238:6452;3:236",
+      "238:6454",
+      "238:6455",
+      "238:6456",
+      "238:6457",
+      "238:6458",
+      "238:6459",
+      "238:6460",
+      "238:6461",
+      "238:6462",
+      "I238:6462;3:227",
+      "238:6463",
+      "I238:6463;3:227",
+      "238:6464",
+      "I238:6464;3:227",
+      "238:6465",
+      "I238:6465;3:227",
+      "238:6466",
+      "I238:6466;218:5744",
+      "I238:6466;218:5745",
+      "I238:6466;218:5746",
+      "238:6474",
+      "238:6475",
+      "238:6476",
+      "I238:6476;3:227",
+      "238:6478",
+      "238:6479",
+      "238:6480",
+      "238:6481",
+      "I238:6481;3:236",
+      "238:6483",
+      "I238:6483;3:212",
+      "238:6485",
+      "238:6486",
+      "238:6487",
+      "238:6488",
+      "238:6489",
+      "238:6490",
+      "238:6491",
+      "238:6492",
+      "238:6493",
+      "238:6494",
+      "238:6495",
+      "238:6496",
+      "I238:6496;3:197",
+      "238:6498",
+      "I238:6498;3:236",
+      "238:6500",
+      "I238:6500;3:236",
+      "238:6502",
+      "238:6503",
+      "238:6504",
+      "I238:6504;3:236",
+      "238:6506",
+      "238:6507",
+      "238:6508",
+      "I238:6508;3:212"
+    ],
+    "mutatedNodeIds": [
+      "219:5879"
+    ],
+    "frames": {
+      "review": "238:6299",
+      "reviewAdded": "238:6356",
+      "reviewUseNew": "238:6404",
+      "reviewKeepMine": "238:6456"
+    },
+    "controls": {
+      "reviewGear": "238:6309",
+      "reviewBack": "238:6319",
+      "reviewCourses": "238:6326",
+      "reviewUse": "238:6335",
+      "reviewKeep": "238:6337",
+      "reviewAdd": "238:6344",
+      "reviewAddedGear": "238:6366",
+      "reviewAddedBack": "238:6376",
+      "reviewAddedCourses": "238:6383",
+      "reviewAddedUse": "238:6392",
+      "reviewAddedKeep": "238:6394",
+      "reviewUseNewGear": "238:6414",
+      "reviewUseNewBack": "238:6424",
+      "reviewUseNewCourses": "238:6431",
+      "reviewUseNewAdd": "238:6444",
+      "reviewKeepMineGear": "238:6466",
+      "reviewKeepMineBack": "238:6476",
+      "reviewKeepMineCourses": "238:6483",
+      "reviewKeepMineAdd": "238:6496",
+      "manageReview": "238:6508"
+    }
+  },
+  "state": {
+    "createdNodeIds": [],
+    "mutatedNodeIds": [
+      "I219:5888;218:5735",
+      "141:7352",
+      "141:7355",
+      "141:7358",
+      "141:7361",
+      "141:7364",
+      "166:8451",
+      "166:8454",
+      "166:8457"
+    ],
+    "createdVariableIds": [
+      "VariableID:237:6303",
+      "VariableID:237:6304"
+    ],
+    "variables": {
+      "two": "VariableID:237:6303",
+      "info": "VariableID:237:6304"
+    },
+    "detailThree": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+    "detailTwo": "Courses \u00b7 2 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+    "resetControls": [
+      "141:7352",
+      "141:7355",
+      "141:7358",
+      "141:7361",
+      "141:7364",
+      "166:8451",
+      "166:8454",
+      "166:8457"
+    ]
+  },
+  "wiring": {
+    "createdNodeIds": [],
+    "mutatedNodeIds": [
+      "141:7352",
+      "141:7355",
+      "141:7358",
+      "141:7361",
+      "141:7364",
+      "166:8451",
+      "166:8454",
+      "166:8457",
+      "I219:5956;218:5729",
+      "I219:5888;218:5737",
+      "I219:5888;218:5739",
+      "238:6508",
+      "234:6400",
+      "234:6415",
+      "234:6430",
+      "234:6445",
+      "234:6506",
+      "234:6523",
+      "234:6564",
+      "234:6537",
+      "234:6547",
+      "234:6479",
+      "234:6488",
+      "234:6574",
+      "234:6608",
+      "234:6644",
+      "234:6653",
+      "234:6660",
+      "234:6673",
+      "234:6684",
+      "234:6693",
+      "234:6394",
+      "234:6424",
+      "234:6417",
+      "234:6447",
+      "234:6449",
+      "234:6461",
+      "234:6481",
+      "234:6490",
+      "234:6648",
+      "234:6508",
+      "I234:6501;3:349",
+      "234:6496",
+      "234:6525",
+      "I234:6518;3:349",
+      "234:6514",
+      "234:6566",
+      "I234:6559;3:349",
+      "234:6555",
+      "234:6539",
+      "234:6549",
+      "234:6598",
+      "234:6634",
+      "234:6610",
+      "234:6646",
+      "234:6662",
+      "I234:6668;3:349",
+      "234:6686",
+      "I234:6679;3:349",
+      "234:6695",
+      "238:6332",
+      "238:6334",
+      "238:6319",
+      "238:6309",
+      "238:6326",
+      "238:6344",
+      "238:6335",
+      "238:6337",
+      "238:6389",
+      "238:6391",
+      "238:6376",
+      "238:6366",
+      "238:6383",
+      "238:6392",
+      "238:6394",
+      "238:6437",
+      "238:6424",
+      "238:6414",
+      "238:6431",
+      "238:6444",
+      "238:6489",
+      "238:6476",
+      "238:6466",
+      "238:6483",
+      "238:6496"
+    ],
+    "removedNodeIds": [
+      "238:6355",
+      "238:6403",
+      "238:6455",
+      "238:6507"
+    ],
+    "createdVariableIds": [
+      "VariableID:239:6357",
+      "VariableID:239:6358",
+      "VariableID:239:6359"
+    ],
+    "variables": {
+      "two": "VariableID:237:6303",
+      "info": "VariableID:237:6304",
+      "added": "VariableID:239:6357",
+      "pending": "VariableID:239:6358",
+      "due": "VariableID:239:6359"
+    },
+    "links": [
+      {
+        "id": "I219:5956;218:5729",
+        "name": "Action / Manage bCourses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6389",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I219:5888;218:5737",
+        "name": "Reference command / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "I219:5888;218:5739",
+        "name": "Reference command / Replace token",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6419",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6508",
+        "name": "Action / Review bCourses assignments",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:239:6357"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "238:6356",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "238:6299",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "234:6400",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5927",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6415",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5927",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6430",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6445",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6506",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6523",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6564",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6537",
+        "name": "Action / Close draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6547",
+        "name": "Action / Done",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6479",
+        "name": "Action / Done",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6488",
+        "name": "Action / Done",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6574",
+        "name": "Action / Back",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6608",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6644",
+        "name": "Action / Cancel",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6653",
+        "name": "Action / Close",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6660",
+        "name": "Action / Back",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6673",
+        "name": "Action / Back",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6684",
+        "name": "Action / Done",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6693",
+        "name": "Action / Done",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6394",
+        "name": "Masked new token draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6404",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6424",
+        "name": "Masked new token draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6434",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6417",
+        "name": "Action / Check and save",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6449",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6447",
+        "name": "Action / Check and save",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6449",
+        "name": "bCourses / checkingConnect",
+        "trigger": {
+          "type": "AFTER_TIMEOUT",
+          "timeout": 2.5
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6473",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6461",
+        "name": "bCourses / checkingReplace",
+        "trigger": {
+          "type": "AFTER_TIMEOUT",
+          "timeout": 2.5
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6483",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6481",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6648",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6490",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6648",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6648",
+        "name": "bCourses / coursesLoading",
+        "trigger": {
+          "type": "AFTER_TIMEOUT",
+          "timeout": 1.5
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "234:6508",
+        "name": "Action / Check and save",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I234:6501;3:349",
+        "name": "Button",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6496",
+        "name": "Masked new token draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6434",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6525",
+        "name": "Action / Check and save",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I234:6518;3:349",
+        "name": "Button",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6514",
+        "name": "Masked new token draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6434",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6566",
+        "name": "Action / Check and save",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I234:6559;3:349",
+        "name": "Button",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6461",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6555",
+        "name": "Masked new token draft",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6434",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6539",
+        "name": "Action / Check saved setup",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6541",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6549",
+        "name": "Action / Save new token again",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6434",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6598",
+        "name": "Connection / Course option",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6612",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6634",
+        "name": "Connection / Course option",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6576",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6610",
+        "name": "Action / Save courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:237:6303",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": false
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:237:6304",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work."
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "234:6688",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6646",
+        "name": "Action / Save courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:237:6303",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": true
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:237:6304",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "Courses \u00b7 2 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work."
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "234:6688",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6662",
+        "name": "Action / Refresh",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6648",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I234:6668;3:349",
+        "name": "Button",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6648",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6686",
+        "name": "Action / Retry refresh",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6688",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "I234:6679;3:349",
+        "name": "Button",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "234:6688",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "234:6695",
+        "name": "Action / Review assignments",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:239:6357"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "238:6356",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "238:6299",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "238:6319",
+        "name": "Action / Back to Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6309",
+        "name": "Action / Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5719",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6326",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "238:6344",
+        "name": "Action / Add",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6357",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": true
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6356",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6335",
+        "name": "Action / Use new due date",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6358",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": false
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6359",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "New due date accepted \u00b7 Nov 8"
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6404",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6337",
+        "name": "Action / Keep mine",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6358",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": false
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6359",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "Your due date kept \u00b7 Nov 6"
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6456",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6376",
+        "name": "Action / Back to Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6366",
+        "name": "Action / Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5719",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6383",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "238:6392",
+        "name": "Action / Use new due date",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6358",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": false
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6359",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "New due date accepted \u00b7 Nov 8"
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6404",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6394",
+        "name": "Action / Keep mine",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6358",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": false
+            }
+          },
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6359",
+            "variableValue": {
+              "type": "STRING",
+              "resolvedType": "STRING",
+              "value": "Your due date kept \u00b7 Nov 6"
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6456",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6424",
+        "name": "Action / Back to Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6414",
+        "name": "Action / Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5719",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6431",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "238:6444",
+        "name": "Action / Add",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6357",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": true
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6356",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6476",
+        "name": "Action / Back to Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5859",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6466",
+        "name": "Action / Settings",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "NODE",
+            "destinationId": "219:5719",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      },
+      {
+        "id": "238:6483",
+        "name": "Action / Choose courses",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "CONDITIONAL",
+            "conditionalBlocks": [
+              {
+                "condition": {
+                  "type": "VARIABLE_ALIAS",
+                  "resolvedType": "BOOLEAN",
+                  "value": {
+                    "type": "VARIABLE_ALIAS",
+                    "id": "VariableID:237:6303"
+                  }
+                },
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6612",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              },
+              {
+                "actions": [
+                  {
+                    "type": "NODE",
+                    "destinationId": "234:6576",
+                    "navigation": "SWAP",
+                    "transition": null,
+                    "resetScrollPosition": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "238:6496",
+        "name": "Action / Add",
+        "trigger": {
+          "type": "ON_CLICK"
+        },
+        "actions": [
+          {
+            "type": "SET_VARIABLE",
+            "variableId": "VariableID:239:6357",
+            "variableValue": {
+              "type": "BOOLEAN",
+              "resolvedType": "BOOLEAN",
+              "value": true
+            }
+          },
+          {
+            "type": "NODE",
+            "destinationId": "238:6356",
+            "navigation": "SWAP",
+            "transition": null,
+            "resetScrollPosition": true
+          }
+        ]
+      }
+    ],
+    "bounds": [
+      {
+        "key": "connect",
+        "id": "234:6389",
+        "w": 540,
+        "h": 394,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "connectFilled",
+        "id": "234:6404",
+        "w": 540,
+        "h": 394,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "replace",
+        "id": "234:6419",
+        "w": 540,
+        "h": 394,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "replaceFilled",
+        "id": "234:6434",
+        "w": 540,
+        "h": 394,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "checkingConnect",
+        "id": "234:6449",
+        "w": 540,
+        "h": 360,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "checkingReplace",
+        "id": "234:6461",
+        "w": 540,
+        "h": 360,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "accepted",
+        "id": "234:6473",
+        "w": 540,
+        "h": 274,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "replaced",
+        "id": "234:6483",
+        "w": 540,
+        "h": 222,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "rejected",
+        "id": "234:6492",
+        "w": 540,
+        "h": 436,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "offline",
+        "id": "234:6510",
+        "w": 540,
+        "h": 410,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "saveUnknown",
+        "id": "234:6527",
+        "w": 540,
+        "h": 342,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "checkedSaved",
+        "id": "234:6541",
+        "w": 540,
+        "h": 274,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "saveFailure",
+        "id": "234:6551",
+        "w": 540,
+        "h": 410,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "help",
+        "id": "234:6568",
+        "w": 540,
+        "h": 274,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesThree",
+        "id": "234:6576",
+        "w": 540,
+        "h": 556,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesTwo",
+        "id": "234:6612",
+        "w": 540,
+        "h": 556,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesLoading",
+        "id": "234:6648",
+        "w": 540,
+        "h": 222,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesEmpty",
+        "id": "234:6655",
+        "w": 540,
+        "h": 222,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesUnavailable",
+        "id": "234:6664",
+        "w": 540,
+        "h": 324,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesRefreshFailed",
+        "id": "234:6675",
+        "w": 540,
+        "h": 324,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "coursesSaved",
+        "id": "234:6688",
+        "w": 540,
+        "h": 222,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "review",
+        "id": "238:6299",
+        "w": 800,
+        "h": 900,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "reviewAdded",
+        "id": "238:6356",
+        "w": 800,
+        "h": 900,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "reviewUseNew",
+        "id": "238:6404",
+        "w": 800,
+        "h": 900,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      },
+      {
+        "key": "reviewKeepMine",
+        "id": "238:6456",
+        "w": 800,
+        "h": 900,
+        "overlayPosition": "CENTER",
+        "background": "NONE"
+      }
+    ]
+  },
+  "refresh": {
+    "createdNodeIds": [],
+    "mutatedNodeIds": [
+      "238:6392",
+      "238:6394",
+      "I219:5748;218:5732",
+      "I219:5820;218:5732",
+      "I219:5888;218:5732",
+      "238:6328",
+      "238:6385",
+      "238:6433",
+      "238:6485",
+      "141:7352",
+      "141:7355",
+      "141:7358",
+      "141:7361",
+      "141:7364",
+      "166:8451",
+      "166:8454",
+      "166:8457",
+      "234:6610",
+      "234:6646",
+      "234:6686",
+      "I234:6679;3:349"
+    ],
+    "createdVariableIds": [
+      "VariableID:240:6360"
+    ],
+    "refreshVariable": "VariableID:240:6360"
+  },
+  "arrangement": {
+    "createdNodeIds": [
+      "241:6387",
+      "241:6388",
+      "241:6389",
+      "241:6390",
+      "241:6357",
+      "241:6358",
+      "241:6359",
+      "241:6360",
+      "I241:6360;3:212",
+      "241:6363",
+      "I241:6363;3:212",
+      "241:6366",
+      "I241:6366;3:212",
+      "241:6369",
+      "I241:6369;3:212",
+      "241:6372",
+      "I241:6372;3:212",
+      "241:6375",
+      "I241:6375;3:212",
+      "241:6378",
+      "I241:6378;3:212",
+      "241:6381",
+      "I241:6381;3:212",
+      "241:6384",
+      "I241:6384;3:212"
+    ],
+    "mutatedNodeIds": [
+      "234:6386",
+      "234:6389",
+      "234:6404",
+      "234:6419",
+      "234:6434",
+      "234:6449",
+      "234:6461",
+      "234:6473",
+      "234:6483",
+      "234:6387",
+      "234:6492",
+      "234:6510",
+      "234:6527",
+      "234:6541",
+      "234:6551",
+      "234:6568",
+      "234:6388",
+      "234:6576",
+      "234:6612",
+      "234:6648",
+      "234:6655",
+      "234:6664",
+      "234:6675",
+      "234:6688",
+      "238:6299",
+      "238:6356",
+      "238:6404",
+      "238:6456"
+    ],
+    "guide": "241:6357",
+    "guideButtons": [
+      {
+        "id": "241:6360",
+        "label": "First connection",
+        "target": "234:6389"
+      },
+      {
+        "id": "241:6363",
+        "label": "Replace saved token",
+        "target": "234:6419"
+      },
+      {
+        "id": "241:6366",
+        "label": "Rejected token",
+        "target": "234:6492"
+      },
+      {
+        "id": "241:6369",
+        "label": "Offline check",
+        "target": "234:6510"
+      },
+      {
+        "id": "241:6372",
+        "label": "Save failed before write",
+        "target": "234:6551"
+      },
+      {
+        "id": "241:6375",
+        "label": "Save result unknown",
+        "target": "234:6527"
+      },
+      {
+        "id": "241:6378",
+        "label": "No active courses",
+        "target": "234:6655"
+      },
+      {
+        "id": "241:6381",
+        "label": "Course fetch failed",
+        "target": "234:6664"
+      },
+      {
+        "id": "241:6384",
+        "label": "Selection saved / refresh failed",
+        "target": "234:6675"
+      }
+    ],
+    "sections": [
+      {
+        "id": "234:6386",
+        "x": 16400,
+        "y": 3300,
+        "w": 2960,
+        "h": 1340
+      },
+      {
+        "id": "234:6387",
+        "x": 16400,
+        "y": 4860,
+        "w": 2960,
+        "h": 1440
+      },
+      {
+        "id": "234:6388",
+        "x": 16400,
+        "y": 6520,
+        "w": 4120,
+        "h": 2660
+      }
+    ]
+  },
+  "finalPolish": {
+    "createdNodeIds": [
+      "243:6366",
+      "I243:6366;3:236",
+      "243:6368",
+      "I243:6368;3:236",
+      "243:6370",
+      "I243:6370;3:236",
+      "243:6372",
+      "I243:6372;3:236"
+    ],
+    "mutatedNodeIds": [
+      "219:5887",
+      "238:6508",
+      "238:6318",
+      "238:6375",
+      "238:6423",
+      "238:6475",
+      "234:6572"
+    ]
+  },
+  "current": {
+    "frames": [
+      {
+        "key": "connect",
+        "id": "234:6389",
+        "w": 540,
+        "h": 394,
+        "descendants": 15,
+        "scroll": []
+      },
+      {
+        "key": "connectFilled",
+        "id": "234:6404",
+        "w": 540,
+        "h": 394,
+        "descendants": 15,
+        "scroll": []
+      },
+      {
+        "key": "replace",
+        "id": "234:6419",
+        "w": 540,
+        "h": 394,
+        "descendants": 15,
+        "scroll": []
+      },
+      {
+        "key": "replaceFilled",
+        "id": "234:6434",
+        "w": 540,
+        "h": 394,
+        "descendants": 15,
+        "scroll": []
+      },
+      {
+        "key": "checkingConnect",
+        "id": "234:6449",
+        "w": 540,
+        "h": 360,
+        "descendants": 12,
+        "scroll": []
+      },
+      {
+        "key": "checkingReplace",
+        "id": "234:6461",
+        "w": 540,
+        "h": 360,
+        "descendants": 12,
+        "scroll": []
+      },
+      {
+        "key": "accepted",
+        "id": "234:6473",
+        "w": 540,
+        "h": 274,
+        "descendants": 10,
+        "scroll": []
+      },
+      {
+        "key": "replaced",
+        "id": "234:6483",
+        "w": 540,
+        "h": 222,
+        "descendants": 9,
+        "scroll": []
+      },
+      {
+        "key": "rejected",
+        "id": "234:6492",
+        "w": 540,
+        "h": 436,
+        "descendants": 18,
+        "scroll": []
+      },
+      {
+        "key": "offline",
+        "id": "234:6510",
+        "w": 540,
+        "h": 410,
+        "descendants": 17,
+        "scroll": []
+      },
+      {
+        "key": "saveUnknown",
+        "id": "234:6527",
+        "w": 540,
+        "h": 342,
+        "descendants": 14,
+        "scroll": []
+      },
+      {
+        "key": "checkedSaved",
+        "id": "234:6541",
+        "w": 540,
+        "h": 274,
+        "descendants": 10,
+        "scroll": []
+      },
+      {
+        "key": "saveFailure",
+        "id": "234:6551",
+        "w": 540,
+        "h": 410,
+        "descendants": 17,
+        "scroll": []
+      },
+      {
+        "key": "help",
+        "id": "234:6568",
+        "w": 540,
+        "h": 274,
+        "descendants": 8,
+        "scroll": []
+      },
+      {
+        "key": "coursesThree",
+        "id": "234:6576",
+        "w": 540,
+        "h": 556,
+        "descendants": 36,
+        "scroll": []
+      },
+      {
+        "key": "coursesTwo",
+        "id": "234:6612",
+        "w": 540,
+        "h": 556,
+        "descendants": 34,
+        "scroll": []
+      },
+      {
+        "key": "coursesLoading",
+        "id": "234:6648",
+        "w": 540,
+        "h": 222,
+        "descendants": 7,
+        "scroll": []
+      },
+      {
+        "key": "coursesEmpty",
+        "id": "234:6655",
+        "w": 540,
+        "h": 222,
+        "descendants": 9,
+        "scroll": []
+      },
+      {
+        "key": "coursesUnavailable",
+        "id": "234:6664",
+        "w": 540,
+        "h": 324,
+        "descendants": 11,
+        "scroll": []
+      },
+      {
+        "key": "coursesRefreshFailed",
+        "id": "234:6675",
+        "w": 540,
+        "h": 324,
+        "descendants": 13,
+        "scroll": []
+      },
+      {
+        "key": "coursesSaved",
+        "id": "234:6688",
+        "w": 540,
+        "h": 222,
+        "descendants": 9,
+        "scroll": []
+      },
+      {
+        "key": "review",
+        "id": "238:6299",
+        "w": 800,
+        "h": 900,
+        "descendants": 58,
+        "scroll": [
+          {
+            "id": "238:6317",
+            "w": 800,
+            "h": 840,
+            "contentHeight": 871
+          }
+        ]
+      },
+      {
+        "key": "reviewAdded",
+        "id": "238:6356",
+        "w": 800,
+        "h": 900,
+        "descendants": 49,
+        "scroll": [
+          {
+            "id": "238:6374",
+            "w": 800,
+            "h": 840,
+            "contentHeight": 769
+          }
+        ]
+      },
+      {
+        "key": "reviewUseNew",
+        "id": "238:6404",
+        "w": 800,
+        "h": 900,
+        "descendants": 53,
+        "scroll": [
+          {
+            "id": "238:6422",
+            "w": 800,
+            "h": 840,
+            "contentHeight": 827
+          }
+        ]
+      },
+      {
+        "key": "reviewKeepMine",
+        "id": "238:6456",
+        "w": 800,
+        "h": 900,
+        "descendants": 53,
+        "scroll": [
+          {
+            "id": "238:6474",
+            "w": 800,
+            "h": 840,
+            "contentHeight": 827
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "FRAME": 115,
+      "TEXT": 265,
+      "INSTANCE": 122,
+      "VECTOR": 17
+    },
+    "gearCoverage": {
+      "headers": 99,
+      "missingOrDuplicate": []
+    },
+    "variables": [
+      "VariableID:237:6303",
+      "VariableID:237:6304",
+      "VariableID:239:6357",
+      "VariableID:239:6358",
+      "VariableID:239:6359",
+      "VariableID:240:6360"
+    ],
+    "audit": "bcourses-audit.json",
+    "models": "bcourses-models.json",
+    "font": "Inter fallback. SF Pro is listed but reports missing on rendered component text; no broader typography migration.",
+    "scope": "25 states: 21 dialogs, four 800x900 Light review frames; actual preview/keyboard/responsive/theme/runtime checks remain pending."
+  }
+}

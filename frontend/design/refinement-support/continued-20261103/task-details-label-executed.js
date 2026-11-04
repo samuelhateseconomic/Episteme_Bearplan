@@ -1,0 +1,2 @@
+// Executed patch archive; do not replay on the existing file.
+await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));const label=await figma.getNodeByIdAsync('I124:7112;3:197');for(const s of label.getStyledTextSegments(['fontName']))await figma.loadFontAsync(s.fontName);label.characters='Task details';return {mutatedNodeIds:[label.id],text:label.characters,width:label.width,buttonWidth:label.parent.width};

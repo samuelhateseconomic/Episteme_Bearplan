@@ -1,0 +1,365 @@
+{
+  "date": "2026-11-03",
+  "fileKey": "jobFe4sXDot7BKsej0arNB",
+  "sessionId": "8ac12b29-2135-4b7a-8c4c-fd2b515b445b",
+  "changes": [
+    {
+      "source": "copy-flows-executed.js",
+      "result": {
+        "pageId": "2:5",
+        "mutatedNodeIds": [
+          "6:2589",
+          "6:2592",
+          "I6:2596;3:212",
+          "126:6951",
+          "I126:7176;3:212",
+          "126:7176",
+          "126:7425",
+          "I126:7505;3:212",
+          "126:7505",
+          "126:7188",
+          "I126:7413;3:212",
+          "126:7413",
+          "126:7517",
+          "I126:7597;3:212",
+          "126:7597",
+          "14:3697",
+          "14:3700",
+          "I14:3704;3:212",
+          "6:2582",
+          "14:3690"
+        ],
+        "createdNodeIds": [],
+        "backdrops": [
+          "6:2582",
+          "14:3690"
+        ],
+        "labels": [
+          {
+            "id": "I6:2596;3:212",
+            "text": "Keep week open",
+            "width": 103,
+            "available": 108,
+            "root": "6:2541"
+          },
+          {
+            "id": "I126:7176;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "6:2634"
+          },
+          {
+            "id": "I126:7505;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "6:2683"
+          },
+          {
+            "id": "I126:7413;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "17:4256"
+          },
+          {
+            "id": "I126:7597;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "17:4308"
+          },
+          {
+            "id": "I14:3704;3:212",
+            "text": "Keep week open",
+            "width": 103,
+            "available": 108,
+            "root": "14:3649"
+          }
+        ],
+        "copy": [
+          {
+            "id": "6:2589",
+            "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+            "width": 488,
+            "height": 42,
+            "root": "6:2541"
+          },
+          {
+            "id": "6:2592",
+            "text": "Unfinished planned tasks count as Missed. Carryover adds dates only after Review and Apply.",
+            "width": 456,
+            "height": 36,
+            "root": "6:2541"
+          },
+          {
+            "id": "126:6951",
+            "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+            "width": 752,
+            "height": 18,
+            "root": "6:2634"
+          },
+          {
+            "id": "126:7425",
+            "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+            "width": 752,
+            "height": 18,
+            "root": "6:2683"
+          },
+          {
+            "id": "126:7188",
+            "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+            "width": 752,
+            "height": 18,
+            "root": "17:4256"
+          },
+          {
+            "id": "126:7517",
+            "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+            "width": 752,
+            "height": 18,
+            "root": "17:4308"
+          },
+          {
+            "id": "14:3697",
+            "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+            "width": 488,
+            "height": 42,
+            "root": "14:3649"
+          },
+          {
+            "id": "14:3700",
+            "text": "Unfinished planned tasks count as Missed. Carryover adds dates only after Review and Apply.",
+            "width": 456,
+            "height": 36,
+            "root": "14:3649"
+          }
+        ]
+      }
+    },
+    {
+      "source": "copy-references-executed.js",
+      "result": {
+        "pageId": "2:4",
+        "mutatedNodeIds": [
+          "86:7840",
+          "I86:7847;3:212",
+          "86:7997",
+          "I86:8004;3:212",
+          "113:8582",
+          "I113:8679;3:212",
+          "113:8679",
+          "113:8749",
+          "I113:8809;3:212",
+          "113:8809"
+        ],
+        "createdNodeIds": [],
+        "backdrops": [],
+        "labels": [
+          {
+            "id": "I86:7847;3:212",
+            "text": "Keep week open",
+            "width": 103,
+            "available": 108,
+            "root": "86:7791"
+          },
+          {
+            "id": "I86:8004;3:212",
+            "text": "Keep week open",
+            "width": 103,
+            "available": 108,
+            "root": "86:7948"
+          },
+          {
+            "id": "I113:8679;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "113:8566"
+          },
+          {
+            "id": "I113:8809;3:212",
+            "text": "Skip carryover",
+            "width": 90,
+            "available": 112,
+            "root": "113:8733"
+          }
+        ],
+        "copy": [
+          {
+            "id": "86:7840",
+            "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+            "width": 488,
+            "height": 42,
+            "root": "86:7791"
+          },
+          {
+            "id": "86:7997",
+            "text": "End Week closes and freezes this plan. Carryover comes next; skipping it leaves this week closed.",
+            "width": 488,
+            "height": 42,
+            "root": "86:7948"
+          },
+          {
+            "id": "113:8582",
+            "text": "Week closed. Suggested days follow the last planned weekday. Skip carryover adds no dates.",
+            "width": 592,
+            "height": 18,
+            "root": "113:8566"
+          },
+          {
+            "id": "113:8749",
+            "text": "Week closed. Apply adds reviewed dates; Skip carryover adds none. Deadlines and history stay unchanged.",
+            "width": 752,
+            "height": 18,
+            "root": "113:8733"
+          }
+        ]
+      }
+    },
+    {
+      "source": "preview-copy-flows-executed.js",
+      "result": {
+        "mutatedNodeIds": [
+          "6:2589",
+          "14:3697"
+        ],
+        "copy": [
+          {
+            "id": "6:2589",
+            "width": 488,
+            "height": 42,
+            "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+          },
+          {
+            "id": "14:3697",
+            "width": 488,
+            "height": 42,
+            "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+          }
+        ]
+      }
+    },
+    {
+      "source": "preview-copy-references-executed.js",
+      "result": {
+        "mutatedNodeIds": [
+          "86:7840",
+          "86:7997"
+        ],
+        "copy": [
+          {
+            "id": "86:7840",
+            "width": 488,
+            "height": 42,
+            "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+          },
+          {
+            "id": "86:7997",
+            "width": 488,
+            "height": 42,
+            "text": "Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next."
+          }
+        ]
+      }
+    },
+    {
+      "source": "stale-preview-guard-executed.js",
+      "result": {
+        "mutatedNodeIds": [
+          "6:2541",
+          "14:3649"
+        ],
+        "createdNodeIds": [],
+        "guard": "Already closed source routes to its existing frozen view; never reopens or changes closure."
+      }
+    }
+  ],
+  "mutatedNodeIds": [
+    "6:2589",
+    "6:2592",
+    "I6:2596;3:212",
+    "126:6951",
+    "I126:7176;3:212",
+    "126:7176",
+    "126:7425",
+    "I126:7505;3:212",
+    "126:7505",
+    "126:7188",
+    "I126:7413;3:212",
+    "126:7413",
+    "126:7517",
+    "I126:7597;3:212",
+    "126:7597",
+    "14:3697",
+    "14:3700",
+    "I14:3704;3:212",
+    "6:2582",
+    "14:3690",
+    "86:7840",
+    "I86:7847;3:212",
+    "86:7997",
+    "I86:8004;3:212",
+    "113:8582",
+    "I113:8679;3:212",
+    "113:8679",
+    "113:8749",
+    "I113:8809;3:212",
+    "113:8809",
+    "6:2541",
+    "14:3649"
+  ],
+  "createdNodeIds": [],
+  "renders": [
+    {
+      "nodeId": "6:2541",
+      "isError": false
+    },
+    {
+      "nodeId": "113:8566",
+      "isError": false
+    },
+    {
+      "nodeId": "113:8733",
+      "isError": false
+    }
+  ],
+  "renderDimensions": {
+    "6:2541": {
+      "width": 800,
+      "height": 900,
+      "theme": "Light"
+    },
+    "113:8566": {
+      "width": 640,
+      "height": 800,
+      "theme": "Light"
+    },
+    "113:8733": {
+      "width": 800,
+      "height": 900,
+      "theme": "Dark"
+    }
+  },
+  "fontCheck": {
+    "family": "Inter",
+    "passed": true,
+    "keepWeekOpenTextWidth": 103,
+    "keepWeekOpenAvailable": 108,
+    "skipCarryoverTextWidth": 90,
+    "skipCarryoverAvailable": 112
+  },
+  "model": {
+    "pass": 111,
+    "fail": 0,
+    "source": "cancellation/installed-cancellation-model.js"
+  },
+  "userReport": {
+    "original": "when I hit cancel, it does not cancel but already end the week",
+    "location": "Preview, before confirming End Week",
+    "recheck": "Returned to the open week",
+    "scope": "Fresh Reset Plan week -> End Week preview -> Keep week open; remaining carryover sequence pending."
+  },
+  "limitation": "Premature closure was not reproduced in installed-reaction models. User-reported targeted recheck passes after clarification, backdrop routing and stale-preview guard. Actual agent-controlled presentation/keyboard execution remains unavailable."
+}

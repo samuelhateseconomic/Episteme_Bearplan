@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-03",
+  "os": "macOS 26.6.2 Darwin arm64",
+  "scope": "UX-C02 Figma and documentation only",
+  "checks": [
+    {
+      "command": "git diff --check -- docs/PROGRESS.md docs/COMPLETED.md frontend/FIGMA_PROTOTYPE.md frontend/design/figma-node-ledger.json frontend/plans/settings-connections/README.md",
+      "result": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 - (inline local evidence validator)",
+      "result": "PASS",
+      "details": {
+        "localLinksAndFragments": 278,
+        "pngEvidence": 6,
+        "pngDimensions": "800x900",
+        "figmaAssertions": 56,
+        "reactionContracts": 29,
+        "returnModels": 10,
+        "ledgerInventoryMatch": true
+      }
+    },
+    {
+      "method": "Figma render export and local view_image inspection",
+      "result": "PASS with scope limits",
+      "frames": 6,
+      "width": 800,
+      "height": 900,
+      "theme": "Light"
+    },
+    {
+      "command": "Python urllib asset download",
+      "result": "Failed: certificate issuer unavailable in Python trust store; no validation disabled"
+    },
+    {
+      "command": "curl -f -s -S -L -o <local-evidence.png> <temporary-Figma-asset-url>",
+      "result": "PASS for six assets using system TLS verification"
+    }
+  ],
+  "notRun": [
+    "Application test suites",
+    "Actual Figma preview click/keyboard execution",
+    "User walkthrough",
+    "Live providers",
+    "Other widths or themes"
+  ],
+  "sourceBaseline": "a43a456 plus concurrent uncommitted account-isolation changes; source inspection only"
+}

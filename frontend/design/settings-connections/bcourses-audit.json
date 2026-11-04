@@ -1,0 +1,2918 @@
+{
+  "counts": {
+    "FRAME": 115,
+    "TEXT": 265,
+    "INSTANCE": 122,
+    "VECTOR": 17
+  },
+  "frames": [
+    {
+      "key": "connect",
+      "id": "234:6389",
+      "w": 540,
+      "h": 394,
+      "descendants": 15,
+      "scroll": []
+    },
+    {
+      "key": "connectFilled",
+      "id": "234:6404",
+      "w": 540,
+      "h": 394,
+      "descendants": 15,
+      "scroll": []
+    },
+    {
+      "key": "replace",
+      "id": "234:6419",
+      "w": 540,
+      "h": 394,
+      "descendants": 15,
+      "scroll": []
+    },
+    {
+      "key": "replaceFilled",
+      "id": "234:6434",
+      "w": 540,
+      "h": 394,
+      "descendants": 15,
+      "scroll": []
+    },
+    {
+      "key": "checkingConnect",
+      "id": "234:6449",
+      "w": 540,
+      "h": 360,
+      "descendants": 12,
+      "scroll": []
+    },
+    {
+      "key": "checkingReplace",
+      "id": "234:6461",
+      "w": 540,
+      "h": 360,
+      "descendants": 12,
+      "scroll": []
+    },
+    {
+      "key": "accepted",
+      "id": "234:6473",
+      "w": 540,
+      "h": 274,
+      "descendants": 10,
+      "scroll": []
+    },
+    {
+      "key": "replaced",
+      "id": "234:6483",
+      "w": 540,
+      "h": 222,
+      "descendants": 9,
+      "scroll": []
+    },
+    {
+      "key": "rejected",
+      "id": "234:6492",
+      "w": 540,
+      "h": 436,
+      "descendants": 18,
+      "scroll": []
+    },
+    {
+      "key": "offline",
+      "id": "234:6510",
+      "w": 540,
+      "h": 410,
+      "descendants": 17,
+      "scroll": []
+    },
+    {
+      "key": "saveUnknown",
+      "id": "234:6527",
+      "w": 540,
+      "h": 342,
+      "descendants": 14,
+      "scroll": []
+    },
+    {
+      "key": "checkedSaved",
+      "id": "234:6541",
+      "w": 540,
+      "h": 274,
+      "descendants": 10,
+      "scroll": []
+    },
+    {
+      "key": "saveFailure",
+      "id": "234:6551",
+      "w": 540,
+      "h": 410,
+      "descendants": 17,
+      "scroll": []
+    },
+    {
+      "key": "help",
+      "id": "234:6568",
+      "w": 540,
+      "h": 274,
+      "descendants": 8,
+      "scroll": []
+    },
+    {
+      "key": "coursesThree",
+      "id": "234:6576",
+      "w": 540,
+      "h": 556,
+      "descendants": 36,
+      "scroll": []
+    },
+    {
+      "key": "coursesTwo",
+      "id": "234:6612",
+      "w": 540,
+      "h": 556,
+      "descendants": 34,
+      "scroll": []
+    },
+    {
+      "key": "coursesLoading",
+      "id": "234:6648",
+      "w": 540,
+      "h": 222,
+      "descendants": 7,
+      "scroll": []
+    },
+    {
+      "key": "coursesEmpty",
+      "id": "234:6655",
+      "w": 540,
+      "h": 222,
+      "descendants": 9,
+      "scroll": []
+    },
+    {
+      "key": "coursesUnavailable",
+      "id": "234:6664",
+      "w": 540,
+      "h": 324,
+      "descendants": 11,
+      "scroll": []
+    },
+    {
+      "key": "coursesRefreshFailed",
+      "id": "234:6675",
+      "w": 540,
+      "h": 324,
+      "descendants": 13,
+      "scroll": []
+    },
+    {
+      "key": "coursesSaved",
+      "id": "234:6688",
+      "w": 540,
+      "h": 222,
+      "descendants": 9,
+      "scroll": []
+    },
+    {
+      "key": "review",
+      "id": "238:6299",
+      "w": 800,
+      "h": 900,
+      "descendants": 58,
+      "scroll": [
+        {
+          "id": "238:6317",
+          "w": 800,
+          "h": 840,
+          "contentHeight": 871
+        }
+      ]
+    },
+    {
+      "key": "reviewAdded",
+      "id": "238:6356",
+      "w": 800,
+      "h": 900,
+      "descendants": 49,
+      "scroll": [
+        {
+          "id": "238:6374",
+          "w": 800,
+          "h": 840,
+          "contentHeight": 769
+        }
+      ]
+    },
+    {
+      "key": "reviewUseNew",
+      "id": "238:6404",
+      "w": 800,
+      "h": 900,
+      "descendants": 53,
+      "scroll": [
+        {
+          "id": "238:6422",
+          "w": 800,
+          "h": 840,
+          "contentHeight": 827
+        }
+      ]
+    },
+    {
+      "key": "reviewKeepMine",
+      "id": "238:6456",
+      "w": 800,
+      "h": 900,
+      "descendants": 53,
+      "scroll": [
+        {
+          "id": "238:6474",
+          "w": 800,
+          "h": 840,
+          "contentHeight": 827
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "reset": [
+    {
+      "id": "141:7352",
+      "totalActions": 214,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "141:7355",
+      "totalActions": 214,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "141:7358",
+      "totalActions": 215,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "141:7361",
+      "totalActions": 215,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "141:7364",
+      "totalActions": 269,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "166:8451",
+      "totalActions": 217,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "166:8454",
+      "totalActions": 216,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    },
+    {
+      "id": "166:8457",
+      "totalActions": 216,
+      "connectionResets": [
+        "VariableID:240:6360",
+        "VariableID:239:6357",
+        "VariableID:239:6358",
+        "VariableID:239:6359",
+        "VariableID:237:6303",
+        "VariableID:237:6304"
+      ]
+    }
+  ],
+  "gearCoverage": {
+    "headers": 99,
+    "missingOrDuplicate": []
+  },
+  "variables": [
+    "VariableID:237:6303",
+    "VariableID:237:6304",
+    "VariableID:239:6357",
+    "VariableID:239:6358",
+    "VariableID:239:6359",
+    "VariableID:240:6360"
+  ],
+  "installedActions": [
+    {
+      "id": "I219:5956;218:5729",
+      "name": "Action / Manage bCourses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6389",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I219:5888;218:5737",
+      "name": "Reference command / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I219:5888;218:5739",
+      "name": "Reference command / Replace token",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6419",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6508",
+      "name": "Action / Review bCourses assignments",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "238:6356",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:239:6357"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "238:6299",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6400",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5927",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6415",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5927",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6430",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6445",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6506",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6523",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6564",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6537",
+      "name": "Action / Close draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6547",
+      "name": "Action / Done",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6479",
+      "name": "Action / Done",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6488",
+      "name": "Action / Done",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6574",
+      "name": "Action / Back",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6608",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6644",
+      "name": "Action / Cancel",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6653",
+      "name": "Action / Close",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6660",
+      "name": "Action / Back",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6673",
+      "name": "Action / Back",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6684",
+      "name": "Action / Done",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6693",
+      "name": "Action / Done",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6394",
+      "name": "Masked new token draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6404",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6424",
+      "name": "Masked new token draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6434",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6417",
+      "name": "Action / Check and save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6449",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6447",
+      "name": "Action / Check and save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6449",
+      "name": "bCourses / checkingConnect",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6473",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6461",
+      "name": "bCourses / checkingReplace",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 2.5
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6483",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6481",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6648",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6490",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6648",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6648",
+      "name": "bCourses / coursesLoading",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "AFTER_TIMEOUT",
+            "timeout": 1.5
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6508",
+      "name": "Action / Check and save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I234:6501;3:349",
+      "name": "Button",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6496",
+      "name": "Masked new token draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6434",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6525",
+      "name": "Action / Check and save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I234:6518;3:349",
+      "name": "Button",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6514",
+      "name": "Masked new token draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6434",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6566",
+      "name": "Action / Check and save",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I234:6559;3:349",
+      "name": "Button",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6461",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6555",
+      "name": "Masked new token draft",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6434",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6539",
+      "name": "Action / Check saved setup",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6541",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6549",
+      "name": "Action / Save new token again",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6434",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6598",
+      "name": "Connection / Course option",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6612",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6634",
+      "name": "Connection / Course option",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6576",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6610",
+      "name": "Action / Save courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed just now \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6688",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6646",
+      "name": "Action / Save courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed just now \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 2 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6688",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6662",
+      "name": "Action / Refresh",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6648",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I234:6668;3:349",
+      "name": "Button",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "234:6648",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6686",
+      "name": "Action / Retry refresh",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed just now \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6688",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I234:6679;3:349",
+      "name": "Button",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed just now \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6688",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "234:6695",
+      "name": "Action / Review assignments",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "238:6356",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:239:6357"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "238:6299",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6319",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6309",
+      "name": "Action / Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5719",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6326",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6344",
+      "name": "Action / Add",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "238:6356",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6335",
+      "name": "Action / Use new due date",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "New due date accepted \u00b7 Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "238:6404",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6337",
+      "name": "Action / Keep mine",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your due date kept \u00b7 Nov 6",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "238:6456",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6376",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6366",
+      "name": "Action / Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5719",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6383",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6392",
+      "name": "Action / Use new due date",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "New due date accepted \u00b7 Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6394",
+      "name": "Action / Keep mine",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your due date kept \u00b7 Nov 6",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6424",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6414",
+      "name": "Action / Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5719",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6431",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6444",
+      "name": "Action / Add",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "238:6356",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6476",
+      "name": "Action / Back to Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5859",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6466",
+      "name": "Action / Settings",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "NODE",
+              "destinationId": "219:5719",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6483",
+      "name": "Action / Choose courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "CONDITIONAL",
+              "conditionalBlocks": [
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6612",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ],
+                  "condition": {
+                    "value": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:237:6303"
+                    },
+                    "type": "VARIABLE_ALIAS",
+                    "resolvedType": "BOOLEAN"
+                  }
+                },
+                {
+                  "actions": [
+                    {
+                      "type": "NODE",
+                      "destinationId": "234:6576",
+                      "navigation": "SWAP",
+                      "transition": null,
+                      "resetVideoPosition": false,
+                      "resetScrollPosition": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "238:6496",
+      "name": "Action / Add",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "238:6356",
+              "navigation": "SWAP",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6360",
+      "name": "Review example / First connection",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6389",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6363",
+      "name": "Review example / Replace saved token",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6419",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6366",
+      "name": "Review example / Rejected token",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6492",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6369",
+      "name": "Review example / Offline check",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6510",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6372",
+      "name": "Review example / Save failed before write",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6551",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6375",
+      "name": "Review example / Save result unknown",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6527",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6378",
+      "name": "Review example / No active courses",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6655",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6381",
+      "name": "Review example / Course fetch failed",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6664",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "241:6384",
+      "name": "Review example / Selection saved / refresh failed",
+      "reactions": [
+        {
+          "trigger": {
+            "type": "ON_CLICK"
+          },
+          "actions": [
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6303",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:237:6304",
+              "variableValue": {
+                "value": "Courses \u00b7 3 selected. Changing courses keeps tasks you already added.\n\nAssignments \u00b7 Review and Add in bCourses; new deadlines need your review.\n\nToken \u00b7 Saved securely on this Mac. Replacing or removing it keeps local work.",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6357",
+              "variableValue": {
+                "value": false,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6358",
+              "variableValue": {
+                "value": true,
+                "type": "BOOLEAN",
+                "resolvedType": "BOOLEAN"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:239:6359",
+              "variableValue": {
+                "value": "Your task: Nov 6 \u2192 bCourses: Nov 8",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "SET_VARIABLE",
+              "variableId": "VariableID:240:6360",
+              "variableValue": {
+                "value": "Last refreshed Nov 3 at 9:36 AM \u00b7 Manual refresh",
+                "type": "STRING",
+                "resolvedType": "STRING"
+              }
+            },
+            {
+              "type": "NODE",
+              "destinationId": "234:6675",
+              "navigation": "OVERLAY",
+              "transition": null,
+              "resetVideoPosition": false,
+              "resetScrollPosition": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence": "Structural and installed-reaction evidence only; not a Figma preview walkthrough.",
+  "screenshots": [
+    "bcourses-setup-flow-light.png",
+    "bcourses-recovery-flow-light.png",
+    "bcourses-courses-flow-light.png",
+    "bcourses-connect-light.png",
+    "bcourses-rejected-light.png",
+    "bcourses-courses-light.png",
+    "bcourses-review-light.png",
+    "bcourses-management-light.png"
+  ]
+}

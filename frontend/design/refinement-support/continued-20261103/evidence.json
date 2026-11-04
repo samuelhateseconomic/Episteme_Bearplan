@@ -1,0 +1,162 @@
+{
+  "patch": {
+    "mutatedNodeIds": [
+      "9:6086",
+      "I9:6086;3:349",
+      "124:7107",
+      "I124:7107;3:349",
+      "I124:7107;3:349;3:212",
+      "5:5532",
+      "5:5608",
+      "9:6064",
+      "124:7095"
+    ],
+    "createdNodeIds": [],
+    "verification": [
+      {
+        "id": "9:6086",
+        "name": "Feedback",
+        "reactionCount": 0
+      },
+      {
+        "id": "I9:6086;3:349",
+        "name": "Button",
+        "reactionCount": 1
+      },
+      {
+        "id": "124:7107",
+        "name": "Feedback",
+        "reactionCount": 0
+      },
+      {
+        "id": "I124:7107;3:349",
+        "name": "Button",
+        "reactionCount": 1
+      },
+      {
+        "id": "5:5532",
+        "name": "Modal background",
+        "reactionCount": 1
+      },
+      {
+        "id": "5:5608",
+        "name": "Modal background",
+        "reactionCount": 1
+      },
+      {
+        "id": "9:6064",
+        "name": "Modal background",
+        "reactionCount": 1
+      },
+      {
+        "id": "124:7095",
+        "name": "Modal background",
+        "reactionCount": 1
+      }
+    ]
+  },
+  "label": {
+    "mutatedNodeIds": [
+      "I124:7112;3:197"
+    ],
+    "text": "Task details",
+    "width": 75,
+    "buttonWidth": 112
+  },
+  "compact": {
+    "evidence": {
+      "width": 640,
+      "height": 800,
+      "outlineY": 1,
+      "outlineHeight": 59,
+      "fonts": [
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      ]
+    },
+    "restored": {
+      "width": 800,
+      "height": 900,
+      "values": true
+    },
+    "mutatedNodeIds": [
+      "5:4109"
+    ],
+    "temporaryOnly": true
+  },
+  "dark": {
+    "evidence": {
+      "width": 800,
+      "height": 900,
+      "outlineY": 1,
+      "outlineHeight": 59,
+      "fonts": [
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        }
+      ]
+    },
+    "restored": {
+      "width": 800,
+      "height": 900,
+      "values": true
+    },
+    "mutatedNodeIds": [
+      "5:4109"
+    ],
+    "temporaryOnly": true
+  },
+  "date": "2026-11-03",
+  "fileKey": "jobFe4sXDot7BKsej0arNB",
+  "sessionId": "8ac12b29-2135-4b7a-8c4c-fd2b515b445b",
+  "userSpacingFeedback": "Looks right now",
+  "model": {
+    "pass": 60,
+    "fail": 0,
+    "source": "design/refinement-support/continued-20261103/installed-journey-model.js"
+  },
+  "boundary": "Temporary completed-Read renders check layout only; full total derivation was not seeded. No presentation clicking, scroll, keyboard or application test execution."
+}

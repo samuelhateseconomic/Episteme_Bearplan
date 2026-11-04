@@ -1,0 +1,2 @@
+// Executed patch archive; do not replay on the existing file.
+await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));const result=[];for(const id of ["6:2589","14:3697"]){const t=await figma.getNodeByIdAsync(id);for(const s of t.getStyledTextSegments(['fontName']))await figma.loadFontAsync(s.fontName);t.characters='Nothing changes until you choose End Week. It freezes this plan; optional carryover comes next.';result.push({id:t.id,width:t.width,height:t.height,text:t.characters});}return {mutatedNodeIds:result.map(r=>r.id),copy:result};

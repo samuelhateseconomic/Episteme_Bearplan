@@ -9,6 +9,274 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-03 — Session design checkpoint committed; push awaiting approval
+
+Committed the 63-file design/documentation checkpoint after staged-scope and diff
+checks. Inspected 59 evidence/guidance files, 134 local links, JSON/PNG consistency,
+credential/transient-URL marker checks and ten archived-script syntax checks; all
+passed. No application tests were rerun. The commit contains no unfinished backend
+or CLAUDE edits and no duplicate `(1)` files.
+
+Automatic approval review rejected `git push origin main`: the branch includes 11
+earlier commits beyond this session's design checkpoint and targets the default
+branch. No push occurred. Explicit approval for publishing that full history remains
+pending. Git identifies the current local design commit; existing design/runtime
+follow-ups are unchanged.
+
+## 2026-11-03 — Session design checkpoint prepared for commit and push
+
+User explicitly requested commit and push. Scoped checkpoint includes the November 3
+prototype refinements/handoff, frontend connection plans and agent skills, Settings
+navigation repair and UX-C03 bCourses flow with synthetic evidence. Current gates
+remain unchanged: UX-C04–06, actual preview/accessibility/responsive checks and
+runtime/operator acceptance are pending. Existing committed branch history accompanies
+an ordinary push; unfinished backend/account-isolation edits, CLAUDE.md changes and
+duplicate `(1)` files are excluded. Git records the commit and remote outcome.
+
+Content/JSON/local-link/PNG/inventory checks and scoped diff checks are run before
+commit; no app test rerun is needed for this design/documentation checkpoint.
+
+## 2026-11-03 — UX-C03 bCourses setup, recovery and assignment entry
+
+Delivered 25 editable states: 21 compact Connect/Replace/course dialogs and four
+800×900 Light assignment-review views, organized into three flow sections on the
+existing free Figma canvas. Masked fixed inputs, cancel/retry, pre-write versus
+uncertain-save recovery, course draft/save behavior, explicit Add and reviewed
+deadline choices are wired as bounded samples. The dedicated review location
+remains proposed; secondary reference controls are identified.
+
+[Detailed review](reviews/2026-11-03-bcourses-settings-flow.md),
+[exact inventory](../frontend/design/settings-connections/bcourses-inventory.json),
+[31 action models](../frontend/design/settings-connections/bcourses-models.json).
+Final audit: 519 editable nodes across the states, no raster UI/font/overlap/width
+failures; 80 installed action sources; all 99 navigation headers retain one gear.
+All eight reset starts include six isolated connection-demo variables. Source
+inspection distinguished uncertain credential writes and saved-selection/failed-
+refresh outcomes. Long-text reflow was repaired and final renders inspected.
+
+**Pass with follow-ups** for construction and metadata/model review. Actual preview,
+keyboard/focus, responsive/Dark, user acceptance and application/provider tests
+remain separate. Inter fallback retained after SF Pro resolved missing. macOS
+26.6.2 arm64. No app/data/provider change, commit or push. UX-C04 is next eligible,
+not started.
+
+## 2026-11-03 — Settings gear remains available across prototype workspaces
+
+Fixed the user-reported missing Settings button on Track, Stats and Assistant.
+Added the existing gear to 84 missing headers: all 95 prototype navigation headers
+now contain one gear (89 workspace overlay entries and six Settings close controls).
+Preserved the existing navigation actions on all changed headers. Updated the
+[review](reviews/2026-11-03-settings-overview.md#navigation-correction-after-user-review),
+[exact inventory](../frontend/design/settings-connections/overview-inventory.json)
+and [coverage audit](../frontend/design/settings-connections/navigation-audit.json).
+
+Three corrected 800×900 Light renders inspected; no clipping/overlap or duplicate
+gears in installed-header checks; 89 in-memory return models passed. Actual
+preview, keyboard/focus and responsive/theme references remain separate checks.
+No application/provider/saved-data changes, commit or push. UX-C03 not started.
+
+## 2026-11-03 — UX-C02 Settings overview built and reviewed
+
+Delivered [six editable overview states](reviews/2026-11-03-settings-overview.md)
+on the existing free Figma canvas: working, Google/bCourses management open,
+setup/scope, paused with issue and syncing. Added a token-bound provider component,
+Settings gear and five representative workspace entries with overlay/close
+return semantics. [Exact inventory](../frontend/design/settings-connections/overview-inventory.json)
+and six final 800×900 Light PNGs are saved under frontend/design/settings-connections;
+the existing node ledger links the extension. Prior canvas/frame IDs were retained.
+
+**Pass with follow-ups** for construction/static/source review. Six renders inspected;
+56/56 structural/reaction/model assertions passed, including 29 reaction contracts
+and 10 in-memory return journeys. Fixed inherited selected navigation, notice
+property wiring, command sizing and misleading static-state transitions. Actual
+preview execution, independent review, user acceptance and other widths/themes
+remain C06. Setup/recovery/Pause commands remain clearly static pending C03–05.
+No app tests, runtime/provider/user-data changes, commit or push. macOS 26.6.2.
+Reconciled a43a456 backend source; preserved concurrent account-isolation work.
+Next eligible unit UX-C03 remains not started.
+
+## 2026-11-03 — Frontend connection plans, tests and agent skills organized
+
+Delivered the [frontend plan index](../frontend/plans/README.md) and canonical
+[Settings/Connections package](../frontend/plans/settings-connections/README.md):
+12 requirements, six design units, nine future application units with small slices,
+54 case contracts, traceability and runnable future command references. Preserved
+old UX section-6 anchor and historical evidence. Added [frontend AGENTS](../frontend/AGENTS.md)
+and separate design/build skills with metadata. Shared progress remains the only
+mutable status tracker; no prototype/application unit started.
+
+[Package review](reviews/2026-11-03-frontend-connections-agent-package.md): **Pass**
+for documentation/guidance. Relative links/fragments, IDs, test references, metadata,
+whitespace/diff and both bundled skill validations passed. Three independent
+read-only skill dry runs passed; package review corrections cover read-only live
+isolation, same-client sign-in retention and automatic UI fetches while paused.
+macOS 26.6.2. No app tests, service/provider/Figma operations, real credentials or
+saved data touched. No app dependencies changed, commit or push. Concurrent work
+preserved, including newer 674db93 credential routes and later source changes.
+
+## 2026-11-03 — UX-C01 local connection coherence review and plan amendment
+
+Rechecked Settings against the actual local app with two independent read-only
+reviews. Kept Settings → Connections; added separate Google file/authorization
+steps, all three Google functions, service-lifetime/offline copy, truthful status,
+confirmed Pause control with proposed detailed semantics, and cancellation,
+disconnect/replacement/account safeguards. Added six manageable design tickets
+and eight verification scenarios to the [UX plan](../frontend/BEARPLANS_UX_PLAN.md#6-local-settings-and-connections-extension).
+[Review](reviews/2026-11-03-settings-connection-coherence.md): **Pass with follow-ups**.
+
+Correction to the prior discussion: credential relocation is now built/committed
+in f375f24; credential routes appeared as concurrent in-progress source during the
+review and were not verified. This review starts neither app nor Figma work;
+C02–C06 remain not started. macOS source/diff/link/scope/whitespace review only;
+no live credentials, user data, provider calls or app tests. No commit or push.
+
+## 2026-11-03 — Settings / Connections UX discussion reviewed
+
+Reviewed the current bCourses and Google UI/source, connection reviews and the
+new plan-only setup section (`f413a11`) on macOS. Recommended compact Settings →
+Connections with separate credential setup dialogs, browser-based Google consent,
+visible status/recovery and an accessible bCourses review destination. User
+confirmed Pause / Resume automatic Google sync; review-list placement remains
+pending. Recorded the current local-only Google Disconnect versus planned
+revocation discrepancy in [PROGRESS](PROGRESS.md). Recommendations are not a
+completed prototype or implementation. Read-only inspection plus handoff notes;
+no application tests, secrets/user-data access, Figma edits, commit or push.
+
+## 2026-11-03 — UX-R24 revised implementation handoff delivered
+
+Delivered [frontend handoff](../frontend/BEARPLANS_UX_HANDOFF.md),
+[exact inventory](../frontend/design/handoff-inventory.json) and updated Figma
+handoff annotations/index/ledger. Resolved 89 product/state and 46 reference nodes,
+11 starts, 38 component/set nodes, ten styles and 26 selected tokens. Reconciled
+omitted existing IDs/style without creating assets. Updated 11 annotation texts;
+inline 1040×942 render/readback passed after an external screenshot showed old text.
+
+[R24 review](reviews/2026-11-03-ux-r24-handoff.md): **Pass with follow-ups**.
+JSON/count/ID/URL/link/alias/property/scope/whitespace checks and async-body syntax
+passed. Retained proposed defaults, unsupported runtime/hardware checks and original
+checkpoint boundaries. All 24 repair subtickets Done; no app implementation starts.
+No application tests, new commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 bounded walkthrough completed
+
+Final user reports: Stats scopes/detail clear; Assistant question retained after
+Cancel/error; static empty-name validation clear with other details visible.
+Together with earlier journey reports and preview-cancel repair/recheck, this
+completes the bounded formative repair walkthrough: **Pass with follow-ups**.
+[Closure evidence](reviews/2026-11-03-ux-r23-continuation.md#final-stats-assistant-and-validation-feedback).
+No claim of timed observation, original full roadmap acceptance, real persistence,
+free drag/accessibility or hardware certification. R24 was then the sole active
+ticket. Documentation checks only for final feedback; no app changes/commit/push.
+
+## 2026-11-03 — UX-R23 active-session completion and interruption feedback
+
+User reported preserved session/controls after completing Read during its countdown,
+and clear confirmed-only time in the separate interruption/explicit-continue
+example. This supplies the combined active-timer completion report previously
+missing; no real timing, storage, sleep/wake or hardware certification claim.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#active-session-completion-and-interruption-user-feedback).
+Read-only control inspection prepared Stats/Assistant/validation prompts, explicitly
+retaining Cancel as untested if its two-second generation ends first. Documentation
+content/link/status/diff checks passed. No Figma/app changes, new behavior tests,
+commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 live completion/frozen Missed feedback recorded
+
+User reported “Clear; current status changed and history stayed” after later Read
+completion and revisiting Stats/closed history without Reset. Recorded scoped
+user-reported success; no exact-total, repeated-miss or real-persistence claim.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#missed-and-frozen-history-user-feedback).
+Combined active-timer completion and interruption review remain pending.
+Documentation content/link/status/diff checks passed. No Figma/app changes, new
+behavior tests, commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 carryover sequence reported successful
+
+User reported “Clear and completed correctly” for selection/redating, Review/Skip,
+closed-week re-entry and reviewed Apply into next week. With the earlier preview-
+exit recheck, the finite reviewed closure/carryover direction is accepted. Retained
+the original cancellation report and limits; no exact date/count, persistence,
+arbitrary-combination or overall R23 acceptance claim.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#remaining-carryover-sequence-user-feedback).
+Documentation content/link/status/diff checks passed. No Figma/app changes, new
+behavior tests, commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 preview exit repaired and user rechecked
+
+User localized the report to pre-confirmation cancellation. Clarified Keep week
+open/Skip carryover, corrected preview backdrop returns and guarded already-closed
+previews. Propagated compact/dark/edge references: 32 nodes, no new variables.
+111 installed-reaction model cases pass; fresh 800×900 Light preview, 640×800 Light
+carryover and 800×900 Dark review renders passed scoped visual checks.
+
+User recheck: “Returned to the open week.” Targeted preview exit now accepted;
+the original cause was not reproduced in the model. Remaining carryover/R23
+acceptance is still pending. [Repair/recheck evidence](reviews/2026-11-03-ux-r23-continuation.md#preview-cancellation-repair-and-targeted-user-recheck).
+JSON/link/status/whitespace and async-body syntax checks; no app tests, commit or
+push. Concurrent application/Google work preserved.
+
+## 2026-11-03 — UX-R23 End Week/carryover finding captured
+
+Recorded “Something unclear or unsuccessful” as an unresolved walkthrough finding,
+not successful flow acceptance. Asked for the exact step and expected/actual result;
+read-only inspection located existing controls without applying a speculative fix.
+[Finding evidence](reviews/2026-11-03-ux-r23-continuation.md#end-week-and-carryover-unresolved-user-finding).
+Only feedback capture/documentation is finished; repair and R23 remain open.
+Content/link/status/diff checks passed. No Figma/app mutations, new behavior tests,
+commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 compact/crowded scrolling feedback recorded
+
+User reported “Both clear and reachable” for the compact Today eighth/lower tasks
+and the final crowded Projects task. Recorded scoped user-reported scrolling and
+visibility success; static reference controls, actual user window/zoom, keyboard
+and other states remain unverified. No correction requested.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#compact-and-crowded-scrolling-user-feedback).
+Documentation content/link/status/diff checks passed. No Figma/app changes, new
+behavior tests, commit or push; concurrent work preserved.
+
+## 2026-11-03 — UX-R23 closed-week recovery feedback recorded
+
+User reported “Clear; details were retained” for the blocked-save explanation and
+Review day navigation. Recorded scoped user-reported success; date editing and
+closed-week guard enforcement are not established by directly opening this example.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#closed-week-recovery-user-feedback).
+Read-only inspection identified the existing compact/crowded scroll references
+for the next prompt. No Figma mutations or app changes. Documentation content/link/
+status/diff checks passed; no application tests, commit or push.
+
+## 2026-11-03 — UX-R23 failed-save recovery walkthrough recorded
+
+User replied “Clear and recovered once” for understanding the failed-save example,
+using Retry and finding one Draft seminar questions. Recorded scoped user-reported
+success; no fix requested. Closed-week recovery and other journeys remain open.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#failed-save-user-feedback).
+Documentation-only content/link/status/diff checks; no Figma/app changes, new
+behavior tests, commit or push. Concurrent changes preserved.
+
+## 2026-11-03 — UX-R23 sample task-entry walkthrough recorded
+
+User replied “Clear and worked” for finding + Add task, understanding the shown
+deadline/estimate/planned day, saving Draft seminar questions and finding it in
+the list. Recorded scoped user-reported success; no fix requested. Error recovery,
+other required journeys and overall acceptance remain open.
+[Feedback evidence](reviews/2026-11-03-ux-r23-continuation.md#task-entry-user-feedback).
+Documentation-only content/link/diff checks; no Figma/app changes, new tests,
+commit or push. Concurrent changes preserved.
+
+## 2026-11-03 — UX-R23 spacing accepted and task-save recovery repaired
+
+User accepted weekday styling and Outline spacing (“Looks right now”). Verified
+completed-Read at 640×800 Light and 800×900 Dark, restoring all temporary state.
+Repaired two false-success feedback routes, four timer-preserving form dismissals,
+and one clipped action label. Ten nodes changed; no new nodes or app changes.
+Installed-reaction model: **60 passed, 0 failed**; Reset remains 206 variables.
+
+[Detailed evidence](reviews/2026-11-03-ux-r23-continuation.md),
+[execution evidence](../frontend/design/refinement-support/continued-20261103/evidence.json).
+Task-entry report and remaining R23 journeys are pending; R24 not started.
+No new commit/push; unrelated concurrent application work preserved.
+
 ## 2026-11-02 — UX-R23 weekday and Outline spacing repair
 
 Recorded the user's successful weekly-flow report and visual spacing findings.

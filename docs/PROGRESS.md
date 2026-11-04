@@ -11,78 +11,62 @@ in the linked reviews.
 item here and update [Build status](#build-status). Keep this file short; do not
 paste long check logs here.
 
-## Current state — November 2, 2026
+## Current state — November 3, 2026
 
-**UX refinement resumed at the user's request on November 2. UX-R21 native
-wiring and UX-R22 independent static QA are complete (Pass with follow-ups).**
-Twenty-two of the 24 repair tickets are Done. **UX-R23 is Paused at the user's request,
-with partial walkthrough evidence**; R24 final handoff is not started. Codex remains the sole Figma writer. No application
-implementation is authorized by this design request. Baseline Git checkpoint: `c4a5d14`. The user-authorized design checkpoint commit
-contains this resumption; resolve its hash from Git history.
+**UX repair/handoff delivered: 24/24 repair subtickets Done.** R23 passed with
+follow-ups for the bounded user-reported walkthrough; R24 passed with follow-ups
+for the reconciled implementation handoff. Settings overview UX-C02 and bCourses flow UX-C03 are delivered with follow-ups
+under the user’s November 3 requests. No ticket is active; application delivery
+remains a later unit. Original UX-01–36 checkpoint
+acceptance remains distinct from this repair subset.
 
-**UX-32.1 remains In review.** All 75 original screen IDs and ten original named
-starts remain; the ledger contains 89 product/state frames plus a separate review
-launcher, with 11 starts total. The free two-dimensional canvas remains.
-[Canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5),
-[review launcher](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=141-7346),
-[node ledger](../frontend/design/figma-node-ledger.json),
-[execution evidence](../frontend/design/refinement-execution.json).
+**Start here:** [refined UX handoff](../frontend/BEARPLANS_UX_HANDOFF.md),
+[exact inventory](../frontend/design/handoff-inventory.json),
+[free editing canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5),
+[reset launcher](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&starting-point-node-id=141%3A7346),
+[canvas handoff notes](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=22-85).
+Live reconciliation resolved all 89 product/state frames and 46 reference frames;
+launcher is separate, with 11 starts total. Original IDs/free canvas preserved.
 
-**R21 completed on resumption:** repaired failed reopen/Retry and pinned its error;
-finished new-row Start/navigation/grip wiring; added working paired disclosure
-states; corrected the wrapped parent header, repeated History and order cue;
-reset all 206 prototype variables (202 at the R21 checkpoint) through eight review examples; fixed legacy
-Back routes that lost source-week or timer context; removed five self-navigation
-branches and duplicate entry handlers; preserved Assistant questions; bound saved
-session labels to captured context; separated the new Forest record; reconciled
-wallet/error labels and disabled unsupported sample controls visibly.
+**Review evidence:** [R23 reports/repairs](reviews/2026-11-03-ux-r23-continuation.md),
+[R24 handoff review](reviews/2026-11-03-ux-r24-handoff.md),
+[independent R22 assessment](reviews/2026-11-02-ux-r22-static-review.md).
+Latest installed-reaction model: 111/111 pass, Reset covers 206 variables. Earlier
+44 time and 601 navigation models remain historical. Static score 87.98/100 is
+heuristic, not measured task success; no new score was inferred from user reports.
+The preview-cancel finding was repaired/rechecked; user reports then accepted
+carryover, frozen Missed, active-session completion, interruption review, Stats,
+Assistant cancel/error retention and static validation. Exact cause of the initial
+early-closure report was not reproduced independently and remains in its evidence.
 
-**Evidence:** 23 installed-reaction journey checks, 44 time/correction/wallet checks
-and 601 navigation-return checks pass in read-only Map models. Initial structural
-inspection covered all 89 product frames; 29 changed roots were rechecked after
-repair. Final scope has no missing/cross-page destinations, malformed guards,
-supported Start/completion/frozen-action gaps or self-navigation. All 90 roots have
-at most one timed entry handler; 22 Cancel controls have no mutation side effects.
-These are structural/model checks, not actual presentation clicks.
+**Remaining boundaries:** keyboard/focus, assistive technology, arbitrary drag,
+actual text reflow/breakpoint behavior, general task editing, real storage/timing,
+optional full reward/correction tours and original checkpoint/hardware/core-trial
+acceptance are not certified. User reports were not timed or agent-observed; actual
+window/zoom was not reported. Reference controls and fixed simulations remain
+bounded as detailed in the handoff. The agent had no working browser/computer
+control. Application/core-trial copies, service and database were not changed.
 
-**Static assessment: 87.98/100 (88 rounded), up from 76.84/100.** Same 13
-weights; heuristic design judgment, not measured task success. No unresolved
-required static P1 in the reviewed scope. Fresh rendered checks cover the main
-800×900 Light compositions plus 640×800 compact/enlarged text, 800×900 dark Today,
-and 1440×900 wide Week. Earlier R20 46-reference evidence remains historical.
-[R21 wiring review](reviews/2026-11-02-ux-r21-wiring.md),
-[independent R22 review](reviews/2026-11-02-ux-r22-static-review.md).
+**Next eligible design-related work:** separately scope app implementation when
+requested, first resolving the proposed measurement/breakpoint/fallback/Earlier/
+cross-month decisions below. Do not automatically start a build. Preserve newer
+M5/M6 capabilities, including concurrent Google/calendar work omitted by this
+prototype. Legacy provider ordering elsewhere in this record was not re-audited
+by the design handoff; reconcile it against current Git before any provider work.
 
-**R23 paused — last owner Codex; walkthrough participant user.** Acceptance scenarios:
-[repair plan §8](../frontend/BEARPLANS_UX_REPAIR_PLAN.md#8-required-validation-matrix-and-walkthrough).
-The user reported “nothing stuck” for the first two examples: lower-row Today
-selection/start/pause/return and Read completion/reopening under Prepare seminar
-discussion, with Reset between them. No fix was requested. This is user-reported
-success, without direct observation, timing or viewport evidence.
-[Walkthrough evidence](reviews/2026-11-02-ux-r23-walkthrough.md).
+**Session checkpoint:** design documentation/evidence committed in the current local
+checkpoint. Push to `origin/main` was rejected by automatic approval review because
+it also includes 11 earlier committed project changes beyond the scoped design
+work. Nothing was pushed. Explicit approval for that full branch history is pending;
+uncommitted backend/CLAUDE edits and duplicate files remain excluded. Checks passed:
+63-file staged scope, 59 inspected evidence/guidance files, 134 local links, JSON/PNG
+consistency, ten archived-script syntax checks and scoped diff whitespace.
 
-**Stopped after the requested spacing fix; resume only when the user asks.**
-The weekly-flow report found no interaction issue but flagged inconsistent day
-styling and an Outline gap. Repaired nine day/result views and collapsed hidden
-Read layout slots across 42 roots; Reset now covers 206 variables. Wednesday,
-Saturday and completed-Read Today renders passed the scoped spacing check; the
-23 journey models were rerun and passed. [Evidence](reviews/2026-11-02-ux-r23-walkthrough.md#weekly-feedback-and-spacing-repair--stop-checkpoint).
-
-**Next on resumption:** user review of the latest spacing repair, affected compact/
-dark states, then task Save/error, compact eighth-row access, crowded Projects
-scrolling, closure/carryover/re-entry, frozen Missed, interruption recovery and
-Stats/Assistant. Overall R23 acceptance and R24 handoff remain open. The separate
-examples do not establish completion during an active timer.
-
-Browser/computer control is unavailable in this session. Other presentation
-journeys, explicit scroll behavior, keyboard/focus, arbitrary dragging and
-assistive technology remain unverified.
-Finite examples simulate one 12-minute save and three task toggles;
-successful purchase/ownership and a general session ledger are not demonstrated.
-R24 reviewed handoff follows R23 acceptance. The full original 36-ticket acceptance,
-application/core-trial and hardware gates remain open. No service/database operations or app tests were performed for the design work.
-The user authorized a scoped checkpoint commit after this repair; no push is authorized. Concurrent
-CLAUDE.md edits and untracked `(1)` file copies appeared during work and are preserved.
+Earlier design baseline commit: `23faa2d`. November 3 refinements, handoff, frontend
+connection plans/skills and UX-C02/C03 evidence form the user-authorized design
+checkpoint. Commit/push results are recorded in Git. Concurrent unfinished backend
+work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint. Detailed finished items are in
+[COMPLETED](COMPLETED.md), rather than parallel mutable design trackers.
 
 - **M5 assistant:** actions through router → grounding → library → gate → Apply,
   replay and Undo; orchestrator with direct answers and plan/tasks/time
@@ -91,22 +75,37 @@ CLAUDE.md edits and untracked `(1)` file copies appeared during work and are pre
   [actions review](reviews/2026-11-01-assistant-actions.md) and
   [evaluation](reviews/2026-11-01-m5-evaluation.md). Last recorded: pytest 863
   passed, 1 Windows-only skip; Vitest 145.
-- **Frontend redesign:** first Figma prototype constructed; user/runtime review pending
+- **Frontend redesign:** bounded repaired prototype and handoff delivered; full original checkpoint/runtime acceptance remains open
   ([UX register](#ux-delivery-register)).
 - **M4 core trial:** candidate recorded; actual seven-day trial not reported.
 
 ## Next up
 
-1. **UX design paused:** resume R23 only when requested; review the spacing repair, finish remaining journeys, then R24 handoff.
+1. **UX-C02 overview and UX-C03 bCourses flow delivered:** [review](reviews/2026-11-03-settings-overview.md), [editable overview](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=219-5719). Six 800×900 Light states, two reusable components and 89 workspace gear entries. 56 structural/reaction/model assertions passed; actual preview, broader widths/themes and user acceptance remain pending. UX-C03 is delivered with follow-ups; next eligible design unit is UX-C04, not started. Existing repair/handoff and runtime/hardware gates stay distinct.
 2. **User hands-on review of the Assistant in the app preview** (pending).
+   **Connection setup baseline:** credential relocation is committed in f375f24
+   and write-only setup routes in 674db93. Current source continues to advance;
+   these are source observations, not a fresh runtime certification by design.
+   **Settings plan/agent package delivered:** [frontend plan index](../frontend/plans/README.md),
+   [connection entrypoint](../frontend/plans/settings-connections/README.md),
+   [spec](../frontend/plans/settings-connections/SPEC.md),
+   [steps](../frontend/plans/settings-connections/EXECUTION_PLAN.md),
+   [54-case test plan](../frontend/plans/settings-connections/TEST_PLAN.md) and
+   [frontend AGENTS](../frontend/AGENTS.md) with linked design/build skills.
+   [Package review](reviews/2026-11-03-frontend-connections-agent-package.md).
+   User confirmed Pause / Resume automatic Google sync; detailed semantics remain
+   proposed. bCourses review placement remains unanswered; the dedicated-view
+   recommendation did not block the overview. The original documentation request started
+   no execution; the later “go for the first work” request delivered UX-C02. Next
+   eligible design unit is UX-C04; application slices remain separately scoped.
 3. Then, each only when the user authorizes it, in this order
    ([build plan §8–9](../BearPlans_Build_Plan.md#assistant-architecture-orchestrator-and-specialists-user-approved-direction-2026-11-01)):
    (4) M6 Google Calendar → (5) bCourses access spike → (6) Canvas (bCourses) →
    (7) Gmail. CalCentral only after an access investigation; MCP only behind a
    vetted adapter boundary. Roadmap steps 1–3 are done (see COMPLETED.md).
    **bCourses connection committed (`422081e`, 2026-11-01; user moved it before
-   Google Calendar):** direct read-only API (MCP vetted and not used), token in
-   git-ignored `.secrets/bearplans.secrets.env`, course picker, review list, Add
+   Google Calendar):** direct read-only API (MCP vetted and not used), token now
+   in data-folder `secrets/bearplans.secrets.env` (f375f24), course picker, review list, Add
    to a course project, due-date change review. Migration 15 → 16. Waiting on
    the user's hands-on check.
    [Review](reviews/2026-11-01-bcourses-connection.md).
@@ -118,7 +117,7 @@ CLAUDE.md edits and untracked `(1)` file copies appeared during work and are pre
   ([review](reviews/2026-11-01-end-week-carryover.md#assistant-carryover-command)).
   **Migrations 14 → 16** ran on the real data at the user's launch on 2026-11-01 23:26
   (backup `backups/pre-upgrade-v13-20261101T232614-….sqlite3`). Needs the user's hands-on check.
-  R13–R15 and R21 reflect these rules; R23 actual walkthrough remains pending.
+  R13–R15/R21 reflect these rules; the bounded R23 prototype walkthrough was reported successful. App hands-on verification remains separate.
 - M5: no applied-action history view (receipts persist; in-page only).
 - M5: daily assistant writes not certified until the user's UI review.
 - Organization: agree a compact frontend/backend/shared-tests ownership and
@@ -144,9 +143,44 @@ CLAUDE.md edits and untracked `(1)` file copies appeared during work and are pre
   created tasks, exact `completed_at` restore, no timer Undo, one change per
   request with ≤4 clarification rounds, stateless proposals). "Every action
   requires Apply" is confirmed.
-- UX draft defaults still unconfirmed: measurements, filing cross-month weeks
+- UX draft defaults still unconfirmed: measurements (59px draft rows versus proposed 64px, and the 1280px threshold versus fallback references), filing cross-month weeks
   under their Monday's month, detailed Earlier selection, and Inter as the Figma-only
   fallback for unavailable SF Pro/Helvetica Neue.
+
+## Settings and Connections delivery register
+
+Stable definitions/tests: [frontend package](../frontend/plans/settings-connections/README.md).
+Only the active small unit/subslice belongs here; completed documentation is not
+visual construction or application delivery. No unit is currently Active.
+UX-C03 delivered under “continue”: [review](reviews/2026-11-03-bcourses-settings-flow.md),
+[25-state inventory](../frontend/design/settings-connections/bcourses-inventory.json)
+and [31/31 installed-action models](../frontend/design/settings-connections/bcourses-models.json).
+Codex was the single writer/self-reviewer. 21 compact dialogs and four 800×900 Light
+work views; 80 installed sources; zero structural font/raster/overlap/width findings.
+All 99 Navigation headers retain one Settings gear. Six isolated demo variables
+are included in all eight reset starts; original task/timer/history variables are
+not touched by connection actions. Actual preview, keyboard/focus, responsive/Dark
+and user acceptance remain pending; secondary work controls are references.
+Next concrete step: UX-C04 Google setup/browser authorization, not started.
+
+Earlier UX-C02 navigation correction covered 95 headers after the user found
+missing gears on Track/Stats/Assistant (89 workspace entries and six close controls).
+UX-C03 adds four review headers; current 99-header coverage is recorded above.
+Actual preview/keyboard/focus checks remain pending.
+Earlier overview unit: UX-C02, Codex single writer with source/structural/visual self-review;
+[review and limitations](reviews/2026-11-03-settings-overview.md). Build skill used
+to reconcile source, not to duplicate backend work. Source includes a43a456
+Pause/status/disconnect work; concurrent account-isolation work remains unverified by design.
+
+| Unit | Current state | Evidence / next step |
+| --- | --- | --- |
+| UX-C01 | Done — Pass with follow-ups | [Coherence review](reviews/2026-11-03-settings-connection-coherence.md); detailed package/guidance validation delivered. |
+| UX-C02 | Done — Pass with follow-ups | [Overview review](reviews/2026-11-03-settings-overview.md): six editable 800×900 Light states, two components; navigation correction covers all 95 headers (89 workspace entries), with zero missing/duplicate/clipped gears. Initial 56/56 assertions and latest 89 return models are metadata/model evidence. Static commands, actual preview and broader acceptance remain explicit. |
+| UX-C03 | Done — Pass with follow-ups | [Review](reviews/2026-11-03-bcourses-settings-flow.md): 25 editable states, 31 models, explicit cancel/save/refresh recovery; actual preview and wider acceptance pending. Dedicated review placement remains proposed. |
+| UX-C04 | Not started | Google file and browser-authorization design. |
+| UX-C05 | Not started | Pause/offline/recovery design; detailed proposed semantics remain labelled. |
+| UX-C06 | Not started | Responsive prototype/user review/handoff after construction. |
+| APP-C01–09 | Not started as this execution sequence | Reuse committed migration/credential routes and any newer concurrent source. Existing capability is not absent because these new ticket definitions are unstarted. Select a small authorized slice before app work. |
 
 ## UX delivery register
 This is the sole mutable UX status table; stable ticket details/acceptance live in
@@ -193,21 +227,18 @@ the user-requested prototype-first draft, with formal checkpoint acceptance pend
 | UX-32.1 | First connected review prototype (user reprioritization) | In review | UX-04; prototype-first request | [Draft delivered; runtime/user gates open](reviews/2026-11-01-figma-prototype.md) |
 | UX-33 | Complete responsive/theme coverage | In review | UX-32 | [Draft subset; acceptance open](reviews/2026-11-01-figma-prototype.md) |
 | UX-34 | Run independent design QA | In review | UX-33 | [Draft subset; acceptance open](reviews/2026-11-01-figma-prototype.md) |
-| UX-35 | Run user walkthrough and fixes | In review | UX-34 | R23 first two examples reported successful; remaining walkthrough pending |
-| UX-36 | Deliver handoff | Not started | UX-35 | User walkthrough / full handoff pending |
+| UX-35 | Run user walkthrough and fixes | In review | UX-34 | R23 bounded repair walkthrough Done; original full checkpoint acceptance remains open |
+| UX-36 | Deliver handoff | In review | UX-35 | R24 scoped repair handoff delivered; original full checkpoint acceptance remains open |
 
-**Next concrete step:** wait for the user to resume, then review the latest spacing fix. UX-06–34 retain
-design evidence, not full acceptance; UX-35 is In review and UX-36 remains unstarted.
+**Next concrete step:** no repair ticket is active. Use the handoff to scope a separately authorized implementation; original UX-06–36 checkpoint acceptance remains distinct.
 
 ### UX repair register
 
 Stable definitions/acceptance: [repair plan](../frontend/BEARPLANS_UX_REPAIR_PLAN.md).
 Owner for the repair sequence: Codex; independent visual/product/verification
 reviewers inspect the active ticket. Evidence is saved in the dated refinement
-review and execution record. R21 native wiring and R22 static QA are complete with execution follow-ups;
-R23 ownership and the next action are recorded above.
-Only one ticket may be Active. Execute R19 after R04 before later optional proposals;
-other dependencies follow the plan. These subtickets do not complete original UX
+review and execution record. All 24 repair subtickets are complete for their scoped acceptance; R23/R24 evidence is linked above. Original roadmap and runtime follow-ups remain explicit.
+Only one ticket may be Active; future dependencies follow the plan. These subtickets do not complete original UX
 acceptance by themselves.
 
 | ID | Repair | Status | Depends on |
@@ -234,8 +265,8 @@ acceptance by themselves.
 | UX-R20 | Responsive/theme propagation | Done | R05–R19 |
 | UX-R21 | Prototype wiring | Done | R13–R20 |
 | UX-R22 | Independent QA/rescore | Done | R20–R21 |
-| UX-R23 | User walkthrough/corrections | Paused | R22 static readiness |
-| UX-R24 | Revised handoff | Not started | R22–R23 |
+| UX-R23 | User walkthrough/corrections | Done | R22 static readiness |
+| UX-R24 | Revised handoff | Done | R22–R23 |
 
 ## Build status
 | Build | State | Evidence / relevant commits |
@@ -264,6 +295,13 @@ acceptance by themselves.
 | M5 larger replans, integrations, plan-only transfer | **Not started** | Separate authorized scope and acceptance required |
 
 ## Guidance discrepancies retained
+- Earlier Settings/package reviews describe the 674db93 baseline. Newer a43a456
+  source adds durable worker Pause, sign-in/disconnect coordination, best-effort
+  revocation and save-before-disconnect replacement. UX-C02 reconciled these as
+  source observations, not fresh runtime passes. Automatic empty-cache UI refresh
+  and explicit calendar-fetch behavior still need Pause reconciliation; concurrent
+  account-isolation changes also need their own review. Credential relocation in
+  f375f24 and data-folder secrets supersede prior code-folder instructions.
 - The explicit October 16 Option/Alt Add request supersedes October 15's one-active
   date refinement. Multiple dates now reference the same leaf, unique per task/date,
   with shared completion, unique-leaf totals and immutable historical placements.

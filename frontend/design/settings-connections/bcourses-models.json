@@ -1,0 +1,131 @@
+{
+  "result": "PASS",
+  "checks": [
+    {
+      "name": "Connect opens an empty draft",
+      "result": "PASS"
+    },
+    {
+      "name": "Connect cancel returns to setup without changing saved demo state",
+      "result": "PASS"
+    },
+    {
+      "name": "Reopening starts with the empty field",
+      "result": "PASS"
+    },
+    {
+      "name": "Check and save enters busy",
+      "result": "PASS"
+    },
+    {
+      "name": "Accepted result occurs after a bounded timeout",
+      "result": "PASS"
+    },
+    {
+      "name": "Accepted setup leads to course selection",
+      "result": "PASS"
+    },
+    {
+      "name": "Replacement cancel returns without applying",
+      "result": "PASS"
+    },
+    {
+      "name": "Replacement has a distinct settled result",
+      "result": "PASS"
+    },
+    {
+      "name": "rejected keeps a retry path",
+      "result": "PASS"
+    },
+    {
+      "name": "offline keeps a retry path",
+      "result": "PASS"
+    },
+    {
+      "name": "saveFailure keeps a retry path",
+      "result": "PASS"
+    },
+    {
+      "name": "Unknown save checks saved access before resubmission",
+      "result": "PASS"
+    },
+    {
+      "name": "Ensure replacement returns to the retained sample draft",
+      "result": "PASS"
+    },
+    {
+      "name": "Course Cancel discards the draft",
+      "result": "PASS"
+    },
+    {
+      "name": "Saved course selection is still three",
+      "result": "PASS"
+    },
+    {
+      "name": "Save applies the two-course selection and refresh evidence",
+      "result": "PASS"
+    },
+    {
+      "name": "Reopen reflects two saved courses",
+      "result": "PASS"
+    },
+    {
+      "name": "Saving three restores the matching management summary",
+      "result": "PASS"
+    },
+    {
+      "name": "Explicit Add alone marks the source item added",
+      "result": "PASS"
+    },
+    {
+      "name": "Review re-entry preserves the one Add result",
+      "result": "PASS"
+    },
+    {
+      "name": "Deadline review after Add preserves Added and accepts only the due date",
+      "result": "PASS"
+    },
+    {
+      "name": "Keep mine survives a later Add",
+      "result": "PASS"
+    },
+    {
+      "name": "Partial course success retries only refresh",
+      "result": "PASS"
+    },
+    {
+      "name": "review retains Settings access",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewAdded retains Settings access",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewUseNew retains Settings access",
+      "result": "PASS"
+    },
+    {
+      "name": "reviewKeepMine retains Settings access",
+      "result": "PASS"
+    },
+    {
+      "name": "All installed connection actions stay within six new demo variables",
+      "result": "PASS"
+    },
+    {
+      "name": "All eight reset starts initialize all six new variables",
+      "result": "PASS"
+    },
+    {
+      "name": "All 99 workspace/Settings headers retain one gear",
+      "result": "PASS"
+    },
+    {
+      "name": "25 views have no font, raster, overlap or width failures",
+      "result": "PASS"
+    }
+  ],
+  "installedSources": 80,
+  "scope": "Installed-action models only; no observed Figma preview or provider/storage execution."
+}

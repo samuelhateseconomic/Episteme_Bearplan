@@ -1,7 +1,9 @@
 # BearPlans — first Figma prototype
 
-Built November 1, 2026 for the user's “build the prototype first” request.
-This is an editable review draft; application implementation is separate.
+Built November 1 and refined through November 3, 2026. The bounded repair
+walkthrough and scoped handoff are delivered; application implementation is separate.
+Start with the [refined UX handoff](BEARPLANS_UX_HANDOFF.md) and
+[exact asset/state inventory](design/handoff-inventory.json).
 
 [Open the prototype](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB/BearPlans?node-id=5-3972&starting-point-node-id=5%3A3972&page-id=2%3A5&scaling=scale-down)
 or [open the free editing canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=50-4633).
@@ -15,8 +17,8 @@ to reset between bounded examples. [R21 evidence](../docs/reviews/2026-11-02-ux-
 separates installed-action models/static renders from actual interaction.
 [Independent static review](../docs/reviews/2026-11-02-ux-r22-static-review.md) scored
 87.98/100 with no unresolved required static P1 in its reviewed scope. Current
-status is in [PROGRESS](../docs/PROGRESS.md); actual walkthrough/user acceptance and
-final implementation handoff remain separate gates.
+status is in [PROGRESS](../docs/PROGRESS.md). The bounded R23 walkthrough and R24
+handoff are complete; full original checkpoint and production acceptance remain separate.
 
 ## What to review
 
@@ -82,10 +84,23 @@ M5 Apply/Undo actions remain outside this sample.
 
 ## Review boundaries and handoff
 
-Structural and scoped visual checks passed, including the repaired compact Track
-fields. Browser presentation could not be launched by the computer-control tool,
-so actual clicks, scrolling, keyboard execution, focus transfer and arbitrary
-state combinations remain unverified. This is not full roadmap acceptance.
+Structural and scoped visual checks passed, including repaired compact Track fields.
+The user reported success for bounded core click/scroll journeys, with preview-
+cancellation repaired and rechecked. The agent had no browser/computer-control
+interface; keyboard/focus, arbitrary combinations and runtime data/timing remain
+unverified. This is not full original roadmap or application acceptance.
+
+The [November 3 continuation](../docs/reviews/2026-11-03-ux-r23-continuation.md)
+records the user's acceptance of weekday/Outline spacing, completed-Read compact/
+dark renders, and task-save recovery repairs. Its 60 installed-reaction Map checks
+pass; actual preview execution is distinguished from those checks. The later
+[preview-cancellation repair/recheck](../docs/reviews/2026-11-03-ux-r23-continuation.md#preview-cancellation-repair-and-targeted-user-recheck)
+adds explicit Keep week open/Skip carryover labels, source-board dismissal and
+stale-preview guards; its 111 model cases pass and the user reported returning
+to the open week. The later user-reported carryover sequence is recorded in the
+same review; overall acceptance remains in shared progress. Original review
+records remain historical evidence. The [R24 reconciliation](../docs/reviews/2026-11-03-ux-r24-handoff.md)
+and [frontend handoff](BEARPLANS_UX_HANDOFF.md) describe the delivered scope.
 
 SF Pro was advertised but returned missing-font errors; Helvetica Neue was not
 available. **Inter is the documented Figma fallback**, with the app's system-font
@@ -98,5 +113,49 @@ are in the [canonical UX plan](BEARPLANS_UX_PLAN.md), current status is in
 [shared progress](../docs/PROGRESS.md), and actual checks/limitations are in the
 [prototype review](../docs/reviews/2026-11-01-figma-prototype.md).
 
-No application source, data, service, core-trial copy, commit or push was changed
-by this Figma work. Concurrent application changes in the checkout remain separate.
+No application source, data, service or core-trial copy was changed by this Figma
+work. The user authorized committing and pushing the November 3 design checkpoint;
+Git records the result. Concurrent unfinished application changes remain separate.
+
+
+## Settings and Connections extension
+
+The [UX-C02 overview review](../docs/reviews/2026-11-03-settings-overview.md)
+adds six 800×900 Light states in a separate
+[free canvas flow section](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=219-5718).
+[Open Settings](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=219-5719)
+or use the gear on any of the 89 prototype workspace states, including Track,
+Stats and Assistant. The UX-C02 audit covered 95 navigation headers
+(89 open Settings; six Settings references close it); UX-C03 adds four review headers.
+The earlier 89-product/46-reference handoff remains its original baseline;
+the extension does not rewrite its acceptance evidence.
+
+Working-state Manage/Hide and overlay close routes are installed. UX-C03 wires
+bCourses setup and management below. Google setup, Pause effects and responsive/
+user verification follow in UX-C04–06; other overview error/busy commands remain references.
+[Exact extension IDs](design/settings-connections/overview-inventory.json) and
+[installed-structure/model checks](design/settings-connections/overview-audit.json)
+distinguish checked metadata from unverified actual preview behavior.
+
+
+### bCourses setup extension — UX-C03
+
+[Flow review](../docs/reviews/2026-11-03-bcourses-settings-flow.md) ·
+[exact inventory](design/settings-connections/bcourses-inventory.json) ·
+[installed-action audit](design/settings-connections/bcourses-audit.json) ·
+[31 scoped action models](design/settings-connections/bcourses-models.json).
+
+- [Connect / Replace canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=234-6386)
+- [Recovery examples and review starts](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=234-6387)
+- [Course / assignment-review canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=234-6388)
+- [Connect sample](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=234-6389&starting-point-node-id=234%3A6389&scaling=min-zoom)
+- [Working Settings entry](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=5-3972&starting-point-node-id=5%3A3972&scaling=min-zoom): gear → Manage bCourses → Replace token / Choose courses / Review assignments.
+
+21 540px dialogs and four 800×900 Light work views. Click an empty token field to
+use the fixed masked sample; no real typing, token storage or bCourses access.
+Direct reference starts lack the original invoking background. Main source Add
+and deadline choices are finite interactions; disabled work actions, ordinary
+review tabs and unsampled groups remain references for UX-C06. Actual preview,
+keyboard/focus and broader widths/themes remain pending. New review views retain
+Settings; current Navigation coverage is 99/99 headers. The earlier 95-header audit
+is historical evidence before these four views were added.
