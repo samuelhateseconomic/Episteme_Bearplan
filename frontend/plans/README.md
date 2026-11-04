@@ -8,6 +8,7 @@ PROGRESS. [COMPLETED](../../docs/COMPLETED.md) records finished work.
 | Work | Canonical entry | Purpose |
 | --- | --- | --- |
 | Settings: bCourses and Google | [Connection plan package](settings-connections/README.md) | Product contract, detailed design/build sequence, tests and agent skills. |
+| Settings implementation handoff | [Reviewed connection handoff](settings-connections/HANDOFF.md) | Exact context/theme assets, interactions, reusable components and build obligations. |
 | Overall UX refresh | [UX plan](../BEARPLANS_UX_PLAN.md) | Stable original brief and UX-01–36 definitions. |
 | Prototype repairs | [Repair plan](../BEARPLANS_UX_REPAIR_PLAN.md) | UX-R01–24 definitions; shared progress holds completion evidence. |
 | Reviewed design handoff | [UX handoff](../BEARPLANS_UX_HANDOFF.md) | Bounded reviewed prototype, constraints and implementation implications. |

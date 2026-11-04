@@ -18,7 +18,8 @@ follow-ups for the bounded user-reported walkthrough; R24 passed with follow-ups
 for the reconciled implementation handoff. Settings overview UX-C02 and bCourses flow UX-C03 are delivered with follow-ups
 under the user’s November 3 requests. UX-C04 Google setup/browser flow is delivered
 with follow-ups under the November 4 “continue” request. UX-C05 Pause/offline/removal
-flow is delivered with follow-ups; the user reported its main flow clear. No unit is active;
+flow is delivered with follow-ups; the user reported its main flow clear. UX-C06 context/theme and scoped handoff
+are delivered with follow-ups under “go ahead”; no unit is active;
 application delivery remains a later unit. Original UX-01–36 checkpoint
 acceptance remains distinct from this repair subset.
 
@@ -49,13 +50,18 @@ window/zoom was not reported. Reference controls and fixed simulations remain
 bounded as detailed in the handoff. The agent had no working browser/computer
 control. Application/core-trial copies, service and database were not changed.
 
-**Next eligible design-related work:** UX-C06 Settings context/theme and remaining
-walkthrough/handoff review. Separately scope app implementation when requested,
-first resolving the proposed measurement/breakpoint/fallback/Earlier/
-cross-month decisions below. Do not automatically start a build. Preserve newer
-M5/M6 capabilities, including concurrent Google/calendar work omitted by this
-prototype. Legacy provider ordering elsewhere in this record was not re-audited
-by the design handoff; reconcile it against current Git before any provider work.
+**Settings design handoff:** UX-C02–C06 are delivered with follow-ups. Read the
+[connection handoff](../frontend/plans/settings-connections/HANDOFF.md) and
+[UX-C06 review](reviews/2026-11-04-settings-context-handoff.md). The user reported
+compact navigation/scroll/cancel/session return, Dark readability and selected
+provider recovery/scope examples clear. Second technical review and real browser
+accessibility/resizing/zoom/provider/restart gates remain open.
+
+**Next eligible work:** separately scope APP-C01 baseline/fixture reconciliation
+when application implementation is requested; do not automatically start it.
+Resolve proposed measurement/breakpoint/fallback/Earlier/cross-month decisions
+where they affect that slice. Preserve newer M5/M6 and concurrent account work.
+Legacy provider ordering below was not re-audited by this design handoff.
 
 **Session checkpoint:** `e4e7804` and the 11 earlier commits were pushed to
 `origin/main` on November 4 after the user explicitly approved all 12 commits.
@@ -85,7 +91,7 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
 
 ## Next up
 
-1. **Settings UX-C02–C05 delivered with follow-ups.** Latest [recovery review](reviews/2026-11-04-connection-recovery.md): 36 compact Light states, 19 starts, 58/58 installed-action models; main Pause → Sync once → Resume user report accepted. Restart persistence and one-shot keeping Pause are confirmed intent, not runtime evidence. Next eligible design unit: UX-C06, not started — full-width/theme contexts and remaining walkthrough/accessibility/handoff checks. App implementation stays separately scoped. Existing core/hardware gates remain open.
+1. **Settings UX-C02–C06 delivered with follow-ups.** Latest [context/handoff review](reviews/2026-11-04-settings-context-handoff.md): 54 window frames across three sizes/two themes, 165/165 new finite models and bounded user reports accepted. [Consolidated guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=293-8853&starting-point-node-id=293%3A8853&scaling=min-zoom). No unit active. Next eligible application unit is APP-C01 only when separately requested. Existing core/hardware/runtime gates remain open.
 2. **User hands-on review of the Assistant in the app preview** (pending).
    **Connection setup baseline:** credential relocation is committed in f375f24
    and write-only setup routes in 674db93. Current source continues to advance;
@@ -101,8 +107,7 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
    one-shot sync keeping automation paused; remaining trigger/acknowledgement/Resume
    details remain proposed. bCourses review placement remains unanswered; the dedicated-view
    recommendation did not block the overview. The original documentation request started
-   no execution; the later “go for the first work” request delivered UX-C02. Next
-   eligible design unit is UX-C06; application slices remain separately scoped.
+   no execution; the later “go for the first work” request delivered UX-C02. UX-C06 scoped handoff is delivered; application slices remain separately scoped.
 3. Then, each only when the user authorizes it, in this order
    ([build plan §8–9](../BearPlans_Build_Plan.md#assistant-architecture-orchestrator-and-specialists-user-approved-direction-2026-11-01)):
    (4) M6 Google Calendar → (5) bCourses access spike → (6) Canvas (bCourses) →
@@ -156,7 +161,26 @@ work, CLAUDE.md edits and untracked `(1)` copies remain outside this checkpoint.
 
 Stable definitions/tests: [frontend package](../frontend/plans/settings-connections/README.md).
 Only the active small unit/subslice belongs here; completed documentation is not
-visual construction or application delivery. No unit is currently Active.
+visual construction or application delivery. No unit is currently Active. UX-C06
+scoped construction/handoff and bounded user design review are delivered with
+follow-ups; see below.
+UX-C06 delivered under “go ahead”: [review](reviews/2026-11-04-settings-context-handoff.md),
+[connection handoff](../frontend/plans/settings-connections/HANDOFF.md),
+[context guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=293-8853&starting-point-node-id=293%3A8853&scaling=min-zoom).
+54 windows / six combinations of size and theme; 30 native PNGs inspected; 4,106 editable nodes
+reconciled; zero font/raster/overflow/overlap findings. 285 installed sources,
+165/165 new finite models; twelve isolated variables retain token sample and
+Today/Track origin. No original task/session/history bindings/writes remain in
+new lanes. Fresh fingerprints match all 145 C05 sources; retained 58 recovery and
+19 Google routing checks pass. User reports: “Clear; all those steps worked”,
+“Readable; layout looks right”, “Clear in all examples”. These are unobserved,
+untimed bounded reports, not actual app/provider/restart verification. Codex sole
+Figma writer/technical reviewer; independent review was the user’s design
+walkthrough. Second technical audit, arbitrary browser resize/zoom, keyboard/focus,
+assistive technology and full state/theme matrix remain follow-ups. No new app,
+credential, service, DB/provider work or release gate change. Uncommitted; no
+commit/push requested. Next eligible APP-C01 requires separate application scope.
+
 UX-C05 delivered: [review](reviews/2026-11-04-connection-recovery.md),
 [36-state inventory](../frontend/design/settings-connections/recovery/inventory.json),
 [recovery guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=270-6806&starting-point-node-id=270%3A6806&scaling=min-zoom).
@@ -168,8 +192,8 @@ The report confirms intended one-shot retention and saved Pause across restart,
 not actual restart/provider/keyboard verification. Four new demo variables join
 all eight full resets; old Google/bCourses/task/session resets retained. No app,
 credential, service, DB or provider work. The user requested a local UX-C05
-checkpoint; Git records the commit. No push requested. Next: UX-C06, not started, for widths/themes, remaining error/removal
-walkthroughs, accessibility and consolidated handoff. **Source gap to carry forward:**
+checkpoint; Git records the commit. No push requested. UX-C06 bounded follow-up evidence is recorded above; app accessibility/provider
+checks remain separate. **Source gap to carry forward:**
 `GoogleSync.while_idle` still executes after a lock-acquisition timeout; Pause and
 Disconnect cannot yet certify the designed in-flight barrier. Mounted/direct-reader
 automatic work also needs Pause gating. See review for later APP-C02/C04 obligations.
@@ -215,7 +239,7 @@ Pause/status/disconnect work; concurrent account-isolation work remains unverifi
 | UX-C03 | Done — Pass with follow-ups | [Review](reviews/2026-11-03-bcourses-settings-flow.md): 25 editable states, 31 models, explicit cancel/save/refresh recovery; actual preview and wider acceptance pending. Dedicated review placement remains proposed. |
 | UX-C04 | Done — Pass with follow-ups | [Review](reviews/2026-11-04-google-settings-flow.md): 47 states, 59 aggregate installed-action models, file/auth/sync separation; actual preview and broader acceptance pending. |
 | UX-C05 | Done — Pass with follow-ups | [Review](reviews/2026-11-04-connection-recovery.md): 36 states, 58 models, main user report accepted; other walkthroughs/responsive/accessibility/runtime evidence pending. |
-| UX-C06 | Not started | Responsive prototype/user review/handoff after construction. |
+| UX-C06 | Delivered — Pass with follow-ups | Three sizes/Light–Dark, bounded user walkthrough and scoped handoff; [review](reviews/2026-11-04-settings-context-handoff.md). |
 | APP-C01–09 | Not started as this execution sequence | Reuse committed migration/credential routes and any newer concurrent source. Existing capability is not absent because these new ticket definitions are unstarted. Select a small authorized slice before app work. |
 
 ## UX delivery register

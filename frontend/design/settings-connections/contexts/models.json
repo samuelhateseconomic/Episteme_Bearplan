@@ -1,0 +1,667 @@
+{
+  "passed": 165,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Prior recovery sources retain all 145 installed reaction fingerprints",
+      "pass": true
+    },
+    {
+      "name": "All context snapshots and guide stay editable",
+      "pass": true
+    },
+    {
+      "name": "No frame overflow, overlap or missing/wrong font findings",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: 640 · Light · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "640 · Light: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: 800 · Light · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "800 · Light: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: 1440 · Light · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "1440 · Light: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: 640 · Dark · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "640 · Dark: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: 800 · Dark · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "800 · Dark: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: all installed controls stay within their lane and allowed state",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: no inherited task/session/history bindings remain",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Settings opens from Today",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: opening Settings preserves the token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: bCourses management opens",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: removal starts with a preview",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Keep token cancels without changing sample state",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: only explicit confirmation changes token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: confirmation leaves all other lanes untouched",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Close keeps the removal result",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Back to work returns to the same Today frame",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Open timer returns to the paused Track sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Settings from Track records Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Back to work restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Settings gear also restores Track origin",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Google management opens without changing token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Google scope opens explicitly",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Not now keeps context and token sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: offline exits restore originating Track sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: 1440 · Dark · Start resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Google scope resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Offline & paused resets only this lane",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: offline policy remains separate from retained last success",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: other Settings examples show automatic policy",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: Today and Track retain the same paused Read sample",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: actual dimensions and semantic theme match",
+      "pass": true
+    },
+    {
+      "name": "1440 · Dark: long management content keeps an explicit vertical scroll area",
+      "pass": true
+    }
+  ],
+  "limitation": "Interprets installed finite reactions and static audits; does not click presentation or test real storage, resizing, keyboard, timer or provider behavior."
+}

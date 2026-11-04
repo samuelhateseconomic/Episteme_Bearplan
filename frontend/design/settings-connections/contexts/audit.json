@@ -1,0 +1,1657 @@
+{
+  "structure": {
+    "lanes": [
+      {
+        "root": "288:7329",
+        "key": "Context / 640 · Light / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": null
+      },
+      {
+        "root": "288:7494",
+        "key": "Context / 640 · Light / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7505",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7544",
+        "key": "Context / 640 · Light / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7555",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7602",
+        "key": "Context / 640 · Light / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7613",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 873,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7662",
+        "key": "Context / 640 · Light / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": null
+      },
+      {
+        "root": "288:7714",
+        "key": "Context / 640 · Light / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7725",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7794",
+        "key": "Context / 640 · Light / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7805",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7870",
+        "key": "Context / 640 · Light / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7881",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "288:7943",
+        "key": "Context / 640 · Light / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "288:7954",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7013",
+        "key": "Context / 800 · Light / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:7178",
+        "key": "Context / 800 · Light / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7189",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7228",
+        "key": "Context / 800 · Light / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7239",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7286",
+        "key": "Context / 800 · Light / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7297",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 855,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7346",
+        "key": "Context / 800 · Light / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:7398",
+        "key": "Context / 800 · Light / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7409",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7479",
+        "key": "Context / 800 · Light / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7490",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7556",
+        "key": "Context / 800 · Light / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7567",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7630",
+        "key": "Context / 800 · Light / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:7641",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7749",
+        "key": "Context / 1440 · Light / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:7914",
+        "key": "Context / 1440 · Light / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:7925",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:7964",
+        "key": "Context / 1440 · Light / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:7975",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8022",
+        "key": "Context / 1440 · Light / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:8033",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 855,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8082",
+        "key": "Context / 1440 · Light / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:8134",
+        "key": "Context / 1440 · Light / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:8145",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8215",
+        "key": "Context / 1440 · Light / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:8226",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8292",
+        "key": "Context / 1440 · Light / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:8303",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8366",
+        "key": "Context / 1440 · Light / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:1"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:8377",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8485",
+        "key": "Context / 640 · Dark / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": null
+      },
+      {
+        "root": "290:8650",
+        "key": "Context / 640 · Dark / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:8661",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8700",
+        "key": "Context / 640 · Dark / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:8711",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8758",
+        "key": "Context / 640 · Dark / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:8769",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 873,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8818",
+        "key": "Context / 640 · Dark / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": null
+      },
+      {
+        "root": "290:8870",
+        "key": "Context / 640 · Dark / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:8881",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:8951",
+        "key": "Context / 640 · Dark / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:8962",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 731,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9028",
+        "key": "Context / 640 · Dark / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:9039",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9102",
+        "key": "Context / 640 · Dark / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 640,
+        "height": 800,
+        "scroll": {
+          "id": "290:9113",
+          "width": 640,
+          "height": 740,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9221",
+        "key": "Context / 800 · Dark / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:9386",
+        "key": "Context / 800 · Dark / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9397",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9436",
+        "key": "Context / 800 · Dark / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9447",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9494",
+        "key": "Context / 800 · Dark / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9505",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 855,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9554",
+        "key": "Context / 800 · Dark / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:9606",
+        "key": "Context / 800 · Dark / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9617",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9687",
+        "key": "Context / 800 · Dark / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9698",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9764",
+        "key": "Context / 800 · Dark / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9775",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9838",
+        "key": "Context / 800 · Dark / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 800,
+        "height": 900,
+        "scroll": {
+          "id": "290:9849",
+          "width": 800,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:9957",
+        "key": "Context / 1440 · Dark / work",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:10122",
+        "key": "Context / 1440 · Dark / overview",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10133",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 567,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10172",
+        "key": "Context / 1440 · Dark / google",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10183",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10230",
+        "key": "Context / 1440 · Dark / bcourses",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10241",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 855,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10290",
+        "key": "Context / 1440 · Dark / track",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": null
+      },
+      {
+        "root": "290:10342",
+        "key": "Context / 1440 · Dark / consent",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10353",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10423",
+        "key": "Context / 1440 · Dark / offline",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10434",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 713,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10500",
+        "key": "Context / 1440 · Dark / remove",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10511",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      },
+      {
+        "root": "290:10574",
+        "key": "Context / 1440 · Dark / removed",
+        "mode": {
+          "VariableCollectionId:2:8": "2:2"
+        },
+        "width": 1440,
+        "height": 900,
+        "scroll": {
+          "id": "290:10585",
+          "width": 1440,
+          "height": 840,
+          "contentHeight": 765,
+          "overflow": "VERTICAL"
+        }
+      }
+    ],
+    "overflow": [],
+    "overlap": [],
+    "raster": [],
+    "fonts": [],
+    "types": {
+      "FRAME": 1152,
+      "VECTOR": 186,
+      "TEXT": 1614,
+      "INSTANCE": 942,
+      "ELLIPSE": 42,
+      "RECTANGLE": 78
+    }
+  },
+  "states": [
+    {
+      "section": "288:7328",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "288:7329"
+        },
+        {
+          "key": "overview",
+          "id": "288:7494",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "288:7544",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "288:7602",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "288:7662"
+        },
+        {
+          "key": "consent",
+          "id": "288:7714",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "288:7794",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "288:7870",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8853",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "288:7943",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    },
+    {
+      "section": "290:7012",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "290:7013"
+        },
+        {
+          "key": "overview",
+          "id": "290:7178",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "290:7228",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "290:7286",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "290:7346"
+        },
+        {
+          "key": "consent",
+          "id": "290:7398",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "290:7479",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "290:7556",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8855",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "290:7630",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    },
+    {
+      "section": "290:7748",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "290:7749"
+        },
+        {
+          "key": "overview",
+          "id": "290:7914",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "290:7964",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "290:8022",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "290:8082"
+        },
+        {
+          "key": "consent",
+          "id": "290:8134",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "290:8215",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "290:8292",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8857",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "290:8366",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    },
+    {
+      "section": "290:8484",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "290:8485"
+        },
+        {
+          "key": "overview",
+          "id": "290:8650",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "290:8700",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "290:8758",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "290:8818"
+        },
+        {
+          "key": "consent",
+          "id": "290:8870",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "290:8951",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "290:9028",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8859",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "290:9102",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    },
+    {
+      "section": "290:9220",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "290:9221"
+        },
+        {
+          "key": "overview",
+          "id": "290:9386",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "290:9436",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "290:9494",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "290:9554"
+        },
+        {
+          "key": "consent",
+          "id": "290:9606",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "290:9687",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "290:9764",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8861",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "290:9838",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    },
+    {
+      "section": "290:9956",
+      "oldBindings": [],
+      "sources": 44,
+      "states": [
+        {
+          "key": "work",
+          "id": "290:9957"
+        },
+        {
+          "key": "overview",
+          "id": "290:10122",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "google",
+          "id": "290:10172",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "bcourses",
+          "id": "290:10230",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved"
+        },
+        {
+          "key": "track",
+          "id": "290:10290"
+        },
+        {
+          "key": "consent",
+          "id": "290:10342",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "offline",
+          "id": "290:10423",
+          "googlePolicy": "Paused · Google unavailable",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "remove",
+          "id": "290:10500",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusVariable": "VariableID:291:8863",
+          "bcStatusLiteral": "Token saved",
+          "bodyScroll": "NONE"
+        },
+        {
+          "key": "removed",
+          "id": "290:10574",
+          "googlePolicy": "Automatic sync on",
+          "googleLast": "Last complete sync: Nov 3 at 9:41 AM",
+          "bcStatusLiteral": "Token not saved",
+          "bodyScroll": "NONE"
+        }
+      ]
+    }
+  ],
+  "guide": {
+    "id": "293:8853",
+    "width": 800,
+    "height": 1284,
+    "types": {
+      "FRAME": 14,
+      "TEXT": 43,
+      "INSTANCE": 29
+    },
+    "issues": []
+  },
+  "snapshots": [
+    {
+      "id": "288:7329",
+      "texts": [
+        {
+          "id": "288:7344",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I288:7359;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "288:7389",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "288:7390",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "290:7013",
+      "texts": [
+        {
+          "id": "290:7028",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I290:7043;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:7073",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "290:7074",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "290:7749",
+      "texts": [
+        {
+          "id": "290:7764",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I290:7779;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:7809",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "290:7810",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "290:8485",
+      "texts": [
+        {
+          "id": "290:8500",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I290:8515;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:8545",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "290:8546",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "290:9221",
+      "texts": [
+        {
+          "id": "290:9236",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I290:9251;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:9281",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "290:9282",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "290:9957",
+      "texts": [
+        {
+          "id": "290:9972",
+          "text": "Sunday, November 1"
+        },
+        {
+          "id": "I290:9987;3:285",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:10017",
+          "text": "Paused · 18:00 remaining"
+        },
+        {
+          "id": "290:10018",
+          "text": "Read the primary source"
+        }
+      ]
+    },
+    {
+      "id": "288:7662",
+      "texts": [
+        {
+          "id": "288:7686",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "288:7687",
+          "text": "PAUSED"
+        },
+        {
+          "id": "288:7688",
+          "text": "18:00"
+        },
+        {
+          "id": "288:7689",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    },
+    {
+      "id": "290:7346",
+      "texts": [
+        {
+          "id": "290:7370",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:7371",
+          "text": "PAUSED"
+        },
+        {
+          "id": "290:7372",
+          "text": "18:00"
+        },
+        {
+          "id": "290:7373",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    },
+    {
+      "id": "290:8082",
+      "texts": [
+        {
+          "id": "290:8106",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:8107",
+          "text": "PAUSED"
+        },
+        {
+          "id": "290:8108",
+          "text": "18:00"
+        },
+        {
+          "id": "290:8109",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    },
+    {
+      "id": "290:8818",
+      "texts": [
+        {
+          "id": "290:8842",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:8843",
+          "text": "PAUSED"
+        },
+        {
+          "id": "290:8844",
+          "text": "18:00"
+        },
+        {
+          "id": "290:8845",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    },
+    {
+      "id": "290:9554",
+      "texts": [
+        {
+          "id": "290:9578",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:9579",
+          "text": "PAUSED"
+        },
+        {
+          "id": "290:9580",
+          "text": "18:00"
+        },
+        {
+          "id": "290:9581",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    },
+    {
+      "id": "290:10290",
+      "texts": [
+        {
+          "id": "290:10314",
+          "text": "Read the primary source"
+        },
+        {
+          "id": "290:10315",
+          "text": "PAUSED"
+        },
+        {
+          "id": "290:10316",
+          "text": "18:00"
+        },
+        {
+          "id": "290:10317",
+          "text": "12 min confirmed · Waiting for you"
+        }
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "name": "Light",
+      "values": {
+        "color/bg": {
+          "r": 0.9647058844566345,
+          "g": 0.95686274766922,
+          "b": 0.9372549057006836,
+          "a": 1
+        },
+        "color/surface": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "color/text": {
+          "r": 0.12156862765550613,
+          "g": 0.1411764770746231,
+          "b": 0.12941177189350128,
+          "a": 1
+        },
+        "color/muted": {
+          "r": 0.364705890417099,
+          "g": 0.3960784375667572,
+          "b": 0.37254902720451355,
+          "a": 1
+        },
+        "color/accent": {
+          "r": 0.18431372940540314,
+          "g": 0.41960784792900085,
+          "b": 0.30980393290519714,
+          "a": 1
+        },
+        "color/onAccent": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "color/soft": {
+          "r": 0.9098039269447327,
+          "g": 0.9333333373069763,
+          "b": 0.9058823585510254,
+          "a": 1
+        },
+        "color/error": {
+          "r": 0.6431372761726379,
+          "g": 0.14901961386203766,
+          "b": 0.1725490242242813,
+          "a": 1
+        },
+        "color/errorBg": {
+          "r": 0.9843137264251709,
+          "g": 0.929411768913269,
+          "b": 0.9215686321258545,
+          "a": 1
+        },
+        "color/focus": {
+          "r": 0.10196078568696976,
+          "g": 0.37254902720451355,
+          "b": 0.7058823704719543,
+          "a": 1
+        }
+      }
+    },
+    {
+      "name": "Dark",
+      "values": {
+        "color/bg": {
+          "r": 0.08627451211214066,
+          "g": 0.09803921729326248,
+          "b": 0.09019608050584793,
+          "a": 1
+        },
+        "color/surface": {
+          "r": 0.12156862765550613,
+          "g": 0.1411764770746231,
+          "b": 0.12941177189350128,
+          "a": 1
+        },
+        "color/text": {
+          "r": 0.9098039269447327,
+          "g": 0.9215686321258545,
+          "b": 0.9098039269447327,
+          "a": 1
+        },
+        "color/muted": {
+          "r": 0.6392157077789307,
+          "g": 0.6705882549285889,
+          "b": 0.6470588445663452,
+          "a": 1
+        },
+        "color/accent": {
+          "r": 0.42352941632270813,
+          "g": 0.7333333492279053,
+          "b": 0.5764706134796143,
+          "a": 1
+        },
+        "color/onAccent": {
+          "r": 0.054901961237192154,
+          "g": 0.10196078568696976,
+          "b": 0.07450980693101883,
+          "a": 1
+        },
+        "color/soft": {
+          "r": 0.14901961386203766,
+          "g": 0.23529411852359772,
+          "b": 0.18039216101169586,
+          "a": 1
+        },
+        "color/error": {
+          "r": 1,
+          "g": 0.5411764979362488,
+          "b": 0.5607843399047852,
+          "a": 1
+        },
+        "color/errorBg": {
+          "r": 0.250980406999588,
+          "g": 0.14509804546833038,
+          "b": 0.16470588743686676,
+          "a": 1
+        },
+        "color/focus": {
+          "r": 0.5411764979362488,
+          "g": 0.7058823704719543,
+          "b": 0.9725490212440491,
+          "a": 1
+        }
+      }
+    }
+  ],
+  "ledger": {
+    "count": 4106,
+    "sortedIdsFNV1a": "59016469"
+  }
+}

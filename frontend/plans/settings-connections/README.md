@@ -25,6 +25,9 @@ remain bounded by the user’s actual request.
 5. Load the applicable skill below. Read implementation details only for authorized
    application work; planning a test never means that test has passed.
 
+6. [HANDOFF.md](HANDOFF.md): reviewed asset/context map, simulation boundaries and
+   implementation obligations. It does not replace SPEC or current PROGRESS.
+
 ## Choose the workflow
 
 | Request | Skill and outcome |

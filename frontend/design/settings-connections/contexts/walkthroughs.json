@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-04",
+  "method": "User reports, not directly observed or timed; actual window/zoom/input method unknown",
+  "reports": [
+    {
+      "prompt": "In the new [Settings review guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=293-8853&starting-point-node-id=293%3A8853&scaling=min-zoom), try “640 · Light · Start”: open Settings → bCourses Manage, scroll the long course names, open Remove token and choose Keep token. Then Back to work → Open timer. Are scrolling, Cancel and returning to the same paused Read sample clear? These are fixed samples; other task/timer controls are visual references.",
+      "answer": "Clear; all those steps worked"
+    },
+    {
+      "prompt": "From the same guide, inspect “640 · Dark · Start” and “Google scope” in its row. Are text, buttons and the dialog readable, with no awkward gaps or clipped actions?",
+      "answer": "Readable; layout looks right"
+    },
+    {
+      "prompt": "For the remaining provider walkthrough, use “bCourses flow” in the review guide and inspect “First connection” and “Rejected token.” Then use “Google setup” → “Simulate missing permissions,” followed by “Pause & recovery” → “Local removal · Google unavailable.” Is recovery clear in each case, especially that Google exports all local tasks (including added bCourses tasks), while “disconnected here” does not prove Google revoked access? These are fixed simulations.",
+      "answer": "Clear in all examples"
+    }
+  ]
+}

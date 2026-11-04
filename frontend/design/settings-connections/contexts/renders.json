@@ -1,0 +1,386 @@
+[
+  {
+    "nodeId": "288:7494",
+    "name": "640-light-overview.png",
+    "key": "overview",
+    "lane": 0,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "d3c5fd6c698f84f4b70a83c40b09445b17efd8c6d6b7a697c92674cd70c2406c"
+  },
+  {
+    "nodeId": "288:7602",
+    "name": "640-light-bcourses.png",
+    "key": "bcourses",
+    "lane": 0,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "d4d8a2dfd6f2ec2c86dd03adf6d174cdad0c652d8c4503a6dd98e9e1a4a06fd9"
+  },
+  {
+    "nodeId": "288:7714",
+    "name": "640-light-consent.png",
+    "key": "consent",
+    "lane": 0,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "7a01dc7eb762f39e15bc8903ca30c2b2add070c36ff1dd81c859f8d6ccee1d5e"
+  },
+  {
+    "nodeId": "288:7794",
+    "name": "640-light-offline.png",
+    "key": "offline",
+    "lane": 0,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "6004736694d0df2555c738f7ac9abc8c3cbe55e14e06d77459f740972b4d97cb"
+  },
+  {
+    "nodeId": "290:7178",
+    "name": "800-light-overview.png",
+    "key": "overview",
+    "lane": 1,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "a2b2b9c2ba5212313f78d94bc3cd13ef776315cdf7c7dbe0b81689d728e60a79"
+  },
+  {
+    "nodeId": "290:7286",
+    "name": "800-light-bcourses.png",
+    "key": "bcourses",
+    "lane": 1,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "61cc7d428f3e9007fc72411831453b8be16e6ed4b5feefc948ff86be91b36c39"
+  },
+  {
+    "nodeId": "290:7398",
+    "name": "800-light-consent.png",
+    "key": "consent",
+    "lane": 1,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "726d8394c6dfb85c2c6ab7388890851ba8ef75cad728434c81216e311ff2b810"
+  },
+  {
+    "nodeId": "290:7479",
+    "name": "800-light-offline.png",
+    "key": "offline",
+    "lane": 1,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "25f025cfa85d36cdd8d3683d2ad2294cc16a8f128968910959412c0d2414effd"
+  },
+  {
+    "nodeId": "290:7914",
+    "name": "1440-light-overview.png",
+    "key": "overview",
+    "lane": 2,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "741967bd114dc1b34c6ef07085e450f2fed9c2a1626ded0145e39bd4119cf6de"
+  },
+  {
+    "nodeId": "290:8022",
+    "name": "1440-light-bcourses.png",
+    "key": "bcourses",
+    "lane": 2,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "3909ad8f299bd0304c1d768938810dd6f042948c0be4f38d0a7d7a3237b14c2c"
+  },
+  {
+    "nodeId": "290:8134",
+    "name": "1440-light-consent.png",
+    "key": "consent",
+    "lane": 2,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "680acc15005dd3ec378196d4a4b11e97b824315bd4897d3c87f79d2793e326e9"
+  },
+  {
+    "nodeId": "290:8215",
+    "name": "1440-light-offline.png",
+    "key": "offline",
+    "lane": 2,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "6f0fb5320bccf894f0009c8786711934cce0de831da284e30f40f733ccdc734e"
+  },
+  {
+    "nodeId": "290:8650",
+    "name": "640-dark-overview.png",
+    "key": "overview",
+    "lane": 3,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "8a8c1936ed5d2d9751c4566582db26c67adec93d98a3909378ebe13034a52534"
+  },
+  {
+    "nodeId": "290:8758",
+    "name": "640-dark-bcourses.png",
+    "key": "bcourses",
+    "lane": 3,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "ab0b2004b9885e2f5444f7f3e7c2630a18d86e3a15d8a1645b1639a78338260c"
+  },
+  {
+    "nodeId": "290:8870",
+    "name": "640-dark-consent.png",
+    "key": "consent",
+    "lane": 3,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "d0bd5a860dc0010c3d133ad32385aab1bcdd6284956a5bc4216e21cd73a1be4f"
+  },
+  {
+    "nodeId": "290:8951",
+    "name": "640-dark-offline.png",
+    "key": "offline",
+    "lane": 3,
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "40026d361947fdc999e3d046157e6d75218b6513f72830fa5c8725a08ef2c238"
+  },
+  {
+    "nodeId": "290:9386",
+    "name": "800-dark-overview.png",
+    "key": "overview",
+    "lane": 4,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "cf47630e327a4161e3297dd2f6c5ed0f97c0c209de146fdf37e65511bfadbc03"
+  },
+  {
+    "nodeId": "290:9494",
+    "name": "800-dark-bcourses.png",
+    "key": "bcourses",
+    "lane": 4,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "b2572116c943c4bb29d613743e5e8484e4e1034f6e86b718d5e4a8f0aa99ae52"
+  },
+  {
+    "nodeId": "290:9606",
+    "name": "800-dark-consent.png",
+    "key": "consent",
+    "lane": 4,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "261aa5e41da8c93ca5d01cb0f2939f4b5ccd6a7141465c32b38f91c2c3b72706"
+  },
+  {
+    "nodeId": "290:9687",
+    "name": "800-dark-offline.png",
+    "key": "offline",
+    "lane": 4,
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "91858204df83d5a93633af0af3eb7b924d2987d0fc9978d3dabd675173e38092"
+  },
+  {
+    "nodeId": "290:10122",
+    "name": "1440-dark-overview.png",
+    "key": "overview",
+    "lane": 5,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "3ce69cee8c3c010389eb5844df5cd07403ccb9bdd4cb46e60d25fa655949df59"
+  },
+  {
+    "nodeId": "290:10230",
+    "name": "1440-dark-bcourses.png",
+    "key": "bcourses",
+    "lane": 5,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "5a90a418a913aa2db2cab1947ab216c57e9b5e456bd441f11732064445e50d52"
+  },
+  {
+    "nodeId": "290:10342",
+    "name": "1440-dark-consent.png",
+    "key": "consent",
+    "lane": 5,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "d1e194a0e5d0194b14c9d825c840e790aa2127c986ad5c8fd894592e568dd625"
+  },
+  {
+    "nodeId": "290:10423",
+    "name": "1440-dark-offline.png",
+    "key": "offline",
+    "lane": 5,
+    "expected": [
+      1440,
+      900
+    ],
+    "width": 1440,
+    "height": 900,
+    "sha256": "555eac2e8045e36f4d1f3349be863530a91ff133a2c960acd90138e88e5f703a"
+  },
+  {
+    "nodeId": "293:8853",
+    "name": "review-guide.png",
+    "key": "guide",
+    "expected": [
+      800,
+      1284
+    ],
+    "width": 800,
+    "height": 1284,
+    "sha256": "246fab6fa32dac7e57fca0d51dff01e1029f7e6798ddb1ed5c3d8a30bc429f7d"
+  },
+  {
+    "nodeId": "288:7329",
+    "name": "640-light-work.png",
+    "key": "work",
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "074b1bda394338878ec07b784155b065de153e6ff087439ad16239f7e423506e"
+  },
+  {
+    "nodeId": "290:8485",
+    "name": "640-dark-work.png",
+    "key": "work",
+    "expected": [
+      640,
+      800
+    ],
+    "width": 640,
+    "height": 800,
+    "sha256": "8ee3238f838f54ad7e94fe7fc93417aad81036e8a08859dbbe29c84d8f9f00d0"
+  },
+  {
+    "nodeId": "290:9554",
+    "name": "800-dark-track.png",
+    "key": "track",
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "a2c31ec019d9260fc7d4036afe97e6314da4b6ddcbf5d0d184865d65ad4b1fd3"
+  },
+  {
+    "nodeId": "290:7556",
+    "name": "800-light-removal.png",
+    "key": "remove",
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "a7aa8b1699c3aab79d2fef8c738e82ceac222bbd2d85c3341dddca764d2569da"
+  },
+  {
+    "nodeId": "290:7630",
+    "name": "800-light-removed.png",
+    "key": "removed",
+    "expected": [
+      800,
+      900
+    ],
+    "width": 800,
+    "height": 900,
+    "sha256": "86d62c31badc22317bbeb96efc5fc789afa1eff13e21737871263803d08d7c35"
+  }
+]

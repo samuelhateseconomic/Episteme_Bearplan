@@ -6,6 +6,10 @@ it does not authorize or start application changes. Current work/gates belong on
 in [PROGRESS](../docs/PROGRESS.md). Stable decisions remain in the
 [UX plan](BEARPLANS_UX_PLAN.md) and [shared guidance](../AGENTS.md).
 
+Settings and connection extensions are specified in the [connection handoff](plans/settings-connections/HANDOFF.md),
+including the November 4 width/theme and bounded navigation review. Preserve the
+original product inventory below; extension IDs/evidence live with that package.
+
 ## Open and identify this version
 
 - [Free editing canvas](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-id=2-5).

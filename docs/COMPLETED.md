@@ -9,6 +9,26 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-04 — UX-C06 Settings context/theme and scoped handoff
+
+Delivered six width/theme sections (54 full-window frames), an 800×1284 consolidated
+guide, long-content/scroll, modal/session-return and Light/Dark control-state
+references. User reported compact scrolling/Keep token/paused-session return, Dark
+readability and selected provider recovery/scope examples clear. Codex sole Figma
+writer/technical reviewer; independent review is the bounded user walkthrough.
+
+Checks: 165/165 new finite models; 58 recovery and 19 Google routing retained-readback
+checks pass; live fingerprints match 145 prior recovery sources. 4,106 editable
+nodes reconcile with the ledger; zero structural/font/raster findings; 30 native-size
+PNG renders inspected. 360 local links, nine JSON files, PNG hashes, ten archived
+call-body syntax checks and diff checks passed. New lanes have zero original task/session/history bindings
+and only twelve isolated sample variables. Full app accessibility/resizing/provider/
+restart and a second technical audit remain follow-ups, not certified acceptance.
+[Review](reviews/2026-11-04-settings-context-handoff.md),
+[handoff](../frontend/plans/settings-connections/HANDOFF.md). No app/data/provider
+changes. Uncommitted; no commit/push requested. Application work remains separately
+scoped; current next action is in PROGRESS.
+
 ## 2026-11-04 — UX-C05 local design checkpoint
 
 User requested a commit of the completed Pause/offline/removal prototype evidence,

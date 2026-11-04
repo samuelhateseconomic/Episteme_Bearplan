@@ -203,3 +203,18 @@ Other error/removal walkthroughs, complete contexts/themes and accessibility rem
 UX-C06 follow-ups. Source lock-timeout/automatic-reader gaps are recorded for later
 app implementation. The historical C02–C04 audits remain their original evidence;
 C05 contains the changed installed sources and current relevant bounds.
+
+## Settings context/theme review — November 4
+
+[Open the consolidated guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=293-8853&starting-point-node-id=293%3A8853&scaling=min-zoom)
+or read the [connection implementation handoff](plans/settings-connections/HANDOFF.md).
+Six flow sections add 54 editable window references at 640×800, 800×900 and
+1440×900 in Light/Dark. The 800×1284 guide provides 18 isolated starts plus links
+to original provider/recovery guides, with static focus/disabled/loading/error
+specimens. Existing flow IDs and page organization remain.
+
+Scoped navigation retains Today/Track origin and changes only isolated sample
+state; other controls are disclosed visual references. The user reported compact
+scroll/cancel/session return, Dark readability and selected provider recovery/scope
+examples clear. This does not certify real session identity, keyboard/focus, browser
+resizing/zoom, provider access or restart. [Review and evidence](../docs/reviews/2026-11-04-settings-context-handoff.md).

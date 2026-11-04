@@ -1,0 +1,122 @@
+[
+  {
+    "id": "VariableID:291:8853",
+    "name": "Connections context / 640 · Light / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:291:8855",
+    "name": "Connections context / 800 · Light / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:291:8857",
+    "name": "Connections context / 1440 · Light / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:291:8859",
+    "name": "Connections context / 640 · Dark / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:291:8861",
+    "name": "Connections context / 800 · Dark / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:291:8863",
+    "name": "Connections context / 1440 · Dark / bCourses token status",
+    "type": "STRING",
+    "scopes": [
+      "TEXT_CONTENT"
+    ],
+    "values": {
+      "9:4": "Token saved"
+    }
+  },
+  {
+    "id": "VariableID:308:8888",
+    "name": "Connections context / 0 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  },
+  {
+    "id": "VariableID:308:8909",
+    "name": "Connections context / 1 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  },
+  {
+    "id": "VariableID:308:8930",
+    "name": "Connections context / 2 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  },
+  {
+    "id": "VariableID:308:8951",
+    "name": "Connections context / 3 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  },
+  {
+    "id": "VariableID:308:8972",
+    "name": "Connections context / 4 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  },
+  {
+    "id": "VariableID:308:8993",
+    "name": "Connections context / 5 / return view",
+    "type": "STRING",
+    "scopes": [],
+    "values": {
+      "9:4": "work"
+    }
+  }
+]
