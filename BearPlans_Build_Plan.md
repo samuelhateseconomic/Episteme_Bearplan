@@ -215,6 +215,43 @@ and is added only if a supported access route exists.
 - The Gmail connector available to the Claude Code development tool is not part
   of BearPlans and is not the app's integration path.
 
+### Connection setup inside the app (requested 2026-11-03, plan only — not started)
+
+User request: set and update the bCourses token and the Google sign-in file from
+inside BearPlans, never by editing files in VS Code. Built **after M6 and before
+Gmail** (Gmail reuses the same Google setup). Estimate: one day, four steps.
+
+1. **Secrets move out of the code folder** *(proposed default)*. Credentials go to
+   `~/Library/Application Support/BearPlans/secrets/` (owner-only folder, files
+   mode 600), next to the data rather than inside the repository, so the trial copy
+   and future code updates share one setup. On first launch, existing files in
+   `.secrets/` are copied there once and then used; `.secrets/` is left untouched.
+   `BEARPLANS_SECRETS_FILE` still overrides for tests. Credentials stay out of
+   backups and out of the database.
+2. **Write-only backend routes.** Save/replace/remove the bCourses token; upload/
+   replace/remove the Google Desktop-app client file. Each save is checked before it
+   is kept: the token by one read-only bCourses call, the client file by shape
+   (`installed` type, client ID/secret, Google addresses). Saves are atomic and
+   owner-only. Routes report only *set / not set, saved date, last check result* —
+   never the value, any part of it, or the file contents. Size limits, existing
+   Host/Origin/CSRF protection, no logging of bodies. Removing the Google client
+   also signs out; Disconnect still revokes the Google token when possible.
+3. **Connections screen.** One place for bCourses and Google: status, "Paste token"
+   (password field, cleared after save), "Choose sign-in file" (file picker),
+   Replace, Remove, Test, and short step-by-step help with links to the bCourses
+   token page and the Google Cloud credentials page (APIs to enable, test user).
+   Error messages that today say "edit `.secrets/…`" point to this screen instead.
+   The assistant cannot read or change these settings.
+4. **Checks and docs.** pytest (value never returned or logged, invalid input keeps
+   the old value, permissions, migration of existing files), Vitest, and a
+   real-Chrome test using fake credentials. Then update the secrets rule in
+   `AGENTS.md`, the bCourses and Google reviews, and record the result.
+
+Acceptance: with VS Code closed, the user can replace an expired bCourses token and
+a new Google sign-in file in the app, and both connections work again after Refresh
+or Connect Google; no credential value appears in the page, API responses, logs,
+backups or Git.
+
 Use Mac Keychain for tokens. SQLite and backups contain private content and are not automatically encrypted by local storage. Use restrictive file permissions, avoid content/credential logging, document backup contents and rely on the owner's disk-encryption policy; evaluate app-level encryption only if the threat model requires it. Disconnect revokes when supported and removes stored tokens; cached-source deletion is a separate explicit choice.
 
 Bind the local service to loopback. Validate Host and Origin, use authenticated local requests and CSRF protection where relevant, and avoid wildcard CORS. An unrelated website must not be able to call local mutation routes. Ollama stays behind the service and is not exposed to the LAN.
