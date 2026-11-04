@@ -9,6 +9,17 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-04 — Session checkpoint and earlier history pushed
+
+After explicit user approval for all 12 commits on `main`, `git fetch origin`
+confirmed zero commits behind and 12 ahead. `git push origin main` succeeded,
+advancing `origin/main` from `c4a5d14` to design checkpoint `e4e7804`. This resolves
+the earlier approval rejections; no force push was used. Existing uncommitted
+backend/account-isolation work, CLAUDE edits and duplicate files remain untouched.
+Updated the shared progress record to reflect publication. Only documentation
+checks are needed for this handoff update; application tests and acceptance gates
+were not rerun or advanced. UX-C04 remains the next eligible design unit, not started.
+
 ## 2026-11-03 — Session design checkpoint committed; push awaiting approval
 
 Committed the 63-file design/documentation checkpoint after staged-scope and diff

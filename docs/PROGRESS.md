@@ -11,7 +11,7 @@ in the linked reviews.
 item here and update [Build status](#build-status). Keep this file short; do not
 paste long check logs here.
 
-## Current state — November 3, 2026
+## Current state — November 4, 2026
 
 **UX repair/handoff delivered: 24/24 repair subtickets Done.** R23 passed with
 follow-ups for the bounded user-reported walkthrough; R24 passed with follow-ups
@@ -54,13 +54,14 @@ M5/M6 capabilities, including concurrent Google/calendar work omitted by this
 prototype. Legacy provider ordering elsewhere in this record was not re-audited
 by the design handoff; reconcile it against current Git before any provider work.
 
-**Session checkpoint:** design documentation/evidence committed in the current local
-checkpoint. Push to `origin/main` was rejected by automatic approval review because
-it also includes 11 earlier committed project changes beyond the scoped design
-work. Nothing was pushed. Explicit approval for that full branch history is pending;
-uncommitted backend/CLAUDE edits and duplicate files remain excluded. Checks passed:
-63-file staged scope, 59 inspected evidence/guidance files, 134 local links, JSON/PNG
-consistency, ten archived-script syntax checks and scoped diff whitespace.
+**Session checkpoint:** `e4e7804` and the 11 earlier commits were pushed to
+`origin/main` on November 4 after the user explicitly approved all 12 commits.
+The ordinary push advanced the remote from `c4a5d14` to `e4e7804`; earlier approval
+rejections are resolved. Uncommitted backend/CLAUDE edits and duplicate files remain
+excluded and untouched. Original checkpoint checks passed: 63-file staged scope,
+59 inspected evidence/guidance files, 134 local links, JSON/PNG consistency,
+ten archived-script syntax checks and scoped diff whitespace. No application
+changes or new acceptance evidence were added by publishing the checkpoint.
 
 Earlier design baseline commit: `23faa2d`. November 3 refinements, handoff, frontend
 connection plans/skills and UX-C02/C03 evidence form the user-authorized design
