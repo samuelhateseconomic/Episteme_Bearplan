@@ -63,6 +63,16 @@ Resolve proposed measurement/breakpoint/fallback/Earlier/cross-month decisions
 where they affect that slice. Preserve newer M5/M6 and concurrent account work.
 Legacy provider ordering below was not re-audited by this design handoff.
 
+**Latest publication (November 4):** user requested “push the project”. Ordinary
+`git push origin main` advanced `4544f74` → `2eddbe7`, publishing UX-C04
+`96c0910`, UX-C05 `01bb39c` and the 49-file UX-C06 checkpoint `2eddbe7`.
+Fresh checks: 165 context, 58 recovery and 19 Google routing models passed;
+360 local Markdown links, nine JSON artifacts, 30 PNG hashes/dimensions,
+4,106-node ledger consistency and scoped diff checks passed on macOS.
+Uncommitted backend/account/CLAUDE work and duplicate files were excluded and
+preserved. This publication changes no app/runtime acceptance or next-work scope.
+The documentation publication receipt is recorded by the following Git commit.
+
 **Session checkpoint:** `e4e7804` and the 11 earlier commits were pushed to
 `origin/main` on November 4 after the user explicitly approved all 12 commits.
 The ordinary push advanced the remote from `c4a5d14` to `e4e7804`; earlier approval
@@ -178,8 +188,9 @@ untimed bounded reports, not actual app/provider/restart verification. Codex sol
 Figma writer/technical reviewer; independent review was the user’s design
 walkthrough. Second technical audit, arbitrary browser resize/zoom, keyboard/focus,
 assistive technology and full state/theme matrix remain follow-ups. No new app,
-credential, service, DB/provider work or release gate change. Uncommitted; no
-commit/push requested. Next eligible APP-C01 requires separate application scope.
+credential, service, DB/provider work or release gate change. Committed as
+`2eddbe7` and pushed under the later publication request recorded above.
+Next eligible APP-C01 requires separate application scope.
 
 UX-C05 delivered: [review](reviews/2026-11-04-connection-recovery.md),
 [36-state inventory](../frontend/design/settings-connections/recovery/inventory.json),
@@ -210,7 +221,7 @@ Google variables are added to all eight resets; all six bCourses resets remain.
 user acceptance and provider/runtime checks remain pending. Account-isolation
 source was inspected, not certified. No app/data/provider changes. The user requested
 a local UX-C04 commit; Git records the checkpoint. No push was requested for this
-unit. UX-C04 is committed locally as `96c0910`; not pushed. UX-C05 is recorded above.
+unit. UX-C04 was committed locally as `96c0910` and is now published under the later request recorded above. UX-C05 is recorded above.
 
 UX-C03 delivered under “continue”: [review](reviews/2026-11-03-bcourses-settings-flow.md),
 [25-state inventory](../frontend/design/settings-connections/bcourses-inventory.json)

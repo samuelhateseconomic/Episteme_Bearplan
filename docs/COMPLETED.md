@@ -9,6 +9,19 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-04 — Settings design checkpoint publication
+
+User requested “push the project”. Committed the completed 49-file UX-C06
+context/theme evidence and handoff as `2eddbe7`, then successfully pushed
+`origin/main` from `4544f74` to `2eddbe7`, including earlier UX-C04 `96c0910`
+and UX-C05 `01bb39c`. Ordinary push; no history rewriting. Fresh verification:
+165 context, 58 recovery and 19 Google routing checks passed; 360 Markdown links,
+nine JSON artifacts, 30 PNG hashes/dimensions, 4,106-node ledger and scoped
+whitespace checks passed. No unrelated application suite rerun for design/docs.
+Backend/account/CLAUDE changes and duplicate files remain uncommitted and preserved.
+No runtime/provider or release acceptance advanced. Publication receipt is recorded
+in the following documentation commit; current next work remains in PROGRESS.
+
 ## 2026-11-04 — UX-C06 Settings context/theme and scoped handoff
 
 Delivered six width/theme sections (54 full-window frames), an 800×1284 consolidated
