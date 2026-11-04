@@ -1,0 +1,41 @@
+[
+  {
+    "label": "Correct reference labels and help Back",
+    "code": "await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));await Promise.all(['Regular','Medium','Semi Bold'].map(style=>figma.loadFontAsync({family:'Inter',style})));const mutated=[];for(const [key,value]of [['enabled','Automatic sync on'],['paused','Paused'],['pausedOffline','Paused'],['syncFailure','Automatic sync on'],['resumed','Automatic sync on']]){const n=await figma.getNodeByIdAsync({\"enabled\":{\"body\":\"269:6548\",\"policy\":\"269:6549\",\"last\":\"269:6550\"},\"pausing\":{\"body\":\"269:6578\"},\"paused\":{\"body\":\"269:6596\",\"policy\":\"269:6597\",\"last\":\"269:6598\"},\"pauseFailed\":{\"body\":\"269:6626\"},\"pauseUnknown\":{\"body\":\"269:6644\"},\"resuming\":{\"body\":\"269:6662\"},\"resumed\":{\"body\":\"269:6680\",\"policy\":\"269:6681\",\"last\":\"269:6682\"},\"resumeFailed\":{\"body\":\"269:6700\"},\"resumeUnknown\":{\"body\":\"269:6718\"},\"onceReview\":{\"body\":\"269:6736\"},\"onceBusy\":{\"body\":\"269:6754\",\"policy\":\"269:6755\",\"last\":\"269:6756\"},\"onceSuccess\":{\"body\":\"269:6774\",\"policy\":\"269:6775\",\"last\":\"269:6776\"},\"pausedOffline\":{\"body\":\"269:6794\",\"policy\":\"269:6795\",\"last\":\"269:6796\"},\"syncFailure\":{\"body\":\"269:6817\",\"policy\":\"269:6818\",\"last\":\"269:6819\"},\"oncePartial\":{\"body\":\"269:6840\",\"policy\":\"269:6841\",\"last\":\"269:6842\"},\"onceOffline\":{\"body\":\"269:6860\",\"policy\":\"269:6861\",\"last\":\"269:6862\"},\"disconnectReview\":{\"body\":\"269:6880\"},\"disconnecting\":{\"body\":\"269:6898\"},\"disconnected\":{\"body\":\"269:6916\"},\"revocationUnknown\":{\"body\":\"269:6937\"},\"disconnectFailed\":{\"body\":\"269:6958\"},\"disconnectUnknown\":{\"body\":\"269:6976\"},\"signedOutObserved\":{\"body\":\"269:6994\"},\"revokeHelp\":{\"body\":\"269:7015\"},\"removeClientReview\":{\"body\":\"269:7031\"},\"removingClient\":{\"body\":\"269:7049\"},\"clientRemoved\":{\"body\":\"269:7067\"},\"clientRemoveUnknown\":{\"body\":\"269:7088\"},\"clientRemains\":{\"body\":\"269:7106\"},\"removeTokenReview\":{\"body\":\"269:7127\"},\"removingToken\":{\"body\":\"269:7145\"},\"tokenRemoved\":{\"body\":\"269:7163\"},\"tokenRemoveFailed\":{\"body\":\"269:7181\"},\"tokenRemoveUnknown\":{\"body\":\"269:7199\"},\"offlineWork\":{\"body\":\"269:7217\"},\"serviceHelp\":{\"body\":\"269:7235\"}}[key].policy);n.setBoundVariable('characters',null);n.characters=value;mutated.push(n.id);}const help=await figma.getNodeByIdAsync(\"269:7018\");await help.setReactionsAsync([{trigger:{type:'ON_CLICK'},actions:[{type:'BACK'}]}]);mutated.push(help.id);return {mutatedNodeIds:mutated,changes:'Correct paused canvas references; help Back no longer assigns sign-out/setup state.'};",
+    "executionOnly": true
+  },
+  {
+    "label": "Guard conflicting Settings actions",
+    "code": "await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));const operationId=\"VariableID:270:6649\";function eq(v){return {type:'EXPRESSION',resolvedType:'BOOLEAN',value:{expressionFunction:'EQUALS',expressionArguments:[{type:'VARIABLE_ALIAS',resolvedType:'STRING',value:{type:'VARIABLE_ALIAS',id:operationId}},{type:'STRING',resolvedType:'STRING',value:v}]}};}function and(a,b){return {type:'EXPRESSION',resolvedType:'BOOLEAN',value:{expressionFunction:'AND',expressionArguments:[a,b]}};}function nav(id){return {type:'NODE',destinationId:id,navigation:'SWAP',transition:null,resetVideoPosition:false,resetScrollPosition:true};}function c(v,id){return {type:'CONDITIONAL',conditionalBlocks:[{condition:eq(v),actions:[nav(id)]},{actions:[]}]};}const pending={\"pausing\":\"269:6567\",\"resuming\":\"269:6651\",\"once\":\"269:6743\",\"disconnecting\":\"269:6887\",\"removingClient\":\"269:7038\",\"removingToken\":\"269:7134\",\"pauseUnknown\":\"269:6633\",\"resumeUnknown\":\"269:6707\",\"disconnectUnknown\":\"269:6965\",\"clientUnknown\":\"269:7077\",\"tokenUnknown\":\"269:7188\"};const blockers=Object.entries(pending).map(([v,id])=>c(v,id));const n=await figma.getNodeByIdAsync('I219:5839;218:5741');const old=n.reactions[0].actions;const actions=old.map(a=>({...a,conditionalBlocks:a.conditionalBlocks.map((b,i)=>i===0?{...b,condition:and(eq('idle'),b.condition)}:b)}));await n.setReactionsAsync([{trigger:{type:'ON_CLICK'},actions:[...blockers,...actions]}]);const bc=await figma.getNodeByIdAsync('I219:5888;218:5741');await bc.setReactionsAsync([{trigger:{type:'ON_CLICK'},actions:[...blockers,c('idle',\"269:7116\")]}]);return {mutatedNodeIds:[n.id,bc.id],actionCounts:[n.reactions[0].actions.length,bc.reactions[0].actions.length]};",
+    "executionOnly": true
+  },
+  {
+    "label": "Truthful bCourses metadata",
+    "code": "await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));const ids=[\"234:6610\",\"234:6646\",\"241:6360\",\"241:6363\",\"241:6366\",\"241:6369\",\"241:6372\",\"241:6375\",\"241:6378\",\"241:6381\",\"241:6384\",\"141:7352\",\"141:7355\",\"141:7358\",\"141:7361\",\"141:7364\",\"166:8451\",\"166:8454\",\"166:8457\"],info='VariableID:237:6304',status=\"VariableID:270:6650\",created=[],mutated=[],sources=[];const replace=s=>s.replace('Token · Saved securely on this Mac.','Token · Manage privately on this Mac.');for(const id of ids){const n=await figma.getNodeByIdAsync(id);const rs=n.reactions.map(r=>{let a=r.actions.map(a=>a.type==='SET_VARIABLE'&&a.variableId===info&&typeof a.variableValue.value==='string'?{...a,variableValue:{...a.variableValue,value:replace(a.variableValue.value)}}:a);if(id.startsWith('241:'))a.unshift({type:'SET_VARIABLE',variableId:status,variableValue:{type:'STRING',resolvedType:'STRING',value:id==='241:6360'?'Setup needed':'Token saved'}});return {trigger:r.trigger,actions:a};});await n.setReactionsAsync(rs);mutated.push(n.id);if(!id.startsWith('141:')&&!id.startsWith('166:'))sources.push({id:n.id,name:n.name,reactions:n.reactions.map(r=>({trigger:r.trigger,actions:r.actions??[]}))});}const v=await figma.variables.getVariableByIdAsync(info);for(const [m,value]of Object.entries(v.valuesByMode))if(typeof value==='string')v.setValueForMode(m,replace(value));return {mutatedNodeIds:mutated,mutatedVariableIds:[info],sources};",
+    "executionOnly": true
+  },
+  {
+    "label": "User-confirmed semantics copy",
+    "code": "await figma.setCurrentPageAsync(await figma.getNodeByIdAsync('2:5'));await figma.loadFontAsync({family:'Inter',style:'Regular'});const changes=[];for(const [id,text]of [[\"269:6585\",'Pause is saved across restart; one-time sync keeps it paused. Proposed scope: all automatic Google reads, timed-plan publishing and Tasks sync. Local work stays available.'],[\"269:7224\",'Closing a browser tab is not Pause or Disconnect. Stopping the service stops its scheduler. The saved Pause must survive restart. Cached events retain last-refresh evidence. bCourses refresh is manual.']]){const f=await figma.getNodeByIdAsync(id);const t=f.findAllWithCriteria({types:['TEXT']}).find(t=>t.name==='Consequences and recovery');t.characters=text;changes.push(t.id);}const g=await figma.getNodeByIdAsync('270:6806');const t=g.children.filter(t=>t.type==='TEXT')[1];t.characters='Fixed sample responses only; no provider, credential, saved task or timer changes. Confirmed intent: Pause survives restart; Sync once keeps it paused. Remaining trigger/acknowledgement details are proposed. Busy samples acknowledge after 2.5 seconds; leaving delays the sample until reopened.';changes.push(t.id);return {mutatedNodeIds:changes,guide:{width:g.width,height:g.height}};",
+    "executionOnly": true
+  },
+  {
+    "label": "Guide spacing token, no visual geometry change",
+    "executionOnly": true,
+    "mutatedNodeIds": [
+      "270:6819",
+      "270:6826",
+      "270:6833",
+      "270:6840",
+      "270:6847",
+      "270:6854",
+      "270:6861",
+      "270:6868",
+      "270:6875",
+      "270:6882"
+    ],
+    "property": "itemSpacing",
+    "variableId": "VariableID:2:46",
+    "unchangedValue": 12
+  }
+]

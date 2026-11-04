@@ -1,0 +1,194 @@
+[
+  {
+    "id": "141:7352",
+    "actions": 223,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "141:7355",
+    "actions": 223,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "141:7358",
+    "actions": 224,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "141:7361",
+    "actions": 224,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "141:7364",
+    "actions": 278,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "166:8451",
+    "actions": 226,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "166:8454",
+    "actions": 225,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  },
+  {
+    "id": "166:8457",
+    "actions": 225,
+    "newAssignments": [
+      {
+        "id": "VariableID:270:6647",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6648",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6649",
+        "count": 1
+      },
+      {
+        "id": "VariableID:270:6650",
+        "count": 1
+      }
+    ],
+    "google": 5,
+    "bcourses": 6
+  }
+]

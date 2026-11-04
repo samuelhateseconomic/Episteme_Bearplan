@@ -131,8 +131,8 @@ The earlier 89-product/46-reference handoff remains its original baseline;
 the extension does not rewrite its acceptance evidence.
 
 Working-state Manage/Hide and overlay close routes are installed. UX-C03 wires
-bCourses setup and management below; UX-C04 adds the Google flow. Pause effects
-and responsive/user verification follow in UX-C05–06; other overview error/busy
+bCourses setup and management below; UX-C04 adds the Google flow and UX-C05 the
+Pause/removal effects. Responsive/user verification follows in UX-C06; other overview error/busy
 commands remain references.
 [Exact extension IDs](design/settings-connections/overview-inventory.json) and
 [installed-structure/model checks](design/settings-connections/overview-audit.json)
@@ -176,8 +176,30 @@ or inspect the [file](https://www.figma.com/design/jobFe4sXDot7BKsej0arNB?node-i
 flow groups. Working Google management → Sign-in & calendars is wired; setup
 Connect uses the fixed sample-file flow. There are 47 540px references plus the
 800×778 guide. No real file picker, credentials, browser authorization or provider
-work. Guide starts reset only the five Google variables; the eight full review
-resets include those too. Browser-return outcomes use explicit guide simulations;
+work. C04 guide starts reset five Google variables plus three Google policy/operation
+variables added by C05; the eight full review resets include these too. Browser-return outcomes use explicit guide simulations;
 waiting does not become connected by a timer. Actual preview/accessibility,
 responsive/Dark and user acceptance remain pending. Pause/Disconnect effects are
-UX-C05. Current Settings-gear coverage remains 99/99 headers.
+provided by UX-C05 below. Earlier Settings-gear evidence remains 99/99 headers.
+
+
+### Pause, offline and removal extension — UX-C05
+
+[Flow review](../docs/reviews/2026-11-04-connection-recovery.md) ·
+[exact inventory](design/settings-connections/recovery/inventory.json) ·
+[installed actions](design/settings-connections/recovery/sources.json) ·
+[58 action models](design/settings-connections/recovery/models.json).
+
+[Open the recovery guide](https://www.figma.com/proto/jobFe4sXDot7BKsej0arNB?page-id=2%3A5&node-id=270-6806&starting-point-node-id=270%3A6806&scaling=min-zoom).
+36 540px Light states and a 19-start 800×738 guide. Working Manage Google →
+Pause/Sync once and Sign-in & calendars → Sync & access enter the flow;
+Manage bCourses → Remove token opens reviewed local removal. Explicit Cancel,
+request/receipt, unknown-result recovery and local/provider removal results remain distinct.
+
+Busy samples use fixed 2.5-second replies. No credentials, provider work, restart
+or real timer runs. User reported the main Pause → Sync once → Resume clear;
+saved Pause surviving restart and one-shot retaining Pause are confirmed intent.
+Other error/removal walkthroughs, complete contexts/themes and accessibility remain
+UX-C06 follow-ups. Source lock-timeout/automatic-reader gaps are recorded for later
+app implementation. The historical C02–C04 audits remain their original evidence;
+C05 contains the changed installed sources and current relevant bounds.

@@ -6,7 +6,7 @@ Read the [entrypoint](README.md), [specification](SPEC.md) and [execution plan](
 
 Prepared November 3, 2026 from macOS/Darwin and source at `674db93`. That commit includes write-only connection-setup routes and their existing tests; `f375f24` includes credential relocation. Source may advance independently: APP-C01 must reconcile the actual checkout, diff and running service before implementation. Reading an existing test is not a fresh pass. No application test, browser run, provider call, credential read or Figma operation was performed to author this plan.
 
-Pause/Resume automatic Google sync is confirmed. Persistence across restarts, finishing an in-flight sync before acknowledging Paused, explicit Sync once while paused and fresh reconciliation on Resume remain **proposed details**. Cases that depend on them become acceptance gates after those details are agreed; do not treat them as current implementation claims. Assignment-review placement is also unresolved; exercise its agreed destination rather than silently choosing one.
+Pause/Resume automatic Google sync is confirmed. On November 4 the user also confirmed restart persistence and Sync once keeping automation paused, and reported the fixed main prototype flow clear. Neither restart nor provider operation was tested. Covering all automatic triggers, finishing in-flight work before acknowledging Paused and fresh reconciliation on Resume remain **proposed details**. Cases depending on those remaining details become acceptance gates after agreement; design reports are not current implementation claims. Assignment-review placement remains unresolved; exercise its agreed destination rather than silently choosing one.
 
 Use these evidence layers independently:
 
@@ -110,7 +110,7 @@ Use existing `tests/test_connections.py` and Google/bCourses tests as foundation
 
 ## Synchronization and local lifecycle cases
 
-Pause cases below depend on the proposed detailed contract being accepted. All three Google functions share the automatic-control boundary; a display preference or navigation event must not bypass it.
+Restart persistence and one-shot retention are confirmed; other Pause cases below depend on acceptance of the remaining proposed details. All three Google functions share the automatic-control boundary; a display preference or navigation event must not bypass it.
 
 | Case / layer / ticket | Preconditions | Actions | Expected result | Evidence |
 | --- | --- | --- | --- | --- |

@@ -14,7 +14,8 @@ connection text formerly in UX plan section 6; that anchor remains a forwarding 
 | Existing confirmed integration scope | Read-only/manual bCourses with explicit Add and deadline review; Google selected-calendar reading, BearPlans-calendar publishing and all-task Google Tasks sync. |
 | Recommended presentation | Settings → Connections, small gear in compact top bar, two provider panels, on-demand details. |
 | Pending placement preference | Keep a dedicated bCourses assignment-review view while the user's location preference remains unanswered. Course/account management belongs in Settings. |
-| Proposed Pause details | Persist across restart; cover all automatic Google triggers; explicit Sync once stays paused; finish an in-flight operation before acknowledging Paused; Resume reconciles current records. |
+| Confirmed November 4 | The saved Pause survives restart. Explicit Sync once keeps automatic sync paused. The user reported the main prototype flow clear; no actual restart was tested. |
+| Proposed remaining Pause details | Cover all automatic Google triggers; finish an in-flight operation before acknowledging Paused; Resume reconciles current records. |
 | Deferred | Multi-account switching, automatic bCourses refresh, independent Google capability switches, cache/remote deletion tools and Gmail. Do not add them as a side effect. |
 
 User instructions and root guidance supersede this document. Resolve material
@@ -145,9 +146,11 @@ claiming everything rolled back. Never create duplicate tasks/events on recovery
 
 ### CON-08 — Confirmed Pause / Resume and proposed detailed semantics
 
-Include Pause / Resume automatic Google sync. Proposed behavior for implementation
-scoping: cover periodic, post-edit, launch/reconnect and other automatic triggers
-for all three functions. Save preference durably; restart does not silently resume.
+Include Pause / Resume automatic Google sync. Confirmed November 4: save the
+preference durably so restart does not resume it; explicit Sync once keeps
+automation paused. The user accepted this intended behavior in a fixed prototype,
+not a runtime/restart test. Proposed remaining implementation detail: cover
+periodic, post-edit, launch/reconnect and other automatic triggers for all three functions.
 Keep credentials, local tasks, cached sources and Google copies. Local work remains
 available. Do not confuse this control with pausing a countdown session.
 
@@ -157,7 +160,7 @@ requested picker refresh is distinct one-time work.
 
 If work is in flight, show Pausing… Finishing the current sync. Acknowledge Paused
 only when no new automatic operation can begin; do not promise rollback of provider
-writes already completed. Explicit Sync once may run while staying paused. Any
+writes already completed. Explicit Sync once must keep automation paused (confirmed November 4). Any
 other action that contacts a provider while paused (calendar-list refresh or Save
 calendars) must disclose its one-time work or save selection locally for later;
 never silently turn automation on. Resume reconciles the current state rather than

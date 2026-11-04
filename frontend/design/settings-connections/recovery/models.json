@@ -1,0 +1,234 @@
+[
+  {
+    "name": "Sync once Cancel keeps Automatic sync on",
+    "result": "Pass"
+  },
+  {
+    "name": "Sync once acknowledgement keeps Automatic sync on and advances success only after receipt",
+    "result": "Pass"
+  },
+  {
+    "name": "Disconnect Cancel keeps Automatic sync on",
+    "result": "Pass"
+  },
+  {
+    "name": "Remove setup Cancel keeps Automatic sync on",
+    "result": "Pass"
+  },
+  {
+    "name": "Sync once Cancel keeps Paused",
+    "result": "Pass"
+  },
+  {
+    "name": "Sync once acknowledgement keeps Paused and advances success only after receipt",
+    "result": "Pass"
+  },
+  {
+    "name": "Disconnect Cancel keeps Paused",
+    "result": "Pass"
+  },
+  {
+    "name": "Remove setup Cancel keeps Paused",
+    "result": "Pass"
+  },
+  {
+    "name": "Pause click shows pending policy; receipt acknowledges and retains last success",
+    "result": "Pass"
+  },
+  {
+    "name": "Resume receipt enables policy but never invents a new successful sync",
+    "result": "Pass"
+  },
+  {
+    "name": "pauseFailed preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "resumeFailed preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "pauseUnknown preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "resumeUnknown preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "oncePartial preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "onceOffline preserves last complete success",
+    "result": "Pass"
+  },
+  {
+    "name": "pauseUnknown explicit check reaches disclosed fixed observation",
+    "result": "Pass"
+  },
+  {
+    "name": "resumeUnknown explicit check reaches disclosed fixed observation",
+    "result": "Pass"
+  },
+  {
+    "name": "disconnectUnknown explicit check reaches disclosed fixed observation",
+    "result": "Pass"
+  },
+  {
+    "name": "clientRemoveUnknown explicit check reaches disclosed fixed observation",
+    "result": "Pass"
+  },
+  {
+    "name": "tokenRemoveUnknown explicit check reaches disclosed fixed observation",
+    "result": "Pass"
+  },
+  {
+    "name": "pausing Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "resuming Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "onceBusy Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "disconnecting Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "removingClient Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "removingToken Close preserves request; reopening resumes sample, not false cancellation",
+    "result": "Pass"
+  },
+  {
+    "name": "pausing blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "resuming blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "once blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "disconnecting blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "removingClient blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "removingToken blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "pauseUnknown blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "resumeUnknown blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "disconnectUnknown blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "clientUnknown blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "tokenUnknown blocks conflicting policy, one-shot, sign-in and token removal",
+    "result": "Pass"
+  },
+  {
+    "name": "Disconnect receipt changes local sign-in and revocation summary, retaining calendar selection and policy",
+    "result": "Pass"
+  },
+  {
+    "name": "Offline revocation reports local sign-out without confirmed Google result",
+    "result": "Pass"
+  },
+  {
+    "name": "Unknown disconnect check does not invent Google revocation",
+    "result": "Pass"
+  },
+  {
+    "name": "Remove setup acknowledgement requires fresh setup and retains selected cache metadata",
+    "result": "Pass"
+  },
+  {
+    "name": "Access help Back preserves absent setup state",
+    "result": "Pass"
+  },
+  {
+    "name": "bCourses removal Cancel leaves all saved sample state",
+    "result": "Pass"
+  },
+  {
+    "name": "bCourses removal acknowledgement changes only local token metadata",
+    "result": "Pass"
+  },
+  {
+    "name": "New bCourses save restores saved-token metadata 234:6449",
+    "result": "Pass"
+  },
+  {
+    "name": "New bCourses save restores saved-token metadata 234:6461",
+    "result": "Pass"
+  },
+  {
+    "name": "Paused plus offline retains connection, last success and paused policy",
+    "result": "Pass"
+  },
+  {
+    "name": "bCourses saved-scope descriptions never claim a removed token is saved",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 141:7352",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 141:7355",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 141:7358",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 141:7361",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 141:7364",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 166:8451",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 166:8454",
+    "result": "Pass"
+  },
+  {
+    "name": "Full reset retains old Google/bCourses assignments and four recovery defaults 166:8457",
+    "result": "Pass"
+  },
+  {
+    "name": "New recovery controls never write task, timer, history or reward variables or open provider URLs",
+    "result": "Pass"
+  }
+]

@@ -9,6 +9,35 @@ Older entries keep the wording they had when written: words like "current",
 "next", "uncommitted" or "pending" describe that moment, not today. Detailed
 evidence remains in the linked reviews.
 
+## 2026-11-04 — UX-C05 local design checkpoint
+
+User requested a commit of the completed Pause/offline/removal prototype evidence,
+confirmed decisions and shared handoff. Scoped to frontend design/plan files and
+related review/progress/completed records. All 58 installed-action checks passed;
+JSON/PNG/count/privacy and scoped diff checks passed. Git records the commit.
+Unrelated backend/CLAUDE work and duplicate files remain excluded. No push requested.
+Remaining gates stay as recorded in the [review](reviews/2026-11-04-connection-recovery.md).
+
+## 2026-11-04 — UX-C05 Pause/offline/removal prototype
+
+Delivered 36 editable 540px Light recovery states, 19-start 800×738 guide and
+working Settings policy/one-shot/token-removal entries. Cancel preserves state;
+request/acknowledgement, unknown results, partial writes, local sign-out and Google
+revocation are distinct. Four isolated variables join eight resets; previous work
+state remains. Existing bCourses token summary and paused calendar-read disclosures
+were reconciled. User reported “Clear; this behaviour works for me” for Pause →
+Sync once → Resume, confirming restart persistence/one-shot intent only.
+
+Checks: 58/58 installed-action models; 145 source records plus eight reset summaries;
+467 editable scoped nodes plus nine existing layouts checked with zero structural
+findings; five final Light renders inspected. Full width/theme, keyboard/focus,
+assistive technology, other user walkthroughs and runtime/provider gates pending.
+[Review](reviews/2026-11-04-connection-recovery.md),
+[frontend evidence](../frontend/design/settings-connections/recovery/inventory.json).
+Source reconciliation exposed lock-timeout acknowledgement/serialization and direct
+reader Pause gaps for separately authorized app work. No app/data/provider changes.
+Uncommitted at handoff; no commit/push requested. Next eligible UX-C06 not started.
+
 ## 2026-11-04 — UX-C04 design checkpoint
 
 User requested a local commit of the Google prototype unit. Scoped checkpoint
